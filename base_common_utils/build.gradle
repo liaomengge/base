@@ -15,8 +15,8 @@ dependencyUpdates {
     }
 }
 
-group = 'cn.mwee'
-version = '1.0.8.33-SNAPSHOT'
+group = 'cn.ly'
+version = '1.0.8.34-SNAPSHOT'
 
 targetCompatibility = 1.8
 sourceCompatibility = 1.8
