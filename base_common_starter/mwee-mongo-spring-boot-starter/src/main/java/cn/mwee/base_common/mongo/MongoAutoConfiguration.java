@@ -1,0 +1,112 @@
+package cn.mwee.base_common.mongo;
+
+import com.mongodb.MongoClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.data.annotation.Persistent;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.StringUtils;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Created by liaomengge on 2018/11/7.
+ */
+@Configuration
+@ConditionalOnClass(MongoDbFactory.class)
+@EnableConfigurationProperties(MongoProperties.class)
+public class MongoAutoConfiguration {
+
+    @Autowired
+    private MongoProperties mongoProperties;
+
+    @Bean
+    @ConditionalOnMissingBean
+    public MongoClient mongoClient() {
+        return new MongoClient(this.mongoProperties.createMongoClientURI());
+    }
+
+    @Bean
+    @ConditionalOnClass(MongoClient.class)
+    public MongoDbFactory mongoDbFactory(MongoClient mongoClient) {
+        return new SimpleMongoDbFactory(mongoClient, this.mongoProperties.createMongoClientURI().getDatabase());
+    }
+
+    @Bean
+    public DefaultMongoTypeMapper defaultMongoTypeMapper() {
+        return new DefaultMongoTypeMapper(null);
+    }
+
+    private Set<Class<?>> scanForEntities(String basePackage) throws ClassNotFoundException {
+        if (!StringUtils.hasText(basePackage)) {
+            return Collections.emptySet();
+        }
+
+        Set<Class<?>> initialEntitySet = new HashSet<>();
+
+        if (StringUtils.hasText(basePackage)) {
+
+            ClassPathScanningCandidateComponentProvider componentProvider = new ClassPathScanningCandidateComponentProvider(
+                    false);
+            componentProvider.addIncludeFilter(new AnnotationTypeFilter(Document.class));
+            componentProvider.addIncludeFilter(new AnnotationTypeFilter(Persistent.class));
+
+            for (BeanDefinition candidate : componentProvider.findCandidateComponents(basePackage)) {
+                initialEntitySet.add(ClassUtils.forName(candidate.getBeanClassName(),
+                        AbstractMongoConfiguration.class.getClassLoader()));
+            }
+        }
+        return initialEntitySet;
+    }
+
+    private Set<Class<?>> getInitialEntitySet() throws ClassNotFoundException {
+        Set<Class<?>> initialEntitySet = new HashSet<>();
+        for (String basePackage : this.mongoProperties.getBasePackages()) {
+            initialEntitySet.addAll(scanForEntities(basePackage));
+        }
+        return initialEntitySet;
+    }
+
+    @Bean
+    public MongoMappingContext mongoMappingContext() throws ClassNotFoundException {
+        MongoMappingContext mappingContext = new MongoMappingContext();
+        mappingContext.setInitialEntitySet(getInitialEntitySet());
+        return mappingContext;
+    }
+
+    @Bean
+    @ConditionalOnClass({MongoDbFactory.class, MongoMappingContext.class, DefaultMongoTypeMapper.class})
+    public MappingMongoConverter mappingMongoConverter(MongoDbFactory mongoDbFactory,
+                                                       MongoMappingContext mongoMappingContext,
+                                                       DefaultMongoTypeMapper defaultMongoTypeMapper) {
+        MappingMongoConverter mappingMongoConverter =
+                new MappingMongoConverter(new DefaultDbRefResolver(mongoDbFactory), mongoMappingContext);
+        mappingMongoConverter.setTypeMapper(defaultMongoTypeMapper);
+        return mappingMongoConverter;
+    }
+
+    @Bean
+    @ConditionalOnClass({MongoDbFactory.class, MappingMongoConverter.class})
+    @ConditionalOnMissingBean
+    public MongoTemplate mongoTemplate(MongoDbFactory mongoDbFactory, MappingMongoConverter mappingMongoConverter) {
+        return new MongoTemplate(mongoDbFactory, mappingMongoConverter);
+    }
+}

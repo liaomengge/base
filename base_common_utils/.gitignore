@@ -1,0 +1,9 @@
+.gradle
+gradle
+gradlew
+gradlew.bat
+.idea
+build
+src/test
+out
+src/main/resources/META-INF

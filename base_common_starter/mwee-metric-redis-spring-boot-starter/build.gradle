@@ -1,0 +1,3 @@
+dependencies {
+    api(project(":mwee-redis-spring-boot-starter"))
+}

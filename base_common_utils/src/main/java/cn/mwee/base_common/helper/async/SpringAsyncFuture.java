@@ -1,0 +1,34 @@
+package cn.mwee.base_common.helper.async;
+
+import cn.mwee.base_common.helper.async.callback.BaseFutureCallback;
+import cn.mwee.base_common.helper.async.task.SingleTask;
+import lombok.AllArgsConstructor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
+
+/**
+ * Created by liaomengge on 2019/6/10.
+ */
+@AllArgsConstructor
+public class SpringAsyncFuture {
+
+    private final ThreadPoolTaskExecutor mwThreadPoolTaskExecutor;
+
+    public <P, V> ListenableFuture<V> asyncExec(P param, BaseFutureCallback<P, V> baseFutureCallback) {
+        ListenableFuture<V> future = mwThreadPoolTaskExecutor.submitListenable(new SingleTask<>(param,
+                baseFutureCallback));
+        future.addCallback(new ListenableFutureCallback<V>() {
+            @Override
+            public void onFailure(Throwable ex) {
+                baseFutureCallback.doFailure(param, ex);
+            }
+
+            @Override
+            public void onSuccess(V result) {
+                baseFutureCallback.doSuccess(param, result);
+            }
+        });
+        return future;
+    }
+}

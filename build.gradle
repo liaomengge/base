@@ -1,0 +1,51 @@
+plugins {
+    id "io.spring.dependency-management" version '1.0.8.RELEASE' apply false
+}
+
+allprojects {
+    wrapper {
+        gradleVersion = '6.5'
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'maven'
+    apply plugin: "idea"
+    apply plugin: 'project-report'
+    apply plugin: "io.spring.dependency-management"
+
+    repositories {
+        mavenLocal()
+        maven {
+            url 'http://127.0.0.1:8089/repository/fly-snapshots/'
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        mavenCentral()
+        jcenter()
+    }
+
+    def versions = [
+            platformBom: '0.0.4-SNAPSHOT'
+    ]
+
+    dependencyManagement {
+        dependencies {
+            imports {
+                mavenBom "cn.mwee:base_platform_bom:${versions.platformBom}"
+            }
+        }
+        resolutionStrategy {
+            cacheChangingModulesFor 0, 'seconds'
+            cacheDynamicVersionsFor 0, 'seconds'
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+    }
+}

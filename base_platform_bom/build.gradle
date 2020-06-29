@@ -1,0 +1,182 @@
+plugins {
+    id "io.spring.dependency-management" version '1.0.9.RELEASE'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: "idea"
+    apply plugin: "io.spring.dependency-management"
+
+    group = 'cn.mwee'
+
+    targetCompatibility = 1.8
+    sourceCompatibility = 1.8
+
+    repositories {
+        maven {
+            url 'http://127.0.0.1:8089/repository/fly-snapshots/'
+        }
+        maven {
+            url 'http://127.0.0.1:8089/repository/fly-releases/'
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        mavenCentral()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+}
+
+wrapper {
+     gradleVersion = '6.5'
+}
+
+def artifactId = "base_platform_bom"
+version = '0.0.4-SNAPSHOT'
+
+def versions = [
+        alibaba        : '1.5.1.RELEASE',
+        springBoot     : '1.5.22.RELEASE',
+        springCloud    : 'Edgware.SR6'
+]
+
+dependencyManagement {
+    imports {
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${versions.alibaba}"
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${versions.springBoot}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${versions.springCloud}"
+    }
+    dependencies {
+        dependency "junit:junit:4.12"
+        dependency "org.projectlombok:lombok:1.18.12"
+        dependency "com.google.auto.service:auto-service:1.0-rc6"
+
+        dependency "com.github.ben-manes.caffeine:caffeine:2.8.2"
+        dependency "com.github.ben-manes.caffeine:guava:2.8.2"
+        dependency "com.github.ben-manes.caffeine:jcache:2.8.2"
+
+        dependency "com.google.guava:guava:29.0-jre"
+        dependency ("net.javacrumbs.future-converter:future-converter-spring-java8:1.2.0") {
+            exclude 'com.google.guava:guava'
+        }
+        dependency ("net.javacrumbs.future-converter:future-converter-spring-guava:1.2.0") {
+            exclude 'com.google.guava:guava'
+        }
+        dependency ("net.javacrumbs.future-converter:future-converter-java8-guava:1.2.0") {
+            exclude 'com.google.guava:guava'
+        }
+        dependency ("com.spotify:futures-extra:4.2.2") {
+            exclude 'com.google.guava:guava'
+        }
+
+        dependency "com.sun.mail:mailapi:1.6.2"
+        dependency "com.sun.mail:javax.mail:1.6.2"
+
+        dependency "com.zaxxer:HikariCP:3.4.1"
+        dependency "com.javadeep:functional-lang:1.0.0"
+        dependency "com.squareup.okhttp3:okhttp:3.14.4"
+
+        dependency "org.jboss.xnio:xnio-nio:3.5.6.Final"
+        dependency "org.jboss.logging:jboss-logging:3.3.1.Final"
+
+        dependency "io.springfox:springfox-swagger2:2.8.0"
+        dependency "io.springfox:springfox-swagger-ui:2.8.0"
+        dependency "com.github.xiaoymin:swagger-bootstrap-ui:1.9.6"
+
+        dependency ("org.apache.curator:curator-client:4.0.1") {
+            exclude 'org.apache.zookeeper:zookeeper'
+        }
+        dependency ("org.apache.curator:curator-framework:4.0.1") {
+            exclude 'org.apache.zookeeper:zookeeper'
+        }
+        dependency ("org.apache.curator:curator-recipes:4.0.1") {
+            exclude 'org.apache.zookeeper:zookeeper'
+        }
+
+        /***********************************华丽的分割线************************************************/
+
+        dependency "javax.ws.rs:javax.ws.rs-api:2.1.1"
+        dependency "javax.servlet:servlet-api:2.5"
+        dependency "javax.servlet:javax.servlet-api:3.1.0"
+        dependency "javax.annotation:javax.annotation-api:1.3.2"
+        dependency "javax.el:javax.el-api:3.0.1-b06"
+
+        dependency "commons-io:commons-io:2.6"
+        dependency "commons-beanutils:commons-beanutils:1.9.4"
+        dependency "org.apache.commons:commons-lang3:3.9"
+        dependency "org.apache.commons:commons-compress:1.19"
+        dependency "org.apache.commons:commons-text:1.8"
+        dependency "org.apache.commons:commons-collections4:4.4"
+
+        dependency "de.ruedigermoeller:fst:2.57"
+        dependency "net.sourceforge.jexcelapi:jxl:2.6.12"
+        dependency "it.sauronsoftware.ftp4j:ftp4j:1.7.2-fixed"
+        dependency "com.dyuproject.protostuff:protostuff-core:1.1.6"
+        dependency "com.dyuproject.protostuff:protostuff-runtime:1.1.6"
+
+        dependency "org.postgresql:postgresql:42.2.8"
+
+        dependency "tk.mybatis:mapper:4.1.5"
+        dependency "org.mybatis:mybatis:3.5.4"
+        dependency "org.mybatis:mybatis-spring:2.0.4"
+        dependency "com.github.pagehelper:pagehelper:5.1.11"
+        dependency "com.alibaba:druid:1.1.22"
+        dependency "org.apache.shardingsphere:sharding-jdbc-core:4.0.0-RC3"
+
+        dependency "com.squareup.retrofit2:converter-scalars:2.8.1"
+        dependency "com.squareup.retrofit2:converter-jackson:2.8.1"
+        dependency("com.squareup.retrofit2:retrofit:2.8.1") {
+            exclude 'com.squareup.okhttp3:okhttp'
+        }
+        dependency("org.ligboy.retrofit2:converter-fastjson:2.2.0") {
+            exclude 'com.squareup.retrofit2:retrofit'
+        }
+
+        dependency "com.101tec:zkclient:0.11"
+        dependency "com.lmax:disruptor:3.4.2"
+        dependency "com.alibaba:fastjson:1.2.71"
+        dependency "org.redisson:redisson:3.12.5"
+        dependency "org.apache.activemq:activemq-core:5.7.0"
+        dependency "org.quartz-scheduler:quartz:2.3.2"
+
+        dependency "org.jboss.resteasy:resteasy-client:3.6.3.Final"
+        dependency "org.jboss.resteasy:resteasy-jaxrs:3.6.3.Final"
+        dependency "org.jboss.resteasy:resteasy-netty:3.6.3.Final"
+        dependency "org.jboss.resteasy:resteasy-jackson2-provider:3.6.3.Final"
+        dependency "org.jboss.resteasy:resteasy-multipart-provider:3.6.3.Final"
+
+        dependency "org.glassfish.web:javax.el:2.2.6"
+        dependency "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.53"
+
+        dependency "com.taobao.text:text-ui:0.0.2"
+
+        dependency "com.alibaba:transmittable-thread-local:2.11.4"
+        dependency "com.alibaba:log4j2-ttl-thread-context-map:1.3.1"
+
+        dependency "com.alibaba:dubbo:2.6.7"
+        dependency "com.baidu.disconf:disconf-client:2.6.37"
+    }
+}
+
+ext {
+    nexusUrl = version.endsWith("-SNAPSHOT") ?
+            "http://127.0.0.1:8089/repository/fly-snapshots/" :
+            "http://127.0.0.1:8089/repository/fly-releases/"
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: nexusUrl) {
+                authentication(userName: "fly", password: "fly123")
+            }
+            pom.version = "$project.version"
+            pom.artifactId = "$artifactId"
+            pom.groupId = "$project.group"
+        }
+    }
+}

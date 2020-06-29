@@ -1,0 +1,6 @@
+dependencies {
+    api("org.quartz-scheduler:quartz") {
+        exclude group: 'com.zaxxer'
+        exclude module: 'c3p0'
+    }
+}

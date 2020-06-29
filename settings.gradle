@@ -1,0 +1,6 @@
+rootProject.name = 'base'
+
+include 'base_common_cache'
+include 'base_common_dayu'
+include 'base_common_middleware'
+include 'base_common_utils'

@@ -1,0 +1,4 @@
+dependencies {
+    api "org.apache.activemq:activemq-client"
+    api "org.springframework.amqp:spring-rabbit"
+}
