@@ -3,6 +3,7 @@ package cn.mwee.base_common.utils.trace;
 import cn.mwee.base_common.utils.date.MwJdk8DateUtil;
 import cn.mwee.base_common.utils.misc.MwIdGeneratorUtil;
 import com.alibaba.ttl.TransmittableThreadLocal;
+import lombok.experimental.UtilityClass;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,21 +11,19 @@ import java.util.Map;
 /**
  * Created by liaomengge on 17/5/25.
  */
-public final class MwTraceLogUtil {
+@UtilityClass
+public class MwTraceLogUtil {
 
-    public static final String TRACE_ID = "x-mw-trace-id";
+    public final String TRACE_ID = "x-mw-trace-id";
 
-    private MwTraceLogUtil() {
-    }
-
-    private static final TransmittableThreadLocal<Map<String, String>> TRANSMITTABLE_THREAD_LOCAL =
+    private final TransmittableThreadLocal<Map<String, String>> TRANSMITTABLE_THREAD_LOCAL =
             new TransmittableThreadLocal<>();
 
-    public static void put(String val) {
+    public void put(String val) {
         put(TRACE_ID, val);
     }
 
-    public static void put(String key, String val) {
+    public void put(String key, String val) {
         if (key == null) {
             throw new IllegalArgumentException("key cannot be null");
         }
@@ -36,11 +35,11 @@ public final class MwTraceLogUtil {
         map.put(key, val);
     }
 
-    public static String get() {
+    public String get() {
         return get(TRACE_ID);
     }
 
-    public static String get(String key) {
+    public String get(String key) {
         Map<String, String> map = TRANSMITTABLE_THREAD_LOCAL.get();
         if ((map != null) && (key != null)) {
             return map.get(key);
@@ -48,11 +47,11 @@ public final class MwTraceLogUtil {
         return null;
     }
 
-    public static void remove() {
+    public void remove() {
         remove(TRACE_ID);
     }
 
-    public static void remove(String key) {
+    public void remove(String key) {
         Map<String, String> map = TRANSMITTABLE_THREAD_LOCAL.get();
         if (map != null) {
             map.remove(key);
@@ -60,7 +59,7 @@ public final class MwTraceLogUtil {
         }
     }
 
-    public static void clearTrace() {
+    public void clearTrace() {
         Map<String, String> map = TRANSMITTABLE_THREAD_LOCAL.get();
         if (map != null) {
             map.clear();
@@ -68,19 +67,19 @@ public final class MwTraceLogUtil {
         }
     }
 
-    public static String generateDefaultRandomSed() {
+    public String generateDefaultRandomSed() {
         return MwIdGeneratorUtil.uuid2();
     }
 
-    public static String generateRandomSed(String str) {
+    public String generateRandomSed(String str) {
         return str + "_" + generateDefaultRandomSed();
     }
 
-    public static String generateDefaultTraceLogIdPrefix() {
+    public String generateDefaultTraceLogIdPrefix() {
         return MwJdk8DateUtil.getNowDate2String("yyyyMMdd_HHmmssSSS");
     }
 
-    public static String generateTraceLogIdPrefix(String appId) {
+    public String generateTraceLogIdPrefix(String appId) {
         return appId + "_" + MwJdk8DateUtil.getNowDate2String("yyyyMMdd_HHmmssSSS");
     }
 }

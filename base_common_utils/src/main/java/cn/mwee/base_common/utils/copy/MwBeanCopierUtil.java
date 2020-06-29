@@ -1,6 +1,7 @@
 package cn.mwee.base_common.utils.copy;
 
 import cn.mwee.base_common.utils.log4j2.MwLogger;
+import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
@@ -12,14 +13,12 @@ import java.util.function.BiConsumer;
 /**
  * Created by liaomengge on 16/7/28.
  */
-public final class MwBeanCopierUtil {
+@UtilityClass
+public class MwBeanCopierUtil {
 
-    private final static Logger logger = MwLogger.getInstance(MwBeanCopierUtil.class);
+    private final Logger logger = MwLogger.getInstance(MwBeanCopierUtil.class);
 
-    private static final Map<String, BeanCopier> beanCopierMap = new ConcurrentHashMap<>(16);
-
-    private MwBeanCopierUtil() {
-    }
+    private final Map<String, BeanCopier> beanCopierMap = new ConcurrentHashMap<>(16);
 
     /**
      * <p>
@@ -36,36 +35,31 @@ public final class MwBeanCopierUtil {
      * @param <S>
      * @param <T>
      */
-    public static <S, T> void copyProperties(S source, T target, IBeanCopier<S, T> iBeanCopier) {
-        if (source == null || target == null) {
-            return;
-        }
+    public <S, T> void copyProperties(S source, T target, IBeanCopier<S, T> iBeanCopier) {
+        if (source == null || target == null) return;
 
         Class<?> sourceCls = source.getClass();
         Class<?> targetCls = target.getClass();
         String beanKey = generateKey(sourceCls, targetCls);
         try {
-            BeanCopier copier = beanCopierMap.computeIfAbsent(beanKey, s -> BeanCopier.create(sourceCls, targetCls, false));
+            BeanCopier copier = beanCopierMap.computeIfAbsent(beanKey, s -> BeanCopier.create(sourceCls, targetCls,
+                    false));
 
             copier.copy(source, target, null);
 
-            if (iBeanCopier != null) {
-                iBeanCopier.afterCopy(source, target);
-            }
+            if (iBeanCopier != null) iBeanCopier.afterCopy(source, target);
         } catch (Exception e) {
             logger.error("copy bean error", e);
             BeanUtils.copyProperties(source, target);
         }
     }
 
-    public static <S, T> void copyProperties(S source, T target) {
+    public <S, T> void copyProperties(S source, T target) {
         copyProperties(source, target, null);
     }
 
-    public static <S, T> void copyProperties2(S source, T target, BiConsumer<S, T> biConsumer) {
-        if (source == null || target == null) {
-            return;
-        }
+    public <S, T> void copyProperties2(S source, T target, BiConsumer<S, T> biConsumer) {
+        if (source == null || target == null) return;
 
         Class<?> sourceCls = source.getClass();
         Class<?> targetCls = target.getClass();
@@ -75,20 +69,18 @@ public final class MwBeanCopierUtil {
 
             copier.copy(source, target, null);
 
-            if (biConsumer != null) {
-                biConsumer.accept(source, target);
-            }
+            if (biConsumer != null) biConsumer.accept(source, target);
         } catch (Exception e) {
             logger.error("copy bean error", e);
             BeanUtils.copyProperties(source, target);
         }
     }
 
-    public static <S, T> void copyProperties2(S source, T target) {
+    public <S, T> void copyProperties2(S source, T target) {
         copyProperties2(source, target, null);
     }
 
-    private static String generateKey(Class<?> class1, Class<?> class2) {
+    private String generateKey(Class<?> class1, Class<?> class2) {
         return class1.getName() + "-" + class2.getName();
     }
 

@@ -1,5 +1,6 @@
 package cn.mwee.base_common.utils.reflect;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,16 +17,14 @@ import java.util.*;
 /**
  * Created by liaomengge on 17/11/25.
  */
-public final class MwClassUtil {
+@UtilityClass
+public class MwClassUtil {
 
-    private MwClassUtil() {
-    }
+    private final String CGLIB_CLASS_SEPARATOR = "$$";
 
-    private static final String CGLIB_CLASS_SEPARATOR = "$$";
+    private final Map<Class<?>, Class<?>> primitiveWrapperTypeMap = new IdentityHashMap<>(8);
 
-    private static final Map<Class<?>, Class<?>> primitiveWrapperTypeMap = new IdentityHashMap<>(8);
-
-    static {
+    {
         primitiveWrapperTypeMap.put(Boolean.class, Boolean.TYPE);
         MwClassUtil.primitiveWrapperTypeMap.put(Byte.class, Byte.TYPE);
         MwClassUtil.primitiveWrapperTypeMap.put(Character.class, Character.TYPE);
@@ -36,9 +35,9 @@ public final class MwClassUtil {
         MwClassUtil.primitiveWrapperTypeMap.put(Short.class, Short.TYPE);
     }
 
-    private static final String SETTER_PREFIX = "set";
-    private static final String GETTER_PREFIX = "get";
-    private static final String IS_PREFIX = "is";
+    private final String SETTER_PREFIX = "set";
+    private final String GETTER_PREFIX = "get";
+    private final String IS_PREFIX = "is";
 
     /************************************shortClassName 和 packageName********************************/
 
@@ -47,7 +46,7 @@ public final class MwClassUtil {
      * <p>
      * 内部类的话, 返回"主类.内部类"
      */
-    public static String getShortClassName(Class<?> cls) {
+    public String getShortClassName(Class<?> cls) {
         return ClassUtils.getShortClassName(cls);
     }
 
@@ -56,21 +55,21 @@ public final class MwClassUtil {
      * <p>
      * 内部类的话, 返回"主类.内部类"
      */
-    public static String getShortClassName(String className) {
+    public String getShortClassName(String className) {
         return ClassUtils.getShortClassName(className);
     }
 
     /**
      * 返回PackageName
      */
-    public static String getPackageName(Class<?> cls) {
+    public String getPackageName(Class<?> cls) {
         return ClassUtils.getPackageName(cls);
     }
 
     /**
      * 返回PackageName
      */
-    public static String getPackageName(String className) {
+    public String getPackageName(String className) {
         return ClassUtils.getPackageName(className);
     }
 
@@ -79,14 +78,14 @@ public final class MwClassUtil {
     /**
      * 递归返回所有的SupperClasses, 包含Object.class
      */
-    public static List<Class<?>> getAllSuperclasses(Class<?> cls) {
+    public List<Class<?>> getAllSuperclasses(Class<?> cls) {
         return ClassUtils.getAllSuperclasses(cls);
     }
 
     /**
      * 递归返回本类及所有基类继承的接口, 及接口继承的接口, 比Spring中的相同实现完整
      */
-    public static List<Class<?>> getAllInterfaces(Class<?> cls) {
+    public List<Class<?>> getAllInterfaces(Class<?> cls) {
         return ClassUtils.getAllInterfaces(cls);
     }
 
@@ -95,7 +94,7 @@ public final class MwClassUtil {
      * <p>
      * 包括所有基类, 所有接口的Annotation, 同时支持Spring风格的Annotation继承的父Annotation,
      */
-    public static Set<Annotation> getAllAnnotations(Class<?> cls) {
+    public Set<Annotation> getAllAnnotations(Class<?> cls) {
         List<Class<?>> allTypes = getAllSuperclasses(cls);
         allTypes.addAll(getAllInterfaces(cls));
         allTypes.add(cls);
@@ -115,7 +114,7 @@ public final class MwClassUtil {
         return anns;
     }
 
-    private static <A extends Annotation> void getSupperAnnotations(Class<A> annotationType, Set<Annotation> visited) {
+    private <A extends Annotation> void getSupperAnnotations(Class<A> annotationType, Set<Annotation> visited) {
         Annotation[] anns = annotationType.getDeclaredAnnotations();
 
         for (Annotation ann : anns) {
@@ -133,7 +132,7 @@ public final class MwClassUtil {
      * @param <A>
      * @return
      */
-    public static <A extends Annotation> A getAnnotation(Method method, Class<A> annotationType) {
+    public <A extends Annotation> A getAnnotation(Method method, Class<A> annotationType) {
         Class<?> targetClass = method.getDeclaringClass();
         // The method may be on an interface, but we need attributes from the target class.
         // If the target class is null, the method will be unchanged.
@@ -158,8 +157,8 @@ public final class MwClassUtil {
      * <p>
      * from org.unitils.util.AnnotationUtils
      */
-    public static <T extends Annotation> Set<Field> getAnnotatedPublicFields(Class<? extends Object> clazz,
-                                                                             Class<T> annotation) {
+    public <T extends Annotation> Set<Field> getAnnotatedPublicFields(Class<? extends Object> clazz,
+                                                                      Class<T> annotation) {
 
         if (Object.class.equals(clazz)) {
             return Collections.emptySet();
@@ -184,8 +183,8 @@ public final class MwClassUtil {
      * <p>
      * from org.unitils.util.AnnotationUtils
      */
-    public static <T extends Annotation> Set<Field> getAnnotatedFields(Class<? extends Object> clazz,
-                                                                       Class<T> annotation) {
+    public <T extends Annotation> Set<Field> getAnnotatedFields(Class<? extends Object> clazz,
+                                                                Class<T> annotation) {
         if (Object.class.equals(clazz)) {
             return Collections.emptySet();
         }
@@ -207,7 +206,7 @@ public final class MwClassUtil {
      * <p>
      * 另, 如果子类重载父类的公共函数, 父类函数上的annotation不会继承, 只有接口上的annotation会被继承.
      */
-    public static <T extends Annotation> Set<Method> getAnnotatedPublicMethods(Class<?> clazz, Class<T> annotation) {
+    public <T extends Annotation> Set<Method> getAnnotatedPublicMethods(Class<?> clazz, Class<T> annotation) {
         // 已递归到Objebt.class, 停止递归
         if (Object.class.equals(clazz)) {
             return Collections.emptySet();
@@ -229,8 +228,8 @@ public final class MwClassUtil {
         return annotatedMethods;
     }
 
-    private static <T extends Annotation> boolean searchOnInterfaces(Method method, Class<T> annotationType,
-                                                                     List<Class<?>> ifcs) {
+    private <T extends Annotation> boolean searchOnInterfaces(Method method, Class<T> annotationType,
+                                                              List<Class<?>> ifcs) {
         for (Class<?> iface : ifcs) {
             try {
                 Method equivalentMethod = iface.getMethod(method.getName(), method.getParameterTypes());
@@ -249,7 +248,7 @@ public final class MwClassUtil {
     /**
      * 循环遍历, 按属性名获取前缀为get或is的函数, 并设为可访问
      */
-    public static Method getSetterMethod(Class<?> clazz, String propertyName, Class<?> parameterType) {
+    public Method getSetterMethod(Class<?> clazz, String propertyName, Class<?> parameterType) {
         String setterMethodName = MwClassUtil.SETTER_PREFIX + StringUtils.capitalize(propertyName);
         return MwClassUtil.getAccessibleMethod(clazz, setterMethodName, parameterType);
     }
@@ -257,7 +256,7 @@ public final class MwClassUtil {
     /**
      * 循环遍历, 按属性名获取前缀为set的函数, 并设为可访问
      */
-    public static Method getGetterMethod(Class<?> clazz, String propertyName) {
+    public Method getGetterMethod(Class<?> clazz, String propertyName) {
         String getterMethodName = MwClassUtil.GETTER_PREFIX + StringUtils.capitalize(propertyName);
 
         Method method = MwClassUtil.getAccessibleMethod(clazz, getterMethodName);
@@ -277,7 +276,7 @@ public final class MwClassUtil {
      * <p>
      * 因为class.getFiled(); 不能获取父类的private函数, 因此采用循环向上的getDeclaredField();
      */
-    public static Field getAccessibleField(Class clazz, String fieldName) {
+    public Field getAccessibleField(Class clazz, String fieldName) {
         Validate.notNull(clazz, "clazz can't be null");
         Validate.notEmpty(fieldName, "fieldName can't be blank");
         for (Class<?> superClass = clazz; superClass != Object.class; superClass = superClass.getSuperclass()) {
@@ -301,8 +300,8 @@ public final class MwClassUtil {
      * <p>
      * 因为class.getMethod() 不能获取父类的private函数, 因此采用循环向上的getDeclaredMethod();
      */
-    public static Method getAccessibleMethod(Class<?> clazz, String methodName,
-                                             Class<?>... parameterTypes) {
+    public Method getAccessibleMethod(Class<?> clazz, String methodName,
+                                      Class<?>... parameterTypes) {
         Validate.notNull(clazz, "class can't be null");
         Validate.notEmpty(methodName, "methodName can't be blank");
         Class[] theParameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
@@ -333,7 +332,7 @@ public final class MwClassUtil {
      * <p>
      * 因为class.getMethods() 不能获取父类的private函数, 因此采用循环向上的getMethods();
      */
-    public static Method getAccessibleMethodByName(Class clazz, String methodName) {
+    public Method getAccessibleMethodByName(Class clazz, String methodName) {
         Validate.notNull(clazz, "clazz can't be null");
         Validate.notEmpty(methodName, "methodName can't be blank");
 
@@ -352,7 +351,7 @@ public final class MwClassUtil {
     /**
      * 改变private/protected的方法为public, 尽量不调用实际改动的语句, 避免JDK的SecurityManager抱怨。
      */
-    public static void makeAccessible(Method method) {
+    public void makeAccessible(Method method) {
         if ((!Modifier.isPublic(method.getModifiers()) || !Modifier.isPublic(method.getDeclaringClass().getModifiers()))
                 && !method.isAccessible()) {
             method.setAccessible(true);
@@ -362,7 +361,7 @@ public final class MwClassUtil {
     /**
      * 改变private/protected的成员变量为public, 尽量不调用实际改动的语句, 避免JDK的SecurityManager抱怨。
      */
-    public static void makeAccessible(Field field) {
+    public void makeAccessible(Field field) {
         if ((!Modifier.isPublic(field.getModifiers()) || !Modifier.isPublic(field.getDeclaringClass().getModifiers())
                 || Modifier.isFinal(field.getModifiers())) && !field.isAccessible()) {
             field.setAccessible(true);
@@ -372,7 +371,7 @@ public final class MwClassUtil {
     /**
      * 兼容原子类型与非原子类型的转换, 不考虑依赖两者不同来区分不同函数的场景
      */
-    private static void wrapClassses(Class<?>[] source) {
+    private void wrapClassses(Class<?>[] source) {
         for (int i = 0; i < source.length; i++) {
             Class<?> wrapClass = primitiveWrapperTypeMap.get(source[i]);
             if (wrapClass != null) {
@@ -392,7 +391,7 @@ public final class MwClassUtil {
      * <p>
      * 3. SystemClassLoader
      */
-    public static ClassLoader getDefaultClassLoader() {
+    public ClassLoader getDefaultClassLoader() {
         ClassLoader cl = null;
         try {
             cl = Thread.currentThread().getContextClassLoader();
@@ -417,7 +416,7 @@ public final class MwClassUtil {
     /**
      * 获取CGLib处理过后的实体的原Class.
      */
-    public static Class<?> unwrapCglib(Object instance) {
+    public Class<?> unwrapCglib(Object instance) {
         Validate.notNull(instance, "Instance must not be null");
         Class<?> clazz = instance.getClass();
         if ((clazz != null) && clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {
@@ -432,7 +431,7 @@ public final class MwClassUtil {
     /**
      * 探测类是否存在classpath中
      */
-    public static boolean isPresent(String className, ClassLoader classLoader) {
+    public boolean isPresent(String className, ClassLoader classLoader) {
         try {
             classLoader.loadClass(className);
             return true;

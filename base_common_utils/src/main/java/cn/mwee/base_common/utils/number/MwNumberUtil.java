@@ -1,273 +1,197 @@
 package cn.mwee.base_common.utils.number;
 
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public final class MwNumberUtil {
+@UtilityClass
+public class MwNumberUtil {
 
-    private MwNumberUtil() {
-        //工具类无需对象实例化
-    }
-
-    public static long getLongValue(Long v) {
-        if (v == null) {
-            return 0;
-        }
+    public long getLongValue(Long v) {
+        if (v == null) return 0;
         return v.longValue();
     }
 
-    public static long getLongValue(Long v, Long defaultVal) {
-        if (v == null) {
-            return getLongValue(defaultVal);
-        }
+    public long getLongValue(Long v, Long defaultVal) {
+        if (v == null) return getLongValue(defaultVal);
         return v.longValue();
     }
 
-    public static long getLongValue(Byte b) {
-        if (b == null) {
-            return 0;
-        }
+    public long getLongValue(Byte b) {
+        if (b == null) return 0;
         return b.longValue();
     }
 
-    public static long getLongValue(Short b) {
-        if (b == null) {
-            return 0;
-        }
+    public long getLongValue(Short b) {
+        if (b == null) return 0;
         return b.longValue();
     }
 
-    public static long getLongValue(Integer b) {
-        if (b == null) {
-            return 0;
-        }
+    public long getLongValue(Integer b) {
+        if (b == null) return 0;
         return b.longValue();
     }
 
-    public static long getLongValue(BigDecimal v) {
-        if (v == null) {
-            return 0;
-        }
+    public long getLongValue(BigDecimal v) {
+        if (v == null) return 0;
         return v.longValue();
     }
 
-    public static int getIntValue(Integer b) {
-        if (b == null) {
-            return 0;
-        }
+    public int getIntValue(Integer b) {
+        if (b == null) return 0;
         return b.intValue();
     }
 
-    public static int getIntValue(Integer b, Integer defaultVal) {
-        if (b == null) {
-            return getIntValue(defaultVal);
-        }
+    public int getIntValue(Integer b, Integer defaultVal) {
+        if (b == null) return getIntValue(defaultVal);
         return b.intValue();
     }
 
-    public static int getIntValue(Byte b) {
-        if (b == null) {
-            return 0;
-        }
+    public int getIntValue(Byte b) {
+        if (b == null) return 0;
         return b.intValue();
     }
 
-    public static int getIntValue(Short b) {
-        if (b == null) {
-            return 0;
-        }
+    public int getIntValue(Short b) {
+        if (b == null) return 0;
         return b.intValue();
     }
 
-    public static int getIntValue(Long b) {
-        if (b == null) {
-            return 0;
-        }
+    public int getIntValue(Long b) {
+        if (b == null) return 0;
         return b.intValue();
     }
 
-    public static int getIntValue(BigDecimal b) {
-        if (b == null) {
-            return 0;
-        }
+    public int getIntValue(BigDecimal b) {
+        if (b == null) return 0;
         return b.intValue();
     }
 
-    public static short getShortValue(Short b) {
-        if (b == null) {
-            return 0;
-        }
+    public short getShortValue(Short b) {
+        if (b == null) return 0;
         return b.shortValue();
     }
 
-    public static double getShortValue(Short b, Short defaultVal) {
-        if (b == null) {
-            return getShortValue(defaultVal);
-        }
+    public double getShortValue(Short b, Short defaultVal) {
+        if (b == null) return getShortValue(defaultVal);
         return b.doubleValue();
     }
 
-    public static short getShortValue(Byte b) {
-        if (b == null) {
-            return 0;
-        }
+    public short getShortValue(Byte b) {
+        if (b == null) return 0;
         return b.shortValue();
     }
 
-    public static short getShortValue(Integer b) {
-        if (b == null) {
-            return 0;
-        }
+    public short getShortValue(Integer b) {
+        if (b == null) return 0;
         return b.shortValue();
     }
 
-    public static short getShortValue(Long b) {
-        if (b == null) {
-            return 0;
-        }
+    public short getShortValue(Long b) {
+        if (b == null) return 0;
         return b.shortValue();
     }
 
-    public static int getShortValue(BigDecimal b) {
-        if (b == null) {
-            return 0;
-        }
+    public int getShortValue(BigDecimal b) {
+        if (b == null) return 0;
         return b.shortValue();
     }
 
-    public static byte getByteValue(Byte b) {
-        if (b == null) {
-            return 0;
-        }
+    public byte getByteValue(Byte b) {
+        if (b == null) return 0;
         return b.byteValue();
     }
 
-    public static byte getByteValue(Byte b, Byte defaultVal) {
-        if (b == null) {
-            return getByteValue(defaultVal);
-        }
+    public byte getByteValue(Byte b, Byte defaultVal) {
+        if (b == null) return getByteValue(defaultVal);
         return b.byteValue();
     }
 
-    public static byte getByteValue(Short b) {
-        if (b == null) {
-            return 0;
-        }
+    public byte getByteValue(Short b) {
+        if (b == null) return 0;
         return b.byteValue();
     }
 
-    public static byte getByteValue(Integer b) {
-        if (b == null) {
-            return 0;
-        }
+    public byte getByteValue(Integer b) {
+        if (b == null) return 0;
         return b.byteValue();
     }
 
-    public static byte getByteValue(Long b) {
-        if (b == null) {
-            return 0;
-        }
+    public byte getByteValue(Long b) {
+        if (b == null) return 0;
         return b.byteValue();
     }
 
-    public static byte getByteValue(BigDecimal b) {
-        if (b == null) {
-            return 0;
-        }
+    public byte getByteValue(BigDecimal b) {
+        if (b == null) return 0;
         return b.byteValue();
     }
 
-    public static double getDoubleValue(Double b) {
-        if (b == null) {
-            return 0;
-        }
+    public double getDoubleValue(Double b) {
+        if (b == null) return 0;
         return b.doubleValue();
     }
 
-    public static double getDoubleValue(Double b, Double defaultVal) {
-        if (b == null) {
-            return getDoubleValue(defaultVal);
-        }
+    public double getDoubleValue(Double b, Double defaultVal) {
+        if (b == null) return getDoubleValue(defaultVal);
         return b.doubleValue();
     }
 
-    public static double getDoubleValue(Byte b) {
-        if (b == null) {
-            return 0;
-        }
+    public double getDoubleValue(Byte b) {
+        if (b == null) return 0;
         return b.doubleValue();
     }
 
-    public static double getDoubleValue(Short b) {
-        if (b == null) {
-            return 0;
-        }
+    public double getDoubleValue(Short b) {
+        if (b == null) return 0;
         return b.doubleValue();
     }
 
-    public static double getDoubleValue(Integer b) {
-        if (b == null) {
-            return 0;
-        }
+    public double getDoubleValue(Integer b) {
+        if (b == null) return 0;
         return b.doubleValue();
     }
 
-    public static double getDoubleValue(Long b) {
-        if (b == null) {
-            return 0;
-        }
+    public double getDoubleValue(Long b) {
+        if (b == null) return 0;
         return b.doubleValue();
     }
 
-    public static double getDoubleValue(BigDecimal b) {
-        if (b == null) {
-            return 0;
-        }
+    public double getDoubleValue(BigDecimal b) {
+        if (b == null) return 0;
         return b.doubleValue();
     }
 
-    public static BigDecimal getBiDecimal(Byte s) {
-        if (s == null) {
-            return null;
-        }
+    public BigDecimal getBiDecimal(Byte s) {
+        if (s == null) return null;
         return new BigDecimal(s.toString());
     }
 
-    public static BigDecimal getBiDecimal(Short s) {
-        if (s == null) {
-            return null;
-        }
+    public BigDecimal getBiDecimal(Short s) {
+        if (s == null) return null;
         return new BigDecimal(s.toString());
     }
 
-    public static BigDecimal getBiDecimal(Integer s) {
-        if (s == null) {
-            return null;
-        }
+    public BigDecimal getBiDecimal(Integer s) {
+        if (s == null) return null;
         return new BigDecimal(s.toString());
     }
 
-    public static BigDecimal getBiDecimal(Long s) {
-        if (s == null) {
-            return null;
-        }
+    public BigDecimal getBiDecimal(Long s) {
+        if (s == null) return null;
         return new BigDecimal(s.toString());
     }
 
-    public static BigDecimal getBiDecimal(Double s) {
-        if (s == null) {
-            return null;
-        }
+    public BigDecimal getBiDecimal(Double s) {
+        if (s == null) return null;
         return new BigDecimal(s.toString());
     }
 
-    public static BigDecimal getBiDecimal(String s) {
-        if (StringUtils.isEmpty(s)) {
-            return null;
-        }
+    public BigDecimal getBiDecimal(String s) {
+        if (StringUtils.isEmpty(s)) return null;
         return new BigDecimal(s);
     }
 
@@ -275,45 +199,33 @@ public final class MwNumberUtil {
      * Primitive 2 String
      *************************************/
 
-    public static String getString(Byte num) {
-        if (num == null) {
-            return "";
-        }
+    public String getString(Byte num) {
+        if (num == null) return "";
         return num.toString();
     }
 
-    public static String getString(Short num) {
-        if (num == null) {
-            return "";
-        }
+    public String getString(Short num) {
+        if (num == null) return "";
         return num.toString();
     }
 
-    public static String getString(Integer num) {
-        if (num == null) {
-            return "";
-        }
+    public String getString(Integer num) {
+        if (num == null) return "";
         return num.toString();
     }
 
-    public static String getString(Long num) {
-        if (num == null) {
-            return "";
-        }
+    public String getString(Long num) {
+        if (num == null) return "";
         return num.toString();
     }
 
-    public static String getString(Float num) {
-        if (num == null) {
-            return "";
-        }
+    public String getString(Float num) {
+        if (num == null) return "";
         return num.toString();
     }
 
-    public static String getString(Double num) {
-        if (num == null) {
-            return "";
-        }
+    public String getString(Double num) {
+        if (num == null) return "";
         return num.toString();
     }
 
@@ -328,7 +240,7 @@ public final class MwNumberUtil {
      * @return
      */
     @Deprecated
-    public static byte getByteValue(String str) {
+    public byte getByteValue(String str) {
         return getByteValue(str, (byte) 0);
     }
 
@@ -340,10 +252,8 @@ public final class MwNumberUtil {
      * @return
      */
     @Deprecated
-    public static byte getByteValue(String str, byte defaultValue) {
-        if (StringUtils.isBlank(str)) {
-            return defaultValue;
-        }
+    public byte getByteValue(String str, byte defaultValue) {
+        if (StringUtils.isBlank(str)) return defaultValue;
         return Byte.valueOf(str);
     }
 
@@ -354,7 +264,7 @@ public final class MwNumberUtil {
      * @return
      */
     @Deprecated
-    public static short getShortValue(String str) {
+    public short getShortValue(String str) {
         return getShortValue(str, (short) 0);
     }
 
@@ -366,10 +276,8 @@ public final class MwNumberUtil {
      * @return
      */
     @Deprecated
-    public static short getShortValue(String str, short defaultValue) {
-        if (StringUtils.isBlank(str)) {
-            return defaultValue;
-        }
+    public short getShortValue(String str, short defaultValue) {
+        if (StringUtils.isBlank(str)) return defaultValue;
         return Short.valueOf(str).shortValue();
     }
 
@@ -380,7 +288,7 @@ public final class MwNumberUtil {
      * @return
      */
     @Deprecated
-    public static int getIntValue(String str) {
+    public int getIntValue(String str) {
         return getIntValue(str, 0);
     }
 
@@ -392,10 +300,8 @@ public final class MwNumberUtil {
      * @return
      */
     @Deprecated
-    public static int getIntValue(String str, int defaultValue) {
-        if (StringUtils.isBlank(str)) {
-            return defaultValue;
-        }
+    public int getIntValue(String str, int defaultValue) {
+        if (StringUtils.isBlank(str)) return defaultValue;
         return Integer.valueOf(str).intValue();
     }
 
@@ -406,7 +312,7 @@ public final class MwNumberUtil {
      * @return
      */
     @Deprecated
-    public static long getLongValue(String str) {
+    public long getLongValue(String str) {
         return getLongValue(str, 0L);
     }
 
@@ -418,10 +324,8 @@ public final class MwNumberUtil {
      * @return
      */
     @Deprecated
-    public static long getLongValue(String str, long defaultValue) {
-        if (StringUtils.isBlank(str)) {
-            return defaultValue;
-        }
+    public long getLongValue(String str, long defaultValue) {
+        if (StringUtils.isBlank(str)) return defaultValue;
         return Long.valueOf(str).longValue();
     }
 
@@ -432,7 +336,7 @@ public final class MwNumberUtil {
      * @return
      */
     @Deprecated
-    public static double getDoubleValue(String str) {
+    public double getDoubleValue(String str) {
         return getDoubleValue(str, 0);
     }
 
@@ -444,14 +348,12 @@ public final class MwNumberUtil {
      * @return
      */
     @Deprecated
-    public static double getDoubleValue(String str, double defaultValue) {
-        if (StringUtils.isBlank(str)) {
-            return defaultValue;
-        }
+    public double getDoubleValue(String str, double defaultValue) {
+        if (StringUtils.isBlank(str)) return defaultValue;
         return Double.valueOf(str).doubleValue();
     }
 
-    public static double getDoubleValue(double value, int length) {
+    public double getDoubleValue(double value, int length) {
         BigDecimal bigDecimal = new BigDecimal(value);
         return bigDecimal.setScale(length, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
@@ -465,7 +367,7 @@ public final class MwNumberUtil {
      * @param scale
      * @return
      */
-    public static double round(double value, int scale) {
+    public double round(double value, int scale) {
         return BigDecimal.valueOf(value).setScale(scale, RoundingMode.HALF_UP).doubleValue();
     }
 
@@ -475,7 +377,7 @@ public final class MwNumberUtil {
      * @param value
      * @return
      */
-    public static int floor(double value) {
+    public int floor(double value) {
         return common(value, RoundingMode.DOWN);
     }
 
@@ -485,11 +387,11 @@ public final class MwNumberUtil {
      * @param value
      * @return
      */
-    public static int ceil(double value) {
+    public int ceil(double value) {
         return common(value, RoundingMode.UP);
     }
 
-    private static int common(double value, RoundingMode mode) {
+    private int common(double value, RoundingMode mode) {
         return BigDecimal.valueOf(value).setScale(0, mode).intValue();
     }
 }

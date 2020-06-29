@@ -1,5 +1,6 @@
 package cn.mwee.base_common.utils.validator;
 
+import lombok.experimental.UtilityClass;
 import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;
@@ -8,19 +9,16 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import java.util.*;
 
+@UtilityClass
+public class MwParamValidatorUtil {
 
-public final class MwParamValidatorUtil {
-
-    private MwParamValidatorUtil() {
-    }
-
-    private final static Validator validator = Validation
+    private final Validator validator = Validation
             .byProvider(HibernateValidator.class)
             .configure()
             .buildValidatorFactory()
             .getValidator();
 
-    public static <T> Map<String, ArrayList<String>> validate(T t, HashSet<String> skipFields) {
+    public <T> Map<String, ArrayList<String>> validate(T t, HashSet<String> skipFields) {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(t);
         if (constraintViolations != null && constraintViolations.size() > 0) {
             Map<String, ArrayList<String>> mapErr = new HashMap<>();
@@ -42,7 +40,7 @@ public final class MwParamValidatorUtil {
         return null;
     }
 
-    public static <T> Map<String, ArrayList<String>> validate(T t) {
+    public <T> Map<String, ArrayList<String>> validate(T t) {
         return validate(t, null);
     }
 }

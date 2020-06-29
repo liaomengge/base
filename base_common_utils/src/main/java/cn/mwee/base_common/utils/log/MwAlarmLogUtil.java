@@ -3,14 +3,16 @@ package cn.mwee.base_common.utils.log;
 import cn.mwee.base_common.utils.log4j2.MwLogger;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 
 /**
  * Created by liaomengge on 18/4/20.
  */
-public final class MwAlarmLogUtil {
+@UtilityClass
+public class MwAlarmLogUtil {
 
-    private static final Logger logger = MwLogger.getInstance(MwAlarmLogUtil.class);
+    private final Logger logger = MwLogger.getInstance(MwAlarmLogUtil.class);
 
     private interface AlarmEnum {
 

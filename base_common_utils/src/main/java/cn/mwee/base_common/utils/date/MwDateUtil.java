@@ -1,5 +1,6 @@
 package cn.mwee.base_common.utils.date;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
@@ -11,28 +12,26 @@ import java.util.TimeZone;
 /**
  * Created by liaomengge on 17/11/8.
  */
-public final class MwDateUtil {
+@UtilityClass
+public class MwDateUtil {
 
-    public static final long INTERVAL_UNIT = 1000L;
+    public final long INTERVAL_UNIT = 1000L;
 
-    public static final long MILLISECONDS_SECOND = 1000L;
-    public static final long MILLISECONDS_MINUTE = 60000L;
-    public static final long MILLISECONDS_HOUR = 3600000L;
-    public static final long MILLISECONDS_DAY = 86400000L;
+    public final long MILLISECONDS_SECOND = 1000L;
+    public final long MILLISECONDS_MINUTE = 60000L;
+    public final long MILLISECONDS_HOUR = 3600000L;
+    public final long MILLISECONDS_DAY = 86400000L;
 
-    public final static String yyyy_MM_dd_HH_mm_ss_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
-    public final static String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
-    public final static String yyyy_MM_dd = "yyyy-MM-dd";
-    public final static String yyyyMMdd = "yyyyMMdd";
-    public final static String yyyy_MM = "yyyy-MM";
-    public final static String yyyyMM = "yyyyMM";
-    public final static String yyyy = "yyyy";
-    public final static String HHmmssSSS = "HHmmssSSS";
-    public final static String HHmmss = "HHmmss";
-    public final static String HH_mm_ss = "HH:mm:ss";
-
-    private MwDateUtil() {
-    }
+    public final String yyyy_MM_dd_HH_mm_ss_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
+    public final String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
+    public final String yyyy_MM_dd = "yyyy-MM-dd";
+    public final String yyyyMMdd = "yyyyMMdd";
+    public final String yyyy_MM = "yyyy-MM";
+    public final String yyyyMM = "yyyyMM";
+    public final String yyyy = "yyyy";
+    public final String HHmmssSSS = "HHmmssSSS";
+    public final String HHmmss = "HHmmss";
+    public final String HH_mm_ss = "HH:mm:ss";
 
     /********************************************************
      * Date to String
@@ -43,7 +42,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getNowDate2String() {
+    public String getNowDate2String() {
         return DateFormatUtils.format(new Date(), yyyy_MM_dd_HH_mm_ss);
     }
 
@@ -53,7 +52,7 @@ public final class MwDateUtil {
      * @param pattern
      * @return
      */
-    public static String getNowDate2String(String pattern) {
+    public String getNowDate2String(String pattern) {
         return DateFormatUtils.format(new Date(), pattern);
     }
 
@@ -63,7 +62,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getDate2String(Date date) {
+    public String getDate2String(Date date) {
         return getDate2String(date, yyyy_MM_dd_HH_mm_ss);
     }
 
@@ -76,10 +75,8 @@ public final class MwDateUtil {
      * @param pattern
      * @return
      */
-    public static String getDate2String(Date date, String pattern) {
-        if (date == null) {
-            return "";
-        }
+    public String getDate2String(Date date, String pattern) {
+        if (date == null) return "";
         return DateFormatUtils.format(date, pattern);
     }
 
@@ -95,7 +92,7 @@ public final class MwDateUtil {
      * @param dateStr
      * @return
      */
-    public static Date getString2Date(String dateStr) {
+    public Date getString2Date(String dateStr) {
         return getString2Date(dateStr, yyyy_MM_dd_HH_mm_ss);
     }
 
@@ -108,7 +105,7 @@ public final class MwDateUtil {
      * @param pattern
      * @return
      */
-    public static Date getString2Date(String dateStr, String pattern) {
+    public Date getString2Date(String dateStr, String pattern) {
         try {
             return DateUtils.parseDate(dateStr, pattern);
         } catch (ParseException e) {
@@ -120,10 +117,8 @@ public final class MwDateUtil {
      * Date to Long
      *******************************************************/
 
-    public static long getDate2Long(Date date) {
-        if (date == null) {
-            return 0;
-        }
+    public long getDate2Long(Date date) {
+        if (date == null) return 0;
         return date.getTime();
     }
 
@@ -131,7 +126,7 @@ public final class MwDateUtil {
      * Long to Date
      *******************************************************/
 
-    public static Date getLong2Date(long milliSeconds) {
+    public Date getLong2Date(long milliSeconds) {
         return new Date(milliSeconds);
     }
 
@@ -139,11 +134,11 @@ public final class MwDateUtil {
      * Long to String
      *******************************************************/
 
-    public static String getLong2String(long milliSeconds) {
+    public String getLong2String(long milliSeconds) {
         return getDate2String(getLong2Date(milliSeconds));
     }
 
-    public static String getLong2String(long milliSeconds, String pattern) {
+    public String getLong2String(long milliSeconds, String pattern) {
         return getDate2String(getLong2Date(milliSeconds), pattern);
     }
 
@@ -156,7 +151,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static long getSecondTime() {
+    public long getSecondTime() {
         return System.currentTimeMillis() / INTERVAL_UNIT;
     }
 
@@ -166,10 +161,8 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static long getSecondTime(Date date) {
-        if (date == null) {
-            return 0;
-        }
+    public long getSecondTime(Date date) {
+        if (date == null) return 0;
         return date.getTime() / INTERVAL_UNIT;
     }
 
@@ -178,7 +171,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static long getMilliSecondsTime() {
+    public long getMilliSecondsTime() {
         return System.currentTimeMillis();
     }
 
@@ -187,10 +180,8 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static long getMilliSecondsTime(Date date) {
-        if (date == null) {
-            return 0;
-        }
+    public long getMilliSecondsTime(Date date) {
+        if (date == null) return 0;
         return date.getTime();
     }
 
@@ -203,7 +194,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getTodayBegin2String() {
+    public String getTodayBegin2String() {
         return DateFormatUtils.format(getTodayBegin(), yyyy_MM_dd_HH_mm_ss);
     }
 
@@ -212,7 +203,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getTodayEnd2String() {
+    public String getTodayEnd2String() {
         return DateFormatUtils.format(getTodayEnd(), yyyy_MM_dd_HH_mm_ss);
     }
 
@@ -221,7 +212,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static Date getTodayBegin() {
+    public Date getTodayBegin() {
         return getBegin4Date(new Date());
     }
 
@@ -230,7 +221,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static Date getTodayEnd() {
+    public Date getTodayEnd() {
         return getEnd4Date(new Date());
     }
 
@@ -240,7 +231,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getBegin4Date2String(Date date) {
+    public String getBegin4Date2String(Date date) {
         return DateFormatUtils.format(getBegin4Date(date), yyyy_MM_dd_HH_mm_ss);
     }
 
@@ -250,7 +241,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getEnd4Date2String(Date date) {
+    public String getEnd4Date2String(Date date) {
         return DateFormatUtils.format(getEnd4Date(date), yyyy_MM_dd_HH_mm_ss);
     }
 
@@ -260,10 +251,11 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static Date getBegin4Date(Date date) {
+    public Date getBegin4Date(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+                0, 0, 0);
         return calendar.getTime();
     }
 
@@ -273,10 +265,11 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static Date getEnd4Date(Date date) {
+    public Date getEnd4Date(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+                23, 59, 59);
         return calendar.getTime();
     }
 
@@ -289,7 +282,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getMonthBegin2String() {
+    public String getMonthBegin2String() {
         return DateFormatUtils.format(getMonthBegin(), yyyy_MM_dd);
     }
 
@@ -298,7 +291,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getMonthEnd2String() {
+    public String getMonthEnd2String() {
         return DateFormatUtils.format(getMonthEnd(), yyyy_MM_dd);
     }
 
@@ -307,7 +300,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static Date getMonthBegin() {
+    public Date getMonthBegin() {
         return getBegin4Month(new Date());
     }
 
@@ -316,7 +309,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static Date getMonthEnd() {
+    public Date getMonthEnd() {
         return getEnd4Month(new Date());
     }
 
@@ -326,7 +319,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getBegin4Month2String(Date date) {
+    public String getBegin4Month2String(Date date) {
         return DateFormatUtils.format(getBegin4Month(date), yyyy_MM_dd);
     }
 
@@ -336,7 +329,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getEnd4Month2String(Date date) {
+    public String getEnd4Month2String(Date date) {
         return DateFormatUtils.format(getEnd4Month(date), yyyy_MM_dd);
     }
 
@@ -345,7 +338,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getTodayMonth2String() {
+    public String getTodayMonth2String() {
         return getMonth2String(new Date());
     }
 
@@ -355,7 +348,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getMonth2String(Date date) {
+    public String getMonth2String(Date date) {
         return DateFormatUtils.format(date, yyyy_MM);
     }
 
@@ -365,7 +358,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static Date getBegin4Month(Date date) {
+    public Date getBegin4Month(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.MONTH, 0);
@@ -379,7 +372,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static Date getEnd4Month(Date date) {
+    public Date getEnd4Month(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.MONTH, 1);
@@ -396,7 +389,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getYearBegin2String() {
+    public String getYearBegin2String() {
         return DateFormatUtils.format(getYearBegin(), yyyy_MM);
     }
 
@@ -405,7 +398,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getYearEnd2String() {
+    public String getYearEnd2String() {
         return DateFormatUtils.format(getYearEnd(), yyyy_MM);
     }
 
@@ -414,7 +407,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static Date getYearBegin() {
+    public Date getYearBegin() {
         return getBegin4Year(new Date());
     }
 
@@ -423,7 +416,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static Date getYearEnd() {
+    public Date getYearEnd() {
         return getEnd4Year(new Date());
     }
 
@@ -432,7 +425,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getBegin4Year2String(Date date) {
+    public String getBegin4Year2String(Date date) {
         return DateFormatUtils.format(getBegin4Year(date), yyyy_MM);
     }
 
@@ -441,7 +434,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getEnd4Year2String(Date date) {
+    public String getEnd4Year2String(Date date) {
         return DateFormatUtils.format(getEnd4Year(date), yyyy_MM);
     }
 
@@ -450,7 +443,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static String getTodayYear2String() {
+    public String getTodayYear2String() {
         return getYear2String(new Date());
     }
 
@@ -460,7 +453,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getYear2String(Date date) {
+    public String getYear2String(Date date) {
         return DateFormatUtils.format(date, yyyy);
     }
 
@@ -469,7 +462,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static Date getBegin4Year(Date date) {
+    public Date getBegin4Year(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.MONTH, Calendar.JANUARY);
@@ -482,7 +475,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static Date getEnd4Year(Date date) {
+    public Date getEnd4Year(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.MONTH, Calendar.DECEMBER);
@@ -501,7 +494,7 @@ public final class MwDateUtil {
      * @param toDate
      * @return
      */
-    public static int diffDay(Date fromDate, Date toDate) {
+    public int diffDay(Date fromDate, Date toDate) {
         return (int) ((toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
 
@@ -512,7 +505,7 @@ public final class MwDateUtil {
      * @param toDate
      * @return
      */
-    public static int diffHour(Date fromDate, Date toDate) {
+    public int diffHour(Date fromDate, Date toDate) {
         return (int) ((toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60));
     }
 
@@ -523,7 +516,7 @@ public final class MwDateUtil {
      * @param toDate
      * @return
      */
-    public static int diffMin(Date fromDate, Date toDate) {
+    public int diffMin(Date fromDate, Date toDate) {
         return (int) ((toDate.getTime() - fromDate.getTime()) / (1000 * 60));
     }
 
@@ -534,7 +527,7 @@ public final class MwDateUtil {
      * @param toDate
      * @return
      */
-    public static int diffSecond(Date fromDate, Date toDate) {
+    public int diffSecond(Date fromDate, Date toDate) {
         return (int) ((toDate.getTime() - fromDate.getTime()) / 1000);
     }
 
@@ -547,7 +540,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static int getDayOfWeek() {
+    public int getDayOfWeek() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         calendar.setTime(new Date());
@@ -560,14 +553,13 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static int getDayOfWeekCN() {
+    public int getDayOfWeekCN() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         calendar.setTime(new Date());
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-        if (day == 1) {//外国, 星期天为每个星期的第1天
-            return 7;
-        }
+        //外国, 星期天为每个星期的第1天
+        if (day == 1) return 7;
         return day - 1;
     }
 
@@ -577,7 +569,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static int getDayOfMonth(Date date) {
+    public int getDayOfMonth(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         return c.get(Calendar.DAY_OF_MONTH);
@@ -588,7 +580,7 @@ public final class MwDateUtil {
      *
      * @return
      */
-    public static int getDayOfMonth() {
+    public int getDayOfMonth() {
         return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     }
 
@@ -598,7 +590,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static int getMonth(Date date) {
+    public int getMonth(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         return c.get(Calendar.MONTH) + 1;
@@ -610,7 +602,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static int getHour(Date date) {
+    public int getHour(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         return c.get(Calendar.HOUR_OF_DAY);
@@ -622,7 +614,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static int getMinute(Date date) {
+    public int getMinute(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         return c.get(Calendar.MINUTE);
@@ -634,7 +626,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getStringMonth(Date date) {
+    public String getStringMonth(Date date) {
         return DateFormatUtils.format(date, "MM");
     }
 
@@ -644,7 +636,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getStringDate(Date date) {
+    public String getStringDate(Date date) {
         return DateFormatUtils.format(date, "dd");
     }
 
@@ -654,7 +646,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getStringHour(Date date) {
+    public String getStringHour(Date date) {
         return DateFormatUtils.format(date, "HH");
     }
 
@@ -664,7 +656,7 @@ public final class MwDateUtil {
      * @param date
      * @return
      */
-    public static String getStringMinute(Date date) {
+    public String getStringMinute(Date date) {
         return DateFormatUtils.format(date, "mm");
     }
 
@@ -672,11 +664,11 @@ public final class MwDateUtil {
      * 扩展
      *******************************************************/
 
-    public static Date parse(String dateStr) {
+    public Date parse(String dateStr) {
         return parse(dateStr, yyyy_MM_dd_HH_mm_ss);
     }
 
-    public static Date parse(String dateStr, String pattern) {
+    public Date parse(String dateStr, String pattern) {
         try {
             return DateUtils.parseDate(dateStr, pattern);
         } catch (ParseException e) {
@@ -684,32 +676,28 @@ public final class MwDateUtil {
         }
     }
 
-    public static String formatDateTime(Date date) {
+    public String formatDateTime(Date date) {
         return format(date, yyyy_MM_dd_HH_mm_ss);
     }
 
-    public static String formatDate(Date date) {
+    public String formatDate(Date date) {
         return format(date, yyyy_MM_dd);
     }
 
-    public static String formatTime(Date date) {
+    public String formatTime(Date date) {
         return format(date, HH_mm_ss);
     }
 
-    public static String format(Date date, String pattern) {
-        if (date == null) {
-            return "";
-        }
+    public String format(Date date, String pattern) {
+        if (date == null) return "";
         return DateFormatUtils.format(date, pattern);
     }
 
     /**
      * 判断日期是否在范围内, 包含相等的日期
      */
-    public static boolean isBetween(Date date, Date start, Date end) {
-        if (date == null || start == null || end == null || start.after(end)) {
-            return false;
-        }
+    public boolean isBetween(Date date, Date start, Date end) {
+        if (date == null || start == null || end == null || start.after(end)) return false;
         return !date.before(start) && !date.after(end);
     }
 }

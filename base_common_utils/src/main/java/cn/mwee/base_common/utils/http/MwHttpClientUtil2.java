@@ -2,8 +2,10 @@ package cn.mwee.base_common.utils.http;
 
 import cn.mwee.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import cn.mwee.base_common.support.exception.CommunicationException;
+import cn.mwee.base_common.utils.log.MwAlarmLogUtil;
 import cn.mwee.base_common.utils.log4j2.MwLogger;
 import cn.mwee.base_common.utils.thread.MwThreadFactoryBuilderUtil;
+import lombok.experimental.UtilityClass;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -26,29 +28,24 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static cn.mwee.base_common.utils.log.MwAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ;
-import static cn.mwee.base_common.utils.log.MwAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_HTTP;
-
 /**
  * Created by liaomengge on 16/12/13.
  */
-public final class MwHttpClientUtil2 {
+@UtilityClass
+public class MwHttpClientUtil2 {
 
-    private static final Logger logger = MwLogger.getInstance(MwHttpClientUtil2.class);
+    private final Logger logger = MwLogger.getInstance(MwHttpClientUtil2.class);
 
-    private static int RETRY_TIMES = 3;//重试3次
-    private static int DEFAULT_TIME_OUT = 5_000;//默认5秒超时
+    private int RETRY_TIMES = 3;//重试3次
+    private int DEFAULT_TIME_OUT = 5_000;//默认5秒超时
 
-    private static int MAX_TOTAL = 512;//最大路由数
-    private static int DEFAULT_MAX_PER_ROUTE = 256;//每个路由最大数
+    private int MAX_TOTAL = 512;//最大路由数
+    private int DEFAULT_MAX_PER_ROUTE = 256;//每个路由最大数
 
-    private MwHttpClientUtil2() {
-    }
+    private PoolingHttpClientConnectionManager poolConnManager;
+    private CloseableHttpClient httpClient;
 
-    private static PoolingHttpClientConnectionManager poolConnManager;
-    private static CloseableHttpClient httpClient;
-
-    static {
+    {
         poolConnManager = new PoolingHttpClientConnectionManager();
         poolConnManager.setMaxTotal(MAX_TOTAL);
         poolConnManager.setDefaultMaxPerRoute(DEFAULT_MAX_PER_ROUTE);
@@ -61,31 +58,31 @@ public final class MwHttpClientUtil2 {
      * GET
      ***************************************************************/
 
-    public static String get(String url) {
+    public String get(String url) {
         return get(url, "utf-8", null);
     }
 
-    public static String get(String url, Header[] headers) {
+    public String get(String url, Header[] headers) {
         return get(url, "utf-8", headers);
     }
 
-    public static String get(String url, int timeoutMilliSeconds) {
+    public String get(String url, int timeoutMilliSeconds) {
         return get(url, timeoutMilliSeconds, null);
     }
 
-    public static String get(String url, int timeoutMilliSeconds, Header[] headers) {
+    public String get(String url, int timeoutMilliSeconds, Header[] headers) {
         return get(url, "utf-8", timeoutMilliSeconds, headers);
     }
 
-    public static String get(String url, String encoding, Header[] headers) {
+    public String get(String url, String encoding, Header[] headers) {
         return get(url, encoding, DEFAULT_TIME_OUT, headers);
     }
 
-    public static String get(String url, String encoding, int timeoutMilliSeconds) {
+    public String get(String url, String encoding, int timeoutMilliSeconds) {
         return get(url, encoding, timeoutMilliSeconds, null);
     }
 
-    public static String get(String url, String encoding, int timeoutMilliSeconds, Header[] headers) {
+    public String get(String url, String encoding, int timeoutMilliSeconds, Header[] headers) {
         String result = null;
         CloseableHttpResponse httpResponse = null;
         try {
@@ -110,39 +107,39 @@ public final class MwHttpClientUtil2 {
      * POST JSON
      ***************************************************************/
 
-    public static String post(String url) {
+    public String post(String url) {
         return post(url, "", "application/json", RETRY_TIMES);
     }
 
-    public static String post(String url, int reTryTimes) {
+    public String post(String url, int reTryTimes) {
         return post(url, "", "application/json", reTryTimes);
     }
 
-    public static String post(String url, String postData, int timeoutMilliSeconds) {
+    public String post(String url, String postData, int timeoutMilliSeconds) {
         return post(url, postData, timeoutMilliSeconds, null);
     }
 
-    public static String post(String url, String postData, int timeoutMilliSeconds, Header[] header) {
+    public String post(String url, String postData, int timeoutMilliSeconds, Header[] header) {
         return post(url, postData, "application/json", "utf-8", timeoutMilliSeconds, header);
     }
 
-    public static String post(String url, String postData, String mediaType, int reTryTimes) {
+    public String post(String url, String postData, String mediaType, int reTryTimes) {
         return post(url, postData, mediaType, "utf-8", null);
     }
 
-    public static String post(String url, String postData, String mediaType, Header[] header, int reTryTimes) {
+    public String post(String url, String postData, String mediaType, Header[] header, int reTryTimes) {
         return post(url, postData, mediaType, "utf-8", header);
     }
 
-    public static String post(String url, String postData, String mediaType, String encoding, int reTryTimes) {
+    public String post(String url, String postData, String mediaType, String encoding, int reTryTimes) {
         return post(url, postData, mediaType, encoding, null);
     }
 
-    public static String post(String url, String postData, String mediaType, String encoding, Header[] headers) {
+    public String post(String url, String postData, String mediaType, String encoding, Header[] headers) {
         return post(url, postData, mediaType, encoding, DEFAULT_TIME_OUT, headers);
     }
 
-    public static String post(String url, String postData, String mediaType, String encoding, int timeoutMilliSeconds
+    public String post(String url, String postData, String mediaType, String encoding, int timeoutMilliSeconds
             , Header[] headers) {
         String result = null;
         CloseableHttpResponse httpResponse = null;
@@ -172,39 +169,39 @@ public final class MwHttpClientUtil2 {
      * POST FORM
      ***************************************************************/
 
-    public static String doFormPost(String url, List<NameValuePair> params, int timeoutMilliSeconds) {
+    public String doFormPost(String url, List<NameValuePair> params, int timeoutMilliSeconds) {
         return doFormPost(url, params, timeoutMilliSeconds, null);
     }
 
-    public static String doFormPost(String url, List<NameValuePair> params, int timeoutMilliSeconds, Header[] headers) {
+    public String doFormPost(String url, List<NameValuePair> params, int timeoutMilliSeconds, Header[] headers) {
         return doFormPost(url, params, "application/x-www-form-urlencoded", "utf-8", timeoutMilliSeconds, headers
         );
     }
 
-    public static String doFormPost(String url, List<NameValuePair> params, String mediaType) {
+    public String doFormPost(String url, List<NameValuePair> params, String mediaType) {
         return doFormPost(url, params, mediaType, "utf-8");
     }
 
-    public static String doFormPost(String url, List<NameValuePair> params, String mediaType, Header[] headers) {
+    public String doFormPost(String url, List<NameValuePair> params, String mediaType, Header[] headers) {
         return doFormPost(url, params, mediaType, "utf-8", headers);
     }
 
-    public static String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding) {
+    public String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding) {
         return doFormPost(url, params, mediaType, encoding, DEFAULT_TIME_OUT);
     }
 
-    public static String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
-                                    Header[] headers) {
+    public String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
+                             Header[] headers) {
         return doFormPost(url, params, mediaType, encoding, DEFAULT_TIME_OUT, headers);
     }
 
-    public static String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
-                                    int timeoutMilliSeconds) {
+    public String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
+                             int timeoutMilliSeconds) {
         return doFormPost(url, params, mediaType, encoding, timeoutMilliSeconds, null);
     }
 
-    public static String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
-                                    int timeoutMilliSeconds, Header[] headers) {
+    public String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
+                             int timeoutMilliSeconds, Header[] headers) {
         String result = null;
         CloseableHttpResponse httpResponse = null;
         try {
@@ -233,15 +230,15 @@ public final class MwHttpClientUtil2 {
 
     private static void handleThrowable(Throwable t, String url) {
         if (t instanceof InterruptedIOException || (Objects.nonNull(t.getCause()) && t.getCause() instanceof InterruptedIOException)) {
-            BASE_PREFIX_CALLER_HTTP.error(t);
+            MwAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_HTTP.error(t);
         } else {
-            BASE_PREFIX_CALLER_BIZ.error(t);
+            MwAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
         }
         logger.warn("调用服务失败, 服务地址: " + url, t);
-        throw new CommunicationException("调用服务失败, 服务地址：" + url + ", 异常类型：" + t.getClass() + ", 错误原因：" + t.getMessage());
+        throw new CommunicationException("调用服务失败, 服务地址: " + url + ", 异常类型: " + t.getClass() + ", 错误原因: " + t.getMessage());
     }
 
-    private static void closeQuietly(CloseableHttpResponse httpResponse) {
+    private void closeQuietly(CloseableHttpResponse httpResponse) {
         if (Objects.nonNull(httpResponse)) {
             try {
                 httpResponse.close();
@@ -251,7 +248,7 @@ public final class MwHttpClientUtil2 {
         }
     }
 
-    private static void closeIdleExpiredConnections(PoolingHttpClientConnectionManager connectionManager) {
+    private void closeIdleExpiredConnections(PoolingHttpClientConnectionManager connectionManager) {
         ScheduledExecutorService service = new ScheduledThreadPoolExecutor(1,
                 MwThreadFactoryBuilderUtil.build("http-client-idle"));
         service.scheduleAtFixedRate(() -> {

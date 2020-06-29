@@ -5,6 +5,7 @@ import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -16,10 +17,8 @@ import java.util.List;
 /**
  * Created by liaomengge on 17/11/7.
  */
+@UtilityClass
 public class ProtoStuffSerializerUtil {
-
-    private ProtoStuffSerializerUtil() {
-    }
 
     /**
      * 序列化对象
@@ -27,7 +26,7 @@ public class ProtoStuffSerializerUtil {
      * @param obj
      * @return
      */
-    public static <T> byte[] serialize(T obj) {
+    public <T> byte[] serialize(T obj) {
         byte[] protostuff = null;
         if (obj == null) {
             return protostuff;
@@ -51,7 +50,7 @@ public class ProtoStuffSerializerUtil {
      * @param targetClass
      * @return
      */
-    public static <T> T deserialize(byte[] paramArrayOfByte, Class<T> targetClass) {
+    public <T> T deserialize(byte[] paramArrayOfByte, Class<T> targetClass) {
         T instance = null;
         if (ArrayUtils.isEmpty(paramArrayOfByte)) {
             return instance;
@@ -73,7 +72,7 @@ public class ProtoStuffSerializerUtil {
      * @param objList
      * @return
      */
-    public static <T> byte[] serializeList(List<T> objList) {
+    public <T> byte[] serializeList(List<T> objList) {
         byte[] protostuff = null;
         if (CollectionUtils.isEmpty(objList)) {
             return protostuff;
@@ -103,7 +102,7 @@ public class ProtoStuffSerializerUtil {
      * @param targetClass
      * @return
      */
-    public static <T> List<T> deserializeList(byte[] paramArrayOfByte, Class<T> targetClass) {
+    public <T> List<T> deserializeList(byte[] paramArrayOfByte, Class<T> targetClass) {
         List<T> result = null;
         if (ArrayUtils.isEmpty(paramArrayOfByte)) {
             return result;

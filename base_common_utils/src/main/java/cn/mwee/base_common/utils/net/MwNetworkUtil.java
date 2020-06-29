@@ -1,5 +1,7 @@
 package cn.mwee.base_common.utils.net;
 
+import lombok.experimental.UtilityClass;
+
 import javax.servlet.http.HttpServletRequest;
 import java.net.*;
 import java.util.Enumeration;
@@ -7,10 +9,8 @@ import java.util.Enumeration;
 /**
  * Created by liaomengge on 17/10/10.
  */
-public final class MwNetworkUtil {
-
-    private MwNetworkUtil() {
-    }
+@UtilityClass
+public class MwNetworkUtil {
 
     /**
      * 获取请求主机IP地址,如果通过代理进来, 则透过防火墙获取真实IP地址;
@@ -23,28 +23,20 @@ public final class MwNetworkUtil {
      * @param request
      * @return
      */
-    public final static String getIpAddress(HttpServletRequest request) {
+    public final String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
 
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
                 ip = request.getHeader("Proxy-Client-IP");
-            }
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
                 ip = request.getHeader("WL-Proxy-Client-IP");
-            }
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
                 ip = request.getHeader("HTTP_CLIENT_IP");
-            }
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
                 ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-            }
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-                ip = request.getHeader("X-Real-IP");
-            }
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-                ip = request.getRemoteAddr();
-            }
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) ip = request.getHeader("X-Real-IP");
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) ip = request.getRemoteAddr();
         } else if (ip.length() > 15) {
             String[] ips = ip.split(",");
             for (int index = 0; index < ips.length; index++) {
@@ -63,7 +55,7 @@ public final class MwNetworkUtil {
      *
      * @return
      */
-    public static String getHostAddress() {
+    public String getHostAddress() {
         String result = "127.0.0.1";
         Enumeration allNetInterfaces;
         try {
@@ -77,9 +69,8 @@ public final class MwNetworkUtil {
             Enumeration addresses = netInterface.getInetAddresses();
             while (addresses.hasMoreElements()) {
                 ip = (InetAddress) addresses.nextElement();
-                if (ip != null && ip instanceof Inet4Address && !ip.getHostAddress().equals(result)) {
+                if (ip != null && ip instanceof Inet4Address && !ip.getHostAddress().equals(result))
                     return ip.getHostAddress();
-                }
             }
         }
 
@@ -92,7 +83,7 @@ public final class MwNetworkUtil {
      *
      * @return
      */
-    public static String getHostName() {
+    public String getHostName() {
         try {
             return java.net.InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e) {
@@ -100,7 +91,7 @@ public final class MwNetworkUtil {
         }
     }
 
-    private static String getMachineName() {
+    private String getMachineName() {
         String result = "localhost";
         Enumeration allNetInterfaces;
         try {
@@ -114,9 +105,8 @@ public final class MwNetworkUtil {
             Enumeration addresses = netInterface.getInetAddresses();
             while (addresses.hasMoreElements()) {
                 ip = (InetAddress) addresses.nextElement();
-                if (ip != null && ip instanceof Inet4Address && !ip.getHostName().equals(result)) {
+                if (ip != null && ip instanceof Inet4Address && !ip.getHostName().equals(result))
                     return ip.getHostName();
-                }
             }
         }
 

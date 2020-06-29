@@ -6,6 +6,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamDriver;
 import com.thoughtworks.xstream.io.xml.CompactWriter;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.thoughtworks.xstream.io.xml.Xpp3DomDriver;
+import lombok.experimental.UtilityClass;
 
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -16,12 +17,10 @@ import java.util.Set;
 /**
  * Created by liaomengge on 17/11/7.
  */
-public final class MwXmlUtil {
+@UtilityClass
+public class MwXmlUtil {
 
-    private static Map<Class<?>, XStream> xstreamMap = new HashMap<>(16);
-
-    private MwXmlUtil() {
-    }
+    private Map<Class<?>, XStream> xstreamMap = new HashMap<>(16);
 
     /**
      * 构建XStream
@@ -29,7 +28,7 @@ public final class MwXmlUtil {
      * @param cls
      * @return
      */
-    public static XStream getXstream(Class<?> cls) {
+    public XStream getXstream(Class<?> cls) {
         return getXstream(cls, new Xpp3DomDriver());
     }
 
@@ -40,7 +39,7 @@ public final class MwXmlUtil {
      * @param hierarchicalStreamDriver
      * @return
      */
-    public static XStream getXstream(Class<?> cls, HierarchicalStreamDriver hierarchicalStreamDriver) {
+    public XStream getXstream(Class<?> cls, HierarchicalStreamDriver hierarchicalStreamDriver) {
         if (xstreamMap.containsKey(cls)) {
             return xstreamMap.get(cls);
         }
@@ -60,7 +59,7 @@ public final class MwXmlUtil {
      * @param cls    反序列化的对象
      * @return
      */
-    public static <T> T toBean(String xmlStr, Class<T> cls) {
+    public <T> T toBean(String xmlStr, Class<T> cls) {
         XStream xstream = getXstream(cls);
         T t = (T) xstream.fromXML(xmlStr);
         return t;
@@ -74,7 +73,7 @@ public final class MwXmlUtil {
      * @param implCls 反序列化过程中有继承关系的对象
      * @return
      */
-    public static <T> T toBean(String xmlStr, Class<T> cls, Class<?>... implCls) {
+    public <T> T toBean(String xmlStr, Class<T> cls, Class<?>... implCls) {
         XStream xstream = getXstream(cls);
         xstream.ignoreUnknownElements();
         for (Class<?> implCl : implCls) {
@@ -94,7 +93,7 @@ public final class MwXmlUtil {
      * @param types   子对象需要沿用注解的对象
      * @return
      */
-    public static <T> T toBean(String xmlStr, Class<T> cls, List<Class<?>> implCls, Class<?>... types) {
+    public <T> T toBean(String xmlStr, Class<T> cls, List<Class<?>> implCls, Class<?>... types) {
         XStream xstream = getXstream(cls);
         for (Class<?> implCl : implCls) {
             xstream.addDefaultImplementation(implCl, implCl.getSuperclass());
@@ -112,7 +111,7 @@ public final class MwXmlUtil {
      * @param t 序列化对象
      * @return
      */
-    public static <T> String toXml(T t) {
+    public <T> String toXml(T t) {
         XStream xstream = getXstream(t.getClass());
         StringWriter sw = new StringWriter();
         xstream.marshal(t, new CompactWriter(sw));
@@ -120,7 +119,7 @@ public final class MwXmlUtil {
     }
 
 
-    public static <T> String toXml(T t, Class<?>... implClses) {
+    public <T> String toXml(T t, Class<?>... implClses) {
         XStream xstream = getXstream(t.getClass());
         for (Class<?> implCls : implClses) {
             xstream.addDefaultImplementation(implCls, implCls.getSuperclass());
@@ -136,7 +135,7 @@ public final class MwXmlUtil {
      * @param implCls
      * @return
      */
-    public static <T> String toXml(T t, Set<Class<?>> implCls) {
+    public <T> String toXml(T t, Set<Class<?>> implCls) {
         XStream xstream = getXstream(t.getClass());
         for (Class<?> implCl : implCls) {
             xstream.processAnnotations(implCl);

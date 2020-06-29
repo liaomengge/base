@@ -8,7 +8,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class MwPowerUtil {
 
-    private static final int MAXIMUM_CAPACITY = 1 << 30;
+    private final int MAXIMUM_CAPACITY = 1 << 30;
 
     public int two(int num) {
         int n = num - 1;

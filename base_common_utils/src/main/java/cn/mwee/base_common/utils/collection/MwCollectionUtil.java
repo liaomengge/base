@@ -2,6 +2,7 @@ package cn.mwee.base_common.utils.collection;
 
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Ordering;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -10,31 +11,23 @@ import java.util.*;
 /**
  * Created by liaomengge on 17/11/23.
  */
-public final class MwCollectionUtil {
-
-    private MwCollectionUtil() {
-    }
+@UtilityClass
+public class MwCollectionUtil {
 
     /**
      * 取得Collection的第一个元素, 如果collection为空返回null.
      */
-    public static <T> T getFirst(Collection<T> collection) {
-        if (CollectionUtils.isEmpty(collection)) {
-            return null;
-        }
-        if (collection instanceof List) {
-            return ((List<T>) collection).get(0);
-        }
+    public <T> T getFirst(Collection<T> collection) {
+        if (CollectionUtils.isEmpty(collection)) return null;
+        if (collection instanceof List) return ((List<T>) collection).get(0);
         return collection.iterator().next();
     }
 
     /**
      * 获取Collection的最后一个元素, 如果collection为空返回null.
      */
-    public static <T> T getLast(Collection<T> collection) {
-        if (CollectionUtils.isEmpty(collection)) {
-            return null;
-        }
+    public <T> T getLast(Collection<T> collection) {
+        if (CollectionUtils.isEmpty(collection)) return null;
 
         // 当类型List时, 直接取得最后一个元素.
         if (collection instanceof List) {
@@ -48,46 +41,43 @@ public final class MwCollectionUtil {
     /**
      * 返回无序集合中的最小值, 使用元素默认排序
      */
-    public static <T extends Object & Comparable<? super T>> T min(Collection<? extends T> coll) {
+    public <T extends Object & Comparable<? super T>> T min(Collection<? extends T> coll) {
         return Collections.min(coll);
     }
 
     /**
      * 返回无序集合中的最小值
      */
-    public static <T> T min(Collection<? extends T> coll, Comparator<? super T> comp) {
+    public <T> T min(Collection<? extends T> coll, Comparator<? super T> comp) {
         return Collections.min(coll, comp);
     }
 
     /**
      * 返回无序集合中的最大值, 使用元素默认排序
      */
-    public static <T extends Object & Comparable<? super T>> T max(Collection<? extends T> coll) {
+    public <T extends Object & Comparable<? super T>> T max(Collection<? extends T> coll) {
         return Collections.max(coll);
     }
 
     /**
      * 返回无序集合中的最大值
      */
-    public static <T> T max(Collection<? extends T> coll, Comparator<? super T> comp) {
+    public <T> T max(Collection<? extends T> coll, Comparator<? super T> comp) {
         return Collections.max(coll, comp);
     }
 
     /**
      * 返回无序集合中的最小值和最大值, 使用元素默认排序
      */
-    public static <T extends Object & Comparable<? super T>> Pair<T, T> minAndMax(Collection<? extends T> coll) {
+    public <T extends Object & Comparable<? super T>> Pair<T, T> minAndMax(Collection<? extends T> coll) {
         Iterator<? extends T> i = coll.iterator();
         T minCandidate = i.next();
         T maxCandidate = minCandidate;
 
         while (i.hasNext()) {
             T next = i.next();
-            if (next.compareTo(minCandidate) < 0) {
-                minCandidate = next;
-            } else if (next.compareTo(maxCandidate) > 0) {
-                maxCandidate = next;
-            }
+            if (next.compareTo(minCandidate) < 0) minCandidate = next;
+            else if (next.compareTo(maxCandidate) > 0) maxCandidate = next;
         }
         return Pair.of(minCandidate, maxCandidate);
     }
@@ -95,7 +85,7 @@ public final class MwCollectionUtil {
     /**
      * 返回无序集合中的最小值和最大值
      */
-    public static <T> Pair<T, T> minAndMax(Collection<? extends T> coll, Comparator<? super T> comp) {
+    public <T> Pair<T, T> minAndMax(Collection<? extends T> coll, Comparator<? super T> comp) {
 
         Iterator<? extends T> i = coll.iterator();
         T minCandidate = i.next();
@@ -103,11 +93,8 @@ public final class MwCollectionUtil {
 
         while (i.hasNext()) {
             T next = i.next();
-            if (comp.compare(next, minCandidate) < 0) {
-                minCandidate = next;
-            } else if (comp.compare(next, maxCandidate) > 0) {
-                maxCandidate = next;
-            }
+            if (comp.compare(next, minCandidate) < 0) minCandidate = next;
+            else if (comp.compare(next, maxCandidate) > 0) maxCandidate = next;
         }
 
         return Pair.of(minCandidate, maxCandidate);
@@ -116,56 +103,56 @@ public final class MwCollectionUtil {
     /**
      * 排序最高的N个对象, guava已优化.
      */
-    public static <T extends Comparable> List<T> topN(Iterable<T> iterable, int n) {
+    public <T extends Comparable> List<T> topN(Iterable<T> iterable, int n) {
         return Ordering.natural().greatestOf(iterable, n);
     }
 
     /**
      * 排序最高的N个对象, guava已优化.
      */
-    public static <T extends Comparable> List<T> topN(Iterator<T> iterator, int n) {
+    public <T extends Comparable> List<T> topN(Iterator<T> iterator, int n) {
         return Ordering.natural().greatestOf(iterator, n);
     }
 
     /**
      * 排序最高的N个对象, guava已优化.
      */
-    public static <T> List<T> topN(Iterable<T> iterable, int n, Comparator<T> comp) {
+    public <T> List<T> topN(Iterable<T> iterable, int n, Comparator<T> comp) {
         return Ordering.from(comp).greatestOf(iterable, n);
     }
 
     /**
      * 排序最高的N个对象, guava已优化.
      */
-    public static <T> List<T> topN(Iterator<T> iterator, int n, Comparator<T> comp) {
+    public <T> List<T> topN(Iterator<T> iterator, int n, Comparator<T> comp) {
         return Ordering.from(comp).greatestOf(iterator, n);
     }
 
     /**
      * 排序最低的N个对象, guava已优化.
      */
-    public static <T extends Comparable> List<T> bottomN(Iterable<T> iterable, int n) {
+    public <T extends Comparable> List<T> bottomN(Iterable<T> iterable, int n) {
         return Ordering.natural().leastOf(iterable, n);
     }
 
     /**
      * 排序最低的N个对象, guava已优化.
      */
-    public static <T extends Comparable> List<T> bottomN(Iterator<T> iterator, int n) {
+    public <T extends Comparable> List<T> bottomN(Iterator<T> iterator, int n) {
         return Ordering.natural().leastOf(iterator, n);
     }
 
     /**
      * 排序最低的N个对象, guava已优化.
      */
-    public static <T> List<T> bottomN(Iterable<T> coll, int n, Comparator<T> comp) {
+    public <T> List<T> bottomN(Iterable<T> coll, int n, Comparator<T> comp) {
         return Ordering.from(comp).leastOf(coll, n);
     }
 
     /**
      * 排序最低的N个对象, guava已优化.
      */
-    public static <T> List<T> bottomN(Iterator<T> iterator, int n, Comparator<T> comp) {
+    public <T> List<T> bottomN(Iterator<T> iterator, int n, Comparator<T> comp) {
         return Ordering.from(comp).leastOf(iterator, n);
     }
 }

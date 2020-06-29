@@ -6,6 +6,7 @@ import it.sauronsoftware.ftp4j.FTPConnector;
 import it.sauronsoftware.ftp4j.FTPDataTransferListener;
 import it.sauronsoftware.ftp4j.FTPFile;
 import it.sauronsoftware.ftp4j.connectors.DirectConnector;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
@@ -15,12 +16,10 @@ import java.io.InputStream;
 /**
  * Created by liaomengge on 17/10/11.
  */
-public final class MwFtpUtil {
+@UtilityClass
+public class MwFtpUtil {
 
-    private static Logger logger = MwLogger.getInstance(MwFtpUtil.class);
-
-    private MwFtpUtil() {
-    }
+    private Logger logger = MwLogger.getInstance(MwFtpUtil.class);
 
     /**
      * 将流上传到指定远程服务器
@@ -34,8 +33,8 @@ public final class MwFtpUtil {
      * @param remoteFilePath
      * @throws Exception
      */
-    public static void upload(String serverIP, int serverPort, String ftpUser,
-                              String ftpPwd, String fileName, InputStream inputStream, String remoteFilePath) throws Exception {
+    public void upload(String serverIP, int serverPort, String ftpUser,
+                       String ftpPwd, String fileName, InputStream inputStream, String remoteFilePath) throws Exception {
 
         logger.info("start uploading file[{}] to ftp...", fileName);
         FTPClient client = null;
@@ -48,11 +47,9 @@ public final class MwFtpUtil {
         logger.info("complete uploading file[{}] to ftp...", fileName);
     }
 
-    public static void upload(FTPClient client, String fileName, InputStream inputStream, String remoteFilePath) throws Exception {
+    public void upload(FTPClient client, String fileName, InputStream inputStream, String remoteFilePath) throws Exception {
         // 获得 FTP client
-        if (client == null) {
-            return;
-        }
+        if (client == null) return;
 
         remoteFilePath = StringUtils.replace(remoteFilePath, "\\", "/");
         String remoteDirPath = remoteFilePath.substring(0, remoteFilePath.lastIndexOf('/'));
@@ -61,23 +58,17 @@ public final class MwFtpUtil {
         int isExists = isExist(client, remoteDirPath);
 
         // 不存在创建目录
-        if (isExists < 0) {
-            client.createDirectory(remoteDirPath);
-        }
+        if (isExists < 0) client.createDirectory(remoteDirPath);
         // 切换到 目标路径
         client.changeDirectory(remoteDirPath);
 
         //判断远程文件是否存在
         isExists = isExist(client, remoteFilePath + fileName);
 
-        if (isExists == 0) {
-            //已经存在, 先删除
-            delete(client, remoteFilePath + fileName);
-        }
+        //已经存在, 先删除
+        if (isExists == 0) delete(client, remoteFilePath + fileName);
 
-        if (!client.currentDirectory().equalsIgnoreCase(remoteDirPath)) {
-            client.changeDirectory(remoteDirPath);
-        }
+        if (!client.currentDirectory().equalsIgnoreCase(remoteDirPath)) client.changeDirectory(remoteDirPath);
 
         // 上传文件
         client.upload(fileName, inputStream, 0L, 0L, new CustomTransferListener(fileName));
@@ -94,27 +85,19 @@ public final class MwFtpUtil {
      * @param remoteFilePath
      * @throws Exception
      */
-    public static void delete(FTPClient client, String remoteFilePath) throws Exception {
+    public void delete(FTPClient client, String remoteFilePath) throws Exception {
 
-        if (StringUtils.isEmpty(remoteFilePath)) {
-            return;
-        }
+        if (StringUtils.isEmpty(remoteFilePath)) return;
 
-        if (client == null) {
-            return;
-        }
+        if (client == null) return;
 
         // 判断远程路径是否存在
         int isExists = isExist(client, remoteFilePath);
 
         // 删除文件
-        if (isExists == FTPFile.TYPE_FILE) {
-            client.deleteFile(remoteFilePath);
-        }
+        if (isExists == FTPFile.TYPE_FILE) client.deleteFile(remoteFilePath);
         // 删除文件夹
-        if (isExists == FTPFile.TYPE_DIRECTORY) {
-            deleteFolder(client, remoteFilePath);
-        }
+        if (isExists == FTPFile.TYPE_DIRECTORY) deleteFolder(client, remoteFilePath);
         // 删除完成 切回 根目录
         client.changeDirectory("/");
 
@@ -127,7 +110,7 @@ public final class MwFtpUtil {
      * @param client   FTP Client
      * @param filePath 文件夹路径
      */
-    private static void deleteFolder(FTPClient client, String filePath)
+    private void deleteFolder(FTPClient client, String filePath)
             throws Exception {
         String path = filePath;
         client.changeDirectory(path);
@@ -137,15 +120,13 @@ public final class MwFtpUtil {
         for (FTPFile file : files) {
             name = file.getName();
             // 排除隐藏目录
-            if (".".equals(name) || "..".equals(name)) {
-                continue;
-            }
-            if (file.getType() == FTPFile.TYPE_DIRECTORY) { // 递归删除子目录
+            if (".".equals(name) || "..".equals(name)) continue;
+            // 递归删除子目录
+            if (file.getType() == FTPFile.TYPE_DIRECTORY)
                 deleteFolder(client, client.currentDirectory() + File.separator
                         + file.getName());
-            } else if (file.getType() == FTPFile.TYPE_FILE) { // 删除文件
-                client.deleteFile(file.getName());
-            }
+            else // 删除文件
+                if (file.getType() == FTPFile.TYPE_FILE) client.deleteFile(file.getName());
         }
         client.changeDirectoryUp();// 反回上一级目录
         client.deleteDirectory(filePath); // 删除当前目录
@@ -159,44 +140,34 @@ public final class MwFtpUtil {
      * @param remoteFilePath FTP文件或文件夹路径
      * @return 存在时候返回类型值(文件0, 文件夹1, 连接2), 不存在则返回-1
      */
-    public static int isExist(FTPClient client, String remoteFilePath) {
+    public int isExist(FTPClient client, String remoteFilePath) {
         int x = -1;
-        if (StringUtils.isEmpty(remoteFilePath)) {
-            return x;
-        }
+        if (StringUtils.isEmpty(remoteFilePath)) return x;
         FTPFile[] list = null;
         try {
             list = client.list(remoteFilePath);
         } catch (Exception e) {
             return -1;
         }
-        if (list.length > 1) {
-            return FTPFile.TYPE_DIRECTORY;
-        } else if (list.length == 1) {
+        if (list.length > 1) return FTPFile.TYPE_DIRECTORY;
+        else if (list.length == 1) {
             FTPFile f = list[0];
-            if (f.getType() == FTPFile.TYPE_DIRECTORY) {
-                return FTPFile.TYPE_DIRECTORY;
-            }
+            if (f.getType() == FTPFile.TYPE_DIRECTORY) return FTPFile.TYPE_DIRECTORY;
 
             // 假设推理判断
             String path = remoteFilePath + "/" + f.getName();
             try {
                 int y = client.list(path).length;
-                if (y == 1) {
-                    return FTPFile.TYPE_DIRECTORY;
-                } else {
-                    return FTPFile.TYPE_FILE;
-                }
+                if (y == 1) return FTPFile.TYPE_DIRECTORY;
+                else return FTPFile.TYPE_FILE;
             } catch (Exception e) {
                 return FTPFile.TYPE_FILE;
             }
-        } else {
-            try {
-                client.changeDirectory(remoteFilePath);
-                return FTPFile.TYPE_DIRECTORY;
-            } catch (Exception e) {
-                return -1;
-            }
+        } else try {
+            client.changeDirectory(remoteFilePath);
+            return FTPFile.TYPE_DIRECTORY;
+        } catch (Exception e) {
+            return -1;
         }
     }
 
@@ -205,22 +176,20 @@ public final class MwFtpUtil {
      *
      * @param client
      */
-    public static void closeClient(FTPClient client) {
+    public void closeClient(FTPClient client) {
         if (client != null) {
-            if (client.isConnected()) {
-                try {
-                    client.logout();
-                    client.disconnect(true);
-                } catch (Exception e) {
-                    logger.info("close Ftp Connection error!", e);
-                }
+            if (client.isConnected()) try {
+                client.logout();
+                client.disconnect(true);
+            } catch (Exception e) {
+                logger.info("close Ftp Connection error!", e);
             }
             client = null;
         }
     }
 
     // FTP 传输 监视器 ,简单实现
-    private static class CustomTransferListener implements
+    private class CustomTransferListener implements
             FTPDataTransferListener {
         private String optType;
 
@@ -270,7 +239,7 @@ public final class MwFtpUtil {
      * @param ftpPwd
      * @return
      */
-    private static FTPClient getFtpClient(String serverIP, int serverPort, String ftpUser, String ftpPwd) {
+    private FTPClient getFtpClient(String serverIP, int serverPort, String ftpUser, String ftpPwd) {
         FTPClient ftpClient = null;
         try {
             ftpClient = new FTPClient();

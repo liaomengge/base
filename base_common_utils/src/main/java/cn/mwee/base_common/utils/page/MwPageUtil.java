@@ -3,6 +3,7 @@ package cn.mwee.base_common.utils.page;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.UtilityClass;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,10 +16,8 @@ import java.util.function.UnaryOperator;
 /**
  * Created by liaomengge on 2018/8/9.
  */
-public final class MwPageUtil {
-
-    private MwPageUtil() {
-    }
+@UtilityClass
+public class MwPageUtil {
 
     /**
      * @param t                 请求参数对象
@@ -30,8 +29,8 @@ public final class MwPageUtil {
      * @param <R>
      * @param <V>
      */
-    public static <T, R, V> void process(T t, ToIntFunction<T> pageSizeFunction, UnaryOperator<T> transformOperator,
-                                         Function<T, R> handleFunction, Function<R, List<V>> retFunction) {
+    public <T, R, V> void process(T t, ToIntFunction<T> pageSizeFunction, UnaryOperator<T> transformOperator,
+                                  Function<T, R> handleFunction, Function<R, List<V>> retFunction) {
         int size = pageSizeFunction.applyAsInt(t);
         int initSize = size;
         while (initSize >= size) {
@@ -53,9 +52,9 @@ public final class MwPageUtil {
      * @param <R>
      * @param <V>
      */
-    public static <T, R, V> void process(T t, ToIntFunction<T> pageSizeFunction, UnaryOperator<T> transformOperator,
-                                         Function<T, R> handleFunction, Function<R, List<V>> retFunction,
-                                         Consumer<List<V>> consumers) {
+    public <T, R, V> void process(T t, ToIntFunction<T> pageSizeFunction, UnaryOperator<T> transformOperator,
+                                  Function<T, R> handleFunction, Function<R, List<V>> retFunction,
+                                  Consumer<List<V>> consumers) {
         int size = pageSizeFunction.applyAsInt(t);
         int initSize = size;
         while (initSize >= size) {
@@ -78,9 +77,9 @@ public final class MwPageUtil {
      * @param <V>
      * @return 返回总结果集
      */
-    public static <T, R, V> List<V> processRet(T t, ToIntFunction<T> pageSizeFunction,
-                                               UnaryOperator<T> transformOperator, Function<T, R> handleFunction,
-                                               Function<R, List<V>> retFunction) {
+    public <T, R, V> List<V> processRet(T t, ToIntFunction<T> pageSizeFunction,
+                                        UnaryOperator<T> transformOperator, Function<T, R> handleFunction,
+                                        Function<R, List<V>> retFunction) {
         List<V> totalList = Lists.newArrayList();
         int size = pageSizeFunction.applyAsInt(t);
         int initSize = size;
@@ -103,8 +102,8 @@ public final class MwPageUtil {
      * @param handleFunction    请求对象处理
      * @param <T>
      */
-    public static <T extends Pagination, V> void process(T t, UnaryOperator<T> transformOperator,
-                                                         Function<T, List<V>> handleFunction) {
+    public <T extends Pagination, V> void process(T t, UnaryOperator<T> transformOperator,
+                                                  Function<T, List<V>> handleFunction) {
         process(t, transformOperator, handleFunction, Function.identity());
     }
 
@@ -117,9 +116,9 @@ public final class MwPageUtil {
      * @param <R>
      * @param <V>
      */
-    public static <T extends Pagination, R, V> void process(T t, UnaryOperator<T> transformOperator,
-                                                            Function<T, R> handleFunction,
-                                                            Function<R, List<V>> retFunction) {
+    public <T extends Pagination, R, V> void process(T t, UnaryOperator<T> transformOperator,
+                                                     Function<T, R> handleFunction,
+                                                     Function<R, List<V>> retFunction) {
         process(t, T::getPageSize, transformOperator, handleFunction, retFunction);
     }
 
@@ -130,9 +129,9 @@ public final class MwPageUtil {
      * @param consumers         每次批处理消费
      * @param <T>
      */
-    public static <T extends Pagination, V> void process(T t, UnaryOperator<T> transformOperator,
-                                                         Function<T, List<V>> handleFunction,
-                                                         Consumer<List<V>> consumers) {
+    public <T extends Pagination, V> void process(T t, UnaryOperator<T> transformOperator,
+                                                  Function<T, List<V>> handleFunction,
+                                                  Consumer<List<V>> consumers) {
         process(t, transformOperator, handleFunction, Function.identity(), consumers);
     }
 
@@ -146,10 +145,10 @@ public final class MwPageUtil {
      * @param <R>
      * @param <V>
      */
-    public static <T extends Pagination, R, V> void process(T t, UnaryOperator<T> transformOperator,
-                                                            Function<T, R> handleFunction,
-                                                            Function<R, List<V>> retFunction,
-                                                            Consumer<List<V>> consumers) {
+    public <T extends Pagination, R, V> void process(T t, UnaryOperator<T> transformOperator,
+                                                     Function<T, R> handleFunction,
+                                                     Function<R, List<V>> retFunction,
+                                                     Consumer<List<V>> consumers) {
         process(t, T::getPageSize, transformOperator, handleFunction, retFunction, consumers);
     }
 
@@ -160,8 +159,8 @@ public final class MwPageUtil {
      * @param <T>
      * @return 返回总结果集
      */
-    public static <T extends Pagination, V> List<V> processRet(T t, UnaryOperator<T> transformOperator,
-                                                               Function<T, List<V>> handleFunction) {
+    public <T extends Pagination, V> List<V> processRet(T t, UnaryOperator<T> transformOperator,
+                                                        Function<T, List<V>> handleFunction) {
         return processRet(t, transformOperator, handleFunction, Function.identity());
     }
 
@@ -175,9 +174,9 @@ public final class MwPageUtil {
      * @param <V>
      * @return 返回总结果集
      */
-    public static <T extends Pagination, R, V> List<V> processRet(T t, UnaryOperator<T> transformOperator,
-                                                                  Function<T, R> handleFunction,
-                                                                  Function<R, List<V>> retFunction) {
+    public <T extends Pagination, R, V> List<V> processRet(T t, UnaryOperator<T> transformOperator,
+                                                           Function<T, R> handleFunction,
+                                                           Function<R, List<V>> retFunction) {
         return processRet(t, T::getPageSize, transformOperator, handleFunction, retFunction);
     }
 
@@ -193,8 +192,8 @@ public final class MwPageUtil {
      * @param <R>
      * @param <V>
      */
-    public static <T, R, V> void process(T t, ToIntFunction<T> pageSizeFunction, Function<T, R> handleFunction,
-                                         Function<R, List<V>> retFunction, Function<List<V>, T> transformFunction) {
+    public <T, R, V> void process(T t, ToIntFunction<T> pageSizeFunction, Function<T, R> handleFunction,
+                                  Function<R, List<V>> retFunction, Function<List<V>, T> transformFunction) {
         int size = pageSizeFunction.applyAsInt(t);
         int initSize = size;
         while (initSize >= size) {
@@ -216,9 +215,9 @@ public final class MwPageUtil {
      * @param <R>
      * @param <V>
      */
-    public static <T, R, V> void process(T t, ToIntFunction<T> pageSizeFunction,
-                                         Function<T, R> handleFunction, Function<R, List<V>> retFunction,
-                                         Function<List<V>, T> transformFunction, Consumer<List<V>> consumers) {
+    public <T, R, V> void process(T t, ToIntFunction<T> pageSizeFunction,
+                                  Function<T, R> handleFunction, Function<R, List<V>> retFunction,
+                                  Function<List<V>, T> transformFunction, Consumer<List<V>> consumers) {
         int size = pageSizeFunction.applyAsInt(t);
         int initSize = size;
         while (initSize >= size) {
@@ -241,9 +240,9 @@ public final class MwPageUtil {
      * @param <V>
      * @return 返回总结果集
      */
-    public static <T, R, V> List<V> processRet(T t, ToIntFunction<T> pageSizeFunction, Function<T, R> handleFunction,
-                                               Function<R, List<V>> retFunction,
-                                               Function<List<V>, T> transformFunction) {
+    public <T, R, V> List<V> processRet(T t, ToIntFunction<T> pageSizeFunction, Function<T, R> handleFunction,
+                                        Function<R, List<V>> retFunction,
+                                        Function<List<V>, T> transformFunction) {
         List<V> totalList = Lists.newArrayList();
         int size = pageSizeFunction.applyAsInt(t);
         int initSize = size;
@@ -266,8 +265,8 @@ public final class MwPageUtil {
      * @param handleFunction    请求对象处理
      * @param <T>
      */
-    public static <T extends Pagination, V> void process(T t, Function<T, List<V>> handleFunction,
-                                                         Function<List<V>, T> transformFunction) {
+    public <T extends Pagination, V> void process(T t, Function<T, List<V>> handleFunction,
+                                                  Function<List<V>, T> transformFunction) {
         process(t, handleFunction, Function.identity(), transformFunction);
     }
 
@@ -280,9 +279,9 @@ public final class MwPageUtil {
      * @param <R>
      * @param <V>
      */
-    public static <T extends Pagination, R, V> void process(T t, Function<T, R> handleFunction,
-                                                            Function<R, List<V>> retFunction,
-                                                            Function<List<V>, T> transformFunction) {
+    public <T extends Pagination, R, V> void process(T t, Function<T, R> handleFunction,
+                                                     Function<R, List<V>> retFunction,
+                                                     Function<List<V>, T> transformFunction) {
         process(t, T::getPageSize, handleFunction, retFunction, transformFunction);
     }
 
@@ -293,9 +292,9 @@ public final class MwPageUtil {
      * @param consumers         每次批处理消费
      * @param <T>
      */
-    public static <T extends Pagination, V> void process(T t, Function<T, List<V>> handleFunction,
-                                                         Function<List<V>, T> transformFunction,
-                                                         Consumer<List<V>> consumers) {
+    public <T extends Pagination, V> void process(T t, Function<T, List<V>> handleFunction,
+                                                  Function<List<V>, T> transformFunction,
+                                                  Consumer<List<V>> consumers) {
         process(t, handleFunction, Function.identity(), transformFunction, consumers);
     }
 
@@ -309,10 +308,10 @@ public final class MwPageUtil {
      * @param <R>
      * @param <V>
      */
-    public static <T extends Pagination, R, V> void process(T t, Function<T, R> handleFunction,
-                                                            Function<R, List<V>> retFunction,
-                                                            Function<List<V>, T> transformFunction,
-                                                            Consumer<List<V>> consumers) {
+    public <T extends Pagination, R, V> void process(T t, Function<T, R> handleFunction,
+                                                     Function<R, List<V>> retFunction,
+                                                     Function<List<V>, T> transformFunction,
+                                                     Consumer<List<V>> consumers) {
         process(t, T::getPageSize, handleFunction, retFunction, transformFunction, consumers);
     }
 
@@ -323,8 +322,8 @@ public final class MwPageUtil {
      * @param <T>
      * @return 返回总结果集
      */
-    public static <T extends Pagination, V> List<V> processRet(T t, Function<T, List<V>> handleFunction,
-                                                               Function<List<V>, T> transformFunction) {
+    public <T extends Pagination, V> List<V> processRet(T t, Function<T, List<V>> handleFunction,
+                                                        Function<List<V>, T> transformFunction) {
         return processRet(t, handleFunction, Function.identity(), transformFunction);
     }
 
@@ -338,15 +337,15 @@ public final class MwPageUtil {
      * @param <V>
      * @return 返回总结果集
      */
-    public static <T extends Pagination, R, V> List<V> processRet(T t, Function<T, R> handleFunction,
-                                                                  Function<R, List<V>> retFunction,
-                                                                  Function<List<V>, T> transformFunction) {
+    public <T extends Pagination, R, V> List<V> processRet(T t, Function<T, R> handleFunction,
+                                                           Function<R, List<V>> retFunction,
+                                                           Function<List<V>, T> transformFunction) {
         return processRet(t, T::getPageSize, handleFunction, retFunction, transformFunction);
     }
 
     @Getter
     @Setter
-    public static class Pagination {
+    public class Pagination {
 
         private int pageNo;
         private int pageSize;

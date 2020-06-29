@@ -1,6 +1,7 @@
 package cn.mwee.base_common.utils.text;
 
 import cn.mwee.base_common.utils.string.MwStringUtil;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.text.translate.AggregateTranslator;
 import org.apache.commons.text.translate.CharSequenceTranslator;
 import org.apache.commons.text.translate.EntityArrays;
@@ -13,12 +14,10 @@ import java.util.Map;
 /**
  * Created by liaomengge on 17/11/8.
  */
-public final class MwEscapeJsonUtil {
+@UtilityClass
+public class MwEscapeJsonUtil {
 
-    private MwEscapeJsonUtil() {
-    }
-
-    private static final CharSequenceTranslator ESCAPE_JSON;
+    private final CharSequenceTranslator ESCAPE_JSON;
 
     static {
         Map<CharSequence, CharSequence> escapeJsonMap = new HashMap<>(16);
@@ -31,7 +30,7 @@ public final class MwEscapeJsonUtil {
         );
     }
 
-    public static final String escapeJson(final String input) {
+    public final String escapeJson(String input) {
         try {
             return ESCAPE_JSON.translate(input);
         } catch (Exception e) {

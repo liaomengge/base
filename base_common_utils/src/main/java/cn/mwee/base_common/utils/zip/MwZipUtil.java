@@ -1,6 +1,7 @@
 package cn.mwee.base_common.utils.zip;
 
 import cn.mwee.base_common.utils.log4j2.MwLogger;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.compress.archivers.zip.Zip64Mode;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
@@ -17,13 +18,10 @@ import java.util.List;
 /**
  * Zip格式文件 压缩、解压 工具类
  */
-public final class MwZipUtil {
+@UtilityClass
+public class MwZipUtil {
 
-    private static Logger logger = MwLogger.getInstance(MwZipUtil.class);
-
-    private MwZipUtil() {
-        //工具类无需对象实例化
-    }
+    private Logger logger = MwLogger.getInstance(MwZipUtil.class);
 
     /**
      * 将文件压缩为 Zip 格式
@@ -32,7 +30,7 @@ public final class MwZipUtil {
      * @param targetPath    压缩后保存的路径 包括压缩文件名 如："D:/FTP/ziptest.zip"
      * @throws Exception
      */
-    public static void compress(List<File> fileToZipList, String targetPath)
+    public void compress(List<File> fileToZipList, String targetPath)
             throws Exception {
         if (fileToZipList.size() == 0) {
             return;
@@ -89,7 +87,7 @@ public final class MwZipUtil {
      * @param targetPath 解压后保存的路径 如："D:/FTP/Lodop6/"
      * @throws Exception
      */
-    public static void uncompress(String sourcePath, String targetPath)
+    public void uncompress(String sourcePath, String targetPath)
             throws Exception {
         // 路径为空直接返回
         if (StringUtils.isEmpty(sourcePath) || StringUtils.isEmpty(targetPath)) {
@@ -146,7 +144,7 @@ public final class MwZipUtil {
             } finally {
                 /*
                  * if (os != null) { os.flush(); os.close(); }
-				 */
+                 */
                 if (fos != null) {
                     fos.close();
                 }
@@ -155,7 +153,7 @@ public final class MwZipUtil {
     }
 
     // 私有方法 自动生成 压缩文件名
-    private static String getFormattedFileName() {
+    private String getFormattedFileName() {
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmm");

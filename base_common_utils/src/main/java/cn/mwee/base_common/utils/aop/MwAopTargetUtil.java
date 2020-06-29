@@ -1,6 +1,7 @@
 package cn.mwee.base_common.utils.aop;
 
 import cn.mwee.base_common.utils.log4j2.MwLogger;
+import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopContext;
@@ -12,12 +13,10 @@ import java.lang.reflect.Field;
 /**
  * Created by liaomengge on 6/6/16.
  */
-public final class MwAopTargetUtil {
+@UtilityClass
+public class MwAopTargetUtil {
 
-    private static final Logger logger = MwLogger.getInstance(MwAopTargetUtil.class);
-
-    private MwAopTargetUtil() {
-    }
+    private final Logger logger = MwLogger.getInstance(MwAopTargetUtil.class);
 
     /**
      * 通过cglib获取代理对象(必须开启exposeProxy=true)
@@ -26,7 +25,7 @@ public final class MwAopTargetUtil {
      * @param <T>
      * @return
      */
-    public static <T> T getProxy(T target) {
+    public <T> T getProxy(T target) {
         if (AopUtils.isAopProxy(target)) {
             return target;//是代理对象
         }
@@ -49,7 +48,7 @@ public final class MwAopTargetUtil {
      * @return
      * @throws Exception
      */
-    public static <T> T getTarget(T proxy) throws Exception {
+    public <T> T getTarget(T proxy) throws Exception {
         if (!AopUtils.isAopProxy(proxy)) {
             return proxy;//不是代理对象
         }
@@ -61,7 +60,7 @@ public final class MwAopTargetUtil {
         }
     }
 
-    private static Object getCglibProxyTargetObject(Object proxy) throws Exception {
+    private Object getCglibProxyTargetObject(Object proxy) throws Exception {
         Field h = proxy.getClass().getDeclaredField("CGLIB$CALLBACK_0");
         h.setAccessible(true);
         Object dynamicAdvisedInterceptor = h.get(proxy);
@@ -74,7 +73,7 @@ public final class MwAopTargetUtil {
         return target;
     }
 
-    private static Object getJdkDynamicProxyTargetObject(Object proxy) throws Exception {
+    private Object getJdkDynamicProxyTargetObject(Object proxy) throws Exception {
         Field h = proxy.getClass().getSuperclass().getDeclaredField("h");
         h.setAccessible(true);
         AopProxy aopProxy = (AopProxy) h.get(proxy);

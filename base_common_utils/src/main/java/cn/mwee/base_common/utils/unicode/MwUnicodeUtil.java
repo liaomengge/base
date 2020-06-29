@@ -1,19 +1,19 @@
 package cn.mwee.base_common.utils.unicode;
 
+import lombok.experimental.UtilityClass;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class MwUnicodeUtil {
+@UtilityClass
+public class MwUnicodeUtil {
 
-    private static Pattern p = Pattern.compile("\\\\u([0-9a-fA-F]{4})");
-    private static Pattern p2 = Pattern.compile("(\\\\u(\\p{XDigit}{4}))");
+    private Pattern p = Pattern.compile("\\\\u([0-9a-fA-F]{4})");
+    private Pattern p2 = Pattern.compile("(\\\\u(\\p{XDigit}{4}))");
 
-    private MwUnicodeUtil() {
-    }
-
-    public static String decodeUnicode(String str) {
+    public String decodeUnicode(String str) {
         Charset set = Charset.forName("UTF-16");
         Matcher m = p.matcher(str);
         int start = 0;
@@ -42,7 +42,7 @@ public final class MwUnicodeUtil {
         return sb.toString();
     }
 
-    public static String stringToUnicode(String s) {
+    public String stringToUnicode(String s) {
         String str = "";
         for (int i = 0; i < s.length(); i++) {
             int ch = s.charAt(i);
@@ -56,7 +56,7 @@ public final class MwUnicodeUtil {
         return str;
     }
 
-    public static String unicodeToString(String str) {
+    public String unicodeToString(String str) {
         for (Matcher matcher = p2.matcher(str); matcher.find(); ) {
             char ch = (char) Integer.parseInt(matcher.group(2), 16);
             str = str.replace(matcher.group(1), String.valueOf(ch));

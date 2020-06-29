@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.collections4.IterableUtils;
@@ -30,12 +31,10 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 16/5/10.
  */
-public final class MwMapUtil {
+@UtilityClass
+public class MwMapUtil {
 
-    private static final String PROPERTY_NAME = "class";
-
-    private MwMapUtil() {
-    }
+    private final String PROPERTY_NAME = "class";
 
     /**********************************************Map的集合操作********************************************/
 
@@ -44,8 +43,8 @@ public final class MwMapUtil {
      * <p>
      * 包括key的差集, key的交集, 以及key相同但value不同的元素。
      */
-    public static <K, V> MapDifference<K, V> difference(Map<? extends K, ? extends V> left,
-                                                        Map<? extends K, ? extends V> right) {
+    public <K, V> MapDifference<K, V> difference(Map<? extends K, ? extends V> left,
+                                                 Map<? extends K, ? extends V> right) {
         return Maps.difference(left, right);
     }
 
@@ -56,10 +55,8 @@ public final class MwMapUtil {
      * @param excludePropertyName
      * @return
      */
-    public static Map<String, Object> bean2Map(Object bean, String... excludePropertyName) {
-        if (null == bean) {
-            return Maps.newHashMap();
-        }
+    public Map<String, Object> bean2Map(Object bean, String... excludePropertyName) {
+        if (null == bean) return Maps.newHashMap();
 
         Class<?> type = bean.getClass();
         Map<String, Object> resultMap = Maps.newHashMap();
@@ -97,17 +94,13 @@ public final class MwMapUtil {
      * @param obj
      * @return
      */
-    public static Map<String, Object> bean2Map4Cglib(Object obj) {
-        if (null == obj) {
-            return Maps.newHashMap();
-        }
+    public Map<String, Object> bean2Map4Cglib(Object obj) {
+        if (null == obj) return Maps.newHashMap();
 
         Map<String, Object> resultMap = Maps.newHashMap();
 
         BeanMap beanMap = BeanMap.create(obj);
-        for (Object key : beanMap.keySet()) {
-            resultMap.put(MwStringUtil.getValue(key), beanMap.get(key));
-        }
+        for (Object key : beanMap.keySet()) resultMap.put(MwStringUtil.getValue(key), beanMap.get(key));
         return resultMap;
     }
 
@@ -117,10 +110,8 @@ public final class MwMapUtil {
      * @param obj
      * @return
      */
-    public static Map<String, Object> bean2Map4Json(Object obj) {
-        if (null == obj) {
-            return Maps.newHashMap();
-        }
+    public Map<String, Object> bean2Map4Json(Object obj) {
+        if (null == obj) return Maps.newHashMap();
         return MwJsonUtil.fromJson(MwJsonUtil.toJson(obj), new TypeReference<Map<String, Object>>() {
         });
     }
@@ -133,10 +124,8 @@ public final class MwMapUtil {
      * @param excludePropertyName
      * @return
      */
-    public static Map<String, Object> bean2Map4FastJson(Object obj, boolean isFastJsonField, String... excludePropertyName) {
-        if (null == obj) {
-            return Maps.newHashMap();
-        }
+    public Map<String, Object> bean2Map4FastJson(Object obj, boolean isFastJsonField, String... excludePropertyName) {
+        if (null == obj) return Maps.newHashMap();
 
         Class<?> type = obj.getClass();
         Map<String, Object> resultMap = Maps.newHashMap();
@@ -165,15 +154,11 @@ public final class MwMapUtil {
                     return null;
                 }
 
-                if (isFastJsonField) {
-                    if (field != null) {
-                        JSONField jsonField = field.getAnnotation(JSONField.class);
-                        if (jsonField != null) {
-                            String annotationPropertyName = jsonField.name();
-                            if (StringUtils.isNotBlank(annotationPropertyName)) {
-                                propertyName = annotationPropertyName;
-                            }
-                        }
+                if (isFastJsonField) if (field != null) {
+                    JSONField jsonField = field.getAnnotation(JSONField.class);
+                    if (jsonField != null) {
+                        String annotationPropertyName = jsonField.name();
+                        if (StringUtils.isNotBlank(annotationPropertyName)) propertyName = annotationPropertyName;
                     }
                 }
                 resultMap.put(propertyName, result);
@@ -190,10 +175,8 @@ public final class MwMapUtil {
      * @param excludePropertyName
      * @return
      */
-    public static Map<String, Object> bean2Map4Jackson(Object obj, boolean isJacksonField, String... excludePropertyName) {
-        if (null == obj) {
-            return Maps.newHashMap();
-        }
+    public Map<String, Object> bean2Map4Jackson(Object obj, boolean isJacksonField, String... excludePropertyName) {
+        if (null == obj) return Maps.newHashMap();
 
         Class<?> type = obj.getClass();
         Map<String, Object> resultMap = Maps.newHashMap();
@@ -222,15 +205,11 @@ public final class MwMapUtil {
                     return null;
                 }
 
-                if (isJacksonField) {
-                    if (field != null) {
-                        JsonProperty jsonProperty = field.getAnnotation(JsonProperty.class);
-                        if (jsonProperty != null) {
-                            String annotationPropertyName = jsonProperty.value();
-                            if (StringUtils.isNotBlank(annotationPropertyName)) {
-                                propertyName = annotationPropertyName;
-                            }
-                        }
+                if (isJacksonField) if (field != null) {
+                    JsonProperty jsonProperty = field.getAnnotation(JsonProperty.class);
+                    if (jsonProperty != null) {
+                        String annotationPropertyName = jsonProperty.value();
+                        if (StringUtils.isNotBlank(annotationPropertyName)) propertyName = annotationPropertyName;
                     }
                 }
                 resultMap.put(propertyName, result);
@@ -245,10 +224,8 @@ public final class MwMapUtil {
      * @param obj
      * @return
      */
-    public static Map<String, Object> bean2Map4Jackson(Object obj) {
-        if (null == obj) {
-            return null;
-        }
+    public Map<String, Object> bean2Map4Jackson(Object obj) {
+        if (null == obj) return null;
 
         return MwJacksonUtil.bean2Map(obj, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {
         });
@@ -262,10 +239,8 @@ public final class MwMapUtil {
      * @param <T>
      * @return
      */
-    public static <T> T map2Bean(Map<String, Object> map, Class<T> clazz) {
-        if (null == map) {
-            return null;
-        }
+    public <T> T map2Bean(Map<String, Object> map, Class<T> clazz) {
+        if (null == map) return null;
 
         return MwJacksonUtil.map2Bean(map, clazz);
     }
@@ -278,10 +253,8 @@ public final class MwMapUtil {
      * @param <T>
      * @return
      */
-    public static <T> T map2Bean(Map<String, Object> map, com.fasterxml.jackson.core.type.TypeReference<?> typeReference) {
-        if (null == map) {
-            return null;
-        }
+    public <T> T map2Bean(Map<String, Object> map, com.fasterxml.jackson.core.type.TypeReference<?> typeReference) {
+        if (null == map) return null;
 
         return MwJacksonUtil.map2Bean(map, typeReference);
     }
@@ -292,10 +265,8 @@ public final class MwMapUtil {
      * @param map
      * @param object
      */
-    public static void map2Bean(Map<String, Object> map, Object object) {
-        if (null == map || null == object) {
-            return;
-        }
+    public void map2Bean(Map<String, Object> map, Object object) {
+        if (null == map || null == object) return;
 
         try {
             BeanUtils.populate(object, map);
@@ -309,10 +280,9 @@ public final class MwMapUtil {
      * @param map
      * @param object
      */
-    public static void map2BeanThrowEx(Map<String, Object> map, Object object) throws InvocationTargetException, IllegalAccessException {
-        if (null == map || null == object) {
-            return;
-        }
+    public void map2BeanThrowEx(Map<String, Object> map, Object object) throws InvocationTargetException,
+            IllegalAccessException {
+        if (null == map || null == object) return;
 
         BeanUtils.populate(object, map);
     }
@@ -349,11 +319,9 @@ public final class MwMapUtil {
      * @param mapList Map列表
      * @return Map
      */
-    public static <K, V> Map<K, List<V>> toListMap(Iterable<? extends Map<K, V>> mapList) {
-        final HashMap<K, List<V>> resultMap = new HashMap<>();
-        if (IterableUtils.isEmpty(mapList)) {
-            return resultMap;
-        }
+    public <K, V> Map<K, List<V>> toListMap(Iterable<? extends Map<K, V>> mapList) {
+        HashMap<K, List<V>> resultMap = new HashMap<>();
+        if (IterableUtils.isEmpty(mapList)) return resultMap;
 
         Set<Map.Entry<K, V>> entrySet;
         for (Map<K, V> map : mapList) {
@@ -366,9 +334,7 @@ public final class MwMapUtil {
                 if (null == valueList) {
                     valueList = Lists.newArrayList(entry.getValue());
                     resultMap.put(key, valueList);
-                } else {
-                    valueList.add(entry.getValue());
-                }
+                } else valueList.add(entry.getValue());
             }
         }
 
@@ -404,11 +370,9 @@ public final class MwMapUtil {
      * @param listMap 列表Map
      * @return Map列表
      */
-    public static <K, V> List<Map<K, V>> toMapList(Map<K, ? extends Iterable<V>> listMap) {
-        final List<Map<K, V>> resultList = new ArrayList<>();
-        if (MapUtils.isEmpty(listMap)) {
-            return resultList;
-        }
+    public <K, V> List<Map<K, V>> toMapList(Map<K, ? extends Iterable<V>> listMap) {
+        List<Map<K, V>> resultList = new ArrayList<>();
+        if (MapUtils.isEmpty(listMap)) return resultList;
 
         boolean isEnd;// 是否结束。标准是元素列表已耗尽
         int index = 0;// 值索引
@@ -423,15 +387,11 @@ public final class MwMapUtil {
                 vListSize = vList.size();
                 if (index < vListSize) {
                     map.put(entry.getKey(), vList.get(index));
-                    if (index != vListSize - 1) {
-                        // 当值列表中还有更多值（非最后一个）, 继续循环
-                        isEnd = false;
-                    }
+                    // 当值列表中还有更多值（非最后一个）, 继续循环
+                    if (index != vListSize - 1) isEnd = false;
                 }
             }
-            if (false == map.isEmpty()) {
-                resultList.add(map);
-            }
+            if (false == map.isEmpty()) resultList.add(map);
             index++;
         } while (false == isEnd);
 
@@ -451,7 +411,7 @@ public final class MwMapUtil {
      * @return 连接字符串
      * @since 3.1.1
      */
-    public static <K, V> String join(Map<K, V> map, String separator, String keyValueSeparator) {
+    public <K, V> String join(Map<K, V> map, String separator, String keyValueSeparator) {
         return join(map, separator, keyValueSeparator, false);
     }
 
@@ -466,7 +426,7 @@ public final class MwMapUtil {
      * @return 连接后的字符串
      * @since 3.1.1
      */
-    public static <K, V> String joinIgnoreNull(Map<K, V> map, String separator, String keyValueSeparator) {
+    public <K, V> String joinIgnoreNull(Map<K, V> map, String separator, String keyValueSeparator) {
         return join(map, separator, keyValueSeparator, true);
     }
 
@@ -482,30 +442,26 @@ public final class MwMapUtil {
      * @return 连接后的字符串
      * @since 3.1.1
      */
-    public static <K, V> String join(Map<K, V> map, String separator, String keyValueSeparator, boolean isIgnoreNull) {
-        final StringBuilder strBuilder = new StringBuilder(16);
+    public <K, V> String join(Map<K, V> map, String separator, String keyValueSeparator, boolean isIgnoreNull) {
+        StringBuilder strBuilder = new StringBuilder(16);
         boolean isFirst = true;
-        for (Map.Entry<K, V> entry : map.entrySet()) {
+        for (Map.Entry<K, V> entry : map.entrySet())
             if (false == isIgnoreNull || entry.getKey() != null && entry.getValue() != null) {
-                if (isFirst) {
-                    isFirst = false;
-                } else {
-                    strBuilder.append(separator);
-                }
+                if (isFirst) isFirst = false;
+                else strBuilder.append(separator);
                 strBuilder.append(Objects.toString(entry.getKey(), "")).append(keyValueSeparator).append(Objects.toString(entry.getValue(), ""));
             }
-        }
         return strBuilder.toString();
     }
 
-    public static <K, V> Map<K, V> filterByKey(Map<K, V> map, Predicate<V> predicate) {
+    public <K, V> Map<K, V> filterByKey(Map<K, V> map, Predicate<V> predicate) {
         return map.entrySet()
                 .stream()
                 .filter(x -> predicate.test(x.getValue()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public static <K, V> Map<K, V> filterByValue(Map<K, V> map, Predicate<K> predicate) {
+    public <K, V> Map<K, V> filterByValue(Map<K, V> map, Predicate<K> predicate) {
         return map.entrySet()
                 .stream()
                 .filter(x -> predicate.test(x.getKey()))

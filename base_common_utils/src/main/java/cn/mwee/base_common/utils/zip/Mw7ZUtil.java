@@ -1,6 +1,7 @@
 package cn.mwee.base_common.utils.zip;
 
 import cn.mwee.base_common.utils.log4j2.MwLogger;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZFile;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
@@ -15,13 +16,10 @@ import java.util.List;
 /**
  * 7z格式文件 压缩、解压 工具类
  */
-public final class Mw7ZUtil {
+@UtilityClass
+public class Mw7ZUtil {
 
-    private static Logger logger = MwLogger.getInstance(Mw7ZUtil.class);
-
-    private Mw7ZUtil() {
-        //工具类无需对象实例化
-    }
+    private Logger logger = MwLogger.getInstance(Mw7ZUtil.class);
 
     /**
      * 将文件压缩为 7z 格式
@@ -30,7 +28,7 @@ public final class Mw7ZUtil {
      * @param targetPath       压缩后保存的路径 包括压缩文件名 如："D:/FTP/Archive_20150115.7z"
      * @throws Exception
      */
-    public static void compress(List<File> fileToSevenZList, String targetPath) throws Exception {
+    public void compress(List<File> fileToSevenZList, String targetPath) throws Exception {
         if (fileToSevenZList.size() == 0) {
             return;
         }
@@ -77,7 +75,7 @@ public final class Mw7ZUtil {
      * @param targetPath 解压后保存的路径 如："D:/FTP/20150115/"
      * @throws Exception
      */
-    public static void uncompress(String sourcePath, String targetPath) throws Exception {
+    public void uncompress(String sourcePath, String targetPath) throws Exception {
         // 路径为空直接返回
         if (StringUtils.isEmpty(sourcePath) || StringUtils.isEmpty(targetPath)) {
             return;
@@ -121,7 +119,7 @@ public final class Mw7ZUtil {
     }
 
     // 私有方法 自动生成 压缩文件名
-    private static String getFormattedFileName() {
+    private String getFormattedFileName() {
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmm");

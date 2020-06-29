@@ -2,6 +2,7 @@ package cn.mwee.base_common.utils.collection;
 
 import com.google.common.base.Function;
 import com.google.common.collect.*;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -13,28 +14,22 @@ import java.util.*;
 /**
  * Created by liaomengge on 16/4/20.
  */
-public final class MwListUtil {
-
-    private MwListUtil() {
-    }
+@UtilityClass
+public class MwListUtil {
 
     /**
      * 获取第一个元素, 如果List为空返回 null.
      */
-    public static <T> T getFirst(List<T> list) {
-        if (CollectionUtils.isEmpty(list)) {
-            return null;
-        }
+    public <T> T getFirst(List<T> list) {
+        if (CollectionUtils.isEmpty(list)) return null;
         return list.get(0);
     }
 
     /**
      * 获取最后一个元素, 如果List为空返回null.
      */
-    public static <T> T getLast(List<T> list) {
-        if (CollectionUtils.isEmpty(list)) {
-            return null;
-        }
+    public <T> T getLast(List<T> list) {
+        if (CollectionUtils.isEmpty(list)) return null;
 
         return list.get(list.size() - 1);
     }
@@ -46,8 +41,8 @@ public final class MwListUtil {
      * <p>
      * 对比Apache Common Collection4 ListUtils, 优化了初始大小
      */
-    public static <E> List<E> union(final List<? extends E> list1, final List<? extends E> list2) {
-        final List<E> result = new ArrayList<E>(list1.size() + list2.size());
+    public <E> List<E> union(List<? extends E> list1, List<? extends E> list2) {
+        List<E> result = new ArrayList<>(list1.size() + list2.size());
         result.addAll(list1);
         result.addAll(list2);
         return result;
@@ -60,7 +55,7 @@ public final class MwListUtil {
      * <p>
      * 与List.retainAll()相比, 考虑了的List中相同元素出现的次数, 如"a"在list1出现两次, 而在list2中只出现一次, 则交集里会保留一个"a".
      */
-    public static <T> List<T> intersection(final List<? extends T> list1, final List<? extends T> list2) {
+    public <T> List<T> intersection(List<? extends T> list1, List<? extends T> list2) {
         List<? extends T> smaller = list1;
         List<? extends T> larger = list2;
         if (list1.size() > list2.size()) {
@@ -69,14 +64,13 @@ public final class MwListUtil {
         }
 
         // 克隆一个可修改的副本
-        List<T> newSmaller = new ArrayList<T>(smaller);
-        List<T> result = new ArrayList<T>(smaller.size());
-        for (final T e : larger) {
+        List<T> newSmaller = new ArrayList<>(smaller);
+        List<T> result = new ArrayList<>(smaller.size());
+        for (T e : larger)
             if (newSmaller.contains(e)) {
                 result.add(e);
                 newSmaller.remove(e);
             }
-        }
         return result;
     }
 
@@ -85,13 +79,11 @@ public final class MwListUtil {
      * <p>
      * 与List.removeAll()相比, 会计算元素出现的次数, 如"a"在list1出现两次, 而在list2中只出现一次, 则差集里会保留一个"a".
      */
-    public static <T> List<T> difference(final List<? extends T> list1, final List<? extends T> list2) {
-        final List<T> result = new ArrayList<T>(list1);
-        final Iterator<? extends T> iterator = list2.iterator();
+    public <T> List<T> difference(List<? extends T> list1, List<? extends T> list2) {
+        List<T> result = new ArrayList<>(list1);
+        Iterator<? extends T> iterator = list2.iterator();
 
-        while (iterator.hasNext()) {
-            result.remove(iterator.next());
-        }
+        while (iterator.hasNext()) result.remove(iterator.next());
 
         return result;
     }
@@ -101,32 +93,26 @@ public final class MwListUtil {
      * <p>
      * from Apache Common Collection4 ListUtils, 但其并集－交集时, 没有对交集*2, 所以做了修改
      */
-    public static <T> List<T> disjoint(final List<? extends T> list1, final List<? extends T> list2) {
+    public <T> List<T> disjoint(List<? extends T> list1, List<? extends T> list2) {
         List<T> intersection = intersection(list1, list2);
         List<T> towIntersection = union(intersection, intersection);
         return difference(union(list1, list2), towIntersection);
     }
 
 
-    public static <T> Map<String, T> list2Map(List<T> list, String key, boolean isSort) {
-        if (list == null) {
-            return null;
-        }
+    public <T> Map<String, T> list2Map(List<T> list, String key, boolean isSort) {
+        if (list == null) return null;
 
         Map<String, T> map;
-        if (isSort) {
-            map = new TreeMap<>();
-        } else {
-            map = new HashMap<>(list.size());
-        }
+        if (isSort) map = new TreeMap<>();
+        else map = new HashMap<>(list.size());
 
-        for (T t : list) {
+        for (T t : list)
             try {
                 map.put(BeanUtils.getProperty(t, key), t);
             } catch (Exception e) {
                 return map;
             }
-        }
         return map;
     }
 
@@ -134,17 +120,13 @@ public final class MwListUtil {
      * 转换
      ********************************************/
 
-    public static <T> Map<String, Collection<T>> transformMap(List<T> list, Function<T, String> function) {
-        if (list == null) {
-            return null;
-        }
+    public <T> Map<String, Collection<T>> transformMap(List<T> list, Function<T, String> function) {
+        if (list == null) return null;
 
         Multimap<String, T> resultMap = ArrayListMultimap.create();
         for (T t : list) {
             String value = function.apply(t);
-            if (StringUtils.isNotBlank(value)) {
-                resultMap.put(value, t);
-            }
+            if (StringUtils.isNotBlank(value)) resultMap.put(value, t);
         }
         return resultMap.asMap();
     }
@@ -157,7 +139,7 @@ public final class MwListUtil {
      * @param <T>
      * @return
      */
-    public static <T> Map<String, Collection<T>> transformMap(List<T> list, String key) {
+    public <T> Map<String, Collection<T>> transformMap(List<T> list, String key) {
         return transformMap(list, input -> {
             try {
                 return BeanUtils.getProperty(input, key);
@@ -167,10 +149,8 @@ public final class MwListUtil {
         });
     }
 
-    public static <T> Map<String, Collection<T>> transformMap2(List<T> list, Function<T, String> function) {
-        if (list == null) {
-            return null;
-        }
+    public <T> Map<String, Collection<T>> transformMap2(List<T> list, Function<T, String> function) {
+        if (list == null) return null;
 
         return Multimaps.index(list, function).asMap();
     }
@@ -184,7 +164,7 @@ public final class MwListUtil {
      * @param <T>
      * @return
      */
-    public static <T> Map<String, Collection<T>> transformMap2(List<T> list, String key) {
+    public <T> Map<String, Collection<T>> transformMap2(List<T> list, String key) {
         return transformMap2(list, input -> {
             try {
                 return BeanUtils.getProperty(input, key);
@@ -194,43 +174,33 @@ public final class MwListUtil {
         });
     }
 
-    public static <T> void sortListByKey(List<Map<String, T>> list, String key) {
+    public <T> void sortListByKey(List<Map<String, T>> list, String key) {
         sortListByKey(list, key, true);
     }
 
-    public static <T> void sortListByKey(List<Map<String, T>> list, String key, boolean asc) {
-        if (list == null) {
-            return;
-        }
+    public <T> void sortListByKey(List<Map<String, T>> list, String key, boolean asc) {
+        if (list == null) return;
 
         Comparator<Map<String, T>> comparator = (o1, o2) -> {
-            if (asc) {
-                return MapUtils.getString(o1, key).compareTo(MapUtils.getString(o2, key));
-            }
+            if (asc) return MapUtils.getString(o1, key).compareTo(MapUtils.getString(o2, key));
             return MapUtils.getString(o1, key).compareTo(MapUtils.getString(o2, key));
         };
         Collections.sort(list, Ordering.from(comparator));
     }
 
-    public static <T> List<T> transform(List<Map<String, T>> list, String key) {
+    public <T> List<T> transform(List<Map<String, T>> list, String key) {
         return Lists.transform(list, input -> {
-            if (input != null) {
-                return input.get(key);
-            }
+            if (input != null) return input.get(key);
             return null;
         });
     }
 
-    public static <T> List<T> transform2(List<Map<String, T>> list, String key) {
-        if (list == null) {
-            return null;
-        }
+    public <T> List<T> transform2(List<Map<String, T>> list, String key) {
+        if (list == null) return null;
         List<T> resultList = Lists.newArrayList();
         list.stream().filter(map -> MapUtils.isNotEmpty(map)).forEach(map -> {
             T t = map.get(key);
-            if (t != null) {
-                resultList.add(t);
-            }
+            if (t != null) resultList.add(t);
         });
         return resultList;
     }
@@ -243,15 +213,11 @@ public final class MwListUtil {
      * @param <V>
      * @return
      */
-    public static <K, V> List<Map<K, V>> removeEmptyElement(List<Map<K, V>> list) {
-        if (CollectionUtils.isEmpty(list)) {
-            return new ArrayList<>(16);
-        }
+    public <K, V> List<Map<K, V>> removeEmptyElement(List<Map<K, V>> list) {
+        if (CollectionUtils.isEmpty(list)) return new ArrayList<>(16);
         for (int i = list.size() - 1; i >= 0; i--) {
             Map<K, V> element = list.get(i);
-            if (MapUtils.isEmpty(element)) {
-                list.remove(i);
-            }
+            if (MapUtils.isEmpty(element)) list.remove(i);
         }
         return list;
     }

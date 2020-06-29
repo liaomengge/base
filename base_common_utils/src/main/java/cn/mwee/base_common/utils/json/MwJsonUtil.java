@@ -7,6 +7,7 @@ import com.alibaba.fastjson.serializer.NameFilter;
 import com.alibaba.fastjson.serializer.PropertyFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -17,10 +18,8 @@ import java.util.Map;
 /**
  * Created by liaomengge on 17/11/8.
  */
-public final class MwJsonUtil {
-
-    private MwJsonUtil() {
-    }
+@UtilityClass
+public class MwJsonUtil {
 
     /**
      * 是否是json字符串
@@ -28,7 +27,7 @@ public final class MwJsonUtil {
      * @param str
      * @return
      */
-    public static boolean isJson(String str) {
+    public boolean isJson(String str) {
         try {
             fromJson(str);
             return true;
@@ -45,10 +44,8 @@ public final class MwJsonUtil {
      * @param object
      * @return
      */
-    public static String toJson(Object object) {
-        if (null == object) {
-            return null;
-        }
+    public String toJson(Object object) {
+        if (null == object) return null;
         return JSON.toJSONString(object);
     }
 
@@ -60,13 +57,9 @@ public final class MwJsonUtil {
      * @param object
      * @return
      */
-    public static String toJson4Log(Object object) {
-        if (null == object) {
-            return null;
-        }
-        if (object instanceof String) {
-            return (String) object;
-        }
+    public String toJson4Log(Object object) {
+        if (null == object) return null;
+        if (object instanceof String) return (String) object;
         return JSON.toJSONString(object, SerializerFeature.DisableCircularReferenceDetect);
     }
 
@@ -79,10 +72,8 @@ public final class MwJsonUtil {
      * @param features
      * @return
      */
-    public static String toJson(Object object, SerializerFeature... features) {
-        if (null == object) {
-            return null;
-        }
+    public String toJson(Object object, SerializerFeature... features) {
+        if (null == object) return null;
         return JSON.toJSONString(object, features);
     }
 
@@ -92,7 +83,7 @@ public final class MwJsonUtil {
      * @param object
      * @return
      */
-    public static String toJson4DateFormat(Object object) {
+    public String toJson4DateFormat(Object object) {
         return toJson4DateFormat(object, Collections.EMPTY_MAP);
     }
 
@@ -107,14 +98,11 @@ public final class MwJsonUtil {
      * @param valueFormat
      * @return
      */
-    public static String toJson4DateFormat(Object object, Map<String, Object> valueFormat) {
-        if (valueFormat == null || object == null) {
-            return toJson(object);
-        }
+    public String toJson4DateFormat(Object object, Map<String, Object> valueFormat) {
+        if (valueFormat == null || object == null) return toJson(object);
         ValueFilter valueFilter = (obj, propertyName, propertyValue) -> {
-            if (valueFormat.containsKey(propertyName)) {
+            if (valueFormat.containsKey(propertyName))
                 return MwDateUtil.getDate2String((Date) propertyValue, valueFormat.get(propertyName).toString());
-            }
             return propertyValue;
         };
 
@@ -128,14 +116,10 @@ public final class MwJsonUtil {
      * @param ignorePropertyNames
      * @return
      */
-    public static String toJsonIgnoreProperty(Object object, String... ignorePropertyNames) {
-        if (ArrayUtils.isEmpty(ignorePropertyNames) || object == null) {
-            return toJson(object);
-        }
+    public String toJsonIgnoreProperty(Object object, String... ignorePropertyNames) {
+        if (ArrayUtils.isEmpty(ignorePropertyNames) || object == null) return toJson(object);
         PropertyFilter propertyFilter = (obj, propertyName, propertyValue) -> {
-            if (ArrayUtils.indexOf(ignorePropertyNames, propertyName) == -1) {
-                return true;
-            }
+            if (ArrayUtils.indexOf(ignorePropertyNames, propertyName) == -1) return true;
             return false;
         };
         return JSON.toJSONString(object, propertyFilter);
@@ -148,14 +132,10 @@ public final class MwJsonUtil {
      * @param includePropertyNames
      * @return
      */
-    public static String toJsonIncludeProperty(Object object, String... includePropertyNames) {
-        if (ArrayUtils.isEmpty(includePropertyNames) || object == null) {
-            return toJson(object);
-        }
+    public String toJsonIncludeProperty(Object object, String... includePropertyNames) {
+        if (ArrayUtils.isEmpty(includePropertyNames) || object == null) return toJson(object);
         PropertyFilter propertyFilter = (obj, propertyName, propertyValue) -> {
-            if (ArrayUtils.indexOf(includePropertyNames, propertyName) != -1) {
-                return true;
-            }
+            if (ArrayUtils.indexOf(includePropertyNames, propertyName) != -1) return true;
             return false;
         };
         return JSON.toJSONString(object, propertyFilter);
@@ -168,30 +148,26 @@ public final class MwJsonUtil {
      * @param replacePropertyMap
      * @return
      */
-    public static String toJsonReplaceProperty(Object object, Map<String, Object> replacePropertyMap) {
-        if (MapUtils.isEmpty(replacePropertyMap) || object == null) {
-            return toJson(object);
-        }
+    public String toJsonReplaceProperty(Object object, Map<String, Object> replacePropertyMap) {
+        if (MapUtils.isEmpty(replacePropertyMap) || object == null) return toJson(object);
 
         NameFilter nameFilter = (object1, propertyName, propertyValue) -> {
-            if (replacePropertyMap.containsKey(propertyName)) {
-                return replacePropertyMap.get(propertyName).toString();
-            }
+            if (replacePropertyMap.containsKey(propertyName)) return replacePropertyMap.get(propertyName).toString();
             return propertyName;
         };
 
         return JSON.toJSONString(object, nameFilter);
     }
 
-    public static Object fromJson(String jsonString) {
+    public Object fromJson(String jsonString) {
         return JSON.parse(jsonString);
     }
 
-    public static <T> T fromJson(String jsonString, Class<T> clz) {
+    public <T> T fromJson(String jsonString, Class<T> clz) {
         return JSON.parseObject(jsonString, clz);
     }
 
-    public static <T> T fromJson(String jsonString, TypeReference<T> typeReference) {
+    public <T> T fromJson(String jsonString, TypeReference<T> typeReference) {
         return JSON.parseObject(jsonString, typeReference);
     }
 }

@@ -1,16 +1,15 @@
 package cn.mwee.base_common.utils.collection;
 
 import com.google.common.collect.Sets;
+import lombok.experimental.UtilityClass;
 
 import java.util.Set;
 
 /**
  * Created by liaomengge on 17/11/23.
  */
-public final class MwSetUtil {
-
-    private MwSetUtil() {
-    }
+@UtilityClass
+public class MwSetUtil {
 
     /**********************************************Set集合运算函数********************************************/
     /**
@@ -18,7 +17,7 @@ public final class MwSetUtil {
      * <p>
      * 如果尝试写入该View会抛出UnsupportedOperationException
      */
-    public static <E> Set<E> unionView(final Set<? extends E> set1, final Set<? extends E> set2) {
+    public <E> Set<E> unionView(Set<? extends E> set1, Set<? extends E> set2) {
         return Sets.union(set1, set2);
     }
 
@@ -27,7 +26,7 @@ public final class MwSetUtil {
      * <p>
      * 如果尝试写入该View会抛出UnsupportedOperationException
      */
-    public static <E> Set<E> intersectionView(final Set<E> set1, final Set<?> set2) {
+    public <E> Set<E> intersectionView(Set<E> set1, Set<?> set2) {
         return Sets.intersection(set1, set2);
     }
 
@@ -36,7 +35,7 @@ public final class MwSetUtil {
      * <p>
      * 如果尝试写入该View会抛出UnsupportedOperationException
      */
-    public static <E> Set<E> differenceView(final Set<E> set1, final Set<?> set2) {
+    public <E> Set<E> differenceView(Set<E> set1, Set<?> set2) {
         return Sets.difference(set1, set2);
     }
 
@@ -45,7 +44,7 @@ public final class MwSetUtil {
      * <p>
      * 如果尝试写入该View会抛出UnsupportedOperationException
      */
-    public static <E> Set<E> disjointView(final Set<? extends E> set1, final Set<? extends E> set2) {
+    public <E> Set<E> disjointView(Set<? extends E> set1, Set<? extends E> set2) {
         return Sets.symmetricDifference(set1, set2);
     }
 }

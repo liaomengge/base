@@ -1,5 +1,7 @@
 package cn.mwee.base_common.utils.date;
 
+import lombok.experimental.UtilityClass;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -10,28 +12,26 @@ import java.util.Date;
 /**
  * Created by liaomengge on 2018/6/2.
  */
-public final class MwJdk8DateUtil {
+@UtilityClass
+public class MwJdk8DateUtil {
 
-    public static final long INTERVAL_UNIT = 1000L;
+    public final long INTERVAL_UNIT = 1000L;
 
-    public static final long MILLISECONDS_SECOND = 1000L;
-    public static final long MILLISECONDS_MINUTE = 60000L;
-    public static final long MILLISECONDS_HOUR = 3600000L;
-    public static final long MILLISECONDS_DAY = 86400000L;
+    public final long MILLISECONDS_SECOND = 1000L;
+    public final long MILLISECONDS_MINUTE = 60000L;
+    public final long MILLISECONDS_HOUR = 3600000L;
+    public final long MILLISECONDS_DAY = 86400000L;
 
-    public final static String yyyy_MM_dd_HH_mm_ss_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
-    public final static String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
-    public final static String yyyy_MM_dd = "yyyy-MM-dd";
-    public final static String yyyyMMdd = "yyyyMMdd";
-    public final static String yyyy_MM = "yyyy-MM";
-    public final static String yyyyMM = "yyyyMM";
-    public final static String yyyy = "yyyy";
-    public final static String HHmmssSSS = "HHmmssSSS";
-    public final static String HHmmss = "HHmmss";
-    public final static String HH_mm_ss = "HH:mm:ss";
-
-    private MwJdk8DateUtil() {
-    }
+    public final String yyyy_MM_dd_HH_mm_ss_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
+    public final String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
+    public final String yyyy_MM_dd = "yyyy-MM-dd";
+    public final String yyyyMMdd = "yyyyMMdd";
+    public final String yyyy_MM = "yyyy-MM";
+    public final String yyyyMM = "yyyyMM";
+    public final String yyyy = "yyyy";
+    public final String HHmmssSSS = "HHmmssSSS";
+    public final String HHmmss = "HHmmss";
+    public final String HH_mm_ss = "HH:mm:ss";
 
     /********************************************************
      * Date to String
@@ -42,7 +42,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getNowDate2String() {
+    public String getNowDate2String() {
         LocalDateTime localDateTime = LocalDateTime.now();
         return localDateTime.format(DateTimeFormatter.ofPattern(yyyy_MM_dd_HH_mm_ss));
     }
@@ -53,7 +53,7 @@ public final class MwJdk8DateUtil {
      * @param pattern
      * @return
      */
-    public static String getNowDate2String(String pattern) {
+    public String getNowDate2String(String pattern) {
         LocalDateTime localDateTime = LocalDateTime.now();
         return localDateTime.format(DateTimeFormatter.ofPattern(pattern));
     }
@@ -64,7 +64,7 @@ public final class MwJdk8DateUtil {
      * @param localDateTime
      * @return
      */
-    public static String getDate2String(LocalDateTime localDateTime) {
+    public String getDate2String(LocalDateTime localDateTime) {
         return localDateTime.format(DateTimeFormatter.ofPattern(yyyy_MM_dd_HH_mm_ss));
     }
 
@@ -77,10 +77,8 @@ public final class MwJdk8DateUtil {
      * @param pattern
      * @return
      */
-    public static String getDate2String(LocalDateTime localDateTime, String pattern) {
-        if (localDateTime == null) {
-            return "";
-        }
+    public String getDate2String(LocalDateTime localDateTime, String pattern) {
+        if (localDateTime == null) return "";
         return localDateTime.format(DateTimeFormatter.ofPattern(pattern));
     }
 
@@ -93,10 +91,8 @@ public final class MwJdk8DateUtil {
      * @param pattern
      * @return
      */
-    public static String getDate2String(LocalDate localDate, String pattern) {
-        if (localDate == null) {
-            return "";
-        }
+    public String getDate2String(LocalDate localDate, String pattern) {
+        if (localDate == null) return "";
         return localDate.format(DateTimeFormatter.ofPattern(pattern));
     }
 
@@ -106,7 +102,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static String getDate2String(LocalDate localDate) {
+    public String getDate2String(LocalDate localDate) {
         return localDate.format(DateTimeFormatter.ofPattern(yyyy_MM_dd));
     }
 
@@ -119,10 +115,8 @@ public final class MwJdk8DateUtil {
      * @param pattern
      * @return
      */
-    public static String getDate2String(LocalTime localTime, String pattern) {
-        if (localTime == null) {
-            return "";
-        }
+    public String getDate2String(LocalTime localTime, String pattern) {
+        if (localTime == null) return "";
         return localTime.format(DateTimeFormatter.ofPattern(pattern));
     }
 
@@ -132,7 +126,7 @@ public final class MwJdk8DateUtil {
      * @param localTime
      * @return
      */
-    public static String getDate2String(LocalTime localTime) {
+    public String getDate2String(LocalTime localTime) {
         return localTime.format(DateTimeFormatter.ofPattern(HH_mm_ss));
     }
 
@@ -148,7 +142,7 @@ public final class MwJdk8DateUtil {
      * @param localDateTime
      * @return
      */
-    public static LocalDateTime getString2Date(String localDateTime) {
+    public LocalDateTime getString2Date(String localDateTime) {
         return getString2Date(localDateTime, yyyy_MM_dd_HH_mm_ss);
     }
 
@@ -161,7 +155,7 @@ public final class MwJdk8DateUtil {
      * @param pattern
      * @return
      */
-    public static LocalDateTime getString2Date(String localDateTime, String pattern) {
+    public LocalDateTime getString2Date(String localDateTime, String pattern) {
         try {
             return LocalDateTime.parse(localDateTime, DateTimeFormatter.ofPattern(pattern));
         } catch (RuntimeException e) {
@@ -177,7 +171,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static LocalDate getString2LocalDate(String localDate) {
+    public LocalDate getString2LocalDate(String localDate) {
         return getString2LocalDate(localDate, yyyy_MM_dd);
     }
 
@@ -190,7 +184,7 @@ public final class MwJdk8DateUtil {
      * @param pattern
      * @return
      */
-    public static LocalDate getString2LocalDate(String localDate, String pattern) {
+    public LocalDate getString2LocalDate(String localDate, String pattern) {
         try {
             return LocalDate.parse(localDate, DateTimeFormatter.ofPattern(pattern));
         } catch (RuntimeException e) {
@@ -206,7 +200,7 @@ public final class MwJdk8DateUtil {
      * @param localTime
      * @return
      */
-    public static LocalTime getString2LocalTime(String localTime) {
+    public LocalTime getString2LocalTime(String localTime) {
         return getString2LocalTime(localTime, HH_mm_ss);
     }
 
@@ -219,7 +213,7 @@ public final class MwJdk8DateUtil {
      * @param pattern
      * @return
      */
-    public static LocalTime getString2LocalTime(String localTime, String pattern) {
+    public LocalTime getString2LocalTime(String localTime, String pattern) {
         try {
             return LocalTime.parse(localTime, DateTimeFormatter.ofPattern(pattern));
         } catch (RuntimeException e) {
@@ -231,17 +225,13 @@ public final class MwJdk8DateUtil {
      * Date to Long
      *******************************************************/
 
-    public static long getDate2Long(LocalDateTime localDateTime) {
-        if (localDateTime == null) {
-            return 0;
-        }
+    public long getDate2Long(LocalDateTime localDateTime) {
+        if (localDateTime == null) return 0;
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
-    public static long getDate2Long(LocalDate localDate) {
-        if (localDate == null) {
-            return 0;
-        }
+    public long getDate2Long(LocalDate localDate) {
+        if (localDate == null) return 0;
         return localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
@@ -249,7 +239,7 @@ public final class MwJdk8DateUtil {
      * Long to Date
      *******************************************************/
 
-    public static LocalDateTime getLong2Date(long milliSeconds) {
+    public LocalDateTime getLong2Date(long milliSeconds) {
         return LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSeconds), ZoneId.systemDefault());
     }
 
@@ -257,11 +247,11 @@ public final class MwJdk8DateUtil {
      * Long to String
      *******************************************************/
 
-    public static String getLong2String(long milliSeconds) {
+    public String getLong2String(long milliSeconds) {
         return getDate2String(getLong2Date(milliSeconds));
     }
 
-    public static String getLong2String(long milliSeconds, String pattern) {
+    public String getLong2String(long milliSeconds, String pattern) {
         return getDate2String(getLong2Date(milliSeconds), pattern);
     }
 
@@ -274,7 +264,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static long getSecondTime() {
+    public long getSecondTime() {
         return Clock.systemDefaultZone().instant().getEpochSecond();
     }
 
@@ -284,10 +274,8 @@ public final class MwJdk8DateUtil {
      * @param localDateTime
      * @return
      */
-    public static long getSecondTime(LocalDateTime localDateTime) {
-        if (localDateTime == null) {
-            return 0;
-        }
+    public long getSecondTime(LocalDateTime localDateTime) {
+        if (localDateTime == null) return 0;
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond();
     }
 
@@ -296,7 +284,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static long getMilliSecondsTime() {
+    public long getMilliSecondsTime() {
         return Clock.systemDefaultZone().millis();
     }
 
@@ -305,10 +293,8 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static long getMilliSecondsTime(LocalDateTime localDateTime) {
-        if (localDateTime == null) {
-            return 0;
-        }
+    public long getMilliSecondsTime(LocalDateTime localDateTime) {
+        if (localDateTime == null) return 0;
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
@@ -321,7 +307,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getTodayBegin2String() {
+    public String getTodayBegin2String() {
         return getTodayBegin().format(DateTimeFormatter.ofPattern(yyyy_MM_dd_HH_mm_ss));
     }
 
@@ -330,7 +316,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getTodayEnd2String() {
+    public String getTodayEnd2String() {
         return getTodayEnd().format(DateTimeFormatter.ofPattern(yyyy_MM_dd_HH_mm_ss));
     }
 
@@ -339,7 +325,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static LocalDateTime getTodayBegin() {
+    public LocalDateTime getTodayBegin() {
         return getBegin4Date(LocalDateTime.now());
     }
 
@@ -348,7 +334,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static LocalDateTime getTodayEnd() {
+    public LocalDateTime getTodayEnd() {
         return getEnd4Date(LocalDateTime.now());
     }
 
@@ -358,7 +344,7 @@ public final class MwJdk8DateUtil {
      * @param localDateTime
      * @return
      */
-    public static String getBegin4Date2String(LocalDateTime localDateTime) {
+    public String getBegin4Date2String(LocalDateTime localDateTime) {
         return getBegin4Date(localDateTime).format(DateTimeFormatter.ofPattern(yyyy_MM_dd_HH_mm_ss));
     }
 
@@ -368,7 +354,7 @@ public final class MwJdk8DateUtil {
      * @param localDateTime
      * @return
      */
-    public static String getEnd4Date2String(LocalDateTime localDateTime) {
+    public String getEnd4Date2String(LocalDateTime localDateTime) {
         return getEnd4Date(localDateTime).format(DateTimeFormatter.ofPattern(yyyy_MM_dd_HH_mm_ss));
     }
 
@@ -378,7 +364,7 @@ public final class MwJdk8DateUtil {
      * @param localDateTime
      * @return
      */
-    public static LocalDateTime getBegin4Date(LocalDateTime localDateTime) {
+    public LocalDateTime getBegin4Date(LocalDateTime localDateTime) {
         return LocalDateTime.of(localDateTime.toLocalDate(), LocalTime.MIN);
     }
 
@@ -388,7 +374,7 @@ public final class MwJdk8DateUtil {
      * @param localDateTime
      * @return
      */
-    public static LocalDateTime getEnd4Date(LocalDateTime localDateTime) {
+    public LocalDateTime getEnd4Date(LocalDateTime localDateTime) {
         return LocalDateTime.of(localDateTime.toLocalDate(), LocalTime.MAX);
     }
 
@@ -398,7 +384,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static String getBegin4Date2String(LocalDate localDate) {
+    public String getBegin4Date2String(LocalDate localDate) {
         return getBegin4Date(localDate).format(DateTimeFormatter.ofPattern(yyyy_MM_dd_HH_mm_ss));
     }
 
@@ -408,7 +394,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static String getEnd4Date2String(LocalDate localDate) {
+    public String getEnd4Date2String(LocalDate localDate) {
         return getEnd4Date(localDate).format(DateTimeFormatter.ofPattern(yyyy_MM_dd_HH_mm_ss));
     }
 
@@ -418,7 +404,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static LocalDateTime getBegin4Date(LocalDate localDate) {
+    public LocalDateTime getBegin4Date(LocalDate localDate) {
         return LocalDateTime.of(localDate, LocalTime.MIN);
     }
 
@@ -428,7 +414,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static LocalDateTime getEnd4Date(LocalDate localDate) {
+    public LocalDateTime getEnd4Date(LocalDate localDate) {
         return LocalDateTime.of(localDate, LocalTime.MAX);
     }
 
@@ -441,7 +427,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getMonthBegin2String() {
+    public String getMonthBegin2String() {
         return getMonthBegin().format(DateTimeFormatter.ofPattern(yyyy_MM_dd));
     }
 
@@ -450,7 +436,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getMonthEnd2String() {
+    public String getMonthEnd2String() {
         return getMonthEnd().format(DateTimeFormatter.ofPattern(yyyy_MM_dd));
     }
 
@@ -459,7 +445,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static LocalDate getMonthBegin() {
+    public LocalDate getMonthBegin() {
         return getBegin4Month(LocalDate.now());
     }
 
@@ -468,7 +454,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static LocalDate getMonthEnd() {
+    public LocalDate getMonthEnd() {
         return getEnd4Month(LocalDate.now());
     }
 
@@ -478,7 +464,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static String getBegin4Month2String(LocalDate localDate) {
+    public String getBegin4Month2String(LocalDate localDate) {
         return getBegin4Month(localDate).format(DateTimeFormatter.ofPattern(yyyy_MM_dd));
     }
 
@@ -488,7 +474,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static String getEnd4Month2String(LocalDate localDate) {
+    public String getEnd4Month2String(LocalDate localDate) {
         return getEnd4Month(localDate).format(DateTimeFormatter.ofPattern(yyyy_MM_dd));
     }
 
@@ -497,7 +483,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getTodayMonth2String() {
+    public String getTodayMonth2String() {
         return getMonth2String(LocalDate.now());
     }
 
@@ -507,7 +493,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static String getMonth2String(LocalDate localDate) {
+    public String getMonth2String(LocalDate localDate) {
         return localDate.format(DateTimeFormatter.ofPattern(yyyy_MM));
     }
 
@@ -517,7 +503,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static LocalDate getBegin4Month(LocalDate localDate) {
+    public LocalDate getBegin4Month(LocalDate localDate) {
         return localDate.with(TemporalAdjusters.firstDayOfMonth());
     }
 
@@ -527,7 +513,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static LocalDate getEnd4Month(LocalDate localDate) {
+    public LocalDate getEnd4Month(LocalDate localDate) {
         return localDate.with(TemporalAdjusters.lastDayOfMonth());
     }
 
@@ -540,7 +526,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getYearBegin2String() {
+    public String getYearBegin2String() {
         return getYearBegin().format(DateTimeFormatter.ofPattern(yyyy_MM));
     }
 
@@ -549,7 +535,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getYearEnd2String() {
+    public String getYearEnd2String() {
         return getYearEnd().format(DateTimeFormatter.ofPattern(yyyy_MM));
     }
 
@@ -558,7 +544,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getTodayYear2String() {
+    public String getTodayYear2String() {
         return getYear2String(LocalDate.now());
     }
 
@@ -568,7 +554,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static String getYear2String(LocalDate localDate) {
+    public String getYear2String(LocalDate localDate) {
         return localDate.format(DateTimeFormatter.ofPattern(yyyy));
     }
 
@@ -577,7 +563,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static LocalDate getYearBegin() {
+    public LocalDate getYearBegin() {
         return getBegin4Year(LocalDate.now());
     }
 
@@ -586,7 +572,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static LocalDate getYearEnd() {
+    public LocalDate getYearEnd() {
         return getEnd4Year(LocalDate.now());
     }
 
@@ -595,7 +581,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getBegin4Year2String(LocalDate localDate) {
+    public String getBegin4Year2String(LocalDate localDate) {
         return getBegin4Year(localDate).format(DateTimeFormatter.ofPattern(yyyy_MM));
     }
 
@@ -604,7 +590,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static String getEnd4Year2String(LocalDate localDate) {
+    public String getEnd4Year2String(LocalDate localDate) {
         return getEnd4Year(localDate).format(DateTimeFormatter.ofPattern(yyyy_MM));
     }
 
@@ -613,7 +599,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static LocalDate getBegin4Year(LocalDate localDate) {
+    public LocalDate getBegin4Year(LocalDate localDate) {
         return localDate.with(TemporalAdjusters.firstDayOfYear());
     }
 
@@ -622,7 +608,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static LocalDate getEnd4Year(LocalDate localDate) {
+    public LocalDate getEnd4Year(LocalDate localDate) {
         return localDate.with(TemporalAdjusters.lastDayOfYear());
     }
 
@@ -637,7 +623,7 @@ public final class MwJdk8DateUtil {
      * @param toLocalDate
      * @return
      */
-    public static int diffDay(LocalDate fromLocalDate, LocalDate toLocalDate) {
+    public int diffDay(LocalDate fromLocalDate, LocalDate toLocalDate) {
         return (int) Duration.between(fromLocalDate, toLocalDate).toDays();
     }
 
@@ -648,7 +634,7 @@ public final class MwJdk8DateUtil {
      * @param toLocalTime
      * @return
      */
-    public static int diffHour(LocalTime fromLocalTime, LocalTime toLocalTime) {
+    public int diffHour(LocalTime fromLocalTime, LocalTime toLocalTime) {
         return (int) Duration.between(fromLocalTime, toLocalTime).toHours();
     }
 
@@ -659,7 +645,7 @@ public final class MwJdk8DateUtil {
      * @param toLocalTime
      * @return
      */
-    public static int diffMin(LocalTime fromLocalTime, LocalTime toLocalTime) {
+    public int diffMin(LocalTime fromLocalTime, LocalTime toLocalTime) {
         return (int) Duration.between(fromLocalTime, toLocalTime).toMinutes();
     }
 
@@ -670,7 +656,7 @@ public final class MwJdk8DateUtil {
      * @param toLocalTime
      * @return
      */
-    public static int diffSecond(LocalTime fromLocalTime, LocalTime toLocalTime) {
+    public int diffSecond(LocalTime fromLocalTime, LocalTime toLocalTime) {
         return (int) ChronoUnit.SECONDS.between(fromLocalTime, toLocalTime);
     }
 
@@ -683,7 +669,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static int getDayOfWeekCN(LocalDate localDate) {
+    public int getDayOfWeekCN(LocalDate localDate) {
         return localDate.getDayOfWeek().getValue();
     }
 
@@ -692,7 +678,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static int getDayOfWeekCN() {
+    public int getDayOfWeekCN() {
         return getDayOfWeekCN(LocalDate.now());
     }
 
@@ -702,7 +688,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static int getDayOfMonth(LocalDate localDate) {
+    public int getDayOfMonth(LocalDate localDate) {
         return localDate.getDayOfMonth();
     }
 
@@ -711,7 +697,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static int getDayOfMonth() {
+    public int getDayOfMonth() {
         return getDayOfMonth(LocalDate.now());
     }
 
@@ -721,7 +707,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static int getMonth(LocalDate localDate) {
+    public int getMonth(LocalDate localDate) {
         return localDate.getMonth().getValue();
     }
 
@@ -730,7 +716,7 @@ public final class MwJdk8DateUtil {
      *
      * @return
      */
-    public static int getMonth() {
+    public int getMonth() {
         return getMonth(LocalDate.now());
     }
 
@@ -740,7 +726,7 @@ public final class MwJdk8DateUtil {
      * @param localTime
      * @return
      */
-    public static int getHour(LocalTime localTime) {
+    public int getHour(LocalTime localTime) {
         return localTime.getHour();
     }
 
@@ -750,7 +736,7 @@ public final class MwJdk8DateUtil {
      * @param localTime
      * @return
      */
-    public static int getMinute(LocalTime localTime) {
+    public int getMinute(LocalTime localTime) {
         return localTime.getMinute();
     }
 
@@ -760,7 +746,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static String getStringMonth(LocalDate localDate) {
+    public String getStringMonth(LocalDate localDate) {
         return localDate.format(DateTimeFormatter.ofPattern("MM"));
     }
 
@@ -770,7 +756,7 @@ public final class MwJdk8DateUtil {
      * @param localDate
      * @return
      */
-    public static String getStringDate(LocalDate localDate) {
+    public String getStringDate(LocalDate localDate) {
         return localDate.format(DateTimeFormatter.ofPattern("dd"));
     }
 
@@ -780,7 +766,7 @@ public final class MwJdk8DateUtil {
      * @param localTime
      * @return
      */
-    public static String getStringHour(LocalTime localTime) {
+    public String getStringHour(LocalTime localTime) {
         return localTime.format(DateTimeFormatter.ofPattern("HH"));
     }
 
@@ -790,7 +776,7 @@ public final class MwJdk8DateUtil {
      * @param localTime
      * @return
      */
-    public static String getStringMinute(LocalTime localTime) {
+    public String getStringMinute(LocalTime localTime) {
         return localTime.format(DateTimeFormatter.ofPattern("mm"));
     }
 
@@ -800,7 +786,7 @@ public final class MwJdk8DateUtil {
      * @param localTime
      * @return
      */
-    public static String getStringSecond(LocalTime localTime) {
+    public String getStringSecond(LocalTime localTime) {
         return localTime.format(DateTimeFormatter.ofPattern("ss"));
     }
 
@@ -811,11 +797,10 @@ public final class MwJdk8DateUtil {
     /**
      * 判断日期是否在范围内, 包含相等的日期
      */
-    public static boolean isBetween(LocalDateTime localDateTime, LocalDateTime startLocalDateTime,
-                                    LocalDateTime endLocalDateTime) {
-        if (localDateTime == null || startLocalDateTime == null || endLocalDateTime == null || startLocalDateTime.isAfter(endLocalDateTime)) {
+    public boolean isBetween(LocalDateTime localDateTime, LocalDateTime startLocalDateTime,
+                             LocalDateTime endLocalDateTime) {
+        if (localDateTime == null || startLocalDateTime == null || endLocalDateTime == null || startLocalDateTime.isAfter(endLocalDateTime))
             return false;
-        }
         return !localDateTime.isBefore(startLocalDateTime) && !localDateTime.isAfter(endLocalDateTime);
     }
 
@@ -829,7 +814,7 @@ public final class MwJdk8DateUtil {
      * @param dateStr 时间字符串
      * @return 时间
      */
-    public static LocalDateTime parseDateTime(String dateStr) {
+    public LocalDateTime parseDateTime(String dateStr) {
         return parseDateTime(dateStr, yyyy_MM_dd_HH_mm_ss);
     }
 
@@ -840,7 +825,7 @@ public final class MwJdk8DateUtil {
      * @param pattern 表达式
      * @return 时间
      */
-    public static LocalDateTime parseDateTime(String dateStr, String pattern) {
+    public LocalDateTime parseDateTime(String dateStr, String pattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return parseDateTime(dateStr, formatter);
     }
@@ -852,7 +837,7 @@ public final class MwJdk8DateUtil {
      * @param formatter DateTimeFormatter
      * @return 时间
      */
-    public static LocalDateTime parseDateTime(String dateStr, DateTimeFormatter formatter) {
+    public LocalDateTime parseDateTime(String dateStr, DateTimeFormatter formatter) {
         return LocalDateTime.parse(dateStr, formatter);
     }
 
@@ -862,7 +847,7 @@ public final class MwJdk8DateUtil {
      * @param dateStr 时间字符串
      * @return 时间
      */
-    public static LocalDate parseDate(String dateStr) {
+    public LocalDate parseDate(String dateStr) {
         return parseDate(dateStr, yyyy_MM_dd);
     }
 
@@ -873,7 +858,7 @@ public final class MwJdk8DateUtil {
      * @param pattern 表达式
      * @return 时间
      */
-    public static LocalDate parseDate(String dateStr, String pattern) {
+    public LocalDate parseDate(String dateStr, String pattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return parseDate(dateStr, formatter);
     }
@@ -885,7 +870,7 @@ public final class MwJdk8DateUtil {
      * @param formatter DateTimeFormatter
      * @return 时间
      */
-    public static LocalDate parseDate(String dateStr, DateTimeFormatter formatter) {
+    public LocalDate parseDate(String dateStr, DateTimeFormatter formatter) {
         return LocalDate.parse(dateStr, formatter);
     }
 
@@ -895,7 +880,7 @@ public final class MwJdk8DateUtil {
      * @param dateStr 时间字符串
      * @return 时间
      */
-    public static LocalTime parseTime(String dateStr) {
+    public LocalTime parseTime(String dateStr) {
         return parseTime(dateStr, HH_mm_ss);
     }
 
@@ -906,7 +891,7 @@ public final class MwJdk8DateUtil {
      * @param pattern 时间正则
      * @return 时间
      */
-    public static LocalTime parseTime(String dateStr, String pattern) {
+    public LocalTime parseTime(String dateStr, String pattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return parseTime(dateStr, formatter);
     }
@@ -918,7 +903,7 @@ public final class MwJdk8DateUtil {
      * @param formatter DateTimeFormatter
      * @return 时间
      */
-    public static LocalTime parseTime(String dateStr, DateTimeFormatter formatter) {
+    public LocalTime parseTime(String dateStr, DateTimeFormatter formatter) {
         return LocalTime.parse(dateStr, formatter);
     }
 
@@ -928,7 +913,7 @@ public final class MwJdk8DateUtil {
      * @param temporal 时间
      * @return 格式化后的时间
      */
-    public static String formatDateTime(TemporalAccessor temporal) {
+    public String formatDateTime(TemporalAccessor temporal) {
         return format(temporal, yyyy_MM_dd_HH_mm_ss);
     }
 
@@ -938,7 +923,7 @@ public final class MwJdk8DateUtil {
      * @param temporal 时间
      * @return 格式化后的时间
      */
-    public static String formatDate(TemporalAccessor temporal) {
+    public String formatDate(TemporalAccessor temporal) {
         return format(temporal, yyyy_MM_dd);
     }
 
@@ -948,7 +933,7 @@ public final class MwJdk8DateUtil {
      * @param temporal 时间
      * @return 格式化后的时间
      */
-    public static String formatTime(TemporalAccessor temporal) {
+    public String formatTime(TemporalAccessor temporal) {
         return format(temporal, HH_mm_ss);
     }
 
@@ -959,34 +944,34 @@ public final class MwJdk8DateUtil {
      * @param pattern  表达式
      * @return 格式化后的时间
      */
-    public static String format(TemporalAccessor temporal, String pattern) {
+    public String format(TemporalAccessor temporal, String pattern) {
         return DateTimeFormatter.ofPattern(pattern).format(temporal);
     }
 
     /********************************************************
      * 转化
      *******************************************************/
-    public static LocalDateTime date2LocalDateTime(Date date) {
+    public LocalDateTime date2LocalDateTime(Date date) {
         return LocalDateTime.ofInstant(date2Instant(date), ZoneId.systemDefault());
     }
 
-    public static LocalDateTime instant2LocalDateTime(Instant instant) {
+    public LocalDateTime instant2LocalDateTime(Instant instant) {
         return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
     }
 
-    public static Date instant2Date(Instant instant) {
+    public Date instant2Date(Instant instant) {
         return Date.from(instant);
     }
 
-    public static Date localDatseTime2Date(LocalDateTime localDateTime) {
+    public Date localDatseTime2Date(LocalDateTime localDateTime) {
         return instant2Date(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
-    public static Instant date2Instant(Date date) {
+    public Instant date2Instant(Date date) {
         return date.toInstant();
     }
 
-    public static Instant LocalDateTime2instant(LocalDateTime localDateTime) {
+    public Instant LocalDateTime2instant(LocalDateTime localDateTime) {
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant();
     }
 }

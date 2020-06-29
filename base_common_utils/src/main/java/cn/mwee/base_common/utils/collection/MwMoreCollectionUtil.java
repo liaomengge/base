@@ -45,6 +45,27 @@ public class MwMoreCollectionUtil {
 
     /******************************************************************************************/
 
+    public <E, C extends Collection<E>> void removeIf(C c, Predicate<E> predicate, Consumer<E> consumer) {
+        Iterator<E> iterator = c.iterator();
+        while (iterator.hasNext()) {
+            E next = iterator.next();
+            if (predicate.test(next)) iterator.remove();
+            else consumer.accept(next);
+        }
+    }
+
+    public <K, V, M extends Map<K, V>> void removeIf(M m, Predicate<K> predicate,
+                                                     Consumer<Map.Entry<K, V>> consumer) {
+        Iterator<Map.Entry<K, V>> iterator = m.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<K, V> next = iterator.next();
+            if (predicate.test(next.getKey())) iterator.remove();
+            else consumer.accept(next);
+        }
+    }
+
+    /******************************************************************************************/
+
     /**
      * list到list转换
      *
@@ -55,9 +76,7 @@ public class MwMoreCollectionUtil {
      * @return
      */
     public <T, K> List<K> convertList(List<T> list, Function<T, K> function) {
-        if (CollectionUtils.isEmpty(list)) {
-            return Lists.newArrayList();
-        }
+        if (CollectionUtils.isEmpty(list)) return Lists.newArrayList();
         return list.stream().map(function).filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 
@@ -99,9 +118,7 @@ public class MwMoreCollectionUtil {
      * @return
      */
     public <K, V> Map<K, V> convertMap(List<V> list, Function<V, K> keyFunc, Function<V, V> valFunc) {
-        if (CollectionUtils.isEmpty(list)) {
-            return Maps.newHashMap();
-        }
+        if (CollectionUtils.isEmpty(list)) return Maps.newHashMap();
         return list.stream().collect(Collectors.toMap(keyFunc, valFunc, (v1, v2) -> v2));
     }
 
@@ -118,9 +135,7 @@ public class MwMoreCollectionUtil {
      */
     public <K, V> Map<K, V> convertMap(List<V> list, Predicate<V> predicate, Function<V, K> keyFunc,
                                        Function<V, V> valFunc) {
-        if (CollectionUtils.isEmpty(list)) {
-            return Maps.newHashMap();
-        }
+        if (CollectionUtils.isEmpty(list)) return Maps.newHashMap();
         return list.stream().filter(predicate).collect(Collectors.toMap(keyFunc, valFunc, (v1, v2) -> v2));
     }
 
@@ -136,9 +151,7 @@ public class MwMoreCollectionUtil {
      * @param <V>
      */
     public <T, K, V> void fillList(List<T> list, Map<K, V> map, Function<T, K> function, Consumer<T> action) {
-        if (CollectionUtils.isEmpty(list) || MapUtils.isEmpty(map)) {
-            return;
-        }
+        if (CollectionUtils.isEmpty(list) || MapUtils.isEmpty(map)) return;
         list.stream().filter(val -> map.containsKey(function.apply(val))).forEach(action);
     }
 
@@ -156,9 +169,7 @@ public class MwMoreCollectionUtil {
      */
     public <T, K, V> void fillList(List<T> retList, List<V> fillList, Function<T, K> retEqFunc,
                                    Function<V, K> fillCovertFunc, BiConsumer<T, Map<K, V>> action) {
-        if (CollectionUtils.isEmpty(retList) || CollectionUtils.isEmpty(fillList)) {
-            return;
-        }
+        if (CollectionUtils.isEmpty(retList) || CollectionUtils.isEmpty(fillList)) return;
         Map<K, V> map = convertMap(fillList, fillCovertFunc);
         retList.stream().filter(val -> map.containsKey(retEqFunc.apply(val))).forEach(val -> action.accept(val, map));
     }
@@ -179,9 +190,7 @@ public class MwMoreCollectionUtil {
     public <T, K, V> void fillList(List<T> retList, List<V> fillList, Predicate<V> fillPredicate,
                                    Function<T, K> retEqFunc,
                                    Function<V, K> fillCovertFunc, BiConsumer<T, Map<K, V>> action) {
-        if (CollectionUtils.isEmpty(retList) || CollectionUtils.isEmpty(fillList)) {
-            return;
-        }
+        if (CollectionUtils.isEmpty(retList) || CollectionUtils.isEmpty(fillList)) return;
         Map<K, V> map = convertMap(fillList, fillPredicate, fillCovertFunc);
         retList.stream().filter(val -> map.containsKey(retEqFunc.apply(val))).forEach(val -> action.accept(val, map));
     }

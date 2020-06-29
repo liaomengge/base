@@ -2,6 +2,7 @@ package cn.mwee.base_common.utils.asserts;
 
 import cn.mwee.base_common.support.exception.ParamException;
 import com.google.common.base.Preconditions;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,10 +15,8 @@ import java.util.Map;
 /**
  * Created by liaomengge on 16/4/12.
  */
-public final class MwAssertUtil {
-
-    private MwAssertUtil() {
-    }
+@UtilityClass
+public class MwAssertUtil {
 
     /**
      * 断言表达式的值为true, 否则抛出包含指定错误的信息
@@ -27,7 +26,7 @@ public final class MwAssertUtil {
      * @param errMsg   错误信息
      * @throws ParamException
      */
-    public static void isTrue(final boolean expValue, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void isTrue(final boolean expValue, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> Preconditions.checkArgument(expValue), errCode, errMsg, params);
     }
 
@@ -39,7 +38,7 @@ public final class MwAssertUtil {
      * @param errMsg   错误信息
      * @throws ParamException
      */
-    public static void isFalse(final boolean expValue, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void isFalse(final boolean expValue, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> Preconditions.checkArgument(!expValue), errCode, errMsg, params);
     }
 
@@ -52,7 +51,7 @@ public final class MwAssertUtil {
      * @param errMsg  错误信息
      * @throws ParamException
      */
-    public static void equals(final Object obj1, final Object obj2, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void equals(final Object obj1, final Object obj2, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> {
             if (obj1 == null) {
                 Preconditions.checkArgument(obj2 == null);
@@ -72,7 +71,7 @@ public final class MwAssertUtil {
      * @param errMsg  错误信息
      * @throws ParamException
      */
-    public static void notEquals(final Object obj1, final Object obj2, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void notEquals(final Object obj1, final Object obj2, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> {
             if (obj1 == null) {
                 Preconditions.checkArgument(obj2 != null);
@@ -91,7 +90,7 @@ public final class MwAssertUtil {
      * @param params
      * @throws ParamException
      */
-    public static void isBlank(final String str, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void isBlank(final String str, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> Preconditions.checkArgument(StringUtils.isBlank(str)), errCode, errMsg, params);
     }
 
@@ -103,7 +102,7 @@ public final class MwAssertUtil {
      * @param errMsg  错误信息
      * @throws ParamException
      */
-    public static void isNotBlank(final String str, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void isNotBlank(final String str, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> Preconditions.checkArgument(StringUtils.isNotBlank(str)), errCode, errMsg, params);
     }
 
@@ -115,7 +114,7 @@ public final class MwAssertUtil {
      * @param errMsg  错误信息
      * @throws ParamException
      */
-    public static void isNull(final Object object, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void isNull(final Object object, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> Preconditions.checkArgument(object == null), errCode, errMsg, params);
     }
 
@@ -127,7 +126,7 @@ public final class MwAssertUtil {
      * @param errMsg  错误信息
      * @throws ParamException
      */
-    public static void notNull(final Object object, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void notNull(final Object object, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> Preconditions.checkArgument(object != null), errCode, errMsg, params);
     }
 
@@ -139,7 +138,7 @@ public final class MwAssertUtil {
      * @param errMsg     错误信息
      * @throws ParamException
      */
-    public static void notEmpty(final Collection collection, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void notEmpty(final Collection collection, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> Preconditions.checkArgument(!CollectionUtils.isEmpty(collection)), errCode, errMsg, params);
     }
 
@@ -151,7 +150,7 @@ public final class MwAssertUtil {
      * @param errMsg     错误信息
      * @throws ParamException
      */
-    public static void isEmpty(final Collection collection, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void isEmpty(final Collection collection, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> Preconditions.checkArgument(CollectionUtils.isEmpty(collection)), errCode, errMsg, params);
     }
 
@@ -163,7 +162,7 @@ public final class MwAssertUtil {
      * @param errMsg  错误信息
      * @throws ParamException
      */
-    public static void notEmpty(final Map map, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void notEmpty(final Map map, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> Preconditions.checkArgument(MapUtils.isNotEmpty(map)), errCode, errMsg, params);
     }
 
@@ -175,7 +174,7 @@ public final class MwAssertUtil {
      * @param errMsg  错误信息
      * @throws ParamException
      */
-    public static void isEmpty(final Map map, final int errCode, final String errMsg, final String... params) throws ParamException {
+    public void isEmpty(final Map map, final int errCode, final String errMsg, final String... params) throws ParamException {
         check(() -> Preconditions.checkArgument(MapUtils.isEmpty(map)), errCode, errMsg, params);
     }
 
@@ -189,7 +188,7 @@ public final class MwAssertUtil {
      * @param params
      * @throws ParamException
      */
-    private static void check(AssertTemplate assertTemplate, final int errCode, final String errMsg, final String... params) throws ParamException {
+    private void check(AssertTemplate assertTemplate, final int errCode, final String errMsg, final String... params) throws ParamException {
         try {
             assertTemplate.doAssert();
         } catch (IllegalArgumentException e) {

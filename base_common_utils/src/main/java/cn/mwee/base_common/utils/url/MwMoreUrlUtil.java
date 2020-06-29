@@ -1,16 +1,15 @@
 package cn.mwee.base_common.utils.url;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by liaomengge on 16/11/29.
  */
-public final class MwMoreUrlUtil {
+@UtilityClass
+public class MwMoreUrlUtil {
 
-    private MwMoreUrlUtil() {
-    }
-
-    public static String getUrlSuffix(String url) {
+    public String getUrlSuffix(String url) {
         if (StringUtils.isBlank(url)) {
             return StringUtils.EMPTY;
         }

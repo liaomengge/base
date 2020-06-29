@@ -5,6 +5,7 @@ import cn.mwee.base_common.utils.log4j2.MwLogger;
 import jxl.Workbook;
 import jxl.format.Alignment;
 import jxl.write.*;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 
@@ -13,16 +14,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+@UtilityClass
 public class MwExcelUtil {
 
-    private static Logger logger = MwLogger.getInstance(MwExcelUtil.class);
+    private Logger logger = MwLogger.getInstance(MwExcelUtil.class);
 
-    private static final int MAX_ROW = 65534;
+    private final int MAX_ROW = 65534;
 
-    private MwExcelUtil() {
-    }
-
-    public static void export(Map<String, String> titleMap, List<?> list, ServletOutputStream out) {
+    public void export(Map<String, String> titleMap, List<?> list, ServletOutputStream out) {
         int currPage = 0;
         WritableWorkbook workbook;
         try {
@@ -64,27 +63,21 @@ public class MwExcelUtil {
                     }
                     rowNum++;
                 }
-                for (int i = currPage; i < wsArr.length; i++) {
-                    workbook.removeSheet(i);
-                }
+                for (int i = currPage; i < wsArr.length; i++) workbook.removeSheet(i);
                 workbook.write();
             } catch (Exception e) {
                 logger.error("Export Excel Fail", e);
             } finally {
-                if (workbook != null) {
-                    try {
-                        workbook.close();
-                    } catch (WriteException e) {
-                        logger.error("Close WorkBook Fail", e);
-                    }
+                if (workbook != null) try {
+                    workbook.close();
+                } catch (WriteException e) {
+                    logger.error("Close WorkBook Fail", e);
                 }
             }
         } catch (IOException e) {
             logger.error("Create WorkBook Fail", e);
         } finally {
-            if (out != null) {
-                MwIOUtil.closeQuietly(out);
-            }
+            if (out != null) MwIOUtil.closeQuietly(out);
         }
 
     }

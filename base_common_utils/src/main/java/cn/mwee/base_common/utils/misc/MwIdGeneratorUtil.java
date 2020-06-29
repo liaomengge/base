@@ -2,6 +2,7 @@ package cn.mwee.base_common.utils.misc;
 
 import cn.mwee.base_common.support.misc.micro.Snowflake;
 import cn.mwee.base_common.utils.number.MwNumberUtil;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
@@ -10,16 +11,14 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by liaomengge on 17/11/25.
  */
-public final class MwIdGeneratorUtil {
-
-    private MwIdGeneratorUtil() {
-    }
+@UtilityClass
+public class MwIdGeneratorUtil {
 
     /**
      * 获取36位UUID(原生UUID)
      * 封装JDK自带的UUID, 通过Random数字生成, 中间有-分割.
      */
-    public static String uuid() {
+    public String uuid() {
         return UUID.randomUUID().toString();
     }
 
@@ -27,7 +26,7 @@ public final class MwIdGeneratorUtil {
      * 获取32位UUID
      * 封装JDK自带的UUID, 通过Random数字生成, 中间无-分割.
      */
-    public static String uuid2() {
+    public String uuid2() {
         return StringUtils.replaceChars(UUID.randomUUID().toString(), "-", "");
     }
 
@@ -37,7 +36,7 @@ public final class MwIdGeneratorUtil {
      *
      * @return
      */
-    public static String fastUuid() {
+    public String fastUuid() {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         UUID uuid = new UUID(random.nextLong(), random.nextLong());
         return uuid.toString();
@@ -49,7 +48,7 @@ public final class MwIdGeneratorUtil {
      *
      * @return
      */
-    public static String fastUuid2() {
+    public String fastUuid2() {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         UUID uuid = new UUID(random.nextLong(), random.nextLong());
         return StringUtils.replaceChars(uuid.toString(), "-", "");
@@ -60,7 +59,7 @@ public final class MwIdGeneratorUtil {
      *
      * @return
      */
-    public static Long snowflakeId() {
+    public Long snowflakeId() {
         return new Snowflake().nextId();
     }
 
@@ -69,7 +68,7 @@ public final class MwIdGeneratorUtil {
      *
      * @return
      */
-    public static String snowflakeId2Str() {
+    public String snowflakeId2Str() {
         return MwNumberUtil.getString(new Snowflake().nextId());
     }
 }

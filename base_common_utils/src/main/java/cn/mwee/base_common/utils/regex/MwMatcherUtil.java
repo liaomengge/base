@@ -1,45 +1,47 @@
 package cn.mwee.base_common.utils.regex;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Created by liaomengge on 17/10/11.
  */
-public final class MwMatcherUtil {
-
-    private MwMatcherUtil() {
-    }
+@UtilityClass
+public class MwMatcherUtil {
 
     @Deprecated
-    public static boolean isMatch(String regex, String matchStr) {
+    public boolean isMatch(String regex, String matchStr) {
         Matcher matcher = Pattern.compile(regex).matcher(matchStr);
         return matcher.find();
     }
 
     /**
      * 部分匹配
-     *
+     * <p>
      * {@link #isPartMatch(String, String)}
+     *
      * @param regex
      * @param matchStr
      * @return
      */
     @Deprecated
-    public static boolean find(String regex, String matchStr) {
+    public boolean find(String regex, String matchStr) {
         return isMatch(regex, matchStr);
     }
 
     /**
      * 全部匹配
-     *
+     * <p>
      * {@link #isAllMatch(String, String)}
+     *
      * @param regex
      * @param matchStr
      * @return
      */
     @Deprecated
-    public static boolean matches(String regex, String matchStr) {
+    public boolean matches(String regex, String matchStr) {
         return matchStr.matches(regex);
     }
 
@@ -50,7 +52,7 @@ public final class MwMatcherUtil {
      * @param matchStr
      * @return
      */
-    public static boolean isPartMatch(String regex, String matchStr) {
+    public boolean isPartMatch(String regex, String matchStr) {
         Matcher matcher = Pattern.compile(regex).matcher(matchStr);
         return matcher.find();
     }
@@ -62,7 +64,7 @@ public final class MwMatcherUtil {
      * @param matchStr
      * @return
      */
-    public static boolean isPartMatch(Pattern pattern, String matchStr) {
+    public boolean isPartMatch(Pattern pattern, String matchStr) {
         return pattern.matcher(matchStr).find();
     }
 
@@ -73,7 +75,7 @@ public final class MwMatcherUtil {
      * @param matchStr
      * @return
      */
-    public static boolean isAllMatch(String regex, String matchStr) {
+    public boolean isAllMatch(String regex, String matchStr) {
         return matchStr.matches(regex);
     }
 
@@ -84,7 +86,7 @@ public final class MwMatcherUtil {
      * @param matchStr
      * @return
      */
-    public static boolean isAllMatch(Pattern pattern, String matchStr) {
+    public boolean isAllMatch(Pattern pattern, String matchStr) {
         return pattern.matcher(matchStr).matches();
     }
 }

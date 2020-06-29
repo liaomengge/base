@@ -14,12 +14,12 @@ import java.util.Map;
 @UtilityClass
 public class MwMoreRandomUtil {
 
-    private static Logger logger = MwLogger.getInstance(MwMoreRandomUtil.class);
+    private Logger logger = MwLogger.getInstance(MwMoreRandomUtil.class);
 
-    private static final double PI = 3.14;
+    private final double PI = 3.14;
 
-    private static final Map<Integer, Long> PRIME_NUMBER_MAP = new HashMap<Integer, Long>(24) {
-        private static final long serialVersionUID = -5052666567518642484L;
+    private final Map<Integer, Long> PRIME_NUMBER_MAP = new HashMap<Integer, Long>(24) {
+        private final long serialVersionUID = -5052666567518642484L;
 
         {
             put(1, Long.valueOf("7"));

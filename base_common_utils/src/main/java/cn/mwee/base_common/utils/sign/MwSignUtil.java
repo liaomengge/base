@@ -2,6 +2,7 @@ package cn.mwee.base_common.utils.sign;
 
 
 import cn.mwee.base_common.utils.codec.MwDigestUtil;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
@@ -10,10 +11,8 @@ import java.util.TreeMap;
 /**
  * Created by liaomengge on 17/1/10.
  */
-public final class MwSignUtil {
-
-    private MwSignUtil() {
-    }
+@UtilityClass
+public class MwSignUtil {
 
     /**
      * 过滤
@@ -27,7 +26,7 @@ public final class MwSignUtil {
      * @param params
      * @return
      */
-    public static String sign(String sign, Map<String, Object> params) {
+    public String sign(String sign, Map<String, Object> params) {
         return sign(sign, params, "sk");
     }
 
@@ -42,7 +41,7 @@ public final class MwSignUtil {
      * @param signKey 签名后补充的签名key
      * @return
      */
-    public static String sign(String sign, Map<String, Object> params, String signKey) {
+    public String sign(String sign, Map<String, Object> params, String signKey) {
         if (params == null) {
             return "";
         }
@@ -78,7 +77,7 @@ public final class MwSignUtil {
      * @param params
      * @return
      */
-    public static String sign2(String sign, Map<String, Object> params) {
+    public String sign2(String sign, Map<String, Object> params) {
         if (params == null) {
             return "";
         }

@@ -1,6 +1,7 @@
 package cn.mwee.base_common.utils.string;
 
 import cn.mwee.base_common.support.misc.Charsets;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -12,22 +13,20 @@ import java.util.regex.Pattern;
 /**
  * Created by liaomengge on 17/11/8.
  */
-public final class MwStringUtil {
+@UtilityClass
+public class MwStringUtil {
 
-    private static final Pattern p = Pattern.compile("[\t|\r|\n]");
-    private static final Pattern p2 = Pattern.compile("[\"|\\\\]");
+    private final Pattern p = Pattern.compile("[\t|\r|\n]");
+    private final Pattern p2 = Pattern.compile("[\"|\\\\]");
 
-    private MwStringUtil() {
-    }
-
-    public static String getValue(String str) {
+    public String getValue(String str) {
         if (StringUtils.isBlank(str)) {
             return "";
         }
         return str;
     }
 
-    public static String getValue(Object str) {
+    public String getValue(Object str) {
         if (str == null) {
             return "";
         }
@@ -38,15 +37,15 @@ public final class MwStringUtil {
         return str.toString();
     }
 
-    public static boolean isBlank(String str) {
+    public boolean isBlank(String str) {
         return StringUtils.isBlank(str);
     }
 
-    public static boolean isBlank(Object str) {
+    public boolean isBlank(Object str) {
         return StringUtils.isBlank(getValue(str));
     }
 
-    public static String replaceBlank(String str) {
+    public String replaceBlank(String str) {
         String dest = "";
         if (!isBlank(str)) {
             Matcher m = p.matcher(str);
@@ -55,7 +54,7 @@ public final class MwStringUtil {
         return dest;
     }
 
-    public static String replaceQuota(String str) {
+    public String replaceQuota(String str) {
         String dest = "";
         if (!isBlank(str)) {
             Matcher m = p2.matcher(str);
@@ -64,11 +63,11 @@ public final class MwStringUtil {
         return dest;
     }
 
-    public static String replace(String text) {
+    public String replace(String text) {
         return replace(text, "", "\\\"");
     }
 
-    public static String replace(String text, String searchString, String replaceString) {
+    public String replace(String text, String searchString, String replaceString) {
         return StringUtils.replace(text, searchString, replaceString);
     }
 
@@ -85,7 +84,7 @@ public final class MwStringUtil {
      *
      * @return 如果为null返回null, 如果为""返回空数组
      */
-    public static List<String> split(String str, char separatorChar, int expectParts) {
+    public List<String> split(String str, char separatorChar, int expectParts) {
         if (str == null) {
             return null;
         }
@@ -119,7 +118,7 @@ public final class MwStringUtil {
     /**
      * String 有replace(char,char), 但缺少单独replace first/last的
      */
-    public static String replaceFirst(String s, char sub, char with) {
+    public String replaceFirst(String s, char sub, char with) {
         if (s == null) {
             return null;
         }
@@ -135,7 +134,7 @@ public final class MwStringUtil {
     /**
      * String 有replace(char,char)替换全部char, 但缺少单独replace first/last
      */
-    public static String replaceLast(String s, char sub, char with) {
+    public String replaceLast(String s, char sub, char with) {
         if (s == null) {
             return null;
         }
@@ -154,7 +153,7 @@ public final class MwStringUtil {
      * <p>
      * 如果字符串为Null或空, 返回false
      */
-    public static boolean startWith(CharSequence s, char c) {
+    public boolean startWith(CharSequence s, char c) {
         if (StringUtils.isEmpty(s)) {
             return false;
         }
@@ -166,7 +165,7 @@ public final class MwStringUtil {
      * <p>
      * 如果字符串为Null或空, 返回false
      */
-    public static boolean endWith(CharSequence s, char c) {
+    public boolean endWith(CharSequence s, char c) {
         if (StringUtils.isEmpty(s)) {
             return false;
         }
@@ -180,7 +179,7 @@ public final class MwStringUtil {
      * @param b String
      * @return 是否相同
      */
-    public static boolean slowEquals(String a, String b) {
+    public boolean slowEquals(String a, String b) {
         if (a == null || b == null) {
             return false;
         }
@@ -194,7 +193,7 @@ public final class MwStringUtil {
      * @param b byte array
      * @return 是否相同
      */
-    public static boolean slowEquals(byte[] a, byte[] b) {
+    public boolean slowEquals(byte[] a, byte[] b) {
         if (a == null || b == null) {
             return false;
         }
@@ -214,7 +213,7 @@ public final class MwStringUtil {
      * @param str 字符串
      * @return {String}
      */
-    public static String firstCharToLower(String str) {
+    public String firstCharToLower(String str) {
         char firstChar = str.charAt(0);
         if (firstChar >= 'A' && firstChar <= 'Z') {
             char[] arr = str.toCharArray();
@@ -230,7 +229,7 @@ public final class MwStringUtil {
      * @param str 字符串
      * @return {String}
      */
-    public static String firstCharToUpper(String str) {
+    public String firstCharToUpper(String str) {
         char firstChar = str.charAt(0);
         if (firstChar >= 'a' && firstChar <= 'z') {
             char[] arr = str.toCharArray();

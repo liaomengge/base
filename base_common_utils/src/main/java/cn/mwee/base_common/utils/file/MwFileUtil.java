@@ -6,6 +6,7 @@ import cn.mwee.base_common.utils.log4j2.MwLogger;
 import cn.mwee.base_common.utils.os.MwOSUtil;
 import cn.mwee.base_common.utils.regex.MwMatcherUtil;
 import cn.mwee.base_common.utils.thread.MwThreadFactoryBuilderUtil;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
@@ -19,13 +20,10 @@ import java.util.concurrent.TimeUnit;
 /**
  * 文件工具类
  */
-public final class MwFileUtil {
+@UtilityClass
+public class MwFileUtil {
 
-    private static Logger logger = MwLogger.getInstance(MwFileUtil.class);
-
-    private MwFileUtil() {
-        //工具类无需对象实例化
-    }
+    private Logger logger = MwLogger.getInstance(MwFileUtil.class);
 
     /**
      * 判断文件是否存在
@@ -33,7 +31,7 @@ public final class MwFileUtil {
      * @param fileName
      * @return
      */
-    public static boolean exist(String fileName) {
+    public boolean exist(String fileName) {
         File f = new File(fileName);
         return f.exists();
     }
@@ -44,11 +42,9 @@ public final class MwFileUtil {
      * @param clazz jar包里的main-class
      * @return
      */
-    public static String getJarExecPath(Class clazz) {
+    public String getJarExecPath(Class clazz) {
         String path = clazz.getProtectionDomain().getCodeSource().getLocation().getPath();
-        if (MwOSUtil.getOSname().equals(OSTypeEnum.Windows)) {
-            return path.substring(1);
-        }
+        if (MwOSUtil.getOSname().equals(OSTypeEnum.Windows)) return path.substring(1);
         return path;
     }
 
@@ -58,7 +54,7 @@ public final class MwFileUtil {
      * @param filePath
      * @return
      */
-    public static boolean isAbsolutePath(String filePath) {
+    public boolean isAbsolutePath(String filePath) {
         String temp = StringUtils.replace(filePath, "\\", "/");
         return temp.startsWith("/") || MwMatcherUtil.isPartMatch(temp, "^[A-Za-z]:/");
 
@@ -70,7 +66,7 @@ public final class MwFileUtil {
      * @param filePath
      * @return
      */
-    public static String getDirName(String filePath) {
+    public String getDirName(String filePath) {
         File f = new File(filePath);
         return f.getParent();
     }
@@ -78,7 +74,7 @@ public final class MwFileUtil {
     /**
      * 当前目录路径
      */
-    public static String currentWorkDir = System.getProperty("user.dir") + "/";
+    public String currentWorkDir = System.getProperty("user.dir") + "/";
 
     /**
      * 加载classPath下的属性文件
@@ -86,7 +82,7 @@ public final class MwFileUtil {
      * @param fileName 比如：“/properties/mail.properties”
      * @return
      */
-    public static Properties loadProperties(String fileName) {
+    public Properties loadProperties(String fileName) {
         try {
             Properties p = new Properties();
             p.load(MwFileUtil.class.getResourceAsStream(fileName));
@@ -104,15 +100,11 @@ public final class MwFileUtil {
      * @param fileName 待删除的完整文件名
      * @return
      */
-    public static boolean delete(String fileName) {
+    public boolean delete(String fileName) {
         boolean result = false;
         File f = new File(fileName);
-        if (f.exists()) {
-            result = f.delete();
-
-        } else {
-            result = true;
-        }
+        if (f.exists()) result = f.delete();
+        else result = true;
         return result;
     }
 
@@ -121,20 +113,17 @@ public final class MwFileUtil {
      *
      * @return
      */
-    public static ArrayList<File> getAllFiles(String dirPath) {
+    public ArrayList<File> getAllFiles(String dirPath) {
         File dir = new File(dirPath);
 
-        ArrayList<File> files = new ArrayList<File>();
+        ArrayList<File> files = new ArrayList<>();
 
         if (dir.isDirectory()) {
             File[] fileArr = dir.listFiles();
             for (int i = 0; i < fileArr.length; i++) {
                 File f = fileArr[i];
-                if (f.isFile()) {
-                    files.add(f);
-                } else {
-                    files.addAll(getAllFiles(f.getPath()));
-                }
+                if (f.isFile()) files.add(f);
+                else files.addAll(getAllFiles(f.getPath()));
             }
         }
         return files;
@@ -147,7 +136,7 @@ public final class MwFileUtil {
      * @param dirPath
      * @return
      */
-    public static ArrayList<File> getAllDirectory(String dirPath) {
+    public ArrayList<File> getAllDirectory(String dirPath) {
         return getAllDirectory(dirPath, false);
     }
 
@@ -159,18 +148,16 @@ public final class MwFileUtil {
      * @param isRecursive
      * @return
      */
-    public static ArrayList<File> getAllDirectory(String dirPath, boolean isRecursive) {
+    public ArrayList<File> getAllDirectory(String dirPath, boolean isRecursive) {
         File dir = new File(dirPath);
-        ArrayList<File> files = new ArrayList<File>();
+        ArrayList<File> files = new ArrayList<>();
         if (dir.isDirectory()) {
             File[] fileArr = dir.listFiles();
             for (int i = 0; i < fileArr.length; i++) {
                 File f = fileArr[i];
                 if (f.isDirectory()) {
                     files.add(f);
-                    if (isRecursive) {
-                        files.addAll(getAllDirectory(f.getPath(), true));
-                    }
+                    if (isRecursive) files.addAll(getAllDirectory(f.getPath(), true));
                 }
             }
         }
@@ -183,20 +170,14 @@ public final class MwFileUtil {
      * @param dirPath
      * @return
      */
-    public static ArrayList<File> getDirFiles(String dirPath) {
+    public ArrayList<File> getDirFiles(String dirPath) {
         File path = new File(dirPath);
         File[] fileArr = path.listFiles();
-        ArrayList<File> files = new ArrayList<File>();
+        ArrayList<File> files = new ArrayList<>();
 
-        if (fileArr == null) {
-            return files;
-        }
+        if (fileArr == null) return files;
 
-        for (File f : fileArr) {
-            if (f.isFile()) {
-                files.add(f);
-            }
-        }
+        for (File f : fileArr) if (f.isFile()) files.add(f);
         return files;
     }
 
@@ -207,24 +188,18 @@ public final class MwFileUtil {
      * @param suffix  文件后缀
      * @return
      */
-    public static List<File> getDirFiles(String dirPath,
-                                         final String suffix) {
+    public List<File> getDirFiles(String dirPath,
+                                  String suffix) {
         File path = new File(dirPath);
         File[] fileArr = path.listFiles((dir, name) -> {
             String lowerName = name.toLowerCase();
             String lowerSuffix = suffix.toLowerCase();
-            if (lowerName.endsWith(lowerSuffix)) {
-                return true;
-            }
+            if (lowerName.endsWith(lowerSuffix)) return true;
             return false;
         });
-        List<File> files = new ArrayList<File>();
+        List<File> files = new ArrayList<>();
 
-        for (File f : fileArr) {
-            if (f.isFile()) {
-                files.add(f);
-            }
-        }
+        for (File f : fileArr) if (f.isFile()) files.add(f);
         return files;
     }
 
@@ -233,17 +208,13 @@ public final class MwFileUtil {
      *
      * @param files
      */
-    public static void delete(List<File> files) {
+    public void delete(List<File> files) {
         for (int i = files.size() - 1; i >= 0; i--) {
             File f = files.get(i);
             logger.debug("准备删除文件：" + f.getAbsolutePath());
-            if (f.exists()) {
-                if (f.delete()) {
-                    logger.debug("文件：" + f.getAbsolutePath() + " 删除成功！");
-                } else {
-                    logger.debug("文件：" + f.getAbsolutePath() + " 删除失败！");
-                }
-            }
+            if (f.exists()) if (f.delete()) logger.debug("文件：" + f.getAbsolutePath() + " 删除成功！");
+            else
+                logger.debug("文件：" + f.getAbsolutePath() + " 删除失败！");
         }
 
     }
@@ -256,68 +227,50 @@ public final class MwFileUtil {
      * @param prefix
      * @return
      */
-    public static List<File> getDirFilesByPrefix(String dirPath,
-                                                 final String prefix) {
+    public List<File> getDirFilesByPrefix(String dirPath,
+                                          String prefix) {
         File path = new File(dirPath);
         File[] fileArr = path.listFiles((dir, name) -> {
             String lowerName = name.toLowerCase();
             String lowerPrefix = prefix.toLowerCase();
-            if (lowerName.startsWith(lowerPrefix)) {
-                return true;
-            }
+            if (lowerName.startsWith(lowerPrefix)) return true;
             return false;
         });
-        List<File> files = new ArrayList<File>();
+        List<File> files = new ArrayList<>();
 
-        for (File f : fileArr) {
-            if (f.isFile()) {
-                files.add(f);
-            }
-        }
+        for (File f : fileArr) if (f.isFile()) files.add(f);
         return files;
     }
 
-    public static List<File> getDirFilesByPrefixAndSurfix(String dirPath,
-                                                          final String prefix, final String surfix) {
+    public List<File> getDirFilesByPrefixAndSurfix(String dirPath,
+                                                   String prefix, String surfix) {
         File path = new File(dirPath);
         File[] fileArr = path.listFiles((dir, name) -> {
             String lowerName = name.toLowerCase();
             String lowerPrefix = prefix.toLowerCase();
-            if (lowerName.startsWith(lowerPrefix) && lowerName.endsWith(surfix)) {
-                return true;
-            }
+            if (lowerName.startsWith(lowerPrefix) && lowerName.endsWith(surfix)) return true;
             return false;
         });
-        List<File> files = new ArrayList<File>();
+        List<File> files = new ArrayList<>();
 
-        for (File f : fileArr) {
-            if (f.isFile()) {
-                files.add(f);
-            }
-        }
+        for (File f : fileArr) if (f.isFile()) files.add(f);
         return files;
     }
 
 
-    public static List<File> getDirFilesByPrefix(String dirPath,
-                                                 final String prefix, final String execludePrefix) {
+    public List<File> getDirFilesByPrefix(String dirPath,
+                                          String prefix, String execludePrefix) {
         File path = new File(dirPath);
         File[] fileArr = path.listFiles((dir, name) -> {
             String lowerName = name.toLowerCase();
             String lowerPrefix = prefix.toLowerCase();
             String lowerExecludePrefix = execludePrefix.toLowerCase();
-            if (lowerName.startsWith(lowerPrefix) && !lowerName.startsWith(lowerExecludePrefix)) {
-                return true;
-            }
+            if (lowerName.startsWith(lowerPrefix) && !lowerName.startsWith(lowerExecludePrefix)) return true;
             return false;
         });
-        List<File> files = new ArrayList<File>();
+        List<File> files = new ArrayList<>();
 
-        for (File f : fileArr) {
-            if (f.isFile()) {
-                files.add(f);
-            }
-        }
+        for (File f : fileArr) if (f.isFile()) files.add(f);
         return files;
     }
 
@@ -328,11 +281,9 @@ public final class MwFileUtil {
      * @return 文件内容
      * @throws IOException
      */
-    public static String read(String fileName) throws IOException {
+    public String read(String fileName) throws IOException {
         File f = new File(fileName);
-        if (!f.exists()) {
-            return null;
-        }
+        if (!f.exists()) return null;
         FileInputStream fs = new FileInputStream(f);
         String result = null;
         byte[] b = new byte[fs.available()];
@@ -349,7 +300,7 @@ public final class MwFileUtil {
      * @return
      * @throws IOException
      */
-    public static String read(File f) throws IOException {
+    public String read(File f) throws IOException {
         FileInputStream fs = new FileInputStream(f);
         String result = null;
         byte[] b = new byte[fs.available()];
@@ -366,7 +317,7 @@ public final class MwFileUtil {
      * @param fileContent 写入的内容
      * @throws IOException
      */
-    public static void write(String fileName, String fileContent)
+    public void write(String fileName, String fileContent)
             throws IOException {
         write(fileName, fileContent, true, true);
     }
@@ -380,8 +331,8 @@ public final class MwFileUtil {
      * @param autoOverwrite 目标文件存在时, 是否自动覆盖
      * @throws IOException
      */
-    public static void write(String fileName, String fileContent,
-                             boolean autoCreateDir, boolean autoOverwrite) throws IOException {
+    public void write(String fileName, String fileContent,
+                      boolean autoCreateDir, boolean autoOverwrite) throws IOException {
         write(fileName, fileContent.getBytes(), autoCreateDir,
                 autoOverwrite);
     }
@@ -395,15 +346,11 @@ public final class MwFileUtil {
      * @param autoOverwrite 目标文件存在时, 是否自动覆盖
      * @throws IOException
      */
-    public static void write(String fileName, byte[] contentBytes,
-                             boolean autoCreateDir, boolean autoOverwrite) throws IOException {
+    public void write(String fileName, byte[] contentBytes,
+                      boolean autoCreateDir, boolean autoOverwrite) throws IOException {
 
-        if (autoCreateDir) {
-            createDirs(fileName);
-        }
-        if (autoOverwrite) {
-            delete(fileName);
-        }
+        if (autoCreateDir) createDirs(fileName);
+        if (autoOverwrite) delete(fileName);
         File f = new File(fileName);
         FileOutputStream fs = new FileOutputStream(f);
         fs.write(contentBytes);
@@ -418,7 +365,7 @@ public final class MwFileUtil {
      * @param fileContent
      * @throws IOException
      */
-    public static void append(String fileName, String fileContent, boolean createFileIfNoExist)
+    public void append(String fileName, String fileContent, boolean createFileIfNoExist)
             throws IOException {
         File f = new File(fileName);
         if (f.exists()) {
@@ -429,12 +376,10 @@ public final class MwFileUtil {
             rFile.seek(originLen);
             rFile.write(b);
             rFile.close();
-        } else if (createFileIfNoExist) {
-            write(fileName, fileContent);
-        }
+        } else if (createFileIfNoExist) write(fileName, fileContent);
     }
 
-    public static void append(String fileName, String fileContent) throws IOException {
+    public void append(String fileName, String fileContent) throws IOException {
         append(fileName, fileContent, true);
     }
 
@@ -446,9 +391,9 @@ public final class MwFileUtil {
      * @return 拆分后的文件名列表
      * @throws IOException
      */
-    public static List<String> splitBySize(String fileName, int byteSize)
+    public List<String> splitBySize(String fileName, int byteSize)
             throws IOException {
-        List<String> parts = new ArrayList<String>();
+        List<String> parts = new ArrayList<>();
         File file = new File(fileName);
         int count = (int) Math.ceil(file.length() / (double) byteSize);
         int countLen = (count + "").length();
@@ -475,8 +420,8 @@ public final class MwFileUtil {
      * @param mergeFileName  合并后的文件名
      * @throws IOException
      */
-    public static void mergePartFiles(String dirPath, String partFileSuffix,
-                                      int partFileSize, String mergeFileName) throws IOException {
+    public void mergePartFiles(String dirPath, String partFileSuffix,
+                               int partFileSize, String mergeFileName) throws IOException {
         List<File> partFiles = MwFileUtil.getDirFiles(dirPath,
                 partFileSuffix);
         Collections.sort(partFiles, new FileComparator());
@@ -491,10 +436,9 @@ public final class MwFileUtil {
                 partFiles.size(), partFiles.size() * 3, 1, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(partFiles.size() * 2), MwThreadFactoryBuilderUtil.build("merge-file"));
 
-        for (int i = 0; i < partFiles.size(); i++) {
+        for (int i = 0; i < partFiles.size(); i++)
             threadPool.execute(new MergeRunnable(i * partFileSize,
                     mergeFileName, partFiles.get(i)));
-        }
 
     }
 
@@ -503,7 +447,7 @@ public final class MwFileUtil {
      *
      * @author yjmyzz@126.com
      */
-    private static class FileComparator implements Comparator<File> {
+    private class FileComparator implements Comparator<File> {
         @Override
         public int compare(File o1, File o2) {
             return o1.getName().compareToIgnoreCase(o2.getName());
@@ -515,12 +459,10 @@ public final class MwFileUtil {
      *
      * @param filePath 完整的文件名(类似：/usr/a/b/c/d.xml)
      */
-    public static void createDirs(String filePath) {
+    public void createDirs(String filePath) {
         File file = new File(filePath);
         File parent = file.getParentFile();
-        if (parent != null && !parent.exists()) {
-            parent.mkdirs();
-        }
+        if (parent != null && !parent.exists()) parent.mkdirs();
 
     }
 
@@ -531,7 +473,7 @@ public final class MwFileUtil {
      * @param fileNameTo
      * @throws IOException
      */
-    public static void moveFile(String fileNameFrom, String fileNameTo) throws IOException {
+    public void moveFile(String fileNameFrom, String fileNameTo) throws IOException {
         write(fileNameTo, read(fileNameFrom));
         delete(fileNameFrom);
 
@@ -542,7 +484,7 @@ public final class MwFileUtil {
      *
      * @author yjmyzz@126.com
      */
-    private static class SplitRunnable implements Runnable {
+    private class SplitRunnable implements Runnable {
         int byteSize;
         String partFileName;
         File originFile;
@@ -580,7 +522,7 @@ public final class MwFileUtil {
      *
      * @author yjmyzz@126.com
      */
-    private static class MergeRunnable implements Runnable {
+    private class MergeRunnable implements Runnable {
         long startPos;
         String mergeFileName;
         File partFile;

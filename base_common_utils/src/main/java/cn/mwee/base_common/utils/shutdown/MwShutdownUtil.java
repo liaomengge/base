@@ -1,16 +1,16 @@
 package cn.mwee.base_common.utils.shutdown;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.function.Consumer;
 
 /**
  * Created by liaomengge on 2018/12/20.
  */
-public final class MwShutdownUtil {
+@UtilityClass
+public class MwShutdownUtil {
 
-    private MwShutdownUtil() {
-    }
-
-    public static <T> void registerShutdownHook(Runnable runnable) {
+    public <T> void registerShutdownHook(Runnable runnable) {
         Runtime.getRuntime().addShutdownHook(new Thread(runnable));
     }
 
@@ -22,7 +22,7 @@ public final class MwShutdownUtil {
      * @param <T>
      */
     @Deprecated
-    public static <T> void registerShutdownHook(T t, Consumer<T> consumer) {
+    public <T> void registerShutdownHook(T t, Consumer<T> consumer) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> consumer.accept(t)));
     }
 }

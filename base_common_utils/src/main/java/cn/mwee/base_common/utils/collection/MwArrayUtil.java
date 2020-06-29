@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
@@ -13,10 +14,8 @@ import java.util.List;
 /**
  * Created by liaomengge on 16/9/6.
  */
-public final class MwArrayUtil {
-
-    private MwArrayUtil() {
-    }
+@UtilityClass
+public class MwArrayUtil {
 
     /**
      * 过滤指定元素
@@ -25,29 +24,23 @@ public final class MwArrayUtil {
      * @param array
      * @return
      */
-    public static String[] filter(String filterVal, String... array) {
-        if (array == null) {
-            return null;
-        }
-        for (int i = 0; i < array.length; i++) {
-            if (filterVal.equals(array[i])) {
-                return ArrayUtils.remove(array, i);
-            }
-        }
+    public String[] filter(String filterVal, String... array) {
+        if (array == null) return null;
+        for (int i = 0; i < array.length; i++) if (filterVal.equals(array[i])) return ArrayUtils.remove(array, i);
         return array;
     }
 
     /**
      * 传入类型与大小创建数组.
      */
-    public static <T> T[] newArray(Class<T> type, int length) {
+    public <T> T[] newArray(Class<T> type, int length) {
         return (T[]) Array.newInstance(type, length);
     }
 
     /**
      * list.toArray() 返回的是Object[] 如果要有类型的数组话, 就要使用list.toArray(new String[list.size()]), 这里对调用做了简化
      */
-    public static <T> T[] toArray(List<T> list, Class<T> type) {
+    public <T> T[] toArray(List<T> list, Class<T> type) {
         return list.toArray((T[]) Array.newInstance(type, list.size()));
     }
 
@@ -58,7 +51,7 @@ public final class MwArrayUtil {
      *
      * @see java.util.Arrays#asList(Object...)
      */
-    public static <T> List<T> asList(T... a) {
+    public <T> List<T> asList(T... a) {
         return Arrays.asList(a);
     }
 
@@ -70,7 +63,7 @@ public final class MwArrayUtil {
      *
      * @see com.google.common.collect.Lists#asList(Object, Object[])
      */
-    public static <E> List<E> asList(E first, E[] rest) {
+    public <E> List<E> asList(E first, E[] rest) {
         return Lists.asList(first, rest);
     }
 
@@ -82,7 +75,7 @@ public final class MwArrayUtil {
      * @see java.util.Arrays#asList(Object...)
      * @see com.google.common.primitives.Ints#asList(int...)
      */
-    public static List<Integer> intAsList(int... backingArray) {
+    public List<Integer> intAsList(int... backingArray) {
         return Ints.asList(backingArray);
     }
 
@@ -94,7 +87,7 @@ public final class MwArrayUtil {
      * @see java.util.Arrays#asList(Object...)
      * @see com.google.common.primitives.Longs#asList(long...)
      */
-    public static List<Long> longAsList(long... backingArray) {
+    public List<Long> longAsList(long... backingArray) {
         return Longs.asList(backingArray);
     }
 
@@ -106,7 +99,7 @@ public final class MwArrayUtil {
      * @see java.util.Arrays#asList(Object...)
      * @see com.google.common.primitives.Doubles#asList(double...)
      */
-    public static List<Double> doubleAsList(double... backingArray) {
+    public List<Double> doubleAsList(double... backingArray) {
         return Doubles.asList(backingArray);
     }
 }

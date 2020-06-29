@@ -14,8 +14,8 @@ import java.util.List;
 @UtilityClass
 public class MwRuntimeUtil {
 
-    private static volatile int pId = -1;
-    private static final int CPU_NUM = Runtime.getRuntime().availableProcessors();
+    private volatile int pId = -1;
+    private final int CPU_NUM = Runtime.getRuntime().availableProcessors();
 
     /**
      * 获得当前进程的PID
@@ -24,7 +24,7 @@ public class MwRuntimeUtil {
      *
      * @return pid
      */
-    public static int getPId() {
+    public int getPId() {
         if (pId > 0) {
             return pId;
         }
@@ -43,7 +43,7 @@ public class MwRuntimeUtil {
      *
      * @return {Duration}
      */
-    public static Duration getUpTime() {
+    public Duration getUpTime() {
         long upTime = ManagementFactory.getRuntimeMXBean().getUptime();
         return Duration.ofMillis(upTime);
     }
@@ -53,7 +53,7 @@ public class MwRuntimeUtil {
      *
      * @return jvm参数
      */
-    public static String getJvmArguments() {
+    public String getJvmArguments() {
         List<String> vmArguments = ManagementFactory.getRuntimeMXBean().getInputArguments();
         return Joiner.on(" ").join(vmArguments);
     }
@@ -63,7 +63,7 @@ public class MwRuntimeUtil {
      *
      * @return cpu count
      */
-    public static int getCpuNum() {
+    public int getCpuNum() {
         return CPU_NUM;
     }
 }

@@ -1,14 +1,14 @@
 package cn.mwee.base_common.utils.chinese;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * Created by liaomengge on 16/4/12.
  */
-public final class MwChineseUtil {
+@UtilityClass
+public class MwChineseUtil {
 
-    private MwChineseUtil() {
-    }
-
-    public static boolean isLetter(char c) {
+    public boolean isLetter(char c) {
         int k = 0x80;
         return c / k == 0 ? true : false;
     }
@@ -19,12 +19,9 @@ public final class MwChineseUtil {
      * @param str
      * @return
      */
-    public static boolean isNull(String str) {
-        if (str == null || "".equals(str.trim()) || "null".equalsIgnoreCase(str.trim())) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isNull(String str) {
+        if (str == null || "".equals(str.trim()) || "null".equalsIgnoreCase(str.trim())) return true;
+        else return false;
     }
 
     /**
@@ -33,17 +30,13 @@ public final class MwChineseUtil {
      * @param s 需要得到长度的字符串
      * @return int 得到的字符串长度
      */
-    public static int length(String s) {
-        if (s == null) {
-            return 0;
-        }
+    public int length(String s) {
+        if (s == null) return 0;
         char[] c = s.toCharArray();
         int len = 0;
         for (int i = 0; i < c.length; i++) {
             len++;
-            if (!isLetter(c[i])) {
-                len++;
-            }
+            if (!isLetter(c[i])) len++;
         }
         return len;
     }
@@ -54,7 +47,7 @@ public final class MwChineseUtil {
      * @param s 需要得到长度的字符串
      * @return int 得到的字符串长度
      */
-    public static double getLength(String s) {
+    public double getLength(String s) {
         double valueLength = 0;
         String chinese = "[\u4e00-\u9fa5]";
         // 获取字段值的长度, 如果含中文字符, 则每个中文字符长度为2, 否则为1
@@ -62,13 +55,10 @@ public final class MwChineseUtil {
             // 获取一个字符
             String temp = s.substring(i, i + 1);
             // 判断是否为中文字符
-            if (temp.matches(chinese)) {
-                // 中文字符长度为1
-                valueLength += 1;
-            } else {
-                // 其他字符长度为0.5
-                valueLength += 0.5;
-            }
+            // 中文字符长度为1
+            // 其他字符长度为0.5
+            if (temp.matches(chinese)) valueLength += 1;
+            else valueLength += 0.5;
         }
         // 进位取整
         return Math.ceil(valueLength);

@@ -1,14 +1,14 @@
 package cn.mwee.base_common.utils.regex;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class MwRegexUtil {
+@UtilityClass
+public class MwRegexUtil {
 
-    private static Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
-
-    private MwRegexUtil() {
-    }
+    private Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
 
     /**
      * 判断是否是正确的IP地址
@@ -16,11 +16,12 @@ public final class MwRegexUtil {
      * @param ip
      * @return boolean true,通过, false, 没通过
      */
-    public static boolean isIp(String ip) {
+    public boolean isIp(String ip) {
         if (null == ip || "".equals(ip)) {
             return false;
         }
-        String regex = "^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\." + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\." + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
+        String regex = "^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\." + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\" +
+                "." + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
                 + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";
         return ip.matches(regex);
     }
@@ -31,7 +32,7 @@ public final class MwRegexUtil {
      * @param email
      * @return boolean true,通过, false, 没通过
      */
-    public static boolean isEmail(String email) {
+    public boolean isEmail(String email) {
         if (null == email || "".equals(email)) {
             return false;
         }
@@ -45,7 +46,7 @@ public final class MwRegexUtil {
      * @param text
      * @return boolean true,通过, false, 没通过
      */
-    public static boolean isChinese(String text) {
+    public boolean isChinese(String text) {
         if (null == text || "".equals(text)) {
             return false;
         }
@@ -59,7 +60,7 @@ public final class MwRegexUtil {
      * @param number 数字
      * @return boolean true,通过, false, 没通过
      */
-    public static boolean isNumber(String number) {
+    public boolean isNumber(String number) {
         if (null == number || "".equals(number)) {
             return false;
         }
@@ -74,7 +75,7 @@ public final class MwRegexUtil {
      * @param count   小数位数
      * @return boolean true,通过, false, 没通过
      */
-    public static boolean isDecimal(String decimal, int count) {
+    public boolean isDecimal(String decimal, int count) {
         if (null == decimal || "".equals(decimal)) {
             return false;
         }
@@ -88,7 +89,7 @@ public final class MwRegexUtil {
      * @param phoneNumber 手机号码
      * @return boolean true,通过, false, 没通过
      */
-    public static boolean isPhoneNumber(String phoneNumber) {
+    public boolean isPhoneNumber(String phoneNumber) {
         if (null == phoneNumber || "".equals(phoneNumber)) {
             return false;
         }
@@ -102,7 +103,7 @@ public final class MwRegexUtil {
      * @param text
      * @return boolean true,通过, false, 没通过
      */
-    public static boolean hasSpecialChar(String text) {
+    public boolean hasSpecialChar(String text) {
         if (null == text || "".equals(text)) {
             return false;
         }
@@ -116,7 +117,7 @@ public final class MwRegexUtil {
     /**
      * 适应CJK（中日韩）字符集, 部分中日韩的字是一样的
      */
-    public static boolean isChinese2(String strName) {
+    public boolean isChinese2(String strName) {
         char[] ch = strName.toCharArray();
         for (int i = 0; i < ch.length; i++) {
             char c = ch[i];
@@ -127,7 +128,7 @@ public final class MwRegexUtil {
         return false;
     }
 
-    private static boolean isChinese(char c) {
+    private boolean isChinese(char c) {
         Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
         if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
                 || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION

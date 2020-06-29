@@ -1,10 +1,12 @@
 package cn.mwee.base_common.utils.web;
 
 import cn.mwee.base_common.support.misc.Charsets;
+import cn.mwee.base_common.support.misc.consts.ToolConst;
 import cn.mwee.base_common.utils.io.MwIOUtil;
 import cn.mwee.base_common.utils.json.MwJsonUtil;
 import cn.mwee.base_common.utils.log4j2.MwLogger;
 import com.google.common.collect.Lists;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.http.MediaType;
@@ -20,17 +22,13 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static cn.mwee.base_common.support.misc.consts.ToolConst.JOINER;
-
 /**
  * Created by liaomengge on 17/11/7.
  */
-public final class MwWebUtil {
+@UtilityClass
+public class MwWebUtil {
 
-    public static final Logger logger = MwLogger.getInstance(Charsets.class);
-
-    private MwWebUtil() {
-    }
+    public final Logger logger = MwLogger.getInstance(Charsets.class);
 
     /**
      * 获取Get/Post请求参数(文件上传除外)
@@ -38,7 +36,7 @@ public final class MwWebUtil {
      * @param servletRequest
      * @return
      */
-    public static Map<String, Object> getRequestParams(HttpServletRequest servletRequest) {
+    public Map<String, Object> getRequestParams(HttpServletRequest servletRequest) {
         Map<String, Object> paramMap = new TreeMap<>();
         Enumeration<String> paramNames = servletRequest.getParameterNames();
         while (paramNames != null && paramNames.hasMoreElements()) {
@@ -61,7 +59,7 @@ public final class MwWebUtil {
      * @param servletRequest
      * @return
      */
-    public static MultivaluedMap<String, String> getRequestMultiParams(HttpServletRequest servletRequest) {
+    public MultivaluedMap<String, String> getRequestMultiParams(HttpServletRequest servletRequest) {
         MultivaluedMap<String, String> multivaluedMap = new MultivaluedHashMap<>();
         Enumeration<String> paramNames = servletRequest.getParameterNames();
         while (paramNames != null && paramNames.hasMoreElements()) {
@@ -82,7 +80,7 @@ public final class MwWebUtil {
      * @param servletRequest
      * @return
      */
-    public static Map<String, String> getRequestStringParams(HttpServletRequest servletRequest) {
+    public Map<String, String> getRequestStringParams(HttpServletRequest servletRequest) {
         Map<String, String> paramMap = new TreeMap<>();
         Enumeration<String> paramNames = servletRequest.getParameterNames();
         while (paramNames != null && paramNames.hasMoreElements()) {
@@ -91,7 +89,7 @@ public final class MwWebUtil {
             if (values == null || values.length == 0) {
                 paramMap.put(paramName, null);
             } else {
-                paramMap.put(paramName, JOINER.join(values));
+                paramMap.put(paramName, ToolConst.JOINER.join(values));
             }
         }
         return paramMap;
@@ -103,7 +101,7 @@ public final class MwWebUtil {
      * @param request
      * @return
      */
-    public static String getReqJson(HttpServletRequest request) {
+    public String getReqJson(HttpServletRequest request) {
         return getReqJson(request, Charsets.UTF_8.name());
     }
 
@@ -113,7 +111,7 @@ public final class MwWebUtil {
      * @param request
      * @return
      */
-    public static String getReqJson(HttpServletRequest request, String contentType) {
+    public String getReqJson(HttpServletRequest request, String contentType) {
         try {
             request.setCharacterEncoding(contentType);
         } catch (UnsupportedEncodingException e) {
@@ -133,7 +131,7 @@ public final class MwWebUtil {
      * @param response HttpServletResponse
      * @param result   结果对象
      */
-    public static void renderJson(HttpServletResponse response, Object result) {
+    public void renderJson(HttpServletResponse response, Object result) {
         renderJson(response, result, MediaType.APPLICATION_JSON_UTF8_VALUE);
     }
 
@@ -144,7 +142,7 @@ public final class MwWebUtil {
      * @param result      结果对象
      * @param contentType contentType
      */
-    public static void renderJson(HttpServletResponse response, Object result, String contentType) {
+    public void renderJson(HttpServletResponse response, Object result, String contentType) {
         response.setCharacterEncoding(Charsets.UTF_8.name());
         response.setContentType(contentType);
         try (PrintWriter writer = response.getWriter()) {
@@ -161,7 +159,7 @@ public final class MwWebUtil {
      * @param request 请求对象{@link HttpServletRequest}
      * @return 是否为GET请求
      */
-    public static boolean isGetMethod(HttpServletRequest request) {
+    public boolean isGetMethod(HttpServletRequest request) {
         return "GET".equalsIgnoreCase(request.getMethod());
     }
 
@@ -171,7 +169,7 @@ public final class MwWebUtil {
      * @param request 请求对象{@link HttpServletRequest}
      * @return 是否为POST请求
      */
-    public static boolean isPostMethod(HttpServletRequest request) {
+    public boolean isPostMethod(HttpServletRequest request) {
         return "POST".equalsIgnoreCase(request.getMethod());
     }
 
@@ -181,7 +179,7 @@ public final class MwWebUtil {
      * @param request 请求对象{@link HttpServletRequest}
      * @return 是否为Multipart类型表单, 此类型表单用于文件上传
      */
-    public static boolean isMultipart(HttpServletRequest request) {
+    public boolean isMultipart(HttpServletRequest request) {
         if (false == isPostMethod(request)) {
             return false;
         }
