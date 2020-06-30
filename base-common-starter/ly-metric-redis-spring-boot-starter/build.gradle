@@ -1,0 +1,3 @@
+dependencies {
+    api(project(":ly-redis-spring-boot-starter"))
+}
