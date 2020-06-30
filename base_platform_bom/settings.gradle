@@ -1,3 +1,0 @@
-rootProject.name = 'base_platform_bom'
-include 'base_framework_bom'
-

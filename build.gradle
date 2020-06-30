@@ -29,13 +29,13 @@ subprojects {
     }
 
     def versions = [
-            platformBom: '0.0.4-SNAPSHOT'
+            platformBom: '0.0.5-SNAPSHOT'
     ]
 
     dependencyManagement {
         dependencies {
             imports {
-                mavenBom "cn.mwee:base_platform_bom:${versions.platformBom}"
+                mavenBom "cn.ly:base-platform-bom:${versions.platformBom}"
             }
         }
         resolutionStrategy {

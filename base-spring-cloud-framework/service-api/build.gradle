@@ -1,0 +1,17 @@
+def artifactId = "base-spring-cloud-framework-api"
+
+dependencies {
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: nexusUrl) {
+                authentication(userName: "fly", password: "fly123")
+            }
+            pom.version = "$project.version"
+            pom.artifactId = "$artifactId"
+            pom.groupId = "$project.group"
+        }
+    }
+}

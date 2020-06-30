@@ -1,1 +1,0 @@
-org.springframework.context.ApplicationContextInitializer=cn.mwee.service.base_framework.initializer.BaseApplicationContextInitializer

@@ -1,0 +1,6 @@
+rootProject.name = "base-dubbo-framework"
+
+include 'data-mapper'
+include 'service-api'
+include 'service-common'
+include 'service-provider'

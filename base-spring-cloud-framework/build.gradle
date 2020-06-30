@@ -1,0 +1,131 @@
+plugins {
+    id "io.spring.dependency-management" version '1.0.9.RELEASE'
+}
+
+wrapper {
+     gradleVersion = '6.5'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'maven'
+    apply plugin: "idea"
+    apply plugin: "io.spring.dependency-management"
+
+    group = 'cn.ly'
+    version = '1.5.x.54-SNAPSHOT'
+
+    targetCompatibility = 1.8
+    sourceCompatibility = 1.8
+
+    [compileJava, compileTestJava].each() {
+        //it.options.compilerArgs += ["-Xlint:unchecked", "-Xlint:deprecation", "-Xlint:-options"]
+        it.options.compilerArgs += ["-Xlint:unchecked", "-Xlint:deprecation"]
+        it.options.encoding = "UTF-8"
+    }
+
+    repositories {
+        mavenLocal()
+        maven {
+            url 'http://127.0.0.1:8089/repository/fly-snapshots/'
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        mavenCentral()
+        jcenter()
+    }
+
+    jar {
+        manifest {
+            attributes(
+                    "Created-By": "liaomengge",
+                    "Implementation-Version": project.version
+            )
+        }
+    }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        archiveClassifier.set('sources')
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives sourcesJar
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDirs = ['src/main/java']
+            }
+            resources {
+                srcDirs = ['src/main/resources']
+            }
+        }
+        test {
+            java {
+                srcDirs = ['src/test/java']
+            }
+            resources {
+                srcDirs = ['src/test/resources']
+            }
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+    }
+
+    ext {
+        baseCommonMiddlewareVersion = '1.1.0-SNAPSHOT'
+        baseCommonUtilsVersion = '1.0.9-SNAPSHOT'
+        nexusUrl = version.endsWith("-SNAPSHOT") ?
+                "http://127.0.0.1:8089/repository/fly-snapshots/" :
+                "http://127.0.0.1:8089/repository/fly-releases/"
+    }
+
+    def versions = [
+            platformBom: '0.0.5-SNAPSHOT'
+    ]
+
+    dependencyManagement {
+        dependencies {
+            imports {
+                mavenBom "cn.ly:base-platform-bom:${versions.platformBom}"
+            }
+        }
+        resolutionStrategy {
+            cacheChangingModulesFor 0, 'seconds'
+            cacheDynamicVersionsFor 0, 'seconds'
+        }
+    }
+
+    dependencies {
+        api "com.javadeep:functional-lang"
+        api("cn.ly:base-common-middleware:${baseCommonMiddlewareVersion}") {
+            exclude(module: 'base-common-utils')
+        }
+
+        api "cn.ly:base-common-utils:${baseCommonUtilsVersion}"
+
+        /********************************华丽的分割线****************************/
+
+        api "org.springframework:spring-webmvc"
+        api "org.springframework.boot:spring-boot-starter"
+        api "org.springframework.boot:spring-boot-starter-test"
+        api "org.springframework.boot:spring-boot-starter-actuator"
+
+        api "org.apache.tomcat.embed:tomcat-embed-core"
+        api "org.apache.tomcat.embed:tomcat-embed-logging-juli"
+
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+
+        testImplementation "junit:junit"
+    }
+}

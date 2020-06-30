@@ -1,0 +1,20 @@
+def artifactId = "base_dubbo_framework"
+
+dependencies {
+    api(project(":service-api"))
+    api(project(":service-common"))
+    api(project(":data-mapper"))
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: nexusUrl) {
+                authentication(userName: "fly", password: "fly123")
+            }
+            pom.version = "$project.version"
+            pom.artifactId = "$artifactId"
+            pom.groupId = "$project.group"
+        }
+    }
+}

@@ -1,0 +1,28 @@
+def artifactId = "base-dubbo-framework-api"
+
+dependencies {
+    api "org.hibernate:hibernate-validator"
+    api "javax.annotation:javax.annotation-api"
+
+    api "javax.el:javax.el-api"
+    api "javax.servlet:javax.servlet-api"
+
+    api "org.jboss.resteasy:resteasy-client"
+    api "org.jboss.resteasy:resteasy-jaxrs"
+    api "org.jboss.resteasy:resteasy-netty"
+    api "org.jboss.resteasy:resteasy-jackson2-provider"
+    api "org.jboss.resteasy:resteasy-multipart-provider"
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: nexusUrl) {
+                authentication(userName: "fly", password: "fly123")
+            }
+            pom.version = "$project.version"
+            pom.artifactId = "$artifactId"
+            pom.groupId = "$project.group"
+        }
+    }
+}
