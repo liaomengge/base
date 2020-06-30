@@ -37,7 +37,7 @@ public class SentinelFilter implements Filter, EnvironmentAware {
 
     private static final Logger logger = MwLogger.getInstance(SentinelFilter.class);
 
-    public static final String FRAMEWORK_SENTINEL_ENABLED = "mwee.framework.sentinel.enabled";
+    public static final String FRAMEWORK_SENTINEL_ENABLED = "ly.framework.sentinel.enabled";
 
     private List<String> excludedUris;
 

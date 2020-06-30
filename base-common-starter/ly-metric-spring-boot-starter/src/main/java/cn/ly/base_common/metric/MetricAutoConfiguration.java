@@ -32,7 +32,7 @@ import org.springframework.util.StringUtils;
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @ConditionalOnClass({StatsdMetricWriter.class, StatsDClient.class})
 @EnableConfigurationProperties(MetricProperties.class)
-@ConditionalOnProperty(prefix = "mwee.metric", name = "enabled", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "ly.metric", name = "enabled", matchIfMissing = true)
 @Import({MwTomcatMetricsConfiguration.class, MwThreadPoolMetricsConfiguration.class})
 public class MetricAutoConfiguration {
 

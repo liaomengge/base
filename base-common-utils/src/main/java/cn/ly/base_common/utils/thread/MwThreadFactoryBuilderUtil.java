@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadFactory;
 @UtilityClass
 public class MwThreadFactoryBuilderUtil {
 
-    private final String DEFAULT_NAME_FORMAT = "mwee-pool-{0}-thread-%d";
+    private final String DEFAULT_NAME_FORMAT = "ly-pool-{0}-thread-%d";
 
     public ThreadFactoryBuilder create() {
         return new ThreadFactoryBuilder();

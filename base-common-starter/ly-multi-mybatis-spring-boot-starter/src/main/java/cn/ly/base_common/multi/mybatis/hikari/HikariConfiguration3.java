@@ -13,19 +13,19 @@ import org.springframework.context.annotation.Primary;
  * Created by liaomengge on 2018/12/19.
  */
 @ConditionalOnClass(HikariDataSource.class)
-@ConditionalOnProperty(name = "mwee.datasource.type", havingValue = "com.zaxxer.hikari.HikariDataSource")
+@ConditionalOnProperty(name = "ly.datasource.type", havingValue = "com.zaxxer.hikari.HikariDataSource")
 @Configuration
 public class HikariConfiguration3 {
 
     @Bean(name = "threeMasterDataSource", destroyMethod = "close")
     @Primary
-    @ConfigurationProperties("mwee.mybatis.three.hikari.master")
+    @ConfigurationProperties("ly.mybatis.three.hikari.master")
     public HikariDataSource masterDataSource() {
         return (HikariDataSource) DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
     @Bean(name = "threeSlaveDataSource", destroyMethod = "close")
-    @ConfigurationProperties("mwee.mybatis.three.hikari.slave")
+    @ConfigurationProperties("ly.mybatis.three.hikari.slave")
     public HikariDataSource slaveDataSource() {
         return (HikariDataSource) DataSourceBuilder.create().type(HikariDataSource.class).build();
     }

@@ -44,7 +44,7 @@ public class MybatisPointcutBeanDefinitionRegistry implements EnvironmentAware, 
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         Map<String, LinkedHashMap<String, Object>> mappingPropertiesMap = Maps.newHashMap();
         MutablePropertySources propertySources = ((ConfigurableEnvironment) environment).getPropertySources();
-        new RelaxedDataBinder(mappingPropertiesMap, "mwee.mybatis").bind(new PropertySourcesPropertyValues(propertySources));
+        new RelaxedDataBinder(mappingPropertiesMap, "ly.mybatis").bind(new PropertySourcesPropertyValues(propertySources));
         LinkedHashMap<String, Object> subMappingPropertiesMap = mappingPropertiesMap.get("mapping");
         subMappingPropertiesMap = subMappingPropertiesMap.entrySet().stream()
                 .filter(val -> val.getValue() instanceof LinkedHashMap && StringUtils.isNumeric(val.getKey()))

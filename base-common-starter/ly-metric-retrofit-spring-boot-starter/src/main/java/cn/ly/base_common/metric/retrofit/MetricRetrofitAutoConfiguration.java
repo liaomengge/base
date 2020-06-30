@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(OkHttpClient.class)
-@ConditionalOnProperty(prefix = "mwee.metric-retrofit", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.metric-retrofit", name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(MetricRetrofitProperties.class)
 public class MetricRetrofitAutoConfiguration {
 

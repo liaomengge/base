@@ -22,7 +22,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author lihengming [89921218@qq.com]
  */
 @Data
-@ConfigurationProperties("mwee.mybatis.druid")
+@ConfigurationProperties("ly.mybatis.druid")
 public class DruidStatProperties {
 
     private StatViewServlet statViewServlet = new StatViewServlet();

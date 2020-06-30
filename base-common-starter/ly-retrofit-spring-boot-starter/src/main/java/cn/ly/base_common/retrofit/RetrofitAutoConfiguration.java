@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 @EnableConfigurationProperties(RetrofitProperties.class)
 public class RetrofitAutoConfiguration {
 
-    private static final String DAYU_SENTINEL_ENABLED = "mwee.dayu.sentinel.enabled";
+    private static final String DAYU_SENTINEL_ENABLED = "ly.dayu.sentinel.enabled";
     private static final String SPRING_APPLICATION_NAME = "spring.application.name";
 
     @Autowired(required = false)

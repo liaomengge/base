@@ -56,7 +56,7 @@ public class QuartzListener implements EnvironmentAware, ApplicationListener<Env
     @Override
     public void onApplicationEvent(EnvironmentChangeEvent event) {
         Optional<String> quartzChange = event.getKeys().stream().filter(val -> StringUtils.startsWithIgnoreCase(val,
-                "mwee.quartz")).findFirst();
+                "ly.quartz")).findFirst();
         quartzChange.ifPresent(val -> Optional.ofNullable(schedulerFactoryBean).ifPresent(val2 -> {
             try {
                 Map<String, String> triggerDetailMap = buildTriggerDetail();
@@ -106,7 +106,7 @@ public class QuartzListener implements EnvironmentAware, ApplicationListener<Env
         Map<String, String> triggerDetailMap = Maps.newHashMap();
         Map<String, LinkedHashMap<String, Object>> jobPropertiesMap = Maps.newHashMap();
         MutablePropertySources propertySources = ((ConfigurableEnvironment) environment).getPropertySources();
-        new RelaxedDataBinder(jobPropertiesMap, "mwee.quartz").bind(new PropertySourcesPropertyValues(propertySources));
+        new RelaxedDataBinder(jobPropertiesMap, "ly.quartz").bind(new PropertySourcesPropertyValues(propertySources));
         LinkedHashMap<String, Object> subJobMap = jobPropertiesMap.get("jobs");
         subJobMap = subJobMap.entrySet().stream()
                 .filter(val -> val.getValue() instanceof LinkedHashMap && StringUtils.isNumeric(val.getKey()))

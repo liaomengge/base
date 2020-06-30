@@ -25,7 +25,7 @@ import javax.jms.ConnectionFactory;
  */
 @Configuration
 @ConditionalOnClass({ConnectionFactory.class, ActiveMQConnectionFactory.class})
-@ConditionalOnProperty(name = "mwee.mq.type", havingValue = "activemq")
+@ConditionalOnProperty(name = "ly.mq.type", havingValue = "activemq")
 @EnableConfigurationProperties(ActiveMQProperties.class)
 @Import(ActiveMQQueueConfigBeanRegistryConfiguration.class)
 public class ActiveMQAutoConfiguration {

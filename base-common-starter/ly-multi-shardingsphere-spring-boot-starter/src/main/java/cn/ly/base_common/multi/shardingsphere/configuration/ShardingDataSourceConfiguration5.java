@@ -38,8 +38,8 @@ import java.util.Properties;
  * Created by liaomengge on 2019/9/12.
  */
 @Configuration
-@ConditionalOnProperty(prefix = "mwee.shardingsphere.five", name = "enable", havingValue = "true")
-@ExtendMapperScan(basePackages = "${mwee.shardingsphere.five.mybatis.basePackages}", sqlSessionFactoryRef =
+@ConditionalOnProperty(prefix = "ly.shardingsphere.five", name = "enable", havingValue = "true")
+@ExtendMapperScan(basePackages = "${ly.shardingsphere.five.mybatis.basePackages}", sqlSessionFactoryRef =
         "fiveSqlSessionFactory")
 public class ShardingDataSourceConfiguration5 extends AbstractShardingDataSourceConfiguration {
 
@@ -48,19 +48,19 @@ public class ShardingDataSourceConfiguration5 extends AbstractShardingDataSource
     private final Map<String, DataSource> dataSourceMap = new LinkedHashMap<>();
 
     @Bean("shardingSphereProperties5")
-    @ConfigurationProperties(prefix = "mwee.shardingsphere.five")
+    @ConfigurationProperties(prefix = "ly.shardingsphere.five")
     public ShardingSphereProperties shardingSphereProperties5() {
         return new ShardingSphereProperties();
     }
 
     @Bean("pageHelperProperties5")
-    @ConfigurationProperties(prefix = "mwee.shardingsphere.five.mybatis.pagehelper")
+    @ConfigurationProperties(prefix = "ly.shardingsphere.five.mybatis.pagehelper")
     public Properties pageHelperProperties5() {
         return new Properties();
     }
 
     @Bean("flowProperties5")
-    @ConfigurationProperties(prefix = "mwee.shardingsphere.five.mybatis.flow")
+    @ConfigurationProperties(prefix = "ly.shardingsphere.five.mybatis.flow")
     public Properties flowProperties5() {
         return new Properties();
     }
@@ -94,7 +94,7 @@ public class ShardingDataSourceConfiguration5 extends AbstractShardingDataSource
 
     @Bean("fiveMasterSlaveDataSource")
     public DataSource masterSlaveDataSource() throws SQLException {
-        String prefix = "mwee.shardingsphere.five.datasource.";
+        String prefix = "ly.shardingsphere.five.datasource.";
         List<String> dataSourceNames = getDataSourceNames(environment, prefix);
         if (CollectionUtils.isEmpty(dataSourceNames)) {
             throw new ShardingException("datasource couldn't null");
@@ -159,7 +159,7 @@ public class ShardingDataSourceConfiguration5 extends AbstractShardingDataSource
     @Override
     public final void setEnvironment(Environment environment) {
         this.environment = environment;
-        String prefix = "mwee.shardingsphere.five.datasource.";
+        String prefix = "ly.shardingsphere.five.datasource.";
         for (String each : getDataSourceNames(environment, prefix)) {
             try {
                 dataSourceMap.put(each, getDataSource(environment, prefix, each));

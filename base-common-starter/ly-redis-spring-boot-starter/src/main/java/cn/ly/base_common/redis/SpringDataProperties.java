@@ -18,7 +18,7 @@ import java.util.Objects;
  * Created by liaomengge on 2018/11/14.
  */
 @Data
-@ConfigurationProperties(prefix = "mwee.redis.spring-data")
+@ConfigurationProperties(prefix = "ly.redis.spring-data")
 public class SpringDataProperties {
 
     private boolean enabled;

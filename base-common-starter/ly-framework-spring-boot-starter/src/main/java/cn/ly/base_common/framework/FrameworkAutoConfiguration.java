@@ -37,20 +37,20 @@ public class FrameworkAutoConfiguration {
     @Autowired
     private ApplicationContext applicationContext;
 
-    @Bean("cn.mwee.base_common.support.spring.SpringUtils")
+    @Bean("cn.ly.base_common.support.spring.SpringUtils")
     @ConditionalOnMissingBean
     public SpringUtils springUtils() {
         return new SpringUtils();
     }
 
-    @Bean("cn.mwee.service.base_framework.common.config.FilterConfig")
+    @Bean("cn.ly.service.base_framework.common.config.FilterConfig")
     @ConditionalOnMissingBean
-    @ConfigurationProperties("mwee.framework")
+    @ConfigurationProperties("ly.framework")
     public FilterConfig filterConfig() {
         return new FilterConfig();
     }
 
-    @Bean("cn.mwee.service.base_framework.common.filter.chain.FilterChain")
+    @Bean("cn.ly.service.base_framework.common.filter.chain.FilterChain")
     @ConditionalOnMissingBean
     public FilterChain filterChain() {
         FilterChain filterChain = new FilterChain();
@@ -59,7 +59,7 @@ public class FrameworkAutoConfiguration {
         return filterChain;
     }
 
-    @Bean("cn.mwee.service.base_framework.common.filter.aspect.ServiceAspect")
+    @Bean("cn.ly.service.base_framework.common.filter.aspect.ServiceAspect")
     @ConditionalOnMissingBean
     public ServiceAspect serviceAspect(FilterConfig filterConfig, FilterChain filterChain) {
         ServiceAspect serviceAspect = new ServiceAspect();

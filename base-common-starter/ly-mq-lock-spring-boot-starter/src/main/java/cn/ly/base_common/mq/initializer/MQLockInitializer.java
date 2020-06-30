@@ -28,7 +28,7 @@ public class MQLockInitializer extends AbstractLock implements EnvironmentAware,
         InitializingBean {
 
     private static final String SPRING_APPLICATION_NAME = "spring.application.name";
-    private static final String MQ_TYPE = "mwee.mq.type";
+    private static final String MQ_TYPE = "ly.mq.type";
     private static final String RABBITMQ = "rabbitmq";
     private static final String ACTIVEMQ = "activemq";
 

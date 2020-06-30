@@ -1,4 +1,4 @@
-//package cn.mwee.base_common.dayu.sentinel.interceptor;
+//package cn.ly.base_common.dayu.sentinel.interceptor;
 //
 //import cn.ly.base_common.dayu.consts.DayuConst;
 //import cn.ly.base_common.utils.log4j2.MwLogger;

@@ -23,7 +23,7 @@ public class ExtendSecurityConfiguration {
     public ProductionSecurityFilter productionSecurityFilter() {
         boolean prod = false;
         if (environment != null) {
-            Boolean enabled = environment.getProperty("mwee.swagger.enabled", Boolean.class);
+            Boolean enabled = environment.getProperty("ly.swagger.enabled", Boolean.class);
             prod = BooleanUtils.toBooleanDefaultIfNull(enabled, false);
         }
         ProductionSecurityFilter p = new ProductionSecurityFilter(!prod);
@@ -36,12 +36,12 @@ public class ExtendSecurityConfiguration {
         boolean enableSwaggerBasicAuth = false;
         String defaultUserName = "admin", defaultPass = "123456";
         if (environment != null) {
-            Boolean enableAuth = environment.getProperty("mwee.swagger.basic.enable", Boolean.class);
+            Boolean enableAuth = environment.getProperty("ly.swagger.basic.enable", Boolean.class);
             enableSwaggerBasicAuth = BooleanUtils.toBooleanDefaultIfNull(enableAuth, false);
             if (enableSwaggerBasicAuth) {
                 //如果开启basic验证,从配置文件中获取用户名和密码
-                String pUser = environment.getProperty("mwee.swagger.basic.username");
-                String pPass = environment.getProperty("mwee.swagger.basic.password");
+                String pUser = environment.getProperty("ly.swagger.basic.username");
+                String pPass = environment.getProperty("ly.swagger.basic.password");
                 if (pUser != null && !"".equals(pUser)) {
                     defaultUserName = pUser;
                 }

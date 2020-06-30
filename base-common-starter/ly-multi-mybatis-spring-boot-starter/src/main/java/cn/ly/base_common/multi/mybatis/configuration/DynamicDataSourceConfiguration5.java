@@ -35,25 +35,25 @@ import java.util.Properties;
  * Created by liaomengge on 2018/12/19.
  */
 @Configuration
-@ConditionalOnProperty(prefix = "mwee.mybatis.five", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.mybatis.five", name = "enable", havingValue = "true")
 @Import({DruidConfiguration5.class, HikariConfiguration5.class})
-@ExtendMapperScan(basePackages = "${mwee.mybatis.five.basePackages}", sqlSessionFactoryRef = "fiveSqlSessionFactory")
+@ExtendMapperScan(basePackages = "${ly.mybatis.five.basePackages}", sqlSessionFactoryRef = "fiveSqlSessionFactory")
 public class DynamicDataSourceConfiguration5 {
 
     @Bean("mybatisProperties5")
-    @ConfigurationProperties(prefix = "mwee.mybatis.five")
+    @ConfigurationProperties(prefix = "ly.mybatis.five")
     public MybatisProperties mybatisProperties5() {
         return new MybatisProperties();
     }
 
     @Bean("pageHelperProperties5")
-    @ConfigurationProperties(prefix = "mwee.mybatis.five.pagehelper")
+    @ConfigurationProperties(prefix = "ly.mybatis.five.pagehelper")
     public Properties pageHelperProperties5() {
         return new Properties();
     }
 
     @Bean("flowProperties5")
-    @ConfigurationProperties(prefix = "mwee.mybatis.five.flow")
+    @ConfigurationProperties(prefix = "ly.mybatis.five.flow")
     public Properties flowProperties5() {
         return new Properties();
     }

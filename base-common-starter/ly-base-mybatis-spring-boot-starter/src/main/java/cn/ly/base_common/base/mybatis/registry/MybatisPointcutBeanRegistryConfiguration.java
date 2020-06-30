@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by liaomengge on 2019/5/17.
  */
 @Configuration
-@ConditionalOnProperty(prefix = "mwee.mybatis", name = "aop", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.mybatis", name = "aop", havingValue = "true")
 public class MybatisPointcutBeanRegistryConfiguration {
 
     @Bean

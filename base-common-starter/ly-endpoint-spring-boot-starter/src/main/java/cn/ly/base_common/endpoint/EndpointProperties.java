@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by liaomengge on 2019/7/4.
  */
 @Data
-@ConfigurationProperties(prefix = "mwee.endpoint")
+@ConfigurationProperties(prefix = "ly.endpoint")
 public class EndpointProperties {
 
     private InfoProperties info = new InfoProperties();

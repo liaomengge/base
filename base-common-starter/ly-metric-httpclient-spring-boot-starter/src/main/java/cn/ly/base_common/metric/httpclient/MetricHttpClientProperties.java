@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by liaomengge on 2019/7/30.
  */
 @Data
-@ConfigurationProperties("mwee.metric-http-client")
+@ConfigurationProperties("ly.metric-http-client")
 public class MetricHttpClientProperties {
 
     private boolean enabled;

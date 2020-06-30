@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by liaomengge on 2019/5/6.
  */
 @Data
-@ConfigurationProperties(prefix = "mwee.mq")
+@ConfigurationProperties(prefix = "ly.mq")
 public class MQProperties {
 
     private String type;

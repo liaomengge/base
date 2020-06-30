@@ -7,6 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by liaomengge on 2019/7/11.
  */
 @Data
-@ConfigurationProperties(prefix = "mwee.health-check")
+@ConfigurationProperties(prefix = "ly.health-check")
 public class HealthCheckProperties {
 }

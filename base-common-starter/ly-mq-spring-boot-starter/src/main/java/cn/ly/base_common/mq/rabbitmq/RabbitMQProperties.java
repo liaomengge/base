@@ -18,7 +18,7 @@ import static com.google.common.base.CaseFormat.LOWER_UNDERSCORE;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "mwee.mq.rabbitmq")
+@ConfigurationProperties(prefix = "ly.mq.rabbitmq")
 public class RabbitMQProperties {
 
     @NotNull

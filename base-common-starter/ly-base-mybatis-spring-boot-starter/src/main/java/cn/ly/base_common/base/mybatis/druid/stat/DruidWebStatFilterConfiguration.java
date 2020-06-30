@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Bean;
  * @author lihengming [89921218@qq.com]
  */
 @ConditionalOnWebApplication
-@ConditionalOnProperty(name = "mwee.mybatis.druid.web-stat-filter.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "ly.mybatis.druid.web-stat-filter.enabled", havingValue = "true")
 public class DruidWebStatFilterConfiguration {
 
     @Bean

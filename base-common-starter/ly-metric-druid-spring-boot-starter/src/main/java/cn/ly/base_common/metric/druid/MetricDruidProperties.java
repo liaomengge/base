@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by liaomengge on 2019/7/24.
  */
 @Data
-@ConfigurationProperties("mwee.metric-druid")
+@ConfigurationProperties("ly.metric-druid")
 public class MetricDruidProperties {
 
     private boolean enabled;

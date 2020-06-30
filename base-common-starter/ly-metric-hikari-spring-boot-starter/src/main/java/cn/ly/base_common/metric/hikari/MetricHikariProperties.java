@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by liaomengge on 2019/7/24.
  */
 @Data
-@ConfigurationProperties("mwee.metric-hikari")
+@ConfigurationProperties("ly.metric-hikari")
 public class MetricHikariProperties {
 
     private boolean enabled;

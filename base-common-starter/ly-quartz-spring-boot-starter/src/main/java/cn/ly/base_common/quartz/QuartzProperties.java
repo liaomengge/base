@@ -16,7 +16,7 @@ import static org.quartz.CalendarIntervalTrigger.MISFIRE_INSTRUCTION_DO_NOTHING;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "mwee.quartz")
+@ConfigurationProperties(prefix = "ly.quartz")
 public class QuartzProperties {
 
     private int startupDelay = 0;

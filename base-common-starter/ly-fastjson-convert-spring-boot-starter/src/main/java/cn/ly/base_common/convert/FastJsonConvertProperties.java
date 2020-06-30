@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
  * Created by liaomengge on 2018/12/10.
  */
 @Data
-@ConfigurationProperties("mwee.http.encoding")
+@ConfigurationProperties("ly.http.encoding")
 public class FastJsonConvertProperties {
 
     private Charset charset = Charsets.UTF_8;

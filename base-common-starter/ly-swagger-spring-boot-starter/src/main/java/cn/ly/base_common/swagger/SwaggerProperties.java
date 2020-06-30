@@ -16,7 +16,7 @@ import static springfox.documentation.spring.web.plugins.Docket.DEFAULT_GROUP_NA
  */
 @Data
 @Validated
-@ConfigurationProperties("mwee.swagger")
+@ConfigurationProperties("ly.swagger")
 public class SwaggerProperties {
 
     private boolean enabled;

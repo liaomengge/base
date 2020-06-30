@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "mwee.redis.jedis-cluster")
+@ConfigurationProperties(prefix = "ly.redis.jedis-cluster")
 public class JedisClusterProperties {
 
     private boolean enabled;

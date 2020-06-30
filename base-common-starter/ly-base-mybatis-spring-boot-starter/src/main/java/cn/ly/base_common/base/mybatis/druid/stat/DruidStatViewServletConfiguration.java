@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Bean;
  * @author lihengming [89921218@qq.com]
  */
 @ConditionalOnWebApplication
-@ConditionalOnProperty(name = "mwee.mybatis.druid.stat-view-servlet.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "ly.mybatis.druid.stat-view-servlet.enabled", havingValue = "true")
 public class DruidStatViewServletConfiguration {
 
     private static final String DEFAULT_ALLOW_IP = "127.0.0.1";

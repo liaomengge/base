@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "mwee.mybatis")
+@ConfigurationProperties(prefix = "ly.mybatis")
 public class MybatisProperties {
 
     private Boolean isEnableSqlLog = Boolean.FALSE;

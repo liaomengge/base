@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
  */
 @ConditionalOnClass(DruidDataSource.class)
 @EnableConfigurationProperties(DruidStatProperties.class)
-@ConditionalOnProperty(name = "mwee.datasource.type", havingValue = "com.alibaba.druid.pool.DruidDataSource",
+@ConditionalOnProperty(name = "ly.datasource.type", havingValue = "com.alibaba.druid.pool.DruidDataSource",
         matchIfMissing = true)
 @Configuration
 @Import({DruidStatViewServletConfiguration.class,

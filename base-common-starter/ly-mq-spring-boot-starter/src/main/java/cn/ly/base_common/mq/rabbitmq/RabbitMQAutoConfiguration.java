@@ -32,7 +32,7 @@ import java.util.Objects;
  */
 @Configuration
 @ConditionalOnClass({RabbitTemplate.class, Channel.class})
-@ConditionalOnProperty(name = "mwee.mq.type", havingValue = "rabbitmq", matchIfMissing = true)
+@ConditionalOnProperty(name = "ly.mq.type", havingValue = "rabbitmq", matchIfMissing = true)
 @EnableConfigurationProperties(RabbitMQProperties.class)
 @Import(RabbitMQQueueConfigBeanRegistryConfiguration.class)
 public class RabbitMQAutoConfiguration {

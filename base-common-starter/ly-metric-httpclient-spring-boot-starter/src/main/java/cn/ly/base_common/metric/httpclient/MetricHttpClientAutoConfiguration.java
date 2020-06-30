@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(PoolingHttpClientConnectionManager.class)
-@ConditionalOnProperty(prefix = "mwee.metric-http-client", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.metric-http-client", name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(MetricHttpClientProperties.class)
 public class MetricHttpClientAutoConfiguration {
 

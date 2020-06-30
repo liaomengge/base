@@ -17,7 +17,7 @@ import static com.google.common.base.CaseFormat.LOWER_UNDERSCORE;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "mwee.mq.activemq")
+@ConfigurationProperties(prefix = "ly.mq.activemq")
 public class ActiveMQProperties {
 
     @NotNull

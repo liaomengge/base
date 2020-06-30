@@ -1,4 +1,4 @@
-//package cn.mwee.base_common.dayu.sentinel.interceptor;
+//package cn.ly.base_common.dayu.sentinel.interceptor;
 //
 //import cn.ly.base_common.dayu.domain.DayuBlockedDomain;
 //import cn.ly.base_common.dayu.sentinel.SentinelProperties;

@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 @ConditionalOnClass(DruidDataSource.class)
 @EnableConfigurationProperties(DruidStatProperties.class)
-@ConditionalOnProperty(name = "mwee.datasource.type", havingValue = "com.alibaba.druid.pool.DruidDataSource",
+@ConditionalOnProperty(name = "ly.datasource.type", havingValue = "com.alibaba.druid.pool.DruidDataSource",
         matchIfMissing = true)
 @Configuration
 @Import({DruidStatViewServletConfiguration.class,
@@ -31,13 +31,13 @@ import java.util.Objects;
 public class DruidConfiguration2 {
 
     @Bean(name = "twoParentDataSource")
-    @ConfigurationProperties("mwee.mybatis.two.druid")
+    @ConfigurationProperties("ly.mybatis.two.druid")
     public DruidDataSource parentDataSource() {
         return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(value = "twoMasterDataSource", initMethod = "init", destroyMethod = "close")
-    @ConfigurationProperties("mwee.mybatis.two.druid.master")
+    @ConfigurationProperties("ly.mybatis.two.druid.master")
     public DruidDataSource masterDataSource(@Qualifier("twoParentDataSource") DruidDataSource dataSource) {
         if (Objects.isNull(dataSource)) {
             return DruidDataSourceBuilder.create().build();
@@ -46,7 +46,7 @@ public class DruidConfiguration2 {
     }
 
     @Bean(value = "twoSlaveDataSource", initMethod = "init", destroyMethod = "close")
-    @ConfigurationProperties("mwee.mybatis.two.druid.slave")
+    @ConfigurationProperties("ly.mybatis.two.druid.slave")
     public DruidDataSource slaveDataSource(@Qualifier("twoParentDataSource") DruidDataSource dataSource) {
         if (Objects.isNull(dataSource)) {
             return DruidDataSourceBuilder.create().build();

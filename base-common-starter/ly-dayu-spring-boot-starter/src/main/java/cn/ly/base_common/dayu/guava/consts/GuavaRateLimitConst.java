@@ -5,5 +5,5 @@ package cn.ly.base_common.dayu.guava.consts;
  */
 public class GuavaRateLimitConst {
 
-    public static final String GUAVA_RATE_LIMIT_PREFIX = "mwee.dayu.guava-rate-limit";
+    public static final String GUAVA_RATE_LIMIT_PREFIX = "ly.dayu.guava-rate-limit";
 }

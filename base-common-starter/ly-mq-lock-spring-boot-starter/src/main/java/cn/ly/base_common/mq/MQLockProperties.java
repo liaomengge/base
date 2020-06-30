@@ -12,11 +12,11 @@ import java.util.List;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "mwee.mq.lock")
+@ConfigurationProperties(prefix = "ly.mq.lock")
 public class MQLockProperties {
 
     private int lockNumber = 1;
-    private String rootNode = "/mwee/mq";
+    private String rootNode = "/ly/mq";
     private ZkProperties zk = new ZkProperties();
     private PrototypeProperties prototype = new PrototypeProperties();
 

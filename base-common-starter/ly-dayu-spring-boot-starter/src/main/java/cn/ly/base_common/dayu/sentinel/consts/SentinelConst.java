@@ -5,5 +5,5 @@ package cn.ly.base_common.dayu.sentinel.consts;
  */
 public class SentinelConst {
 
-    public static final String SENTINEL_PREFIX = "mwee.dayu.sentinel";
+    public static final String SENTINEL_PREFIX = "ly.dayu.sentinel";
 }

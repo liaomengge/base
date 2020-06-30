@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "mwee.redis.redisson")
+@ConfigurationProperties(prefix = "ly.redis.redisson")
 public class RedissonProperties {
 
     private boolean enabled;

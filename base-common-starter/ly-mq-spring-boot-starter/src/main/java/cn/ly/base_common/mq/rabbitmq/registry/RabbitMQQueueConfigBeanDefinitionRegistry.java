@@ -52,7 +52,7 @@ public class RabbitMQQueueConfigBeanDefinitionRegistry implements EnvironmentAwa
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         Map<String, LinkedHashMap<String, Object>> queuePropertiesMap = Maps.newHashMap();
         MutablePropertySources propertySources = ((ConfigurableEnvironment) environment).getPropertySources();
-        new RelaxedDataBinder(queuePropertiesMap, "mwee.mq.rabbitmq").bind(new PropertySourcesPropertyValues(propertySources));
+        new RelaxedDataBinder(queuePropertiesMap, "ly.mq.rabbitmq").bind(new PropertySourcesPropertyValues(propertySources));
         LinkedHashMap<String, Object> subQueuePropertiesMap = queuePropertiesMap.get("queues");
         subQueuePropertiesMap = subQueuePropertiesMap.entrySet().stream()
                 .filter(val -> val.getValue() instanceof LinkedHashMap && StringUtils.isNumeric(val.getKey()))

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "mwee.mail")
+@ConfigurationProperties(prefix = "ly.mail")
 public class MailProperties {
 
     @NotNull

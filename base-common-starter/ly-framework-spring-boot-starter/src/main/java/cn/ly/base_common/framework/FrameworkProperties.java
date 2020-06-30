@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by liaomengge on 2019/11/6.
  */
 @Data
-@ConfigurationProperties(prefix = "mwee.framework")
+@ConfigurationProperties(prefix = "ly.framework")
 public class FrameworkProperties {
 
     private final SentinelProperties sentinel = new SentinelProperties();

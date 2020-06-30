@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by liaomengge on 2018/12/18.
  */
 @Configuration
-@ConditionalOnProperty(prefix = "mwee.graceful.tomcat", name = "enabled")
+@ConditionalOnProperty(prefix = "ly.graceful.tomcat", name = "enabled")
 @EnableConfigurationProperties(GracefulProperties.class)
 @ConditionalOnClass({ApplicationListener.class, Tomcat.class})
 public class GracefulAutoConfiguration {

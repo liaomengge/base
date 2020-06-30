@@ -27,7 +27,7 @@ import java.io.InputStream;
  */
 @Configuration
 @ConditionalOnClass(Redisson.class)
-@ConditionalOnProperty(prefix = "mwee.redis.redisson", name = "enabled")
+@ConditionalOnProperty(prefix = "ly.redis.redisson", name = "enabled")
 @EnableConfigurationProperties(RedissonProperties.class)
 public class RedissonConfiguration {
 

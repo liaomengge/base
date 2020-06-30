@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by liaomengge on 2019/8/29.
  */
 @Data
-@ConfigurationProperties("mwee.metric-activemq")
+@ConfigurationProperties("ly.metric-activemq")
 public class MetricActiveMQProperties {
 
     private boolean enabled;

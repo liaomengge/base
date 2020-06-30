@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 @Configuration
 @EnableConfigurationProperties(JedisClusterProperties.class)
-@ConditionalOnProperty(prefix = "mwee.redis.jedis-cluster", name = "enabled")
+@ConditionalOnProperty(prefix = "ly.redis.jedis-cluster", name = "enabled")
 @ConditionalOnClass(JedisCluster.class)
 public class JedisClusterConfiguration {
 

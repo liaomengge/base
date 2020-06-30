@@ -26,7 +26,7 @@ public abstract class AbstractLock {
 
     private int lockNumber = 1; //允许获取的锁数量(默认为1,即最小节点=自身时, 认为获得锁)
     private ZkClient zk = null;
-    private String rootNode = "/mwee"; //根节点名称
+    private String rootNode = "/ly"; //根节点名称
     private String selfNode;
     private final String className = this.getClass().getSimpleName(); //当前实例的className
     private String selfNodeName;//自身注册的临时节点名

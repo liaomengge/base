@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by liaomengge on 2018/12/12.
  */
 @ConditionalOnClass(HikariDataSource.class)
-@ConditionalOnProperty(name = "mwee.datasource.type", havingValue = "com.zaxxer.hikari.HikariDataSource")
+@ConditionalOnProperty(name = "ly.datasource.type", havingValue = "com.zaxxer.hikari.HikariDataSource")
 @Configuration
 public class HikariConfiguration {
 }

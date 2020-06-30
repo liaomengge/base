@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Configuration
 @ConditionalOnClass(HikariDataSource.class)
-@ConditionalOnProperty(prefix = "mwee.metric-hikari", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.metric-hikari", name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(MetricHikariProperties.class)
 public class MetricHikariAutoConfiguration {
 

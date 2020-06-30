@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "mwee.mongo")
+@ConfigurationProperties(prefix = "ly.mongo")
 public class MongoProperties {
 
     @NotNull

@@ -46,20 +46,20 @@ import java.util.Properties;
 @EnableTransactionManagement(proxyTargetClass = true)
 @EnableConfigurationProperties(MybatisProperties.class)
 @Import({DruidConfiguration.class, HikariConfiguration.class})
-@ExtendMapperScan("${mwee.mybatis.basePackages}")
+@ExtendMapperScan("${ly.mybatis.basePackages}")
 public class MybatisAutoConfiguration {
 
     @Autowired
     private MybatisProperties mybatisProperties;
 
     @Bean("pageHelperProperties")
-    @ConfigurationProperties(prefix = "mwee.mybatis.pagehelper")
+    @ConfigurationProperties(prefix = "ly.mybatis.pagehelper")
     public Properties pageHelperProperties() {
         return new Properties();
     }
 
     @Bean("flowProperties")
-    @ConfigurationProperties(prefix = "mwee.mybatis.flow")
+    @ConfigurationProperties(prefix = "ly.mybatis.flow")
     public Properties flowProperties() {
         return new Properties();
     }

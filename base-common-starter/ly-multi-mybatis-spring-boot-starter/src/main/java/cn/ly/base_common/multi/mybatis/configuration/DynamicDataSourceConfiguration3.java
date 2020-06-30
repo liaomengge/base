@@ -35,25 +35,25 @@ import java.util.Properties;
  * Created by liaomengge on 2018/12/19.
  */
 @Configuration
-@ConditionalOnProperty(prefix = "mwee.mybatis.three", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.mybatis.three", name = "enable", havingValue = "true")
 @Import({DruidConfiguration3.class, HikariConfiguration3.class})
-@ExtendMapperScan(basePackages = "${mwee.mybatis.three.basePackages}", sqlSessionFactoryRef = "threeSqlSessionFactory")
+@ExtendMapperScan(basePackages = "${ly.mybatis.three.basePackages}", sqlSessionFactoryRef = "threeSqlSessionFactory")
 public class DynamicDataSourceConfiguration3 {
 
     @Bean("mybatisProperties3")
-    @ConfigurationProperties(prefix = "mwee.mybatis.three")
+    @ConfigurationProperties(prefix = "ly.mybatis.three")
     public MybatisProperties mybatisProperties3() {
         return new MybatisProperties();
     }
 
     @Bean("pageHelperProperties3")
-    @ConfigurationProperties(prefix = "mwee.mybatis.three.pagehelper")
+    @ConfigurationProperties(prefix = "ly.mybatis.three.pagehelper")
     public Properties pageHelperProperties3() {
         return new Properties();
     }
 
     @Bean("flowProperties3")
-    @ConfigurationProperties(prefix = "mwee.mybatis.three.flow")
+    @ConfigurationProperties(prefix = "ly.mybatis.three.flow")
     public Properties flowProperties3() {
         return new Properties();
     }

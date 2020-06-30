@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(PooledConnectionFactory.class)
-@ConditionalOnProperty(prefix = "mwee.metric-activemq", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.metric-activemq", name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(MetricActiveMQProperties.class)
 public class MetricActiveMQAutoConfiguration {
 

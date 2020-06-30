@@ -16,7 +16,7 @@ import static cn.ly.base_common.thread.pool.ThreadPoolGroupProperties.RejectionP
  * Created by liaomengge on 2019/5/17.
  */
 @Data
-@ConfigurationProperties(prefix = "mwee.thread-pool")
+@ConfigurationProperties(prefix = "ly.thread-pool")
 public class ThreadPoolGroupProperties {
 
     private List<ThreadPoolProperties> groups = Lists.newArrayList();

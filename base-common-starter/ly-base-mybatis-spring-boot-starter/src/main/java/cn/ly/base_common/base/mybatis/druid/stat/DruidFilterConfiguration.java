@@ -108,13 +108,13 @@ public class DruidFilterConfiguration {
         return filter;
     }
 
-    private static final String FILTER_STAT_PREFIX = "mwee.mybatis.druid.filter.stat";
-    private static final String FILTER_CONFIG_PREFIX = "mwee.mybatis.druid.filter.config";
-    private static final String FILTER_ENCODING_PREFIX = "mwee.mybatis.druid.filter.encoding";
-    private static final String FILTER_SLF4J_PREFIX = "mwee.mybatis.druid.filter.slf4j";
-    private static final String FILTER_LOG4J_PREFIX = "mwee.mybatis.druid.filter.log4j";
-    private static final String FILTER_LOG4J2_PREFIX = "mwee.mybatis.druid.filter.log4j2";
-    private static final String FILTER_COMMONS_LOG_PREFIX = "mwee.mybatis.druid.filter.commons-log";
-    private static final String FILTER_WALL_PREFIX = "mwee.mybatis.druid.filter.wall";
+    private static final String FILTER_STAT_PREFIX = "ly.mybatis.druid.filter.stat";
+    private static final String FILTER_CONFIG_PREFIX = "ly.mybatis.druid.filter.config";
+    private static final String FILTER_ENCODING_PREFIX = "ly.mybatis.druid.filter.encoding";
+    private static final String FILTER_SLF4J_PREFIX = "ly.mybatis.druid.filter.slf4j";
+    private static final String FILTER_LOG4J_PREFIX = "ly.mybatis.druid.filter.log4j";
+    private static final String FILTER_LOG4J2_PREFIX = "ly.mybatis.druid.filter.log4j2";
+    private static final String FILTER_COMMONS_LOG_PREFIX = "ly.mybatis.druid.filter.commons-log";
+    private static final String FILTER_WALL_PREFIX = "ly.mybatis.druid.filter.wall";
     private static final String FILTER_WALL_CONFIG_PREFIX = FILTER_WALL_PREFIX + ".config";
 }

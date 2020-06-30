@@ -30,7 +30,7 @@ public interface Template {
         private StatsDClient statsDClient;
 
         @Setter
-        private String projName = "mwee";
+        private String projName = "ly";
 
         public Sync(String projName) {
             this.projName = projName;

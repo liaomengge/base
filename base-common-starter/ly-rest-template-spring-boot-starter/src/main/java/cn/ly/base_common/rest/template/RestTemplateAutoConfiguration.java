@@ -63,7 +63,7 @@ public class RestTemplateAutoConfiguration {
 
     private static final Logger logger = MwLogger.getInstance(RestTemplateAutoConfiguration.class);
 
-    private static final String DAYU_SENTINEL_ENABLED = "mwee.dayu.sentinel.enabled";
+    private static final String DAYU_SENTINEL_ENABLED = "ly.dayu.sentinel.enabled";
     private static final String SPRING_APPLICATION_NAME = "spring.application.name";
 
     @Autowired(required = false)

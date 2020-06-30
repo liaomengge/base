@@ -17,7 +17,7 @@ import java.util.Properties;
  */
 @Configuration
 @ConditionalOnCustomProperty
-@ConditionalOnProperty(prefix = "mwee.endpoint.info", name = "enabled", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "ly.endpoint.info", name = "enabled", matchIfMissing = true)
 public class CustomInfoConfiguration {
 
     @Bean

@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(DruidDataSource.class)
-@ConditionalOnProperty(prefix = "mwee.metric-druid", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.metric-druid", name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(MetricDruidProperties.class)
 public class MetricDruidAutoConfiguration {
 

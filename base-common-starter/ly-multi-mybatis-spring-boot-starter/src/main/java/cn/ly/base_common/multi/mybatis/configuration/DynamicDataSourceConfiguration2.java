@@ -35,23 +35,23 @@ import java.util.Properties;
  */
 @Configuration
 @Import({DruidConfiguration2.class, HikariConfiguration2.class})
-@ExtendMapperScan(basePackages = "${mwee.mybatis.two.basePackages}", sqlSessionFactoryRef = "twoSqlSessionFactory")
+@ExtendMapperScan(basePackages = "${ly.mybatis.two.basePackages}", sqlSessionFactoryRef = "twoSqlSessionFactory")
 public class DynamicDataSourceConfiguration2 {
 
     @Bean("mybatisProperties2")
-    @ConfigurationProperties(prefix = "mwee.mybatis.two")
+    @ConfigurationProperties(prefix = "ly.mybatis.two")
     public MybatisProperties mybatisProperties2() {
         return new MybatisProperties();
     }
 
     @Bean("pageHelperProperties2")
-    @ConfigurationProperties(prefix = "mwee.mybatis.two.pagehelper")
+    @ConfigurationProperties(prefix = "ly.mybatis.two.pagehelper")
     public Properties pageHelperProperties2() {
         return new Properties();
     }
 
     @Bean("flowProperties2")
-    @ConfigurationProperties(prefix = "mwee.mybatis.two.flow")
+    @ConfigurationProperties(prefix = "ly.mybatis.two.flow")
     public Properties flowProperties2() {
         return new Properties();
     }

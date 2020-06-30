@@ -9,7 +9,7 @@ import java.util.List;
  * Created by liaomengge on 2019/3/20.
  */
 @Data
-@ConfigurationProperties(prefix = "mwee.cache")
+@ConfigurationProperties(prefix = "ly.cache")
 public class CacheProperties {
 
     private Level1Properties level1 = new Level1Properties();

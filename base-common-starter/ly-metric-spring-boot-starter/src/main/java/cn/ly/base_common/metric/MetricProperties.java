@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by liaomengge on 2018/12/19.
  */
 @Data
-@ConfigurationProperties("mwee.metric")
+@ConfigurationProperties("ly.metric")
 public class MetricProperties {
 
     private boolean enabled;

@@ -9,7 +9,7 @@ import org.springframework.boot.logging.LoggingSystem;
  * Created by liaomengge on 2019/1/21.
  */
 @Data
-@ConfigurationProperties(prefix = "mwee.logger")
+@ConfigurationProperties(prefix = "ly.logger")
 public class LoggerProperties {
 
     private String contextPath = "/logger";

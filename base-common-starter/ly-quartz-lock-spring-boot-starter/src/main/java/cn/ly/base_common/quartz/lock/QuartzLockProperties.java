@@ -11,11 +11,11 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "mwee.quartz.lock")
+@ConfigurationProperties(prefix = "ly.quartz.lock")
 public class QuartzLockProperties {
 
     private int lockNumber = 1;
-    private String rootNode = "/mwee/quartz";
+    private String rootNode = "/ly/quartz";
     private ZkProperties zk = new ZkProperties();
 
     @Data

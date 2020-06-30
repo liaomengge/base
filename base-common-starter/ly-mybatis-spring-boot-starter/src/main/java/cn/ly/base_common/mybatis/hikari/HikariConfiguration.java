@@ -17,19 +17,19 @@ import javax.sql.DataSource;
  */
 @ConditionalOnClass(HikariDataSource.class)
 @ConditionalOnMissingBean(DataSource.class)
-@ConditionalOnProperty(name = "mwee.datasource.type", havingValue = "com.zaxxer.hikari.HikariDataSource")
+@ConditionalOnProperty(name = "ly.datasource.type", havingValue = "com.zaxxer.hikari.HikariDataSource")
 @Configuration
 public class HikariConfiguration {
 
     @Bean(name = "masterDataSource", destroyMethod = "close")
     @Primary
-    @ConfigurationProperties("mwee.mybatis.hikari.master")
+    @ConfigurationProperties("ly.mybatis.hikari.master")
     public HikariDataSource masterDataSource() {
         return (HikariDataSource) DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
     @Bean(name = "slaveDataSource", destroyMethod = "close")
-    @ConfigurationProperties("mwee.mybatis.hikari.slave")
+    @ConfigurationProperties("ly.mybatis.hikari.slave")
     public HikariDataSource slaveDataSource() {
         return (HikariDataSource) DataSourceBuilder.create().type(HikariDataSource.class).build();
     }

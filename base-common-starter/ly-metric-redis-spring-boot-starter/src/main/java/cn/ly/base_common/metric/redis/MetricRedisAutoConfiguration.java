@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @AutoConfigureAfter(RedisAutoConfiguration.class)
-@ConditionalOnProperty(prefix = "mwee.metric-redis", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.metric-redis", name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(MetricRedisProperties.class)
 public class MetricRedisAutoConfiguration {
 

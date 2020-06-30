@@ -10,12 +10,12 @@ import java.util.List;
  * Created by liaomengge on 2018/11/1.
  */
 @Data
-@ConfigurationProperties(prefix = "mwee.rest.template")
+@ConfigurationProperties(prefix = "ly.rest.template")
 public class RestTemplateProperties {
 
     private static final int DEFAULT_TIMEOUT_MILLIS = 5_000;//单位：毫秒
 
-    private String projName = "mwee";
+    private String projName = "ly";
     private String messageConverter = "fastjson";
     private final HttpClientProperties http = new HttpClientProperties();
     private final StatsdProperties statsd = new StatsdProperties();

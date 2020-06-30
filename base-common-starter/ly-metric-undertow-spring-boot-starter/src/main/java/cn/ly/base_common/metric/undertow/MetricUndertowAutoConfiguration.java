@@ -19,7 +19,7 @@ import javax.servlet.Servlet;
  */
 @Configuration
 @ConditionalOnClass({Servlet.class, Undertow.class, SslClientAuthMode.class})
-@ConditionalOnProperty(prefix = "mwee.metric-undertow", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.metric-undertow", name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(MetricUndertowProperties.class)
 public class MetricUndertowAutoConfiguration {
 

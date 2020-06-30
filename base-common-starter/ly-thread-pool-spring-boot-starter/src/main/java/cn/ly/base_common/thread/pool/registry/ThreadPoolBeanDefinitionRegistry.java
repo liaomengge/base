@@ -49,7 +49,7 @@ public class ThreadPoolBeanDefinitionRegistry implements EnvironmentAware, BeanD
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         Map<String, LinkedHashMap<String, Object>> threadPoolPropertiesMap = Maps.newHashMap();
         MutablePropertySources propertySources = ((ConfigurableEnvironment) environment).getPropertySources();
-        new RelaxedDataBinder(threadPoolPropertiesMap, "mwee.thread-pool").bind(new PropertySourcesPropertyValues(propertySources));
+        new RelaxedDataBinder(threadPoolPropertiesMap, "ly.thread-pool").bind(new PropertySourcesPropertyValues(propertySources));
         LinkedHashMap<String, Object> subThreadPoolPropertiesMap = threadPoolPropertiesMap.get("groups");
         subThreadPoolPropertiesMap =
                 subThreadPoolPropertiesMap.entrySet().stream()

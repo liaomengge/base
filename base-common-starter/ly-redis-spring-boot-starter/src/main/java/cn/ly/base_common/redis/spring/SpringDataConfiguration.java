@@ -29,7 +29,7 @@ import java.util.Objects;
  */
 @Configuration
 @EnableConfigurationProperties(SpringDataProperties.class)
-@ConditionalOnProperty(prefix = "mwee.redis.spring-data", name = "enabled")
+@ConditionalOnProperty(prefix = "ly.redis.spring-data", name = "enabled")
 @ConditionalOnClass({GenericObjectPool.class, JedisConnection.class, Jedis.class})
 public class SpringDataConfiguration {
 
