@@ -1,3 +1,0 @@
-dependencies {
-    api "cn.mwee:base_common_middleware:${baseCommonMiddlewareVersion}"
-}

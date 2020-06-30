@@ -1,0 +1,9 @@
+dependencies {
+    api "org.springframework:spring-webmvc"
+    api("cn.ly:base-spring-cloud-framework:${baseSpringCloudVersion}") {
+        exclude(group: 'org.springframework')
+        exclude(group: 'org.springframework.boot')
+        exclude(module: 'base-common-middleware')
+        exclude(module: 'base-common-utils')
+    }
+}

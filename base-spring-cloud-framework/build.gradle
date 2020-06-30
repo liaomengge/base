@@ -1,5 +1,19 @@
 plugins {
+    id 'se.patrikerdes.use-latest-versions' version '0.2.14'
+    id 'com.github.ben-manes.versions' version '0.28.0'
     id "io.spring.dependency-management" version '1.0.9.RELEASE'
+}
+
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+
+dependencyUpdates {
+    rejectVersionIf {
+        isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)
+    }
 }
 
 wrapper {

@@ -1,0 +1,3 @@
+dependencies {
+    api "cn.ly:base-common-middleware:${baseCommonMiddlewareVersion}"
+}
