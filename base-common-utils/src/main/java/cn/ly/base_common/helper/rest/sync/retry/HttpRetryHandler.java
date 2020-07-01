@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.rest.sync.retry;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ import java.net.UnknownHostException;
 @AllArgsConstructor
 public class HttpRetryHandler implements HttpRequestRetryHandler {
 
-    private static final Logger logger = MwLogger.getInstance(HttpRetryHandler.class);
+    private static final Logger logger = LyLogger.getInstance(HttpRetryHandler.class);
 
     private int reTryTimes = 3;//默认重试3次
 

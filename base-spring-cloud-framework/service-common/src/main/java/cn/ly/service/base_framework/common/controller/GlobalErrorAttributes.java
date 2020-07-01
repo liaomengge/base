@@ -1,8 +1,8 @@
 package cn.ly.service.base_framework.common.controller;
 
+import cn.ly.base_common.utils.collection.LyMapUtil;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
-import cn.ly.base_common.utils.collection.MwMapUtil;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
@@ -26,6 +26,6 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
         String sysErrDesc = "HttpStatus[" + status + "], Error Message[" + message + "]";
         String sysException = StringUtils.defaultIfBlank(exception, error);
         DataResult dataResult = DataResult.fail(SystemResultCode.UNKNOWN_ERROR, sysErrDesc, sysException);
-        return MwMapUtil.bean2Map4Cglib(dataResult);
+        return LyMapUtil.bean2Map4Cglib(dataResult);
     }
 }

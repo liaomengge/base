@@ -2,7 +2,7 @@ package cn.ly.base_common.base.mybatis.registry;
 
 import cn.ly.base_common.base.mybatis.MybatisProperties;
 import cn.ly.base_common.base.mybatis.aspect.MybatisPointcutAdvisor;
-import cn.ly.base_common.utils.json.MwJsonUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
 import com.alibaba.fastjson.TypeReference;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -50,8 +50,8 @@ public class MybatisPointcutBeanDefinitionRegistry implements EnvironmentAware, 
                 .filter(val -> val.getValue() instanceof LinkedHashMap && StringUtils.isNumeric(val.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldVal, newVal) -> newVal,
                         LinkedHashMap::new));
-        String mappingJson = MwJsonUtil.toJson(subMappingPropertiesMap);
-        Map<String, MybatisProperties.MappingProperties> mappingJsonMap = MwJsonUtil.fromJson(mappingJson,
+        String mappingJson = LyJsonUtil.toJson(subMappingPropertiesMap);
+        Map<String, MybatisProperties.MappingProperties> mappingJsonMap = LyJsonUtil.fromJson(mappingJson,
                 new TypeReference<Map<String, MybatisProperties.MappingProperties>>() {
                 });
         Optional.ofNullable(mappingJsonMap).ifPresent(val -> val.values().forEach(mappingProperties -> {

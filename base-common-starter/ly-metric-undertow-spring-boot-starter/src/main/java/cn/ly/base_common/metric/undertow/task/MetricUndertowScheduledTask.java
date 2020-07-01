@@ -5,8 +5,8 @@ package cn.ly.base_common.metric.undertow.task;
  */
 
 import cn.ly.base_common.metric.undertow.MetricUndertowProperties;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.thread.MwThreadUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.thread.LyThreadUtil;
 import com.timgroup.statsd.StatsDClient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MetricUndertowScheduledTask {
 
-    private static final Logger logger = MwLogger.getInstance(MetricUndertowScheduledTask.class);
+    private static final Logger logger = LyLogger.getInstance(MetricUndertowScheduledTask.class);
 
     private static final String METRIC_HTTPCLIENT_PREFIX = "metric-undertow.";
     private static final String JMX_NAME_BASE = "org.xnio:type=Xnio,provider=\"nio\",worker=\"XNIO-1\"";
@@ -57,7 +57,7 @@ public class MetricUndertowScheduledTask {
         public void run() {
             long initialDelay = metricUndertowProperties.getInitialDelay() * 1000L;
             if (initialDelay > 0) {
-                MwThreadUtil.sleep(initialDelay);
+                LyThreadUtil.sleep(initialDelay);
             }
             while (!this.isInterrupted()) {
                 try {

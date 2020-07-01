@@ -1,7 +1,7 @@
 package cn.ly.base_common.mq.rabbitmq;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.shutdown.MwShutdownUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.shutdown.LyShutdownUtil;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer;
@@ -14,7 +14,7 @@ import java.util.concurrent.Executor;
  */
 public abstract class AbstractMQReceiver implements DisposableBean {
 
-    protected static final Logger logger = MwLogger.getInstance(AbstractMQReceiver.class);
+    protected static final Logger logger = LyLogger.getInstance(AbstractMQReceiver.class);
 
     public abstract void start();
 
@@ -30,7 +30,7 @@ public abstract class AbstractMQReceiver implements DisposableBean {
      * @param listenerContainer
      */
     protected void registerShutdownHook(AbstractMessageListenerContainer listenerContainer) {
-        MwShutdownUtil.registerShutdownHook(() -> {
+        LyShutdownUtil.registerShutdownHook(() -> {
             try {
                 logger.info("RabbitMQ Listener Exist...");
             } finally {

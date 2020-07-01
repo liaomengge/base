@@ -1,6 +1,6 @@
 package cn.ly.base_common.mq.rabbitmq;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import org.slf4j.Logger;
 
 /**
@@ -8,7 +8,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractMQSender {
 
-    protected static final Logger logger = MwLogger.getInstance(AbstractMQSender.class);
+    protected static final Logger logger = LyLogger.getInstance(AbstractMQSender.class);
 
     public abstract void convertAndSend(int routeKeyHash, Object object);
 

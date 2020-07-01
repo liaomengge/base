@@ -1,8 +1,8 @@
 package cn.ly.service.base_framework.common.filter;
 
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogData;
-import cn.ly.base_common.utils.sign.MwSignUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogData;
+import cn.ly.base_common.utils.sign.LySignUtil;
 import cn.ly.service.base_framework.base.BaseRestRequest;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.MetricsConst;
@@ -45,7 +45,7 @@ public class SignFilter extends AbstractFilter {
             }
         }
 
-        MwLogData logData = new MwLogData();
+        LyLogData logData = new LyLogData();
         logData.setInvocation(invocation.toString());
 
         RpcContext rpcContext = RpcContext.getContext();
@@ -83,13 +83,13 @@ public class SignFilter extends AbstractFilter {
         String signConfig = filterConfig.getSignConfig();
         Map<String, Object> signConfigMap;
         try {
-            signConfigMap = MwJsonUtil.fromJson(signConfig, Map.class);
+            signConfigMap = LyJsonUtil.fromJson(signConfig, Map.class);
         } catch (Exception e) {
             return false;
         }
         String appKey = MapUtils.getString(signConfigMap, appId);
 
-        return MwSignUtil.sign(appKey, paramsMap, "appKey").equals(signRequest.getSign());
+        return LySignUtil.sign(appKey, paramsMap, "appKey").equals(signRequest.getSign());
     }
 
 }

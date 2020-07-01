@@ -7,8 +7,8 @@ import cn.ly.base_common.cache.consts.CacheConst;
 import cn.ly.base_common.cache.domain.CacheDomain;
 import cn.ly.base_common.cache.enums.NotifyTypeEnum;
 import cn.ly.base_common.cache.redis.RedisCache;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 public class CachePoolHelper {
 
-    private static final Logger logger = MwLogger.getInstance(CachePoolHelper.class);
+    private static final Logger logger = LyLogger.getInstance(CachePoolHelper.class);
 
     private final CaffeineCacheManager caffeineCacheManager;
 
@@ -80,7 +80,7 @@ public class CachePoolHelper {
         if (StringUtils.isBlank(level1Json)) {
             return null;
         }
-        return MwJsonUtil.fromJson(level1Json, clazz);
+        return LyJsonUtil.fromJson(level1Json, clazz);
     }
 
     public String getFromLevel2(String key) {
@@ -95,7 +95,7 @@ public class CachePoolHelper {
         if (StringUtils.isBlank(level2Json)) {
             return null;
         }
-        return MwJsonUtil.fromJson(level2Json, clazz);
+        return LyJsonUtil.fromJson(level2Json, clazz);
     }
 
     public String get(String key) {
@@ -140,7 +140,7 @@ public class CachePoolHelper {
         if (StringUtils.isBlank(json)) {
             return null;
         }
-        return MwJsonUtil.fromJson(json, clazz);
+        return LyJsonUtil.fromJson(json, clazz);
     }
 
     public void setToLevel1(String region, String key, String value) {
@@ -154,7 +154,7 @@ public class CachePoolHelper {
         if (StringUtils.isBlank(region) || StringUtils.isBlank(key)) {
             return;
         }
-        caffeineCacheManager.getCache(region).set(key, MwJsonUtil.toJson(value));
+        caffeineCacheManager.getCache(region).set(key, LyJsonUtil.toJson(value));
     }
 
     public void setToLevel2(String key, String value) {
@@ -168,7 +168,7 @@ public class CachePoolHelper {
         if (StringUtils.isBlank(key)) {
             return;
         }
-        redisCache.set(key, MwJsonUtil.toJson(value));
+        redisCache.set(key, LyJsonUtil.toJson(value));
     }
 
     public void setToLevel2(String key, String value, int expiredSeconds) {
@@ -182,7 +182,7 @@ public class CachePoolHelper {
         if (StringUtils.isBlank(key)) {
             return;
         }
-        redisCache.set(key, MwJsonUtil.toJson(value), expiredSeconds);
+        redisCache.set(key, LyJsonUtil.toJson(value), expiredSeconds);
     }
 
     public void set(String key, String value) {
@@ -212,7 +212,7 @@ public class CachePoolHelper {
             return;
         }
         try {
-            String json = MwJsonUtil.toJson(value);
+            String json = LyJsonUtil.toJson(value);
             redisCache.set(key, json);
             CacheDomain cacheDomain =
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.PUT).region(region).key(key).value(json).build();
@@ -249,7 +249,7 @@ public class CachePoolHelper {
             return;
         }
         try {
-            String json = MwJsonUtil.toJson(value);
+            String json = LyJsonUtil.toJson(value);
             redisCache.set(key, json, level2ExpiredSeconds);
             CacheDomain cacheDomain =
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.PUT).region(region).key(key).value(json).build();
@@ -304,13 +304,13 @@ public class CachePoolHelper {
     }
 
     private void sendPubCmd(CacheDomain cacheDomain) {
-        channel.doPubChannel(MwJsonUtil.toJson4Log(cacheDomain));
+        channel.doPubChannel(LyJsonUtil.toJson4Log(cacheDomain));
     }
 
     @PostConstruct
     private void init() {
         channel.doSubChannel(msg -> {
-            CacheDomain cacheDomain = MwJsonUtil.fromJson(msg, CacheDomain.class);
+            CacheDomain cacheDomain = LyJsonUtil.fromJson(msg, CacheDomain.class);
             if (Objects.isNull(cacheDomain)) {
                 return;
             }

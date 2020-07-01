@@ -1,7 +1,7 @@
 package cn.ly.base_common.cache;
 
 import cn.ly.base_common.cache.consts.CacheConst;
-import cn.ly.base_common.utils.json.MwJsonUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
 import com.alibaba.fastjson.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 
@@ -56,14 +56,14 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(key)) {
                 json = cachePoolHelper.get(key);
                 if (StringUtils.isNotBlank(json)) {
-                    return MwJsonUtil.fromJson(json, clazz);
+                    return LyJsonUtil.fromJson(json, clazz);
                 }
                 T t = supplier.get();
                 cachePoolHelper.set(key, t);
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(json, clazz);
+        return LyJsonUtil.fromJson(json, clazz);
     }
 
     /**
@@ -81,14 +81,14 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(key)) {
                 json = cachePoolHelper.get(key);
                 if (StringUtils.isNotBlank(json)) {
-                    return MwJsonUtil.fromJson(json, typeReference);
+                    return LyJsonUtil.fromJson(json, typeReference);
                 }
                 T t = supplier.get();
                 cachePoolHelper.set(key, t);
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(json, typeReference);
+        return LyJsonUtil.fromJson(json, typeReference);
     }
 
     /**
@@ -109,7 +109,7 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(key)) {
                 json = cachePoolHelper.get(key);
                 if (StringUtils.isNotBlank(json)) {
-                    return MwJsonUtil.fromJson(json, clazz);
+                    return LyJsonUtil.fromJson(json, clazz);
                 }
                 T t = supplier.get();
                 if (redisExpiresInSeconds > 0) {
@@ -118,7 +118,7 @@ public class LocalRedisDbCacheHelper {
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(json, clazz);
+        return LyJsonUtil.fromJson(json, clazz);
     }
 
     /**
@@ -139,7 +139,7 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(key)) {
                 json = cachePoolHelper.get(key);
                 if (StringUtils.isNotBlank(json)) {
-                    return MwJsonUtil.fromJson(json, typeReference);
+                    return LyJsonUtil.fromJson(json, typeReference);
                 }
                 T t = supplier.get();
                 if (redisExpiresInSeconds > 0) {
@@ -148,7 +148,7 @@ public class LocalRedisDbCacheHelper {
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(json, typeReference);
+        return LyJsonUtil.fromJson(json, typeReference);
     }
 
     /*************************************************华丽的分割线***********************************************/
@@ -195,14 +195,14 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(synchronizedKey)) {
                 json = cachePoolHelper.get(region, key);
                 if (StringUtils.isNotBlank(json)) {
-                    return MwJsonUtil.fromJson(json, clazz);
+                    return LyJsonUtil.fromJson(json, clazz);
                 }
                 T t = supplier.get();
                 cachePoolHelper.set(region, key, t);
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(json, clazz);
+        return LyJsonUtil.fromJson(json, clazz);
     }
 
     /**
@@ -222,14 +222,14 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(synchronizedKey)) {
                 json = cachePoolHelper.get(region, key);
                 if (StringUtils.isNotBlank(json)) {
-                    return MwJsonUtil.fromJson(json, typeReference);
+                    return LyJsonUtil.fromJson(json, typeReference);
                 }
                 T t = supplier.get();
                 cachePoolHelper.set(region, key, t);
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(json, typeReference);
+        return LyJsonUtil.fromJson(json, typeReference);
     }
 
     /**
@@ -252,7 +252,7 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(synchronizedKey)) {
                 json = cachePoolHelper.get(region, key);
                 if (StringUtils.isNotBlank(json)) {
-                    return MwJsonUtil.fromJson(json, clazz);
+                    return LyJsonUtil.fromJson(json, clazz);
                 }
                 T t = supplier.get();
                 if (redisExpiresInSeconds > 0) {
@@ -261,7 +261,7 @@ public class LocalRedisDbCacheHelper {
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(json, clazz);
+        return LyJsonUtil.fromJson(json, clazz);
     }
 
     /**
@@ -284,7 +284,7 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(synchronizedKey)) {
                 json = cachePoolHelper.get(region, key);
                 if (StringUtils.isNotBlank(json)) {
-                    return MwJsonUtil.fromJson(json, typeReference);
+                    return LyJsonUtil.fromJson(json, typeReference);
                 }
                 T t = supplier.get();
                 if (redisExpiresInSeconds > 0) {
@@ -293,7 +293,7 @@ public class LocalRedisDbCacheHelper {
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(json, typeReference);
+        return LyJsonUtil.fromJson(json, typeReference);
     }
 
     /*************************************************华丽的分割线***********************************************/
@@ -336,14 +336,14 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(key)) {
                 level2Json = cachePoolHelper.getFromLevel2(key);
                 if (StringUtils.isNotBlank(level2Json)) {
-                    return MwJsonUtil.fromJson(level2Json, clazz);
+                    return LyJsonUtil.fromJson(level2Json, clazz);
                 }
                 T t = supplier.get();
                 cachePoolHelper.setToLevel2(key, t);
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(level2Json, clazz);
+        return LyJsonUtil.fromJson(level2Json, clazz);
     }
 
     /**
@@ -361,14 +361,14 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(key)) {
                 level2Json = cachePoolHelper.getFromLevel2(key);
                 if (StringUtils.isNotBlank(level2Json)) {
-                    return MwJsonUtil.fromJson(level2Json, typeReference);
+                    return LyJsonUtil.fromJson(level2Json, typeReference);
                 }
                 T t = supplier.get();
                 cachePoolHelper.setToLevel2(key, t);
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(level2Json, typeReference);
+        return LyJsonUtil.fromJson(level2Json, typeReference);
     }
 
     /**
@@ -387,7 +387,7 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(key)) {
                 level2Json = cachePoolHelper.getFromLevel2(key);
                 if (StringUtils.isNotBlank(level2Json)) {
-                    return MwJsonUtil.fromJson(level2Json, clazz);
+                    return LyJsonUtil.fromJson(level2Json, clazz);
                 }
                 T t = supplier.get();
                 if (redisExpiresInSeconds > 0) {
@@ -396,7 +396,7 @@ public class LocalRedisDbCacheHelper {
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(level2Json, clazz);
+        return LyJsonUtil.fromJson(level2Json, clazz);
     }
 
     /**
@@ -416,7 +416,7 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(key)) {
                 level2Json = cachePoolHelper.getFromLevel2(key);
                 if (StringUtils.isNotBlank(level2Json)) {
-                    return MwJsonUtil.fromJson(level2Json, typeReference);
+                    return LyJsonUtil.fromJson(level2Json, typeReference);
                 }
                 T t = supplier.get();
                 if (redisExpiresInSeconds > 0) {
@@ -425,7 +425,7 @@ public class LocalRedisDbCacheHelper {
                 return t;
             }
         }
-        return MwJsonUtil.fromJson(level2Json, typeReference);
+        return LyJsonUtil.fromJson(level2Json, typeReference);
     }
 
     private String getSynchronizedKey(String key) {

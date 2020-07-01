@@ -1,6 +1,6 @@
 package cn.ly.base_common.mq.activemq.exception;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import org.slf4j.Logger;
 import org.springframework.util.ErrorHandler;
 
@@ -9,7 +9,7 @@ import org.springframework.util.ErrorHandler;
  */
 public class DefaultErrorHandler implements ErrorHandler {
 
-    private static final Logger logger = MwLogger.getInstance(DefaultErrorHandler.class);
+    private static final Logger logger = LyLogger.getInstance(DefaultErrorHandler.class);
 
     @Override
     public void handleError(Throwable t) {

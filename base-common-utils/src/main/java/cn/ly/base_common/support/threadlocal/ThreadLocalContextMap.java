@@ -13,7 +13,7 @@ import java.util.Objects;
 @UtilityClass
 public class ThreadLocalContextMap {
 
-    private static ThreadLocal<Map<String, Object>> threadLocal = new NamedThreadLocal("MW-THREAD-LOCAL-CONTEXT-MAP");
+    private static ThreadLocal<Map<String, Object>> threadLocal = new NamedThreadLocal("LY-THREAD-LOCAL-CONTEXT-MAP");
 
     public void put(String key, Object val) {
         if (key == null) {

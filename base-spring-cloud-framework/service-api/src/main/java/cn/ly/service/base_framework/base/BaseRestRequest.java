@@ -1,6 +1,6 @@
 package cn.ly.service.base_framework.base;
 
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -32,7 +32,7 @@ public abstract class BaseRestRequest<T> implements Serializable {
     private String timeZone = "GMT+8";
 
     @Min(value = 1)
-    private Long timestamp = MwJdk8DateUtil.getSecondTime();
+    private Long timestamp = LyJdk8DateUtil.getSecondTime();
 
     @Valid
     @NotNull(message = "data不能为空")

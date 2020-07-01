@@ -1,6 +1,6 @@
 package cn.ly.base_common.dayu.custom.lua;
 
-import cn.ly.base_common.utils.io.MwMoreIOUtil;
+import cn.ly.base_common.utils.io.LyMoreIOUtil;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 
@@ -18,7 +18,7 @@ public class LuaUtil {
 
     //init 配置文件
     static {
-        String script = MwMoreIOUtil.loadScript("lua/circuit_counter.lua");
+        String script = LyMoreIOUtil.loadScript("lua/circuit_counter.lua");
         luaMap.put(CIRCUIT_COUNTER, script);
     }
 }

@@ -1,8 +1,8 @@
 package cn.ly.base_common.redis.jedis;
 
-import cn.ly.base_common.redis.JedisClusterProperties;
 import cn.ly.base_common.helper.redis.JedisClusterHelper;
-import cn.ly.base_common.utils.number.MwMoreNumberUtil;
+import cn.ly.base_common.redis.JedisClusterProperties;
+import cn.ly.base_common.utils.number.LyMoreNumberUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -50,7 +50,7 @@ public class JedisClusterConfiguration {
     private Set<HostAndPort> createHostAndPorts(List<String> nodes) {
         return nodes.stream().map(val -> {
             String[] hostAndPort = StringUtils.split(val, ':');
-            return new HostAndPort(hostAndPort[0], MwMoreNumberUtil.toInt(hostAndPort[1]));
+            return new HostAndPort(hostAndPort[0], LyMoreNumberUtil.toInt(hostAndPort[1]));
         }).collect(Collectors.toSet());
     }
 }

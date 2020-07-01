@@ -1,9 +1,9 @@
 package cn.ly.base_common.helper.rest.interceptor;
 
-import cn.ly.base_common.utils.error.MwExceptionUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.url.MwMoreUrlUtil;
 import cn.ly.base_common.helper.rest.consts.RestMetricsConst;
+import cn.ly.base_common.utils.error.LyExceptionUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.url.LyMoreUrlUtil;
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.SphU;
@@ -28,7 +28,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SentinelHttpRequestInterceptor implements ClientHttpRequestInterceptor {
 
-    private static final Logger logger = MwLogger.getInstance(SentinelHttpRequestInterceptor.class);
+    private static final Logger logger = LyLogger.getInstance(SentinelHttpRequestInterceptor.class);
 
     private StatsDClient statsDClient;
 
@@ -48,10 +48,10 @@ public class SentinelHttpRequestInterceptor implements ClientHttpRequestIntercep
         } catch (BlockException e) {
             if (StringUtils.isNotBlank(hostWithPathResource)) {
                 logger.warn("Resource[{}], RestTemplate Block Exception...", hostWithPathResource);
-                String methodSuffix = MwMoreUrlUtil.getUrlSuffix(hostWithPathResource);
+                String methodSuffix = LyMoreUrlUtil.getUrlSuffix(hostWithPathResource);
                 Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(methodSuffix + RestMetricsConst.REQ_EXE_BLOCKED));
             }
-            throw MwExceptionUtil.unchecked(e);
+            throw LyExceptionUtil.unchecked(e);
         } catch (Throwable t) {
             Tracer.trace(t);
             throw t;

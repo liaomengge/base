@@ -1,7 +1,7 @@
 package cn.ly.base_common.helper.metric.jvm;
 
 import cn.ly.base_common.helper.metric.AbstractMetricMonitor;
-import cn.ly.base_common.utils.number.MwNumberUtil;
+import cn.ly.base_common.utils.number.LyNumberUtil;
 import cn.ly.base_common.helper.metric.consts.SysMetricsConst;
 import lombok.Setter;
 
@@ -21,7 +21,7 @@ public class JvmMonitor extends AbstractMetricMonitor {
         double freeMem = runtime.freeMemory() / x;
         double usedMem = totalMem - freeMem;
         double memUsedRatio = usedMem / totalMem;
-        memUsedRatio = MwNumberUtil.round(memUsedRatio, 2);
+        memUsedRatio = LyNumberUtil.round(memUsedRatio, 2);
 
         String metricsPrefix = SysMetricsConst.PREFIX_JVM;
         statsDClient.time(metricsPrefix + prefix + SysMetricsConst.JVM_MEM_USED + suffix, (long) usedMem);

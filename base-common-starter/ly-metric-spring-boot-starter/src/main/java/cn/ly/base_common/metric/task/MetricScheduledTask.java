@@ -1,13 +1,13 @@
 package cn.ly.base_common.metric.task;
 
 import cn.ly.base_common.metric.MetricProperties;
-import cn.ly.base_common.metric.metrics.thread.MwThreadStatePublicMetrics;
-import cn.ly.base_common.metric.metrics.thread.custom.MwThreadPoolPublicMetrics;
-import cn.ly.base_common.metric.metrics.thread.tomcat.MwTomcatPublicMetrics;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.shutdown.MwShutdownUtil;
-import cn.ly.base_common.utils.thread.MwRuntimeUtil;
-import cn.ly.base_common.utils.thread.MwThreadFactoryBuilderUtil;
+import cn.ly.base_common.metric.metrics.thread.ThreadStatePublicMetrics;
+import cn.ly.base_common.metric.metrics.thread.custom.ThreadPoolPublicMetrics;
+import cn.ly.base_common.metric.metrics.thread.tomcat.TomcatPublicMetrics;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.shutdown.LyShutdownUtil;
+import cn.ly.base_common.utils.thread.LyRuntimeUtil;
+import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import lombok.Data;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -28,36 +28,36 @@ import java.util.concurrent.TimeUnit;
 @Data
 public class MetricScheduledTask {
 
-    private static final Logger logger = MwLogger.getInstance(MetricScheduledTask.class);
+    private static final Logger logger = LyLogger.getInstance(MetricScheduledTask.class);
 
     private static final String METRIC_PREFIX = "metric.";
 
     private final MetricProperties metricProperties;
     private final StatsdMetricWriter statsdMetricWriter;
     private final SystemPublicMetrics systemPublicMetrics;
-    private final MwThreadPoolPublicMetrics mwThreadPoolPublicMetrics;
-    private final MwThreadStatePublicMetrics mwThreadStatePublicMetrics;
+    private final ThreadPoolPublicMetrics threadPoolPublicMetrics;
+    private final ThreadStatePublicMetrics threadStatePublicMetrics;
 
     @Setter
-    private MwTomcatPublicMetrics mwTomcatPublicMetrics;
+    private TomcatPublicMetrics tomcatPublicMetrics;
 
     public MetricScheduledTask(MetricProperties metricProperties,
                                StatsdMetricWriter statsdMetricWriter,
                                SystemPublicMetrics systemPublicMetrics,
-                               MwThreadPoolPublicMetrics mwThreadPoolPublicMetrics,
-                               MwThreadStatePublicMetrics mwThreadStatePublicMetrics) {
+                               ThreadPoolPublicMetrics threadPoolPublicMetrics,
+                               ThreadStatePublicMetrics LyThreadStatePublicMetrics) {
         this.metricProperties = metricProperties;
         this.statsdMetricWriter = statsdMetricWriter;
         this.systemPublicMetrics = systemPublicMetrics;
-        this.mwThreadPoolPublicMetrics = mwThreadPoolPublicMetrics;
-        this.mwThreadStatePublicMetrics = mwThreadStatePublicMetrics;
+        this.threadPoolPublicMetrics = threadPoolPublicMetrics;
+        this.threadStatePublicMetrics = LyThreadStatePublicMetrics;
     }
 
     @PostConstruct
     private void init() {
         ScheduledThreadPoolExecutor poolExecutor =
-                new ScheduledThreadPoolExecutor(MwRuntimeUtil.getCpuNum(),
-                        MwThreadFactoryBuilderUtil.build("metric"), new ThreadPoolExecutor.CallerRunsPolicy());
+                new ScheduledThreadPoolExecutor(LyRuntimeUtil.getCpuNum(),
+                        LyThreadFactoryBuilderUtil.build("metric"), new ThreadPoolExecutor.CallerRunsPolicy());
         poolExecutor.scheduleAtFixedRate(this::metric, metricProperties.getInitialDelay(), metricProperties.getPeriod(),
                 TimeUnit.SECONDS);
         this.registerShutdownHook(poolExecutor);
@@ -74,7 +74,7 @@ public class MetricScheduledTask {
      */
     private void metricJvm() {
         Collection<Metric<?>> metrics = this.systemPublicMetrics.metrics();
-        metrics.addAll(this.mwThreadStatePublicMetrics.metrics());
+        metrics.addAll(this.threadStatePublicMetrics.metrics());
         metrics.forEach(val -> {
             String name = METRIC_PREFIX + val.getName();
             Metric<?> metric = new Metric<>(name, val.getValue(), val.getTimestamp());
@@ -86,8 +86,8 @@ public class MetricScheduledTask {
      * metric tomcat
      */
     private void metricTomcat() {
-        if (Objects.nonNull(this.mwTomcatPublicMetrics)) {
-            Collection<Metric<?>> metrics = this.mwTomcatPublicMetrics.metrics();
+        if (Objects.nonNull(this.tomcatPublicMetrics)) {
+            Collection<Metric<?>> metrics = this.tomcatPublicMetrics.metrics();
             metrics.forEach(val -> {
                 String name = METRIC_PREFIX + val.getName();
                 Metric<?> metric = new Metric<>(name, val.getValue(), val.getTimestamp());
@@ -100,7 +100,7 @@ public class MetricScheduledTask {
      * metric thread pool
      */
     private void metricThreadPool() {
-        Collection<Metric<?>> metrics = this.mwThreadPoolPublicMetrics.metrics();
+        Collection<Metric<?>> metrics = this.threadPoolPublicMetrics.metrics();
         metrics.forEach(val -> {
             String name = METRIC_PREFIX + val.getName();
             Metric<?> metric = new Metric<>(name, val.getValue(), val.getTimestamp());
@@ -113,7 +113,7 @@ public class MetricScheduledTask {
      * @param poolExecutor
      */
     private void registerShutdownHook(ScheduledThreadPoolExecutor poolExecutor) {
-        MwShutdownUtil.registerShutdownHook(() -> {
+        LyShutdownUtil.registerShutdownHook(() -> {
             try {
                 logger.info("Metric Scheduled Thread Pool Exist...");
             } finally {

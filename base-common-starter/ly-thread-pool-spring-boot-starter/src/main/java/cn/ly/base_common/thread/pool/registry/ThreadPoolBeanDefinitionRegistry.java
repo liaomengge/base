@@ -1,10 +1,10 @@
 package cn.ly.base_common.thread.pool.registry;
 
-import cn.ly.base_common.helper.concurrent.MwThreadPoolTaskExecutor;
-import cn.ly.base_common.helper.concurrent.MwThreadPoolTaskWrappedExecutor;
-import cn.ly.base_common.helper.concurrent.MwTtlThreadPoolTaskExecutor;
+import cn.ly.base_common.helper.concurrent.LyThreadPoolTaskExecutor;
+import cn.ly.base_common.helper.concurrent.LyThreadPoolTaskWrappedExecutor;
+import cn.ly.base_common.helper.concurrent.LyTtlThreadPoolTaskExecutor;
 import cn.ly.base_common.thread.pool.ThreadPoolGroupProperties.ThreadPoolProperties;
-import cn.ly.base_common.utils.json.MwJsonUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
 import com.alibaba.fastjson.TypeReference;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -56,15 +56,15 @@ public class ThreadPoolBeanDefinitionRegistry implements EnvironmentAware, BeanD
                         .filter(val -> val.getValue() instanceof LinkedHashMap && StringUtils.isNumeric(val.getKey()))
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldVal, newVal) -> newVal,
                                 LinkedHashMap::new));
-        String threadPoolJson = MwJsonUtil.toJson(subThreadPoolPropertiesMap);
-        Map<String, ThreadPoolProperties> threadPoolJsonMap = MwJsonUtil.fromJson(threadPoolJson,
+        String threadPoolJson = LyJsonUtil.toJson(subThreadPoolPropertiesMap);
+        Map<String, ThreadPoolProperties> threadPoolJsonMap = LyJsonUtil.fromJson(threadPoolJson,
                 new TypeReference<Map<String, ThreadPoolProperties>>() {
                 });
         Optional.ofNullable(threadPoolJsonMap).ifPresent(val -> val.values().forEach(threadPoolProperties -> {
-            MwThreadPoolTaskExecutor mwThreadPoolTaskExecutor = buildThreadPool(threadPoolProperties);
+            LyThreadPoolTaskExecutor LyThreadPoolTaskExecutor = buildThreadPool(threadPoolProperties);
             BeanDefinitionBuilder builder =
-                    BeanDefinitionBuilder.genericBeanDefinition(MwThreadPoolTaskWrappedExecutor.class);
-            builder.addConstructorArgValue(mwThreadPoolTaskExecutor);
+                    BeanDefinitionBuilder.genericBeanDefinition(LyThreadPoolTaskWrappedExecutor.class);
+            builder.addConstructorArgValue(LyThreadPoolTaskExecutor);
             BeanDefinition beanDefinition = builder.getRawBeanDefinition();
             ScopeMetadata scopeMetadata = scopeMetadataResolver.resolveScopeMetadata(beanDefinition);
             beanDefinition.setScope(scopeMetadata.getScopeName());
@@ -78,18 +78,18 @@ public class ThreadPoolBeanDefinitionRegistry implements EnvironmentAware, BeanD
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
     }
 
-    private MwThreadPoolTaskExecutor buildThreadPool(ThreadPoolProperties threadPoolProperties) {
-        MwThreadPoolTaskExecutor threadPoolTaskExecutor;
+    private LyThreadPoolTaskExecutor buildThreadPool(ThreadPoolProperties threadPoolProperties) {
+        LyThreadPoolTaskExecutor threadPoolTaskExecutor;
         if (!threadPoolProperties.isTtlEnabled()) {
-            threadPoolTaskExecutor = new MwThreadPoolTaskExecutor(threadPoolProperties.buildThreadName());
+            threadPoolTaskExecutor = new LyThreadPoolTaskExecutor(threadPoolProperties.buildThreadName());
         } else {
-            threadPoolTaskExecutor = new MwTtlThreadPoolTaskExecutor(threadPoolProperties.buildThreadName());
+            threadPoolTaskExecutor = new LyTtlThreadPoolTaskExecutor(threadPoolProperties.buildThreadName());
         }
         fillThreadPoolParameter(threadPoolTaskExecutor, threadPoolProperties);
         return threadPoolTaskExecutor;
     }
 
-    private void fillThreadPoolParameter(MwThreadPoolTaskExecutor threadPoolTaskExecutor,
+    private void fillThreadPoolParameter(LyThreadPoolTaskExecutor threadPoolTaskExecutor,
                                          ThreadPoolProperties threadPoolProperties) {
         threadPoolTaskExecutor.setCorePoolSize(threadPoolProperties.getCorePoolSize());
         threadPoolTaskExecutor.setMaxPoolSize(threadPoolProperties.getMaxPoolSize());

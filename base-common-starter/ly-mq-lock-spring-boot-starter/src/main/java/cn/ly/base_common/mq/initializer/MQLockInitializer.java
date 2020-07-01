@@ -5,7 +5,7 @@ import cn.ly.base_common.helper.zk.AbstractLock;
 import cn.ly.base_common.mq.MQLockProperties;
 import cn.ly.base_common.mq.MQLockProperties.PrototypeProperties;
 import cn.ly.base_common.mq.rabbitmq.receiver.BaseMQReceiver;
-import cn.ly.base_common.utils.net.MwNetworkUtil;
+import cn.ly.base_common.utils.net.LyNetworkUtil;
 import org.I0Itec.zkclient.ZkClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -57,14 +57,14 @@ public class MQLockInitializer extends AbstractLock implements EnvironmentAware,
             if (isSingleton(key)) {
                 value.start();
                 logger.info("Ip[{}], Singleton ActiveMQ[{}] acquire lock success, start up...",
-                        MwNetworkUtil.getHostAddress(), key);
+                        LyNetworkUtil.getHostAddress(), key);
             }
         }));
         Optional.ofNullable(baseRabbitMQReceiverMap).ifPresent(val -> val.forEach((key, value) -> {
             if (isSingleton(key)) {
                 value.start();
                 logger.info("Ip[{}], Singleton RabbitMQ[{}] acquire lock success, start up...",
-                        MwNetworkUtil.getHostAddress(), key);
+                        LyNetworkUtil.getHostAddress(), key);
             }
         }));
     }
@@ -75,14 +75,14 @@ public class MQLockInitializer extends AbstractLock implements EnvironmentAware,
             if (isSingleton(key)) {
                 value.stop();
                 logger.info("Ip[{}], Singleton ActiveMQ[{}] acquire lock fail, start fail...",
-                        MwNetworkUtil.getHostAddress(), key);
+                        LyNetworkUtil.getHostAddress(), key);
             }
         }));
         Optional.ofNullable(baseRabbitMQReceiverMap).ifPresent(val -> val.forEach((key, value) -> {
             if (isSingleton(key)) {
                 value.stop();
                 logger.info("Ip[{}], Singleton RabbitMQ[{}] acquire lock fail, start fail...",
-                        MwNetworkUtil.getHostAddress(), key);
+                        LyNetworkUtil.getHostAddress(), key);
             }
         }));
     }
@@ -102,7 +102,7 @@ public class MQLockInitializer extends AbstractLock implements EnvironmentAware,
                     BaseMQReceiver baseMQReceiver = baseRabbitMQReceiverMap.get(val2);
                     Optional.ofNullable(baseMQReceiver).ifPresent(val3 -> {
                         val3.start();
-                        logger.info("Ip[{}], Prototype ActiveMQ[{}], start up...", MwNetworkUtil.getHostAddress(),
+                        logger.info("Ip[{}], Prototype ActiveMQ[{}], start up...", LyNetworkUtil.getHostAddress(),
                                 val2);
                     });
                 }));
@@ -115,7 +115,7 @@ public class MQLockInitializer extends AbstractLock implements EnvironmentAware,
                             baseActiveMQReceiverMap.get(val2);
                     Optional.ofNullable(baseMQReceiver).ifPresent(val3 -> {
                         val3.start();
-                        logger.info("Ip[{}], Prototype RabbitMQ[{}], start up...", MwNetworkUtil.getHostAddress()
+                        logger.info("Ip[{}], Prototype RabbitMQ[{}], start up...", LyNetworkUtil.getHostAddress()
                                 , val2);
                     });
                 }));

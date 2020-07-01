@@ -6,10 +6,10 @@ import cn.ly.base_common.mq.domain.MQMessage;
 import cn.ly.base_common.mq.domain.MessageHeader;
 import cn.ly.base_common.mq.rabbitmq.AbstractMQMessageListener;
 import cn.ly.base_common.mq.rabbitmq.domain.QueueConfig;
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.thread.MwThreadPoolExecutorUtil;
-import cn.ly.base_common.utils.trace.MwTraceLogUtil;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
+import cn.ly.base_common.utils.trace.LyTraceLogUtil;
 import com.rabbitmq.client.Channel;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +40,7 @@ public abstract class BaseMQMessageAsyncListener<T extends MQMessage> extends Ab
     @Override
     public void onMessage(Message message, Channel channel) throws Exception {
         bizTaskExecutor.execute(() -> {
-            long startTime = MwJdk8DateUtil.getMilliSecondsTime();
+            long startTime = LyJdk8DateUtil.getMilliSecondsTime();
             long endTime;
             T t = null;
             try {
@@ -50,22 +50,22 @@ public abstract class BaseMQMessageAsyncListener<T extends MQMessage> extends Ab
                 }
                 MessageHeader messageHeader = resolveMessageHeader(message);
                 rabbitMQMonitor.monitorTime(MetricsConst.SEND_2_RECEIVE_EXEC_TIME + "." + queueConfig.getExchangeName(),
-                        MwJdk8DateUtil.getMilliSecondsTime() - messageHeader.getSendTime());
+                        LyJdk8DateUtil.getMilliSecondsTime() - messageHeader.getSendTime());
 
-                MwTraceLogUtil.put(messageHeader.getMqTraceId());
-                startTime = MwJdk8DateUtil.getMilliSecondsTime();
+                LyTraceLogUtil.put(messageHeader.getMqTraceId());
+                startTime = LyJdk8DateUtil.getMilliSecondsTime();
                 //业务逻辑
                 processListener(t);
 
                 rabbitMQMonitor.monitorCount(MetricsConst.DEQUEUE_COUNT + "." + queueConfig.getExchangeName());
             } catch (Exception e) {
                 rabbitMQMonitor.monitorCount(MetricsConst.EXEC_EXCEPTION + "." + queueConfig.getExchangeName());
-                logger.error("Handle Message[" + MwJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
+                logger.error("Handle Message[" + LyJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
             } finally {
-                endTime = MwJdk8DateUtil.getMilliSecondsTime();
+                endTime = LyJdk8DateUtil.getMilliSecondsTime();
                 rabbitMQMonitor.monitorTime(MetricsConst.RECEIVE_2_HANDLE_EXEC_TIME + "." + queueConfig.getExchangeName(),
                         endTime - startTime);
-                MwTraceLogUtil.clearTrace();
+                LyTraceLogUtil.clearTrace();
             }
         });
     }
@@ -73,7 +73,7 @@ public abstract class BaseMQMessageAsyncListener<T extends MQMessage> extends Ab
     @Override
     public void afterPropertiesSet() throws Exception {
         if (Objects.isNull(bizTaskExecutor)) {
-            bizTaskExecutor = MwThreadPoolExecutorUtil.buildSimpleThreadPool("async-listener",
+            bizTaskExecutor = LyThreadPoolExecutorUtil.buildSimpleThreadPool("async-listener",
                     new LinkedBlockingQueue<>(16));
         }
     }

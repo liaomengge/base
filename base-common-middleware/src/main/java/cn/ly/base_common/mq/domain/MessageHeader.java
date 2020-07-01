@@ -1,7 +1,7 @@
 package cn.ly.base_common.mq.domain;
 
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
-import cn.ly.base_common.utils.misc.MwIdGeneratorUtil;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
+import cn.ly.base_common.utils.misc.LyIdGeneratorUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageHeader {
-    private String mqTraceId = MwIdGeneratorUtil.uuid();
-    private long sendTime = MwJdk8DateUtil.getMilliSecondsTime();
+    private String mqTraceId = LyIdGeneratorUtil.uuid();
+    private long sendTime = LyJdk8DateUtil.getMilliSecondsTime();
 }

@@ -1,7 +1,7 @@
 package cn.ly.base_common.mq.rabbitmq.callback;
 
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.springframework.amqp.core.Message;
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class MQReturnCallback implements RabbitTemplate.ReturnCallback {
 
-    private static final Logger logger = MwLogger.getInstance(MQReturnCallback.class);
+    private static final Logger logger = LyLogger.getInstance(MQReturnCallback.class);
 
     @Override
     public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
@@ -26,6 +26,6 @@ public class MQReturnCallback implements RabbitTemplate.ReturnCallback {
         returnMap.put("exchange", exchange);
         returnMap.put("routingKey", routingKey);
 
-        logger.error("Return Callback Failed, Detail Message[{}]", MwJsonUtil.toJson4Log(returnMap));
+        logger.error("Return Callback Failed, Detail Message[{}]", LyJsonUtil.toJson4Log(returnMap));
     }
 }

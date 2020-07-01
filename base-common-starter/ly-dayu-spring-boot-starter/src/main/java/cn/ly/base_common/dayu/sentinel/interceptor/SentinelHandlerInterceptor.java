@@ -1,7 +1,7 @@
 //package cn.ly.base_common.dayu.sentinel.interceptor;
 //
 //import cn.ly.base_common.dayu.consts.DayuConst;
-//import cn.ly.base_common.utils.log4j2.MwLogger;
+//import cn.ly.base_common.utils.log4j2.LyLogger;
 //import com.alibaba.csp.sentinel.EntryType;
 //import com.alibaba.csp.sentinel.SphU;
 //import com.alibaba.csp.sentinel.adapter.servlet.callback.RequestOriginParser;
@@ -29,7 +29,7 @@
 //@AllArgsConstructor
 //public class SentinelHandlerInterceptor extends HandlerInterceptorAdapter {
 //
-//    private static final Logger logger = MwLogger.getInstance(SentinelHandlerInterceptor.class);
+//    private static final Logger logger = LyLogger.getInstance(SentinelHandlerInterceptor.class);
 //
 //    private static final String WEB_INTERCEPTOR_CONTEXT_NAME = "sentinel_web_interceptor_context";
 //

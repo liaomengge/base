@@ -4,13 +4,13 @@ import cn.ly.base_common.helper.mail.MailHelper;
 import cn.ly.base_common.support.datasource.DBContext;
 import cn.ly.base_common.support.exception.AbstractAppException;
 import cn.ly.base_common.support.exception.AbstractAppRuntimeException;
-import cn.ly.base_common.utils.error.MwThrowableUtil;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log.MwMDCUtil;
-import cn.ly.base_common.utils.log4j2.MwLogData;
-import cn.ly.base_common.utils.net.MwNetworkUtil;
-import cn.ly.base_common.utils.trace.MwTraceLogUtil;
-import cn.ly.base_common.utils.web.MwWebUtil;
+import cn.ly.base_common.utils.error.LyThrowableUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log.LyMDCUtil;
+import cn.ly.base_common.utils.log4j2.LyLogData;
+import cn.ly.base_common.utils.net.LyNetworkUtil;
+import cn.ly.base_common.utils.trace.LyTraceLogUtil;
+import cn.ly.base_common.utils.web.LyWebUtil;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.ServiceConst;
 import com.alibaba.dubbo.rpc.*;
@@ -45,7 +45,7 @@ public class ServiceFilter extends AbstractFilter {
         }
 
         long start = System.currentTimeMillis();
-        MwLogData logData = new MwLogData();
+        LyLogData logData = new LyLogData();
 
         try {
             //1. log params info
@@ -58,7 +58,7 @@ public class ServiceFilter extends AbstractFilter {
             long end = System.currentTimeMillis();
             long elapsedMilliseconds = end - start;
             logData.setElapsedMilliseconds(elapsedMilliseconds);
-            MwMDCUtil.put(MwMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
+            LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
 
             boolean hasException = false;
             if (Objects.isNull(result.getValue())) { //无返回,通常是发生了异常,被dubbo捕获了
@@ -69,7 +69,7 @@ public class ServiceFilter extends AbstractFilter {
                     rpcResult.setValue(nullResult);
                     if (result.hasException()) {
                         hasException = true;
-                        logData.setErrorStack(MwThrowableUtil.getStackTrace(result.getException()));
+                        logData.setErrorStack(LyThrowableUtil.getStackTrace(result.getException()));
                         String errorCode = ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getCode();
                         String errorDesc = ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getDescription();
                         String errorException = logData.getErrorStack();
@@ -113,12 +113,12 @@ public class ServiceFilter extends AbstractFilter {
             return result;
 
         } catch (Exception e) {
-            logData.setErrorStack(MwThrowableUtil.getStackTrace(e));
+            logData.setErrorStack(LyThrowableUtil.getStackTrace(e));
             //其它未知异常处理
             DataResult dataResult = new DataResult(ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getCode(),
                     ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getDescription());
             if (serviceConfig.isThrowException()) {
-                dataResult.setSysException(MwThrowableUtil.getStackTrace(e));
+                dataResult.setSysException(LyThrowableUtil.getStackTrace(e));
             }
             RpcResult result = new RpcResult(dataResult);
             result.setAttachments(invocation.getAttachments());
@@ -126,7 +126,7 @@ public class ServiceFilter extends AbstractFilter {
 
             long end = System.currentTimeMillis();
             long elapsedMilliseconds = end - start;
-            MwMDCUtil.put(MwMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
+            LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
 
             logData.setElapsedMilliseconds(elapsedMilliseconds);
             dataResult.setElapsedMilliseconds(elapsedMilliseconds);
@@ -139,15 +139,15 @@ public class ServiceFilter extends AbstractFilter {
             DBContext.clearDBKey();
 
             //5. clear trace thread local
-            MwTraceLogUtil.clearTrace();
+            LyTraceLogUtil.clearTrace();
 
             //6. clean mdc
-            MwMDCUtil.remove(MwMDCUtil.MDC_WEB_ELAPSED_TIME);
+            LyMDCUtil.remove(LyMDCUtil.MDC_WEB_ELAPSED_TIME);
         }
 
     }
 
-    private void buildRequestLog(RpcContext rpcContext, Invocation invocation, MwLogData logData) {
+    private void buildRequestLog(RpcContext rpcContext, Invocation invocation, LyLogData logData) {
         HttpServletRequest servletRequest = (HttpServletRequest) rpcContext.getRequest();
 
         //1. 获取nginx http的真实IP
@@ -184,7 +184,7 @@ public class ServiceFilter extends AbstractFilter {
             }
         }
 
-        Map<String, Object> queryParamMap = MwWebUtil.getRequestParams(servletRequest);
+        Map<String, Object> queryParamMap = LyWebUtil.getRequestParams(servletRequest);
         logData.setInvocation("RpcInvocation[methodName=" + methodName + "], arguments=" + queryParamMap.toString());
     }
 
@@ -221,12 +221,12 @@ public class ServiceFilter extends AbstractFilter {
         return paramMap;
     }
 
-    private void handleException(MwLogData logData, boolean hasException) {
+    private void handleException(LyLogData logData, boolean hasException) {
         if (hasException) {
             logger.error(logData);
             if (serviceConfig.isSendEmail() && mailHelper != null) {
-                mailHelper.sendTextMail(MwNetworkUtil.getHostAddress() + "/" + MwNetworkUtil.getHostName() +
-                        "-[" + serviceConfig.getServiceName() + "] ERROR!", MwJsonUtil.toJson4Log(logData));
+                mailHelper.sendTextMail(LyNetworkUtil.getHostAddress() + "/" + LyNetworkUtil.getHostName() +
+                        "-[" + serviceConfig.getServiceName() + "] ERROR!", LyJsonUtil.toJson4Log(logData));
             }
             return;
         }

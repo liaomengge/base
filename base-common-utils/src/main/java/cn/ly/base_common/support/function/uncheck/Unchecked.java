@@ -1,7 +1,7 @@
 package cn.ly.base_common.support.function.uncheck;
 
 import cn.ly.base_common.support.function.checked.*;
-import cn.ly.base_common.utils.error.MwExceptionUtil;
+import cn.ly.base_common.utils.error.LyExceptionUtil;
 import lombok.experimental.UtilityClass;
 
 import java.util.Comparator;
@@ -24,7 +24,7 @@ public class Unchecked {
             try {
                 return mapper.apply(t);
             } catch (Throwable e) {
-                throw MwExceptionUtil.unchecked(e);
+                throw LyExceptionUtil.unchecked(e);
             }
         };
     }
@@ -35,7 +35,7 @@ public class Unchecked {
             try {
                 mapper.accept(t);
             } catch (Throwable e) {
-                throw MwExceptionUtil.unchecked(e);
+                throw LyExceptionUtil.unchecked(e);
             }
         };
     }
@@ -46,7 +46,7 @@ public class Unchecked {
             try {
                 return mapper.get();
             } catch (Throwable e) {
-                throw MwExceptionUtil.unchecked(e);
+                throw LyExceptionUtil.unchecked(e);
             }
         };
     }
@@ -57,7 +57,7 @@ public class Unchecked {
             try {
                 runnable.run();
             } catch (Throwable e) {
-                throw MwExceptionUtil.unchecked(e);
+                throw LyExceptionUtil.unchecked(e);
             }
         };
     }
@@ -68,7 +68,7 @@ public class Unchecked {
             try {
                 return callable.call();
             } catch (Throwable e) {
-                throw MwExceptionUtil.unchecked(e);
+                throw LyExceptionUtil.unchecked(e);
             }
         };
     }
@@ -79,7 +79,7 @@ public class Unchecked {
             try {
                 return comparator.compare(o1, o2);
             } catch (Throwable e) {
-                throw MwExceptionUtil.unchecked(e);
+                throw LyExceptionUtil.unchecked(e);
             }
         };
     }

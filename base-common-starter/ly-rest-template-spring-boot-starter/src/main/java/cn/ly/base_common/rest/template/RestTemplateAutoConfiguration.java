@@ -4,8 +4,8 @@ import cn.ly.base_common.helper.rest.interceptor.SentinelHttpRequestInterceptor;
 import cn.ly.base_common.helper.rest.sync.SyncClientTemplate;
 import cn.ly.base_common.helper.rest.sync.interceptor.HttpHeaderInterceptor;
 import cn.ly.base_common.helper.rest.sync.retry.HttpRetryHandler;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.thread.MwThreadFactoryBuilderUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
@@ -61,7 +61,7 @@ import java.util.concurrent.TimeUnit;
 @EnableConfigurationProperties(RestTemplateProperties.class)
 public class RestTemplateAutoConfiguration {
 
-    private static final Logger logger = MwLogger.getInstance(RestTemplateAutoConfiguration.class);
+    private static final Logger logger = LyLogger.getInstance(RestTemplateAutoConfiguration.class);
 
     private static final String DAYU_SENTINEL_ENABLED = "ly.dayu.sentinel.enabled";
     private static final String SPRING_APPLICATION_NAME = "spring.application.name";
@@ -211,7 +211,7 @@ public class RestTemplateAutoConfiguration {
     }
 
     private void closeIdleExpiredConnections(PoolingHttpClientConnectionManager connectionManager) {
-        ScheduledExecutorService service = new ScheduledThreadPoolExecutor(1, MwThreadFactoryBuilderUtil.build("http" +
+        ScheduledExecutorService service = new ScheduledThreadPoolExecutor(1, LyThreadFactoryBuilderUtil.build("http" +
                 "-client-idle"));
         service.scheduleAtFixedRate(() -> {
             try {

@@ -1,7 +1,7 @@
 package cn.ly.base_common.dayu.guava.callback;
 
 import cn.ly.base_common.dayu.domain.DayuBlockedDomain;
-import cn.ly.base_common.utils.web.MwWebUtil;
+import cn.ly.base_common.utils.web.LyWebUtil;
 
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 public class WebCallbackManager {
     private static volatile UrlRateLimitHandler urlRateLimitHandler =
-            (request, response) -> MwWebUtil.renderJson(response, DayuBlockedDomain.create());
+            (request, response) -> LyWebUtil.renderJson(response, DayuBlockedDomain.create());
 
     private WebCallbackManager() {
     }

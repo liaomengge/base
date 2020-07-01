@@ -1,12 +1,12 @@
 package cn.ly.base_common.helper.retrofit.client.interceptor;
 
-import cn.ly.base_common.utils.error.MwThrowableUtil;
-import cn.ly.base_common.utils.log.MwAlarmLogUtil;
-import cn.ly.base_common.utils.log.MwMDCUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.url.MwMoreUrlUtil;
 import cn.ly.base_common.helper.retrofit.consts.RetrofitMetricsConst;
 import cn.ly.base_common.support.misc.Charsets;
+import cn.ly.base_common.utils.error.LyThrowableUtil;
+import cn.ly.base_common.utils.log.LyAlarmLogUtil;
+import cn.ly.base_common.utils.log.LyMDCUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.url.LyMoreUrlUtil;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.timgroup.statsd.StatsDClient;
@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class HttpLoggingInterceptor implements Interceptor {
 
-    private static final Logger logger = MwLogger.getInstance(HttpLoggingInterceptor.class);
+    private static final Logger logger = LyLogger.getInstance(HttpLoggingInterceptor.class);
 
     private final String projName;
 
@@ -53,27 +53,27 @@ public class HttpLoggingInterceptor implements Interceptor {
             response = chain.proceed(request);
         } catch (Throwable t) {
             if (t instanceof InterruptedIOException || (Objects.nonNull(t.getCause()) && t.getCause() instanceof InterruptedIOException)) {
-                MwAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_HTTP.error(t);
+                LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_HTTP.error(t);
             } else {
-                MwAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
+                LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
             }
             tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
-            MwMDCUtil.put(MwMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(tookMs));
+            LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(tookMs));
             if (isIgnoreLogMethod(request)) {
                 logger.warn("请求路径 ==> [{}], 请求异常 ===> [{}], 耗时[{}]ms",
-                        buildReqUrl(request), MwThrowableUtil.getStackTrace(t), tookMs);
+                        buildReqUrl(request), LyThrowableUtil.getStackTrace(t), tookMs);
             } else {
                 logger.warn("请求路径 ==> [{}], 请求参数 ==> [{}], 请求异常 ===> [{}], 耗时[{}]ms",
-                        buildReqUrl(request), buildReqStr(request), MwThrowableUtil.getStackTrace(t), tookMs);
+                        buildReqUrl(request), buildReqStr(request), LyThrowableUtil.getStackTrace(t), tookMs);
             }
             throw t;
         } finally {
             try {
                 tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
-                MwMDCUtil.put(MwMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(tookMs));
+                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(tookMs));
                 doFinally(request, response, tookMs);
             } finally {
-                MwMDCUtil.remove(MwMDCUtil.MDC_THIRD_ELAPSED_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_TIME);
             }
         }
         return response;
@@ -122,7 +122,7 @@ public class HttpLoggingInterceptor implements Interceptor {
     }
 
     private String buildMetricsPrefixName(String url) {
-        String urlMethod = MwMoreUrlUtil.getUrlSuffix(url);
+        String urlMethod = LyMoreUrlUtil.getUrlSuffix(url);
         return projName + "." + urlMethod;
     }
 
@@ -149,7 +149,7 @@ public class HttpLoggingInterceptor implements Interceptor {
 
     private boolean isIgnoreLogMethod(Request request) {
         if (StringUtils.isNotBlank(ignoreLogMethodName)) {
-            String methodName = MwMoreUrlUtil.getUrlSuffix(buildReqUrl(request));
+            String methodName = LyMoreUrlUtil.getUrlSuffix(buildReqUrl(request));
             Iterable<String> iterable =
                     Splitter.on(",").omitEmptyStrings().trimResults().omitEmptyStrings().split(ignoreLogMethodName);
             return Iterables.contains(iterable, methodName);

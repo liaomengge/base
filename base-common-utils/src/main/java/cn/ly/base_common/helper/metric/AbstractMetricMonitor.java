@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.metric;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.timgroup.statsd.StatsDClient;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractMetricMonitor {
 
-    protected final Logger logger = MwLogger.getInstance(AbstractMetricMonitor.class);
+    protected final Logger logger = LyLogger.getInstance(AbstractMetricMonitor.class);
 
     @Setter
     protected StatsDClient statsDClient;

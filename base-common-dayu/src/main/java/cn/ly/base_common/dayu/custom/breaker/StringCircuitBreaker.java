@@ -7,6 +7,6 @@ public interface StringCircuitBreaker extends CircuitBreaker<String> {
 
     @Override
     default String fallback() {
-        return "MW_DAYU_CUSTOM_FALLBACK";
+        return "LY_DAYU_CUSTOM_FALLBACK";
     }
 }

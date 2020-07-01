@@ -1,13 +1,13 @@
 package cn.ly.base_common.dayu.custom;
 
-import cn.ly.base_common.redis.RedisAutoConfiguration;
 import cn.ly.base_common.dayu.custom.CustomCircuitBreakerProperties.RuleProperties;
 import cn.ly.base_common.dayu.custom.aspect.CircuitBreakerResourceAspect;
 import cn.ly.base_common.dayu.custom.circuit.CircuitBreakerHandler;
 import cn.ly.base_common.dayu.custom.config.CircuitBreakerConfig;
 import cn.ly.base_common.dayu.custom.helper.CircuitBreakerRedisHelper;
 import cn.ly.base_common.helper.redis.IRedisHelper;
-import cn.ly.base_common.utils.number.MwNumberUtil;
+import cn.ly.base_common.redis.RedisAutoConfiguration;
+import cn.ly.base_common.utils.number.LyNumberUtil;
 import com.timgroup.statsd.StatsDClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -41,9 +41,9 @@ public class CustomCircuitBreakerConfiguration {
     public CircuitBreakerRedisHelper circuitBreakerRedisHelper(IRedisHelper iRedisHelper) {
         RuleProperties ruleProperties = customCircuitBreakerProperties.getRule();
         CircuitBreakerConfig circuitBreakerConfig = new CircuitBreakerConfig();
-        circuitBreakerConfig.setFailureIntervalSeconds(MwNumberUtil.getIntValue(ruleProperties.getFailureIntervalSeconds()));
-        circuitBreakerConfig.setFailureThreshold(MwNumberUtil.getIntValue(ruleProperties.getFailureThreshold()));
-        circuitBreakerConfig.setResetMilliSeconds(MwNumberUtil.getIntValue(ruleProperties.getResetMilliSeconds()));
+        circuitBreakerConfig.setFailureIntervalSeconds(LyNumberUtil.getIntValue(ruleProperties.getFailureIntervalSeconds()));
+        circuitBreakerConfig.setFailureThreshold(LyNumberUtil.getIntValue(ruleProperties.getFailureThreshold()));
+        circuitBreakerConfig.setResetMilliSeconds(LyNumberUtil.getIntValue(ruleProperties.getResetMilliSeconds()));
         return new CircuitBreakerRedisHelper(iRedisHelper, circuitBreakerConfig);
     }
 

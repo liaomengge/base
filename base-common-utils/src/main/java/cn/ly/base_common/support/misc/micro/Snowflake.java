@@ -1,6 +1,6 @@
 package cn.ly.base_common.support.misc.micro;
 
-import cn.ly.base_common.utils.random.MwRandomUtil;
+import cn.ly.base_common.utils.random.LyRandomUtil;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -184,7 +184,7 @@ public final class Snowflake {
             }
         } else {
             // randomSequence为true表示随机生成允许范围内的序列起始值,否则毫秒内起始值为0L开始自增
-            sequence = MwRandomUtil.threadLocalRandom().nextLong(SEQUENCE_MASK + 1);
+            sequence = LyRandomUtil.threadLocalRandom().nextLong(SEQUENCE_MASK + 1);
         }
 
         lastTimestamp = currentTimestamp;
@@ -243,7 +243,7 @@ public final class Snowflake {
             byte[] addressByte = inetAddress.getAddress();
             ipPiece = new String(addressByte).hashCode();
         } catch (Exception e) {
-            ipPiece = MwRandomUtil.threadLocalRandom().nextInt();
+            ipPiece = LyRandomUtil.threadLocalRandom().nextInt();
         }
         return ipPiece;
     }
@@ -270,7 +270,7 @@ public final class Snowflake {
             machinePiece = netSb.toString().hashCode();
         } catch (Throwable e) {
             // 出问题随机生成,保留后两位
-            machinePiece = MwRandomUtil.threadLocalRandom().nextInt();
+            machinePiece = LyRandomUtil.threadLocalRandom().nextInt();
         }
         return machinePiece;
     }

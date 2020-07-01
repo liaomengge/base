@@ -1,7 +1,7 @@
 package cn.ly.base_common.mq.rabbitmq.receiver;
 
 import cn.ly.base_common.mq.rabbitmq.AbstractMQReceiver;
-import cn.ly.base_common.utils.thread.MwThreadPoolExecutorUtil;
+import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
 import org.aopalliance.aop.Advice;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.amqp.core.AcknowledgeMode;
@@ -89,7 +89,7 @@ public abstract class BaseMQReceiver extends AbstractMQReceiver implements Initi
         if (consumerExecutor != null) {
             simpleMessageListenerContainer.setTaskExecutor(consumerExecutor);
         } else {
-            consumerExecutor = MwThreadPoolExecutorUtil.buildThreadPool(maxConcurrentConsumers,
+            consumerExecutor = LyThreadPoolExecutorUtil.buildThreadPool(maxConcurrentConsumers,
                     concurrentConsumers + maxConcurrentConsumers, "rabbitmq-consumer",
                     30, TimeUnit.SECONDS, new LinkedBlockingQueue<>(16));
             simpleMessageListenerContainer.setTaskExecutor(consumerExecutor);

@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.redis;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import org.slf4j.Logger;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
@@ -15,7 +15,7 @@ import java.util.Set;
  */
 public interface IRedisHelper {
 
-    Logger logger = MwLogger.getInstance(IRedisHelper.class);
+    Logger logger = LyLogger.getInstance(IRedisHelper.class);
 
     String LOCK_PREFIX = "lock:";
     String SET_IF_NOT_EXIST = "NX";

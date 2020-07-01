@@ -1,6 +1,6 @@
 package cn.ly.service.base_framework.common.filter.chain;
 
-import cn.ly.base_common.utils.number.MwNumberUtil;
+import cn.ly.base_common.utils.number.LyNumberUtil;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -46,7 +46,7 @@ public class FilterChain implements ServiceFilter {
 
     public void sortFilters() {
         filters = filters.stream()
-                .sorted(Comparator.comparingInt(value -> MwNumberUtil.getIntValue(OrderUtils.getOrder(value.getClass(), value.getOrder()))))
+                .sorted(Comparator.comparingInt(value -> LyNumberUtil.getIntValue(OrderUtils.getOrder(value.getClass(), value.getOrder()))))
                 .collect(Collectors.toList());
     }
 
@@ -54,7 +54,7 @@ public class FilterChain implements ServiceFilter {
         return filters.parallelStream()
                 .map(val -> {
                     String filterName = val.getClass().getSimpleName();
-                    int order = MwNumberUtil.getIntValue(OrderUtils.getOrder(val.getClass(), val.getOrder()));
+                    int order = LyNumberUtil.getIntValue(OrderUtils.getOrder(val.getClass(), val.getOrder()));
                     return filterName + "(" + order + ")";
                 }).reduce((val, val2) -> val + ',' + val2).orElse("null");
     }

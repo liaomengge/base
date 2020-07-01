@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.redis;
 
-import cn.ly.base_common.utils.collection.MwArrayUtil;
+import cn.ly.base_common.utils.collection.LyArrayUtil;
 import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -223,7 +223,7 @@ public class JedisClusterHelper implements IRedisHelper {
 
     @Override
     public void rpushall(String key, List<String> list) {
-        jedisCluster.rpush(key, MwArrayUtil.toArray(list, String.class));
+        jedisCluster.rpush(key, LyArrayUtil.toArray(list, String.class));
     }
 
     @Override

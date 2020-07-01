@@ -4,7 +4,7 @@ import cn.ly.base_common.dayu.custom.config.CircuitBreakerConfig;
 import cn.ly.base_common.dayu.custom.consts.CircuitBreakerConst;
 import cn.ly.base_common.dayu.custom.lua.LuaUtil;
 import cn.ly.base_common.helper.redis.IRedisHelper;
-import cn.ly.base_common.utils.number.MwMoreNumberUtil;
+import cn.ly.base_common.utils.number.LyMoreNumberUtil;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,12 +25,12 @@ public class CircuitBreakerRedisHelper {
     }
 
     public long getLatestFailureTime(String resource) {
-        return MwMoreNumberUtil.toLong(iRedisHelper.get(this.getLatestFailureTimeStr(resource)));
+        return LyMoreNumberUtil.toLong(iRedisHelper.get(this.getLatestFailureTimeStr(resource)));
     }
 
     public int getFailureCount(String resource) {
         String failureCountStr = iRedisHelper.get(resource);
-        return MwMoreNumberUtil.toInt(failureCountStr);
+        return LyMoreNumberUtil.toInt(failureCountStr);
     }
 
     public void incrFailureCount(String resource) {

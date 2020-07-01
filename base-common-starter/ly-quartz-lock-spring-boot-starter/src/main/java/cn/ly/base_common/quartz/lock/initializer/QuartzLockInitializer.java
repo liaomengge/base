@@ -1,10 +1,10 @@
 package cn.ly.base_common.quartz.lock.initializer;
 
-import cn.ly.base_common.quartz.lock.QuartzLockProperties;
 import cn.ly.base_common.helper.mail.MailHelper;
 import cn.ly.base_common.helper.zk.AbstractLock;
-import cn.ly.base_common.utils.net.MwNetworkUtil;
-import cn.ly.base_common.utils.shutdown.MwShutdownUtil;
+import cn.ly.base_common.quartz.lock.QuartzLockProperties;
+import cn.ly.base_common.utils.net.LyNetworkUtil;
+import cn.ly.base_common.utils.shutdown.LyShutdownUtil;
 import org.I0Itec.zkclient.ZkClient;
 import org.quartz.SchedulerException;
 import org.springframework.beans.BeansException;
@@ -49,7 +49,7 @@ public class QuartzLockInitializer extends AbstractLock implements EnvironmentAw
     protected void lockSuccess() {
         if (Objects.nonNull(schedulerFactoryBean) && !schedulerFactoryBean.isRunning()) {
             schedulerFactoryBean.start();
-            logger.info("Machine[{}], quartz acquire lock success, start up...", MwNetworkUtil.getHostAddress());
+            logger.info("Machine[{}], quartz acquire lock success, start up...", LyNetworkUtil.getHostAddress());
         }
         this.registerShutdownHook(schedulerFactoryBean);
     }
@@ -58,7 +58,7 @@ public class QuartzLockInitializer extends AbstractLock implements EnvironmentAw
     protected void lockFail() {
         if (Objects.nonNull(schedulerFactoryBean) && schedulerFactoryBean.isRunning()) {
             schedulerFactoryBean.stop();
-            logger.info("Machine[{}], quartz acquire lock fail, start fail...", MwNetworkUtil.getHostAddress());
+            logger.info("Machine[{}], quartz acquire lock fail, start fail...", LyNetworkUtil.getHostAddress());
         }
     }
 
@@ -83,7 +83,7 @@ public class QuartzLockInitializer extends AbstractLock implements EnvironmentAw
      * @param schedulerFactoryBean
      */
     private void registerShutdownHook(SchedulerFactoryBean schedulerFactoryBean) {
-        MwShutdownUtil.registerShutdownHook(() -> {
+        LyShutdownUtil.registerShutdownHook(() -> {
             try {
                 logger.info("Quartz Scheduler FactoryBean Exist...");
             } finally {

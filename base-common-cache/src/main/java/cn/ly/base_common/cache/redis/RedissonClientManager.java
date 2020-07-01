@@ -1,7 +1,7 @@
 package cn.ly.base_common.cache.redis;
 
 
-import cn.ly.base_common.utils.io.MwIOUtil;
+import cn.ly.base_common.utils.io.LyIOUtil;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
@@ -74,7 +74,7 @@ public class RedissonClientManager implements InitializingBean {
                 throw new IllegalArgumentException("Can't parse config", e1);
             }
         } finally {
-            MwIOUtil.closeQuietly(inputStream);
+            LyIOUtil.closeQuietly(inputStream);
         }
 
         return Redisson.create(config);

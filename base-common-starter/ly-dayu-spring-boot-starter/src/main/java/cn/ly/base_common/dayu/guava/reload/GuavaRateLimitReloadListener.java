@@ -3,8 +3,8 @@ package cn.ly.base_common.dayu.guava.reload;
 import cn.ly.base_common.dayu.guava.consts.GuavaRateLimitConst;
 import cn.ly.base_common.dayu.guava.domain.FlowRule;
 import cn.ly.base_common.dayu.guava.interceptor.GuavaRateLimitHandlerInterceptor;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.fastjson.TypeReference;
 import com.google.common.util.concurrent.RateLimiter;
 import org.apache.commons.collections4.CollectionUtils;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  */
 public class GuavaRateLimitReloadListener implements EnvironmentAware, ApplicationListener<EnvironmentChangeEvent> {
 
-    private static final Logger logger = MwLogger.getInstance(GuavaRateLimitReloadListener.class);
+    private static final Logger logger = LyLogger.getInstance(GuavaRateLimitReloadListener.class);
 
     private Environment environment;
 
@@ -52,7 +52,7 @@ public class GuavaRateLimitReloadListener implements EnvironmentAware, Applicati
         if (StringUtils.isNotBlank(flowRules)) {
             List<FlowRule> flowRuleList = null;
             try {
-                flowRuleList = MwJsonUtil.fromJson(flowRules, new TypeReference<List<FlowRule>>() {
+                flowRuleList = LyJsonUtil.fromJson(flowRules, new TypeReference<List<FlowRule>>() {
                 });
             } catch (Exception e) {
                 logger.warn("[Guava RateLimit], [flow] rule parse exception", e);

@@ -4,8 +4,8 @@ import cn.ly.base_common.dayu.custom.annotation.CircuitBreakerResource;
 import cn.ly.base_common.dayu.custom.consts.CircuitBreakerConst;
 import cn.ly.base_common.dayu.custom.helper.CircuitBreakerRedisHelper;
 import cn.ly.base_common.support.exception.CircuitBreakerException;
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
-import cn.ly.base_common.utils.error.MwThrowableUtil;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
+import cn.ly.base_common.utils.error.LyThrowableUtil;
 import com.timgroup.statsd.StatsDClient;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -56,7 +56,7 @@ public class CircuitBreakerResourceAspect extends AbstractAspectSupport {
             failureCount = circuitBreakerRedisHelper.getFailureCount(resource);
             long latestFailureTime = circuitBreakerRedisHelper.getLatestFailureTime(resource);
             if (failureCount >= circuitBreakerRedisHelper.getCircuitBreakerConfig().getFailureThreshold()) {
-                if ((MwJdk8DateUtil.getMilliSecondsTime() - latestFailureTime) <= circuitBreakerRedisHelper.getCircuitBreakerConfig().getResetMilliSeconds()) {
+                if ((LyJdk8DateUtil.getMilliSecondsTime() - latestFailureTime) <= circuitBreakerRedisHelper.getCircuitBreakerConfig().getResetMilliSeconds()) {
                     //open status
                     logger.warn("Resource[{}], Custom Circuit Open...", resource);
                     Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(CircuitBreakerConst.Metric.CIRCUIT_BREAKER_PREFIX + resource));
@@ -67,14 +67,14 @@ public class CircuitBreakerResourceAspect extends AbstractAspectSupport {
             //close status
             return joinPoint.proceed();
         } catch (CircuitBreakerException e) {
-            logger.warn("Resource[{}], request fallback handle ==> {}", resource, MwThrowableUtil.getStackTrace(e));
+            logger.warn("Resource[{}], request fallback handle ==> {}", resource, LyThrowableUtil.getStackTrace(e));
             throw e;
         } catch (Throwable t) {
             logger.warn("Resource[{}], request custom circuit handle failed ==> {}", resource,
-                    MwThrowableUtil.getStackTrace(t));
+                    LyThrowableUtil.getStackTrace(t));
             if (failureCount >= circuitBreakerRedisHelper.getCircuitBreakerConfig().getFailureThreshold()) {
                 circuitBreakerRedisHelper.getIRedisHelper().set(circuitBreakerRedisHelper.getLatestFailureTimeStr(resource),
-                        String.valueOf(MwJdk8DateUtil.getMilliSecondsTime()));
+                        String.valueOf(LyJdk8DateUtil.getMilliSecondsTime()));
                 throw t;
             }
 

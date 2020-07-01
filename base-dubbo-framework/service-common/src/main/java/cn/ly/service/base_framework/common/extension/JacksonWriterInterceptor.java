@@ -1,6 +1,6 @@
 package cn.ly.service.base_framework.common.extension;
 
-import cn.ly.base_common.utils.string.MwStringUtil;
+import cn.ly.base_common.utils.string.LyStringUtil;
 import cn.ly.service.base_framework.base.BaseRestResponse;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.ServiceConst.ResponseStatus.ErrorCodeEnum;
@@ -33,7 +33,7 @@ public class JacksonWriterInterceptor implements WriterInterceptor {
             private static final long serialVersionUID = -4891503559850961000L;
         };
         restResponse.setStatus(ErrorCodeEnum.RPC_ERROR.getCode());
-        String rpcErrorMsg = MwStringUtil.getValue(context.getEntity());
+        String rpcErrorMsg = LyStringUtil.getValue(context.getEntity());
         if (rpcErrorMsg.contains("Unrecognized field")) {
             rpcErrorMsg = "[请求参数格式错误](" + rpcErrorMsg + ")";
         }

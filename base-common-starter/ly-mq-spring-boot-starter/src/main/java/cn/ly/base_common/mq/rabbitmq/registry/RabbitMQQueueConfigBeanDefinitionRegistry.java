@@ -2,8 +2,8 @@ package cn.ly.base_common.mq.rabbitmq.registry;
 
 import cn.ly.base_common.mq.rabbitmq.RabbitMQProperties.QueueProperties;
 import cn.ly.base_common.mq.rabbitmq.domain.QueueConfig;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.fastjson.TypeReference;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections4.MapUtils;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 public class RabbitMQQueueConfigBeanDefinitionRegistry implements EnvironmentAware,
         BeanDefinitionRegistryPostProcessor {
 
-    private static final Logger logger = MwLogger.getInstance(RabbitMQQueueConfigBeanDefinitionRegistry.class);
+    private static final Logger logger = LyLogger.getInstance(RabbitMQQueueConfigBeanDefinitionRegistry.class);
 
     private final ScopeMetadataResolver scopeMetadataResolver = new AnnotationScopeMetadataResolver();
 
@@ -62,8 +62,8 @@ public class RabbitMQQueueConfigBeanDefinitionRegistry implements EnvironmentAwa
             logger.info("RabbitMQ初始化, 暂未配置初始化队列...");
             return;
         }
-        String queueJson = MwJsonUtil.toJson(subQueuePropertiesMap);
-        Map<String, QueueProperties> queueJsonMap = MwJsonUtil.fromJson(queueJson,
+        String queueJson = LyJsonUtil.toJson(subQueuePropertiesMap);
+        Map<String, QueueProperties> queueJsonMap = LyJsonUtil.fromJson(queueJson,
                 new TypeReference<Map<String, QueueProperties>>() {
                 });
         queueJsonMap.values().forEach(queueProperties -> {

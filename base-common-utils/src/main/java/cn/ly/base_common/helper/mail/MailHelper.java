@@ -1,10 +1,10 @@
 package cn.ly.base_common.helper.mail;
 
 import cn.ly.base_common.helper.mail.body.InlineMailBody;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.number.MwNumberUtil;
-import cn.ly.base_common.utils.properties.MwPropertiesUtil;
-import cn.ly.base_common.utils.thread.MwThreadPoolExecutorUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.number.LyNumberUtil;
+import cn.ly.base_common.utils.properties.LyPropertiesUtil;
+import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
 import cn.ly.base_common.helper.mail.body.AttachmentMailBody;
 import cn.ly.base_common.helper.mail.body.AttachmentMailBody.AttachmentMailFile;
 import cn.ly.base_common.helper.mail.body.HtmlMailBody;
@@ -29,9 +29,9 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class MailHelper implements InitializingBean {
 
-    private static Logger logger = MwLogger.getInstance(MailHelper.class);
+    private static Logger logger = LyLogger.getInstance(MailHelper.class);
 
-    private ThreadPoolExecutor mailThreadPool = MwThreadPoolExecutorUtil.buildCpuCoreThreadPool("mail",
+    private ThreadPoolExecutor mailThreadPool = LyThreadPoolExecutorUtil.buildCpuCoreThreadPool("mail",
             new LinkedBlockingQueue<>(32), new ThreadPoolExecutor.DiscardPolicy());
 
     private JavaMailSenderImpl mailSender;
@@ -46,13 +46,13 @@ public class MailHelper implements InitializingBean {
     private String bccReceiver;
 
     public MailHelper(Properties properties) {
-        smtpHost = MwPropertiesUtil.getStringProperty(properties, "mail.smtp.host");
-        smtpPort = MwNumberUtil.getIntValue(MwPropertiesUtil.getIntProperty(properties, "mail.smtp.port", 465));
-        senderUserName = MwPropertiesUtil.getStringProperty(properties, "mail.sender.username");
-        senderNickName = MwPropertiesUtil.getStringProperty(properties, "mail.sender.nickname");
-        receiver = MwPropertiesUtil.getStringProperty(properties, "mail.to");
-        ccReceiver = MwPropertiesUtil.getStringProperty(properties, "mail.cc");
-        bccReceiver = MwPropertiesUtil.getStringProperty(properties, "mail.bcc");
+        smtpHost = LyPropertiesUtil.getStringProperty(properties, "mail.smtp.host");
+        smtpPort = LyNumberUtil.getIntValue(LyPropertiesUtil.getIntProperty(properties, "mail.smtp.port", 465));
+        senderUserName = LyPropertiesUtil.getStringProperty(properties, "mail.sender.username");
+        senderNickName = LyPropertiesUtil.getStringProperty(properties, "mail.sender.nickname");
+        receiver = LyPropertiesUtil.getStringProperty(properties, "mail.to");
+        ccReceiver = LyPropertiesUtil.getStringProperty(properties, "mail.cc");
+        bccReceiver = LyPropertiesUtil.getStringProperty(properties, "mail.bcc");
     }
 
     public MailHelper(String smtpHost, int smtpPort, String senderUserName, String senderPassword,

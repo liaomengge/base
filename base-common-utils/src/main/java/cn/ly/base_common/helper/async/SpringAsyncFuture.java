@@ -13,10 +13,10 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @AllArgsConstructor
 public class SpringAsyncFuture {
 
-    private final ThreadPoolTaskExecutor mwThreadPoolTaskExecutor;
+    private final ThreadPoolTaskExecutor lyThreadPoolTaskExecutor;
 
     public <P, V> ListenableFuture<V> asyncExec(P param, BaseFutureCallback<P, V> baseFutureCallback) {
-        ListenableFuture<V> future = mwThreadPoolTaskExecutor.submitListenable(new SingleTask<>(param,
+        ListenableFuture<V> future = lyThreadPoolTaskExecutor.submitListenable(new SingleTask<>(param,
                 baseFutureCallback));
         future.addCallback(new ListenableFutureCallback<V>() {
             @Override

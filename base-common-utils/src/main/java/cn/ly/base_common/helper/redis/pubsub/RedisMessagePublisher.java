@@ -1,10 +1,10 @@
 package cn.ly.base_common.helper.redis.pubsub;
 
 import cn.ly.base_common.helper.mail.MailHelper;
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
-import cn.ly.base_common.utils.error.MwThrowableUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.net.MwNetworkUtil;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
+import cn.ly.base_common.utils.error.LyThrowableUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.net.LyNetworkUtil;
 import org.slf4j.Logger;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -14,7 +14,7 @@ import org.springframework.data.redis.listener.ChannelTopic;
  */
 public class RedisMessagePublisher implements MessagePublisher {
 
-    private static final Logger logger = MwLogger.getInstance(RedisMessagePublisher.class);
+    private static final Logger logger = LyLogger.getInstance(RedisMessagePublisher.class);
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -36,8 +36,8 @@ public class RedisMessagePublisher implements MessagePublisher {
         } catch (Exception e) {
             logger.error("Publish Redis异常 ===> ", e);
             if (mailHelper != null) {
-                mailHelper.sendTextMail(MwNetworkUtil.getHostAddress() + "/" + MwNetworkUtil.getHostName() +
-                        "发布消息异常!", MwJdk8DateUtil.getNowDate2String() + " ===> " + MwThrowableUtil.getStackTrace(e));
+                mailHelper.sendTextMail(LyNetworkUtil.getHostAddress() + "/" + LyNetworkUtil.getHostName() +
+                        "发布消息异常!", LyJdk8DateUtil.getNowDate2String() + " ===> " + LyThrowableUtil.getStackTrace(e));
             }
         }
     }

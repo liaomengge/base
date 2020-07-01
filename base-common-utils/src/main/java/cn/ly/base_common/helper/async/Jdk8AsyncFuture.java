@@ -1,7 +1,7 @@
 package cn.ly.base_common.helper.async;
 
-import cn.ly.base_common.utils.error.MwExceptionUtil;
-import cn.ly.base_common.utils.thread.MwThreadPoolExecutorUtil;
+import cn.ly.base_common.utils.error.LyExceptionUtil;
+import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
 import cn.ly.base_common.helper.async.callback.BaseFutureCallback;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -28,7 +28,7 @@ public class Jdk8AsyncFuture implements InitializingBean {
                 try {
                     return baseFutureCallback.execute(param);
                 } catch (Exception e) {
-                    throw MwExceptionUtil.unchecked(e);
+                    throw LyExceptionUtil.unchecked(e);
                 }
             }, executorService).handleAsync((v, throwable) -> {
                         if (Objects.nonNull(throwable)) {
@@ -45,7 +45,7 @@ public class Jdk8AsyncFuture implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         if (Objects.isNull(executorService)) {
-            executorService = MwThreadPoolExecutorUtil.buildCpuCoreThreadPool("async-exec", 30L,
+            executorService = LyThreadPoolExecutorUtil.buildCpuCoreThreadPool("async-exec", 30L,
                     TimeUnit.SECONDS, new LinkedBlockingQueue<>(32));
         }
     }

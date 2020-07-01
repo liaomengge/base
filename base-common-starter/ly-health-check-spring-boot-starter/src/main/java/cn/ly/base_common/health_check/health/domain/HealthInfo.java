@@ -1,6 +1,6 @@
 package cn.ly.base_common.health_check.health.domain;
 
-import cn.ly.base_common.utils.error.MwThrowableUtil;
+import cn.ly.base_common.utils.error.LyThrowableUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.curator.shaded.com.google.common.collect.ImmutableMap;
@@ -43,7 +43,7 @@ public class HealthInfo {
     }
 
     public HealthInfo withException(Exception e) {
-        return withDetail("Exception", MwThrowableUtil.getStackTrace(e));
+        return withDetail("Exception", LyThrowableUtil.getStackTrace(e));
     }
 
     public enum Status {

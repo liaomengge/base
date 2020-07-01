@@ -1,6 +1,6 @@
 package cn.ly.base_common.quartz.domain;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractBaseJob {
 
-    protected final Logger logger = MwLogger.getInstance(AbstractBaseJob.class);
+    protected final Logger logger = LyLogger.getInstance(AbstractBaseJob.class);
 
     @Getter
     @Setter

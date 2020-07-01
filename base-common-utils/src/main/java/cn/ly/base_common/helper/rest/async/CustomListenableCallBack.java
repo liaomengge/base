@@ -1,8 +1,8 @@
 package cn.ly.base_common.helper.rest.async;
 
 import cn.ly.base_common.helper.rest.data.BaseRequest;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.string.MwStringUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.string.LyStringUtil;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public abstract class CustomListenableCallBack<T> implements ListenableFutureCallback<T> {
 
-    protected static final Logger logger = MwLogger.getInstance(CustomListenableCallBack.class);
+    protected static final Logger logger = LyLogger.getInstance(CustomListenableCallBack.class);
 
     private BaseRequest baseRequest;
 
@@ -35,7 +35,7 @@ public abstract class CustomListenableCallBack<T> implements ListenableFutureCal
 
         String requestParams = "---";
         if (baseRequest != null && baseRequest.getData() != null) {
-            requestParams = MwStringUtil.getValue(baseRequest.getData());
+            requestParams = LyStringUtil.getValue(baseRequest.getData());
         }
         logger.error("请求参数[{}], 异步调用服务失败, 状态码[{}], 异常原因 ===> [{}]", requestParams, statusCode, throwable.getMessage());
     }

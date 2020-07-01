@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.redis.pubsub;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +13,7 @@ import org.springframework.data.redis.connection.MessageListener;
  */
 public abstract class RedisMessageSubscribe implements MessageListener {
 
-    private static final Logger logger = MwLogger.getInstance(RedisMessageSubscribe.class);
+    private static final Logger logger = LyLogger.getInstance(RedisMessageSubscribe.class);
 
     private static final String[] PUB_REG_EXP = {"*", "?", "[", "]", "\\"};
 

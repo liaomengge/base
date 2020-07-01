@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.redis;
 
-import cn.ly.base_common.utils.number.MwNumberUtil;
+import cn.ly.base_common.utils.number.LyNumberUtil;
 import com.google.common.collect.Sets;
 import lombok.Getter;
 import org.redisson.Redisson;
@@ -230,7 +230,7 @@ public class RedissonHelper implements IRedisHelper {
     @Override
     public void ltrim(String key, long start, long end) {
         RList<String> rList = redissonClient.getList(key);
-        rList.trim(MwNumberUtil.getIntValue(start), MwNumberUtil.getIntValue(end));
+        rList.trim(LyNumberUtil.getIntValue(start), LyNumberUtil.getIntValue(end));
     }
 
     @Override

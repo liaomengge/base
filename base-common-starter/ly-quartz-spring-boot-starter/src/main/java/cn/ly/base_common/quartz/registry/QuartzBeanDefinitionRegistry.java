@@ -1,7 +1,7 @@
 package cn.ly.base_common.quartz.registry;
 
 import cn.ly.base_common.quartz.domain.AbstractBaseJob;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -33,7 +33,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 public class QuartzBeanDefinitionRegistry implements EnvironmentAware, ApplicationContextAware,
         BeanDefinitionRegistryPostProcessor {
 
-    private static final Logger logger = MwLogger.getInstance(QuartzBeanDefinitionRegistry.class);
+    private static final Logger logger = LyLogger.getInstance(QuartzBeanDefinitionRegistry.class);
 
     private static final String JOB_PKG = "ly.quartz.basePackage";
 

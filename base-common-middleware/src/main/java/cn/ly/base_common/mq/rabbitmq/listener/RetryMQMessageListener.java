@@ -6,9 +6,9 @@ import cn.ly.base_common.mq.domain.MQMessage;
 import cn.ly.base_common.mq.domain.MessageHeader;
 import cn.ly.base_common.mq.rabbitmq.domain.QueueConfig;
 import cn.ly.base_common.mq.rabbitmq.enums.DeadLetterReasonEnum;
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.trace.MwTraceLogUtil;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.trace.LyTraceLogUtil;
 import com.alibaba.fastjson.JSONException;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ShutdownSignalException;
@@ -37,7 +37,7 @@ public abstract class RetryMQMessageListener<T extends MQMessage> extends BaseMQ
 
     @Override
     public void onMessage(Message message, Channel channel) throws Exception {
-        long startTime = MwJdk8DateUtil.getMilliSecondsTime();
+        long startTime = LyJdk8DateUtil.getMilliSecondsTime();
         long endTime;
         T t = null;
         try {
@@ -47,23 +47,23 @@ public abstract class RetryMQMessageListener<T extends MQMessage> extends BaseMQ
             }
             MessageHeader messageHeader = resolveMessageHeader(message);
             rabbitMQMonitor.monitorTime(MetricsConst.SEND_2_RECEIVE_EXEC_TIME + "." + queueConfig.getExchangeName(),
-                    MwJdk8DateUtil.getMilliSecondsTime() - messageHeader.getSendTime());
+                    LyJdk8DateUtil.getMilliSecondsTime() - messageHeader.getSendTime());
 
-            MwTraceLogUtil.put(messageHeader.getMqTraceId());
-            startTime = MwJdk8DateUtil.getMilliSecondsTime();
+            LyTraceLogUtil.put(messageHeader.getMqTraceId());
+            startTime = LyJdk8DateUtil.getMilliSecondsTime();
             //业务逻辑
             processListener(t);
 
             rabbitMQMonitor.monitorCount(MetricsConst.DEQUEUE_COUNT + "." + queueConfig.getExchangeName());
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (ClassCastException | JSONException e) {
-            logger.error("Receive Message[" + MwJsonUtil.toJson4Log(t) + "] Format Error ===> ", e);
+            logger.error("Receive Message[" + LyJsonUtil.toJson4Log(t) + "] Format Error ===> ", e);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (ShutdownSignalException | ConsumerCancelledException e) {
-            logger.error("Handle Message[" + MwJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
+            logger.error("Handle Message[" + LyJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
         } catch (Exception e) {
             rabbitMQMonitor.monitorCount(MetricsConst.EXEC_EXCEPTION + "." + queueConfig.getExchangeName());
-            logger.error("Handle Message[" + MwJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
+            logger.error("Handle Message[" + LyJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
             try {
                 MessageProperties messageProperties = message.getMessageProperties();
                 Map<String, Object> headerMap = messageProperties.getHeaders();
@@ -86,10 +86,10 @@ public abstract class RetryMQMessageListener<T extends MQMessage> extends BaseMQ
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             }
         } finally {
-            endTime = MwJdk8DateUtil.getMilliSecondsTime();
+            endTime = LyJdk8DateUtil.getMilliSecondsTime();
             rabbitMQMonitor.monitorTime(MetricsConst.RECEIVE_2_HANDLE_EXEC_TIME + "." + queueConfig.getExchangeName(),
                     endTime - startTime);
-            MwTraceLogUtil.clearTrace();
+            LyTraceLogUtil.clearTrace();
         }
     }
 }

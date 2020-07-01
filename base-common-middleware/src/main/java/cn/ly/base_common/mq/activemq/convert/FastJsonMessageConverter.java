@@ -1,7 +1,7 @@
 package cn.ly.base_common.mq.activemq.convert;
 
 import cn.ly.base_common.mq.consts.MQConst;
-import cn.ly.base_common.utils.json.MwJsonUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
 import org.springframework.jms.support.converter.MessageConversionException;
 import org.springframework.jms.support.converter.MessageConverter;
 
@@ -21,13 +21,13 @@ public class FastJsonMessageConverter implements MessageConverter {
         if (object instanceof Message) {
             return (Message) object;
         }
-        return session.createTextMessage(MwJsonUtil.toJson(object));
+        return session.createTextMessage(LyJsonUtil.toJson(object));
     }
 
     @Override
     public Object fromMessage(Message message) throws JMSException, MessageConversionException {
         if (message instanceof TextMessage) {
-            return MwJsonUtil.fromJson(((TextMessage) message).getText());
+            return LyJsonUtil.fromJson(((TextMessage) message).getText());
         }
         if (message instanceof BytesMessage) {
             BytesMessage bytesMessage = (BytesMessage) message;
@@ -35,7 +35,7 @@ public class FastJsonMessageConverter implements MessageConverter {
             bytesMessage.readBytes(bytes);
             try {
                 String body = new String(bytes, MQConst.DEFAULT_CHARSET);
-                return MwJsonUtil.fromJson(body);
+                return LyJsonUtil.fromJson(body);
             } catch (UnsupportedEncodingException e) {
                 throw new MessageConversionException("Cannot convert bytes to String", e);
             }

@@ -1,10 +1,10 @@
 package cn.ly.base_common.quartz;
 
 
-import cn.ly.base_common.helper.concurrent.MwThreadPoolTaskWrappedExecutor;
+import cn.ly.base_common.helper.concurrent.LyThreadPoolTaskWrappedExecutor;
 import cn.ly.base_common.quartz.listener.QuartzListener;
 import cn.ly.base_common.quartz.registry.QuartzBeanRegistryConfiguration;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronTrigger;
@@ -40,7 +40,7 @@ import static cn.ly.base_common.quartz.registry.QuartzBeanDefinitionRegistry.get
 @Import(QuartzBeanRegistryConfiguration.class)
 public class QuartzAutoConfiguration {
 
-    private static final Logger logger = MwLogger.getInstance(QuartzAutoConfiguration.class);
+    private static final Logger logger = LyLogger.getInstance(QuartzAutoConfiguration.class);
 
     private final CopyOnWriteArrayList triggerKeyList = Lists.newCopyOnWriteArrayList();
 
@@ -69,9 +69,9 @@ public class QuartzAutoConfiguration {
         schedulerFactoryBean.setTriggers(cronTriggerList.stream().toArray(CronTrigger[]::new));
         String taskExecutorRef = this.quartzProperties.getTaskExecutorRef();
         if (StringUtils.isNotBlank(taskExecutorRef)) {
-            MwThreadPoolTaskWrappedExecutor taskWrappedExecutor =
+            LyThreadPoolTaskWrappedExecutor taskWrappedExecutor =
                     getApplicationContext().getBean(this.quartzProperties.getTaskExecutorRef(),
-                            MwThreadPoolTaskWrappedExecutor.class);
+                            LyThreadPoolTaskWrappedExecutor.class);
             if (Objects.nonNull(taskWrappedExecutor)) {
                 schedulerFactoryBean.setTaskExecutor(taskWrappedExecutor);
             }

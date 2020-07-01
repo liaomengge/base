@@ -1,8 +1,8 @@
 package cn.ly.base_common.helper.retrofit;
 
-import cn.ly.base_common.utils.error.MwExceptionUtil;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.error.LyExceptionUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.support.exception.CommunicationException;
 import com.alibaba.csp.sentinel.slots.block.AbstractRule;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class RetrofitHelper {
 
-    private static final Logger logger = MwLogger.getInstance(RetrofitHelper.class);
+    private static final Logger logger = LyLogger.getInstance(RetrofitHelper.class);
 
     private final RetryTemplate retryTemplate;
 
@@ -88,7 +88,7 @@ public class RetrofitHelper {
     }
 
     private <T> T extract2(Response<ResponseBody> response, Class<T> clazz) throws IOException {
-        return MwJsonUtil.fromJson(extract2(response), clazz);
+        return LyJsonUtil.fromJson(extract2(response), clazz);
     }
 
     /********************************华丽的分割线****************************/
@@ -98,8 +98,8 @@ public class RetrofitHelper {
     }
 
     private void handleThrowable(Throwable t) {
-        if (t instanceof BlockException || MwExceptionUtil.unwrap(t) instanceof BlockException) {
-            BlockException e = (BlockException) MwExceptionUtil.unwrap(t);
+        if (t instanceof BlockException || LyExceptionUtil.unwrap(t) instanceof BlockException) {
+            BlockException e = (BlockException) LyExceptionUtil.unwrap(t);
             Optional.ofNullable(e).map(BlockException::getRule).map(AbstractRule::getResource).ifPresent(val -> logger.warn("Retrofit Block处理异常 ===> ", t));
         } else {
             logger.warn("处理异常 ===> ", t);

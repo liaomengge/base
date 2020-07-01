@@ -2,7 +2,7 @@
 //
 //import cn.ly.base_common.dayu.domain.DayuBlockedDomain;
 //import cn.ly.base_common.dayu.sentinel.SentinelProperties;
-//import cn.ly.base_common.utils.web.MwWebUtil;
+//import cn.ly.base_common.utils.web.LyWebUtil;
 //import com.alibaba.csp.sentinel.adapter.servlet.callback.WebCallbackManager;
 //import org.apache.commons.collections4.CollectionUtils;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@
 //
 //    @PostConstruct
 //    private void init() {
-//        WebCallbackManager.setUrlBlockHandler((request, response, ex) -> MwWebUtil.renderJson(response,
+//        WebCallbackManager.setUrlBlockHandler((request, response, ex) -> LyWebUtil.renderJson(response,
 //                DayuBlockedDomain.create()));
 //    }
 //}

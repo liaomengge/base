@@ -3,8 +3,8 @@ package cn.ly.base_common.mq.rabbitmq;
 import cn.ly.base_common.mq.consts.MQConst;
 import cn.ly.base_common.mq.domain.MQMessage;
 import cn.ly.base_common.mq.domain.MessageHeader;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.fastjson.TypeReference;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public abstract class AbstractMQMessageListener<T extends MQMessage> implements ChannelAwareMessageListener {
 
-    protected static final Logger logger = MwLogger.getInstance(AbstractMQMessageListener.class);
+    protected static final Logger logger = LyLogger.getInstance(AbstractMQMessageListener.class);
 
     protected T parseMessage(Message message) {
         String receiveMsg = new String(message.getBody());
@@ -32,13 +32,13 @@ public abstract class AbstractMQMessageListener<T extends MQMessage> implements 
 
         Class<T> clazz = this.getEntityClass();
         if (Objects.nonNull(clazz)) {
-            return MwJsonUtil.fromJson(receiveMsg, clazz);
+            return LyJsonUtil.fromJson(receiveMsg, clazz);
         }
         TypeReference<T> typeReference = this.getTypeReference();
         if (Objects.nonNull(typeReference)) {
-            return MwJsonUtil.fromJson(receiveMsg, typeReference);
+            return LyJsonUtil.fromJson(receiveMsg, typeReference);
         }
-        return (T) MwJsonUtil.fromJson(receiveMsg);
+        return (T) LyJsonUtil.fromJson(receiveMsg);
     }
 
     protected MessageHeader resolveMessageHeader(Message message) {

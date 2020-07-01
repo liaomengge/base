@@ -1,7 +1,7 @@
 package cn.ly.base_common.dayu.sentinel.filter;
 
 import cn.ly.base_common.dayu.consts.DayuConst;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.SphU;
@@ -35,7 +35,7 @@ import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
  */
 public class SentinelFilter implements Filter, EnvironmentAware {
 
-    private static final Logger logger = MwLogger.getInstance(SentinelFilter.class);
+    private static final Logger logger = LyLogger.getInstance(SentinelFilter.class);
 
     private static final String FRAMEWORK_SENTINEL_ENABLED = "ly.framework.sentinel.enabled";
 

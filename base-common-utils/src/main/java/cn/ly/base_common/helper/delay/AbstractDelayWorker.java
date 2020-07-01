@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.delay;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.helper.redis.JedisClusterHelper;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractDelayWorker {
 
-    protected static final Logger logger = MwLogger.getInstance(AbstractDelayWorker.class);
+    protected static final Logger logger = LyLogger.getInstance(AbstractDelayWorker.class);
 
     protected final String BASE_DELAY_PREFIX = "delay:";
 

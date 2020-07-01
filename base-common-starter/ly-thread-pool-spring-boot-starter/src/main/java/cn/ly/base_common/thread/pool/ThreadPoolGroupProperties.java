@@ -1,6 +1,6 @@
 package cn.ly.base_common.thread.pool;
 
-import cn.ly.base_common.utils.thread.MwRuntimeUtil;
+import cn.ly.base_common.utils.thread.LyRuntimeUtil;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +26,7 @@ public class ThreadPoolGroupProperties {
         private boolean ttlEnabled = false;
         private String threadName;
         private String beanName;
-        private int corePoolSize = MwRuntimeUtil.getCpuNum();
+        private int corePoolSize = LyRuntimeUtil.getCpuNum();
         private int maxPoolSize = corePoolSize * 2;
         private int keepAliveSeconds = 30;
         private int queueCapacity = 64;

@@ -1,8 +1,8 @@
 package cn.ly.service.base_framework.common.filter;
 
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogData;
-import cn.ly.base_common.utils.number.MwMoreNumberUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogData;
+import cn.ly.base_common.utils.number.LyMoreNumberUtil;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.MetricsConst;
 import cn.ly.service.base_framework.common.consts.ServiceConst;
@@ -34,7 +34,7 @@ public class RateLimitFilter extends AbstractFilter {
         String methodName = invocation.getMethodName();
         Map<String, Object> rateConfigMap;
         try {
-            rateConfigMap = MwJsonUtil.fromJson(rateLimitConfig, Map.class);
+            rateConfigMap = LyJsonUtil.fromJson(rateLimitConfig, Map.class);
         } catch (Exception e) {
             logger.warn("限流配置[{}]格式错误,不合法", rateLimitConfig);
             return invoker.invoke(invocation);
@@ -43,7 +43,7 @@ public class RateLimitFilter extends AbstractFilter {
         if (Objects.isNull(rateConfigMap) || !rateConfigMap.containsKey(methodName)) {
             return invoker.invoke(invocation);
         }
-        double qps = MwMoreNumberUtil.toDouble(MapUtils.getString(rateConfigMap, methodName), -1);
+        double qps = LyMoreNumberUtil.toDouble(MapUtils.getString(rateConfigMap, methodName), -1);
         if (qps <= 0) {
             logger.warn("方法[{}],限流配置[{}],QPS配置不合法", methodName, rateLimitConfig);
             return invoker.invoke(invocation);
@@ -58,7 +58,7 @@ public class RateLimitFilter extends AbstractFilter {
             return invoker.invoke(invocation);
         }
 
-        MwLogData logData = new MwLogData();
+        LyLogData logData = new LyLogData();
         logData.setInvocation(invocation.toString());
 
         RpcContext rpcContext = RpcContext.getContext();

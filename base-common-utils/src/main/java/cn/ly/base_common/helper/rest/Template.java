@@ -1,9 +1,9 @@
 package cn.ly.base_common.helper.rest;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.url.MwMoreUrlUtil;
 import cn.ly.base_common.helper.rest.consts.RestMetricsConst;
 import cn.ly.base_common.helper.rest.data.BaseRequest;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.url.LyMoreUrlUtil;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.timgroup.statsd.StatsDClient;
@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public interface Template {
 
-    Logger logger = MwLogger.getInstance(Template.class);
+    Logger logger = LyLogger.getInstance(Template.class);
 
     @NoArgsConstructor
     abstract class Sync implements Template {
@@ -44,7 +44,7 @@ public interface Template {
 
         protected boolean isIgnoreLogMethod(String url, String ignoreLogMethodName) {
             if (StringUtils.isNotBlank(ignoreLogMethodName)) {
-                String methodName = MwMoreUrlUtil.getUrlSuffix(url);
+                String methodName = LyMoreUrlUtil.getUrlSuffix(url);
                 Iterable<String> iterable =
                         Splitter.on(",").omitEmptyStrings().trimResults().omitEmptyStrings().split(ignoreLogMethodName);
                 return Iterables.contains(iterable, methodName);
@@ -54,7 +54,7 @@ public interface Template {
 
         protected String getMetricsPrefixName(BaseRequest<?> baseRequest) {
             String url = baseRequest.getUrl();
-            String urlMethod = MwMoreUrlUtil.getUrlSuffix(url);
+            String urlMethod = LyMoreUrlUtil.getUrlSuffix(url);
             return projName + "." + urlMethod;
         }
 

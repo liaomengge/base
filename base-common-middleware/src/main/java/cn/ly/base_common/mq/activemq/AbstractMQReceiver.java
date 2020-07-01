@@ -1,8 +1,8 @@
 package cn.ly.base_common.mq.activemq;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.shutdown.MwShutdownUtil;
-import cn.ly.base_common.utils.thread.MwThreadPoolExecutorUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.shutdown.LyShutdownUtil;
+import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -18,14 +18,14 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public abstract class AbstractMQReceiver implements DisposableBean {
 
-    protected static final Logger logger = MwLogger.getInstance(AbstractMQReceiver.class);
+    protected static final Logger logger = LyLogger.getInstance(AbstractMQReceiver.class);
 
     @Setter
     protected boolean asyncExec = false;//非异步执行
 
     @Getter
     @Setter
-    protected ThreadPoolExecutor bizTaskExecutor = MwThreadPoolExecutorUtil.buildSimpleThreadPool("async-activemq",
+    protected ThreadPoolExecutor bizTaskExecutor = LyThreadPoolExecutorUtil.buildSimpleThreadPool("async-activemq",
             new LinkedBlockingQueue<>(16));
 
     public abstract void start();
@@ -38,7 +38,7 @@ public abstract class AbstractMQReceiver implements DisposableBean {
      * @param simpleMessageListenerContainers
      */
     protected void registerShutdownHook(SimpleMessageListenerContainer... simpleMessageListenerContainers) {
-        MwShutdownUtil.registerShutdownHook(() -> {
+        LyShutdownUtil.registerShutdownHook(() -> {
             try {
                 logger.info("ActiveMQ Listener Exist...");
             } finally {

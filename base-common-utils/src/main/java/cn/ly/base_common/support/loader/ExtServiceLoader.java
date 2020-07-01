@@ -1,6 +1,6 @@
 package cn.ly.base_common.support.loader;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.support.extension.ExtensionLoader;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class ExtServiceLoader {
 
-    private static final Logger logger = MwLogger.getInstance(ExtensionLoader.class);
+    private static final Logger logger = LyLogger.getInstance(ExtensionLoader.class);
 
     private static final String PREFIX_DEFAULT = "META-INF/";
     private static final String PREFIX_SERVICES = PREFIX_DEFAULT + "services/";

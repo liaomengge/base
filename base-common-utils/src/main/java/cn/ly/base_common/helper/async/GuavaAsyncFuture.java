@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.async;
 
-import cn.ly.base_common.utils.thread.MwThreadPoolExecutorUtil;
+import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
 import cn.ly.base_common.helper.async.callback.BaseFutureCallback;
 import cn.ly.base_common.helper.async.task.SingleTask;
 import com.google.common.util.concurrent.*;
@@ -46,7 +46,7 @@ public class GuavaAsyncFuture implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         if (Objects.isNull(executorService)) {
-            ExecutorService asyncExecutorService = MwThreadPoolExecutorUtil.buildCpuCoreThreadPool("async-exec", 30L,
+            ExecutorService asyncExecutorService = LyThreadPoolExecutorUtil.buildCpuCoreThreadPool("async-exec", 30L,
                     TimeUnit.SECONDS, new LinkedBlockingQueue<>(32));
             executorService = MoreExecutors.listeningDecorator(asyncExecutorService);
         }

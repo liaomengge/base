@@ -1,12 +1,12 @@
 package cn.ly.service.base_framework.common.exception;
 
-import cn.ly.service.base_framework.base.DataResult;
-import cn.ly.service.base_framework.base.code.SystemResultCode;
 import cn.ly.base_common.support.exception.AbstractAppException;
 import cn.ly.base_common.support.exception.AbstractAppRuntimeException;
 import cn.ly.base_common.support.exception.BusinessException;
-import cn.ly.base_common.utils.error.MwThrowableUtil;
-import cn.ly.base_common.utils.number.MwMoreNumberUtil;
+import cn.ly.base_common.utils.error.LyThrowableUtil;
+import cn.ly.base_common.utils.number.LyMoreNumberUtil;
+import cn.ly.service.base_framework.base.DataResult;
+import cn.ly.service.base_framework.base.code.SystemResultCode;
 import org.redisson.client.RedisException;
 import org.springframework.amqp.AmqpException;
 import org.springframework.dao.DataAccessException;
@@ -24,9 +24,9 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 
-import static cn.ly.base_common.utils.log.MwAlarmLogUtil.MiddlewareEnum.*;
-import static cn.ly.base_common.utils.log.MwAlarmLogUtil.ServerProjEnum.BASE_PREFIX_BIZ;
-import static cn.ly.base_common.utils.log.MwAlarmLogUtil.ServerProjEnum.BASE_PREFIX_UNKNOWN;
+import static cn.ly.base_common.utils.log.LyAlarmLogUtil.MiddlewareEnum.*;
+import static cn.ly.base_common.utils.log.LyAlarmLogUtil.ServerProjEnum.BASE_PREFIX_BIZ;
+import static cn.ly.base_common.utils.log.LyAlarmLogUtil.ServerProjEnum.BASE_PREFIX_UNKNOWN;
 
 /**
  * Created by liaomengge on 2018/10/23.
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             dataResult.setSysErrDesc(((AbstractAppRuntimeException) e).getErrMsg());
         }
 
-        dataResult.setSysException(MwThrowableUtil.getStackTrace(e));
+        dataResult.setSysException(LyThrowableUtil.getStackTrace(e));
         return dataResult;
     }
 
@@ -55,10 +55,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         if (Objects.isNull(ex) && Objects.isNull(status)) {
             return super.handleExceptionInternal(ex, DataResult.fail(SystemResultCode.UNKNOWN_ERROR), headers, status, request);
         }
-        String statusCode = Optional.ofNullable(status).map(val -> MwMoreNumberUtil.toString(val.value())).orElse("");
+        String statusCode = Optional.ofNullable(status).map(val -> LyMoreNumberUtil.toString(val.value())).orElse("");
         String statusDesc = Optional.ofNullable(status).map(val -> val.getReasonPhrase()).orElse("");
         String sysErrDesc = "HttpStatus[" + statusCode + "], Error Message[" + statusDesc + "]";
-        String sysException = Optional.ofNullable(ex).map(val -> MwThrowableUtil.getStackTrace(val)).orElse("");
+        String sysException = Optional.ofNullable(ex).map(val -> LyThrowableUtil.getStackTrace(val)).orElse("");
         DataResult dataResult = DataResult.fail(SystemResultCode.UNKNOWN_ERROR, sysErrDesc, sysException);
         return super.handleExceptionInternal(ex, dataResult, headers, status, request);
     }

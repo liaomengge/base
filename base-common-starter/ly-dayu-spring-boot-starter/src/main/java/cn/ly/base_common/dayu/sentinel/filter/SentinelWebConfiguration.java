@@ -1,7 +1,7 @@
 package cn.ly.base_common.dayu.sentinel.filter;
 
 import cn.ly.base_common.dayu.sentinel.SentinelProperties;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.ImmutableMap;
 import com.timgroup.statsd.StatsDClient;
 import org.apache.commons.collections4.CollectionUtils;
@@ -22,7 +22,7 @@ import java.util.List;
 @ConditionalOnWebApplication
 public class SentinelWebConfiguration {
 
-    private static final Logger logger = MwLogger.getInstance(SentinelWebConfiguration.class);
+    private static final Logger logger = LyLogger.getInstance(SentinelWebConfiguration.class);
 
     @Autowired
     private SentinelProperties sentinelProperties;

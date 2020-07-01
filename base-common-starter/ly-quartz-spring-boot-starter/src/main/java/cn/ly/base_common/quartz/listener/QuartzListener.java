@@ -2,9 +2,9 @@ package cn.ly.base_common.quartz.listener;
 
 import cn.ly.base_common.quartz.QuartzProperties;
 import cn.ly.base_common.quartz.listener.util.TriggerUtil;
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.fastjson.TypeReference;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  */
 public class QuartzListener implements EnvironmentAware, ApplicationListener<EnvironmentChangeEvent>, Ordered {
 
-    private static final Logger logger = MwLogger.getInstance(QuartzListener.class);
+    private static final Logger logger = LyLogger.getInstance(QuartzListener.class);
 
     private Environment environment;
 
@@ -76,7 +76,7 @@ public class QuartzListener implements EnvironmentAware, ApplicationListener<Env
                             if (!StringUtils.equals(oldCronExpression, newCronExpression)) {
                                 logger.info("Trigger[{}], old core expression[{}], new core expression[{}], change " +
                                                 "time ===> {}",
-                                        name, oldCronExpression, newCronExpression, MwJdk8DateUtil.getNowDate2String());
+                                        name, oldCronExpression, newCronExpression, LyJdk8DateUtil.getNowDate2String());
                                 CronTriggerImpl newTrigger = TriggerUtil.clone(trigger);
                                 newTrigger.setCronExpression(newCronExpression);
                                 scheduler.rescheduleJob(triggerKey, newTrigger);
@@ -112,8 +112,8 @@ public class QuartzListener implements EnvironmentAware, ApplicationListener<Env
                 .filter(val -> val.getValue() instanceof LinkedHashMap && StringUtils.isNumeric(val.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldVal, newVal) -> newVal,
                         LinkedHashMap::new));
-        String jobJson = MwJsonUtil.toJson(subJobMap);
-        Map<String, QuartzProperties.JobInfo> jobJsonMap = MwJsonUtil.fromJson(jobJson,
+        String jobJson = LyJsonUtil.toJson(subJobMap);
+        Map<String, QuartzProperties.JobInfo> jobJsonMap = LyJsonUtil.fromJson(jobJson,
                 new TypeReference<Map<String, QuartzProperties.JobInfo>>() {
                 });
         Optional.ofNullable(jobJsonMap).ifPresent(val -> {

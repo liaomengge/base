@@ -1,6 +1,6 @@
 package cn.ly.service.base_framework.common.filter;
 
-import cn.ly.base_common.utils.log4j2.MwLogData;
+import cn.ly.base_common.utils.log4j2.LyLogData;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.MetricsConst;
 import cn.ly.service.base_framework.common.consts.ServiceConst.ResponseStatus.ErrorCodeEnum;
@@ -29,7 +29,7 @@ public class FailFastFilter extends AbstractFilter {
         if (!Iterables.contains(iterable, methodName)) {
             return invoker.invoke(invocation);
         }
-        MwLogData logData = new MwLogData();
+        LyLogData logData = new LyLogData();
         logData.setInvocation(invocation.toString());
 
         RpcContext rpcContext = RpcContext.getContext();

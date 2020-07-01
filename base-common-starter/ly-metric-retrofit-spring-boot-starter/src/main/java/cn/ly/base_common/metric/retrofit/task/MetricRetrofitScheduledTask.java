@@ -5,8 +5,8 @@ package cn.ly.base_common.metric.retrofit.task;
  */
 
 import cn.ly.base_common.metric.retrofit.MetricRetrofitProperties;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.thread.MwThreadUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.thread.LyThreadUtil;
 import com.timgroup.statsd.StatsDClient;
 import lombok.AllArgsConstructor;
 import okhttp3.ConnectionPool;
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MetricRetrofitScheduledTask {
 
-    private static final Logger logger = MwLogger.getInstance(MetricRetrofitScheduledTask.class);
+    private static final Logger logger = LyLogger.getInstance(MetricRetrofitScheduledTask.class);
 
     private static final String METRIC_RETROFIT_PREFIX = "metric-retrofit.";
 
@@ -46,7 +46,7 @@ public class MetricRetrofitScheduledTask {
         public void run() {
             long initialDelay = metricRetrofitProperties.getInitialDelay() * 1000L;
             if (initialDelay > 0) {
-                MwThreadUtil.sleep(initialDelay);
+                LyThreadUtil.sleep(initialDelay);
             }
             while (!this.isInterrupted()) {
                 try {

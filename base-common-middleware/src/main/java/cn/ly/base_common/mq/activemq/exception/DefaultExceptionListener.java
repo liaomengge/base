@@ -1,6 +1,6 @@
 package cn.ly.base_common.mq.activemq.exception;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import org.slf4j.Logger;
 
 import javax.jms.ExceptionListener;
@@ -11,7 +11,7 @@ import javax.jms.JMSException;
  */
 public class DefaultExceptionListener implements ExceptionListener {
 
-    private static final Logger logger = MwLogger.getInstance(DefaultExceptionListener.class);
+    private static final Logger logger = LyLogger.getInstance(DefaultExceptionListener.class);
 
     @Override
     public void onException(JMSException e) {

@@ -1,10 +1,10 @@
 package cn.ly.service.base_framework.mongo.dao.impl;
 
-import cn.ly.base_common.utils.generic.MwGenericUtil;
+import cn.ly.base_common.utils.generic.LyGenericUtil;
 import cn.ly.service.base_framework.mongo.dao.IBaseMongoDao;
 import cn.ly.service.base_framework.mongo.domain.BaseMongoDoc;
 import cn.ly.service.base_framework.mongo.page.MongoPagination;
-import cn.ly.service.base_framework.mongo.util.MwMongoUtil;
+import cn.ly.service.base_framework.mongo.util.LyMongoUtil;
 import com.mongodb.WriteResult;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,13 +84,13 @@ public abstract class BaseMongoDao<T extends BaseMongoDoc> implements IBaseMongo
 
     @Override
     public WriteResult updateFirst(Query query, @NonNull T entity, String... excludePropertyName) {
-        Update update = MwMongoUtil.convertObjectToParams(entity, excludePropertyName);
+        Update update = LyMongoUtil.convertObjectToParams(entity, excludePropertyName);
         return mongoTemplate.updateFirst(query, update, getEntityClass());
     }
 
     @Override
     public WriteResult updateFirst(Query query, @NonNull Map<String, Object> map, String... excludePropertyName) {
-        Update update = MwMongoUtil.convertMapToParams(map, excludePropertyName);
+        Update update = LyMongoUtil.convertMapToParams(map, excludePropertyName);
         return mongoTemplate.updateFirst(query, update, getEntityClass());
     }
 
@@ -101,13 +101,13 @@ public abstract class BaseMongoDao<T extends BaseMongoDoc> implements IBaseMongo
 
     @Override
     public WriteResult updateMulti(Query query, @NonNull T entity, String... excludePropertyName) {
-        Update update = MwMongoUtil.convertObjectToParams(entity, excludePropertyName);
+        Update update = LyMongoUtil.convertObjectToParams(entity, excludePropertyName);
         return mongoTemplate.updateMulti(query, update, getEntityClass());
     }
 
     @Override
     public WriteResult updateMulti(Query query, @NonNull Map<String, Object> map, String... excludePropertyName) {
-        Update update = MwMongoUtil.convertMapToParams(map, excludePropertyName);
+        Update update = LyMongoUtil.convertMapToParams(map, excludePropertyName);
         return mongoTemplate.updateMulti(query, update, getEntityClass());
     }
 
@@ -127,6 +127,6 @@ public abstract class BaseMongoDao<T extends BaseMongoDoc> implements IBaseMongo
     }
 
     private Class<T> getEntityClass() {
-        return MwGenericUtil.getGenericClassType(getClass());
+        return LyGenericUtil.getGenericClassType(getClass());
     }
 }

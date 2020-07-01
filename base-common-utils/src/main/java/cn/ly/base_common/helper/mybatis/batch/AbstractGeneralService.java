@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.mybatis.batch;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.helper.mybatis.extension.MapResultHandler;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.session.ExecutorType;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public abstract class AbstractGeneralService {
 
-    protected final Logger logger = MwLogger.getInstance(AbstractGeneralService.class);
+    protected final Logger logger = LyLogger.getInstance(AbstractGeneralService.class);
 
     protected final int segmentNumber = 500;
 

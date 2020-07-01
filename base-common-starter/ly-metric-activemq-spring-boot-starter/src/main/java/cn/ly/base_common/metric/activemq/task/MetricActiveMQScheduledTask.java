@@ -7,8 +7,8 @@ package cn.ly.base_common.metric.activemq.task;
 import cn.ly.base_common.metric.activemq.MetricActiveMQProperties;
 import cn.ly.base_common.mq.activemq.pool.MonitorPooledConnectionFactory;
 import cn.ly.base_common.mq.activemq.pool.MonitorPooledConnectionFactory.PoolMonitor;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.thread.MwThreadUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.thread.LyThreadUtil;
 import com.timgroup.statsd.StatsDClient;
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MetricActiveMQScheduledTask {
 
-    private static final Logger logger = MwLogger.getInstance(MetricActiveMQScheduledTask.class);
+    private static final Logger logger = LyLogger.getInstance(MetricActiveMQScheduledTask.class);
 
     private static final String METRIC_REDIS_PREFIX = "metric-activemq.";
 
@@ -53,7 +53,7 @@ public class MetricActiveMQScheduledTask {
         public void run() {
             long initialDelay = metricActiveMQProperties.getInitialDelay() * 1000L;
             if (initialDelay > 0) {
-                MwThreadUtil.sleep(initialDelay);
+                LyThreadUtil.sleep(initialDelay);
             }
             while (!this.isInterrupted()) {
                 try {
@@ -88,7 +88,7 @@ public class MetricActiveMQScheduledTask {
         sBuilder.append(prefix + "maxTotal => [" + poolMonitor.getMaxTotal() + "],");
         sBuilder.append(prefix + "numActive => [" + poolMonitor.getNumActive() + "],");
         sBuilder.append(prefix + "numIdle => [" + poolMonitor.getNumIdle() + "],");
-        sBuilder.append(prefix + "numWaiters => [" + poolMonitor.getNumWaiters() + "],");
+        sBuilder.append(prefix + "numWaiters => [" + poolMonitor.getMaxWaitMillis() + "],");
         sBuilder.append(prefix + "maxWaitMillis => [" + poolMonitor.getMaxWaitMillis() + "]");
         logger.info(sBuilder.toString());
     }

@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.lock.distributed;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import org.slf4j.Logger;
 
 import java.util.concurrent.TimeUnit;
@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  */
 public interface DistributedLocker {
 
-    Logger logger = MwLogger.getInstance(DistributedLocker.class);
+    Logger logger = LyLogger.getInstance(DistributedLocker.class);
 
     String REDIS_LOCKER_PREFIX = "lock:";
     String ZK_LOCKER_PREFIX = "/curator";

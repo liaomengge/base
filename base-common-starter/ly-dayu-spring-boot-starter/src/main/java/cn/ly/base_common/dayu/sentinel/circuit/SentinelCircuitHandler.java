@@ -1,9 +1,9 @@
 package cn.ly.base_common.dayu.sentinel.circuit;
 
 import cn.ly.base_common.dayu.consts.DayuConst;
-import cn.ly.base_common.utils.error.MwExceptionUtil;
-import cn.ly.base_common.utils.error.MwThrowableUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.error.LyExceptionUtil;
+import cn.ly.base_common.utils.error.LyThrowableUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.SphU;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SentinelCircuitHandler {
 
-    private static final Logger logger = MwLogger.getInstance(SentinelCircuitHandler.class);
+    private static final Logger logger = LyLogger.getInstance(SentinelCircuitHandler.class);
 
     private StatsDClient statsDClient;
 
@@ -40,7 +40,7 @@ public class SentinelCircuitHandler {
             result = handleBlockException(resource, circuitBreaker, e);
         } catch (Throwable t) {
             logger.warn("Resource[{}], request sentinel circuit handle failed ==> {}", resource,
-                    MwThrowableUtil.getStackTrace(t));
+                    LyThrowableUtil.getStackTrace(t));
             Tracer.trace(t);
             throw t;
         } finally {
@@ -50,7 +50,7 @@ public class SentinelCircuitHandler {
     }
 
     private <R> R handleBlockException(String resource, SentinelCircuitBreaker<R> circuitBreaker, BlockException e) {
-        if (e instanceof DegradeException || MwExceptionUtil.unwrap(e) instanceof DegradeException) {
+        if (e instanceof DegradeException || LyExceptionUtil.unwrap(e) instanceof DegradeException) {
             Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(DayuConst.METRIC_SENTINEL_FALLBACK_PREFIX + resource));
             return circuitBreaker.fallback();
         }

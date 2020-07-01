@@ -1,8 +1,8 @@
 package cn.ly.base_common.metric.druid.task;
 
 import cn.ly.base_common.metric.druid.MetricDruidProperties;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.thread.MwThreadUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.thread.LyThreadUtil;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceStatValue;
 import com.alibaba.druid.stat.DruidDataSourceStatManager;
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MetricDruidScheduledTask {
 
-    private static final Logger logger = MwLogger.getInstance(MetricDruidScheduledTask.class);
+    private static final Logger logger = LyLogger.getInstance(MetricDruidScheduledTask.class);
 
     private static final String METRIC_DRUID_PREFIX = "metric-druid.";
 
@@ -49,7 +49,7 @@ public class MetricDruidScheduledTask {
         public void run() {
             long initialDelay = metricDruidProperties.getInitialDelay() * 1000L;
             if (initialDelay > 0) {
-                MwThreadUtil.sleep(initialDelay);
+                LyThreadUtil.sleep(initialDelay);
             }
             while (!this.isInterrupted()) {
                 try {

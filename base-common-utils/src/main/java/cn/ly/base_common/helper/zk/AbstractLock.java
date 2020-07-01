@@ -1,9 +1,9 @@
 package cn.ly.base_common.helper.zk;
 
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.net.MwNetworkUtil;
-import cn.ly.base_common.utils.thread.MwThreadFactoryBuilderUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.net.LyNetworkUtil;
+import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import org.I0Itec.zkclient.ZkClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class AbstractLock {
 
-    protected final Logger logger = MwLogger.getInstance(AbstractLock.class);
+    protected final Logger logger = LyLogger.getInstance(AbstractLock.class);
 
     private int lockNumber = 1; //允许获取的锁数量(默认为1,即最小节点=自身时, 认为获得锁)
     private ZkClient zk = null;
@@ -252,14 +252,14 @@ public abstract class AbstractLock {
      * 定时向zk发送心跳
      */
     private void heartBeat() {
-        ScheduledExecutorService service = new ScheduledThreadPoolExecutor(1, MwThreadFactoryBuilderUtil.build("heart" +
+        ScheduledExecutorService service = new ScheduledThreadPoolExecutor(1, LyThreadFactoryBuilderUtil.build("heart" +
                 "-zk"));
         service.scheduleAtFixedRate(() -> {
             HeartBeat heartBeat = new HeartBeat();
-            heartBeat.setHostIp(MwNetworkUtil.getHostAddress());
-            heartBeat.setHostName(MwNetworkUtil.getHostName());
+            heartBeat.setHostIp(LyNetworkUtil.getHostAddress());
+            heartBeat.setHostName(LyNetworkUtil.getHostName());
             heartBeat.setLastTime(new Date());
-            zk.writeData(selfNodeFullName, MwJsonUtil.toJson(heartBeat));
+            zk.writeData(selfNodeFullName, LyJsonUtil.toJson(heartBeat));
         }, 0, 15, TimeUnit.SECONDS);
     }
 }

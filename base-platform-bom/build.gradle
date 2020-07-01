@@ -36,7 +36,7 @@ wrapper {
 }
 
 def artifactId = "base-platform-bom"
-version = '0.0.6-SNAPSHOT'
+version = '0.0.5-SNAPSHOT'
 
 def versions = [
         alibaba        : '1.5.1.RELEASE',

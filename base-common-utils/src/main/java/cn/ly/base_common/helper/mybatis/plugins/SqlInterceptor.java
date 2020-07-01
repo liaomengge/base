@@ -1,11 +1,11 @@
 package cn.ly.base_common.helper.mybatis.plugins;
 
-import cn.ly.base_common.utils.date.MwDateUtil;
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.number.MwMoreNumberUtil;
-import cn.ly.base_common.utils.properties.MwPropertiesUtil;
-import cn.ly.base_common.utils.string.MwStringUtil;
+import cn.ly.base_common.utils.date.LyDateUtil;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.number.LyMoreNumberUtil;
+import cn.ly.base_common.utils.properties.LyPropertiesUtil;
+import cn.ly.base_common.utils.string.LyStringUtil;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.cache.CacheKey;
@@ -41,7 +41,7 @@ import java.util.Properties;
 )
 public class SqlInterceptor implements Interceptor {
 
-    private static final Logger logger = MwLogger.getInstance(SqlInterceptor.class);
+    private static final Logger logger = LyLogger.getInstance(SqlInterceptor.class);
 
     private Boolean isEnableSqlLog = Boolean.FALSE;
 
@@ -80,7 +80,7 @@ public class SqlInterceptor implements Interceptor {
 
     @Override
     public void setProperties(Properties properties) {
-        isEnableSqlLog = MwPropertiesUtil.getBooleanProperty(properties, "isEnableSqlLog", Boolean.FALSE);
+        isEnableSqlLog = LyPropertiesUtil.getBooleanProperty(properties, "isEnableSqlLog", Boolean.FALSE);
     }
 
     /**
@@ -143,15 +143,15 @@ public class SqlInterceptor implements Interceptor {
         if (parameterObject instanceof String) {
             result = "'" + parameterObject.toString() + "'";
         } else if (parameterObject instanceof Date) {
-            result = "'" + MwDateUtil.getDate2String((Date) parameterObject) + "'";
+            result = "'" + LyDateUtil.getDate2String((Date) parameterObject) + "'";
         } else if (parameterObject instanceof LocalDateTime) {
-            result = "'" + MwJdk8DateUtil.getDate2String((LocalDateTime) parameterObject) + "'";
+            result = "'" + LyJdk8DateUtil.getDate2String((LocalDateTime) parameterObject) + "'";
         } else if (parameterObject instanceof LocalDate) {
-            result = "'" + MwJdk8DateUtil.getDate2String((LocalDate) parameterObject) + "'";
+            result = "'" + LyJdk8DateUtil.getDate2String((LocalDate) parameterObject) + "'";
         } else if (parameterObject instanceof LocalTime) {
-            result = "'" + MwJdk8DateUtil.getDate2String((LocalTime) parameterObject) + "'";
+            result = "'" + LyJdk8DateUtil.getDate2String((LocalTime) parameterObject) + "'";
         } else {
-            result = MwStringUtil.getValue(parameterObject);
+            result = LyStringUtil.getValue(parameterObject);
         }
         return sql.replaceFirst("\\?", result);
     }
@@ -168,7 +168,7 @@ public class SqlInterceptor implements Interceptor {
         String sqlLog = "Mapper Method ===> [" + sqlId + "], " + sql + ", " + "Spend Time ===> " + costTime + " ms";
         if (sqlCommandType == SqlCommandType.UPDATE || sqlCommandType == SqlCommandType.INSERT
                 || sqlCommandType == SqlCommandType.DELETE) {
-            sqlLog += ", Affect Count ===> " + MwMoreNumberUtil.toInt(MwStringUtil.getValue(obj));
+            sqlLog += ", Affect Count ===> " + LyMoreNumberUtil.toInt(LyStringUtil.getValue(obj));
         }
         logger.info(sqlLog);
     }

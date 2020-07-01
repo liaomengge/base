@@ -1,6 +1,6 @@
 package cn.ly.service.base_framework.base;
 
-import cn.ly.base_common.utils.string.MwToStringUtil;
+import cn.ly.base_common.utils.string.LyToStringUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +29,6 @@ public abstract class BaseRestResponse implements Serializable {
 
     @Override
     public String toString() {
-        return MwToStringUtil.toString(this);
+        return LyToStringUtil.toString(this);
     }
 }

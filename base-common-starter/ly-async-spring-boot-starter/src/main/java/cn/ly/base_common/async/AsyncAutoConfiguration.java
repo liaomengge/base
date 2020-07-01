@@ -1,7 +1,7 @@
 package cn.ly.base_common.async;
 
-import cn.ly.base_common.utils.error.MwThrowableUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.error.LyThrowableUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import org.slf4j.Logger;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -19,7 +19,7 @@ import java.util.concurrent.Executor;
 @EnableAsync(proxyTargetClass = true)
 public class AsyncAutoConfiguration {
 
-    private static final Logger logger = MwLogger.getInstance(AsyncAutoConfiguration.class);
+    private static final Logger logger = LyLogger.getInstance(AsyncAutoConfiguration.class);
 
     @Bean
     @ConditionalOnMissingBean
@@ -34,7 +34,7 @@ public class AsyncAutoConfiguration {
             public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
                 return (ex, method, params) -> logger.error("Current Thread[{}], Invoking Async Method[{}], Exec " +
                                 "Exception ===> {}", Thread.currentThread().getName(), method,
-                        MwThrowableUtil.getStackTrace(ex));
+                        LyThrowableUtil.getStackTrace(ex));
             }
         };
     }

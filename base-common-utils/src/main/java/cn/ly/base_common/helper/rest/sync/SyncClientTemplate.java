@@ -1,12 +1,12 @@
 package cn.ly.base_common.helper.rest.sync;
 
 import cn.ly.base_common.helper.rest.Template;
-import cn.ly.base_common.utils.error.MwExceptionUtil;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log.MwAlarmLogUtil;
-import cn.ly.base_common.utils.log.MwMDCUtil;
-import cn.ly.base_common.utils.url.MwUrlUtil;
 import cn.ly.base_common.helper.rest.data.BaseRequest;
+import cn.ly.base_common.utils.error.LyExceptionUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log.LyAlarmLogUtil;
+import cn.ly.base_common.utils.log.LyMDCUtil;
+import cn.ly.base_common.utils.url.LyUrlUtil;
 import com.alibaba.csp.sentinel.slots.block.AbstractRule;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.NoArgsConstructor;
@@ -54,7 +54,7 @@ public class SyncClientTemplate extends Template.Sync {
         String url = baseRequest.getUrl();
         Map<String, String> dataMap = baseRequest.getData();
         if (MapUtils.isNotEmpty(dataMap)) {
-            url = MwUrlUtil.rebuildUrl(url, dataMap);
+            url = LyUrlUtil.rebuildUrl(url, dataMap);
         }
         ResponseEntity<T> responseEntity = null;
         try {
@@ -65,22 +65,22 @@ public class SyncClientTemplate extends Template.Sync {
         } finally {
             try {
                 long endTime = System.currentTimeMillis();
-                MwMDCUtil.put(MwMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
+                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
                         logger.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
-                                        MwJsonUtil.toJson4Log(responseEntity.getBody()));
+                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
                     } else {
                         logger.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
-                                MwJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
+                                LyJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
-                                        MwJsonUtil.toJson4Log(responseEntity.getBody()));
+                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
                     }
                 }
                 super.statRestExec(prefix, isSuccess, (endTime - startTime));
             } finally {
-                MwMDCUtil.remove(MwMDCUtil.MDC_THIRD_ELAPSED_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_TIME);
             }
         }
         return responseEntity;
@@ -110,22 +110,22 @@ public class SyncClientTemplate extends Template.Sync {
         } finally {
             try {
                 long endTime = System.currentTimeMillis();
-                MwMDCUtil.put(MwMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
+                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
                         logger.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
-                                        MwJsonUtil.toJson4Log(responseEntity.getBody()));
+                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
                     } else {
                         logger.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
-                                MwJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
+                                LyJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
-                                        MwJsonUtil.toJson4Log(responseEntity.getBody()));
+                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
                     }
                 }
                 super.statRestExec(prefix, isSuccess, (endTime - startTime));
             } finally {
-                MwMDCUtil.remove(MwMDCUtil.MDC_THIRD_ELAPSED_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_TIME);
             }
         }
         return responseEntity;
@@ -148,22 +148,22 @@ public class SyncClientTemplate extends Template.Sync {
         } finally {
             try {
                 long endTime = System.currentTimeMillis();
-                MwMDCUtil.put(MwMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
+                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
                         logger.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
-                                        MwJsonUtil.toJson4Log(responseEntity.getBody()));
+                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
                     } else {
                         logger.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
-                                MwJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
+                                LyJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
-                                        MwJsonUtil.toJson4Log(responseEntity.getBody()));
+                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
                     }
                 }
                 super.statRestExec(prefix, isSuccess, (endTime - startTime));
             } finally {
-                MwMDCUtil.remove(MwMDCUtil.MDC_THIRD_ELAPSED_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_TIME);
             }
         }
         return responseEntity;
@@ -171,19 +171,19 @@ public class SyncClientTemplate extends Template.Sync {
 
     private void handleThrowable(BaseRequest<?> baseRequest, Throwable t) {
         if (t instanceof InterruptedIOException || (Objects.nonNull(t.getCause()) && t.getCause() instanceof InterruptedIOException)) {
-            MwAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_HTTP.error(t);
+            LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_HTTP.error(t);
         } else {
-            MwAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
+            LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
         }
         String url = baseRequest.getUrl();
-        if (t instanceof BlockException || MwExceptionUtil.unwrap(t) instanceof BlockException) {
-            BlockException e = (BlockException) MwExceptionUtil.unwrap(t);
+        if (t instanceof BlockException || LyExceptionUtil.unwrap(t) instanceof BlockException) {
+            BlockException e = (BlockException) LyExceptionUtil.unwrap(t);
             Optional.ofNullable(e).map(BlockException::getRule).map(AbstractRule::getResource).ifPresent(val -> {
                 if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
                     logger.error("调用服务失败, 服务地址[{}], 异常原因 ===> [{}]", url, "[" + e + "] Block Exception...");
                 } else {
                     logger.error("调用服务失败, 请求参数[{}], 服务地址[{}], 异常原因 ===> [{}]",
-                            MwJsonUtil.toJson4Log(baseRequest.getData()), url, "[" + e + "] Block Exception...");
+                            LyJsonUtil.toJson4Log(baseRequest.getData()), url, "[" + e + "] Block Exception...");
                 }
             });
         } else {
@@ -191,7 +191,7 @@ public class SyncClientTemplate extends Template.Sync {
                 logger.error("调用服务失败, 服务地址[{}], 异常原因 ===> [{}]", url, t.getMessage());
             } else {
                 logger.error("调用服务失败, 请求参数[{}], 服务地址[{}], 异常原因 ===> [{}]",
-                        MwJsonUtil.toJson4Log(baseRequest.getData()), url, t.getMessage());
+                        LyJsonUtil.toJson4Log(baseRequest.getData()), url, t.getMessage());
             }
         }
     }

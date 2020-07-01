@@ -2,7 +2,7 @@ package cn.ly.base_common.graceful.tomcat;
 
 import cn.ly.base_common.graceful.GracefulProperties;
 import cn.ly.base_common.graceful.consts.GracefulConst;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import org.apache.catalina.connector.Connector;
 import org.slf4j.Logger;
 import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TomcatShutdown implements TomcatConnectorCustomizer, ApplicationListener<ContextClosedEvent> {
 
-    private static final Logger logger = MwLogger.getInstance(TomcatShutdown.class);
+    private static final Logger logger = LyLogger.getInstance(TomcatShutdown.class);
 
     private volatile Connector connector;
 

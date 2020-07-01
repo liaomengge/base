@@ -1,8 +1,8 @@
 package cn.ly.base_common.metric.hikari.task;
 
 import cn.ly.base_common.metric.hikari.MetricHikariProperties;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.thread.MwThreadUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.thread.LyThreadUtil;
 import com.timgroup.statsd.StatsDClient;
 import com.zaxxer.hikari.HikariConfigMXBean;
 import com.zaxxer.hikari.HikariDataSource;
@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MetricHikariScheduledTask {
 
-    private static final Logger logger = MwLogger.getInstance(MetricHikariScheduledTask.class);
+    private static final Logger logger = LyLogger.getInstance(MetricHikariScheduledTask.class);
 
     private static final String METRIC_HIKARI_PREFIX = "metric-hikari.";
 
@@ -52,7 +52,7 @@ public class MetricHikariScheduledTask {
         public void run() {
             long initialDelay = metricHikariProperties.getInitialDelay() * 1000L;
             if (initialDelay > 0) {
-                MwThreadUtil.sleep(initialDelay);
+                LyThreadUtil.sleep(initialDelay);
             }
             while (!this.isInterrupted()) {
                 try {

@@ -1,10 +1,10 @@
 package cn.ly.base_common.redis.redisson;
 
-import cn.ly.base_common.redis.RedissonProperties;
 import cn.ly.base_common.helper.lock.distributed.redis.RedisLocker;
 import cn.ly.base_common.helper.lock.distributed.redis.RedissonConfigManager;
 import cn.ly.base_common.helper.redis.RedissonHelper;
-import cn.ly.base_common.utils.io.MwIOUtil;
+import cn.ly.base_common.redis.RedissonProperties;
+import cn.ly.base_common.utils.io.LyIOUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -68,7 +68,7 @@ public class RedissonConfiguration {
                 throw new IllegalArgumentException("Can't parse config", e1);
             }
         } finally {
-            MwIOUtil.closeQuietly(inputStream);
+            LyIOUtil.closeQuietly(inputStream);
         }
 
         return Redisson.create(config);

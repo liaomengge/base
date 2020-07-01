@@ -7,8 +7,8 @@ package cn.ly.base_common.metric.redis.task;
 import cn.ly.base_common.metric.redis.MetricRedisProperties;
 import cn.ly.base_common.redis.JedisClusterProperties;
 import cn.ly.base_common.redis.SpringDataProperties;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.thread.MwThreadUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.thread.LyThreadUtil;
 import com.google.common.collect.Lists;
 import com.timgroup.statsd.StatsDClient;
 import lombok.Builder;
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MetricRedisScheduledTask {
 
-    private static final Logger logger = MwLogger.getInstance(MetricRedisScheduledTask.class);
+    private static final Logger logger = LyLogger.getInstance(MetricRedisScheduledTask.class);
 
     private static final String METRIC_REDIS_PREFIX = "metric-redis.";
     private static final String JMX_NAME_BASE = "org.apache.commons.pool2:type=GenericObjectPool,name=";
@@ -67,7 +67,7 @@ public class MetricRedisScheduledTask {
         public void run() {
             long initialDelay = metricRedisProperties.getInitialDelay() * 1000L;
             if (initialDelay > 0) {
-                MwThreadUtil.sleep(initialDelay);
+                LyThreadUtil.sleep(initialDelay);
             }
             while (!this.isInterrupted()) {
                 try {
@@ -136,7 +136,7 @@ public class MetricRedisScheduledTask {
         int numActive = (int) mbeanServer.getAttribute(objectName, "NumActive");
         int numIdle = (int) mbeanServer.getAttribute(objectName, "NumIdle");
         int maxTotal = (int) mbeanServer.getAttribute(objectName, "MaxTotal");
-        int numWaiters = (int) mbeanServer.getAttribute(objectName, "NumWaiters");
+        int nuLyaiters = (int) mbeanServer.getAttribute(objectName, "NuLyaiters");
         String jmxNamePrefix = objectName.getKeyProperty("name");
         return PoolStatBean.builder()
                 .maxIdle(maxIdle)
@@ -144,7 +144,7 @@ public class MetricRedisScheduledTask {
                 .numActive(numActive)
                 .numIdle(numIdle)
                 .maxTotal(maxTotal)
-                .numWaiters(numWaiters)
+                .nuLyaiters(nuLyaiters)
                 .jmxNamePrefix(jmxNamePrefix)
                 .build();
     }
@@ -157,7 +157,7 @@ public class MetricRedisScheduledTask {
             statsDClient.recordExecutionTime(metricPrefix + "numActive", poolStatBean.getNumActive());
             statsDClient.recordExecutionTime(metricPrefix + "numIdle", poolStatBean.getNumIdle());
             statsDClient.recordExecutionTime(metricPrefix + "maxTotal", poolStatBean.getMaxTotal());
-            statsDClient.recordExecutionTime(metricPrefix + "numWaiters", poolStatBean.getNumWaiters());
+            statsDClient.recordExecutionTime(metricPrefix + "nuLyaiters", poolStatBean.getNuLyaiters());
             return;
         }
         StringBuilder sBuilder = new StringBuilder(16);
@@ -166,7 +166,7 @@ public class MetricRedisScheduledTask {
         sBuilder.append(metricPrefix + "numActive => [" + poolStatBean.getNumActive() + "],");
         sBuilder.append(metricPrefix + "numIdle => [" + poolStatBean.getNumIdle() + "],");
         sBuilder.append(metricPrefix + "maxTotal => [" + poolStatBean.getMaxTotal() + "],");
-        sBuilder.append(metricPrefix + "numWaiters => [" + poolStatBean.getNumWaiters() + "]");
+        sBuilder.append(metricPrefix + "nuLyaiters => [" + poolStatBean.getNuLyaiters() + "]");
         logger.info(sBuilder.toString());
     }
 
@@ -178,7 +178,7 @@ public class MetricRedisScheduledTask {
         private int numActive;
         private int numIdle;
         private int maxTotal;
-        private int numWaiters;
+        private int nuLyaiters;
         private String jmxNamePrefix;
     }
 }

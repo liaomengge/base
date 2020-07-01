@@ -1,10 +1,10 @@
 package cn.ly.base_common.metric;
 
-import cn.ly.base_common.metric.metrics.thread.MwThreadStatePublicMetrics;
-import cn.ly.base_common.metric.metrics.thread.custom.MwThreadPoolMetricsConfiguration;
-import cn.ly.base_common.metric.metrics.thread.custom.MwThreadPoolPublicMetrics;
-import cn.ly.base_common.metric.metrics.thread.tomcat.MwTomcatMetricsConfiguration;
-import cn.ly.base_common.metric.metrics.thread.tomcat.MwTomcatPublicMetrics;
+import cn.ly.base_common.metric.metrics.thread.ThreadStatePublicMetrics;
+import cn.ly.base_common.metric.metrics.thread.custom.ThreadPoolMetricsConfiguration;
+import cn.ly.base_common.metric.metrics.thread.custom.ThreadPoolPublicMetrics;
+import cn.ly.base_common.metric.metrics.thread.tomcat.TomcatMetricsConfiguration;
+import cn.ly.base_common.metric.metrics.thread.tomcat.TomcatPublicMetrics;
 import cn.ly.base_common.metric.task.MetricScheduledTask;
 import com.timgroup.statsd.NonBlockingStatsDClient;
 import com.timgroup.statsd.StatsDClient;
@@ -33,16 +33,16 @@ import org.springframework.util.StringUtils;
 @ConditionalOnClass({StatsdMetricWriter.class, StatsDClient.class})
 @EnableConfigurationProperties(MetricProperties.class)
 @ConditionalOnProperty(prefix = "ly.metric", name = "enabled", matchIfMissing = true)
-@Import({MwTomcatMetricsConfiguration.class, MwThreadPoolMetricsConfiguration.class})
+@Import({TomcatMetricsConfiguration.class, ThreadPoolMetricsConfiguration.class})
 public class MetricAutoConfiguration {
 
     @Autowired
     private MetricProperties metricProperties;
 
-    private final MwTomcatPublicMetrics mwTomcatPublicMetrics;
+    private final TomcatPublicMetrics tomcatPublicMetrics;
 
-    public MetricAutoConfiguration(ObjectProvider<MwTomcatPublicMetrics> objectProvider) {
-        this.mwTomcatPublicMetrics = objectProvider.getIfUnique();
+    public MetricAutoConfiguration(ObjectProvider<TomcatPublicMetrics> objectProvider) {
+        this.tomcatPublicMetrics = objectProvider.getIfUnique();
     }
 
     @Bean
@@ -83,20 +83,20 @@ public class MetricAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public MwThreadStatePublicMetrics mwThreadStatePublicMetrics() {
-        return new MwThreadStatePublicMetrics();
+    public ThreadStatePublicMetrics threadStatePublicMetrics() {
+        return new ThreadStatePublicMetrics();
     }
 
     @Bean
     @ConditionalOnBean({StatsdMetricWriter.class, SystemPublicMetrics.class,
-            MwThreadPoolPublicMetrics.class, MwThreadStatePublicMetrics.class})
+            ThreadPoolPublicMetrics.class, ThreadStatePublicMetrics.class})
     public MetricScheduledTask metricScheduledTask(StatsdMetricWriter statsdMetricWriter,
                                                    SystemPublicMetrics systemPublicMetrics,
-                                                   MwThreadPoolPublicMetrics mwThreadPoolPublicMetrics,
-                                                   MwThreadStatePublicMetrics mwThreadStatePublicMetrics) {
+                                                   ThreadPoolPublicMetrics threadPoolPublicMetrics,
+                                                   ThreadStatePublicMetrics threadStatePublicMetrics) {
         MetricScheduledTask metricScheduledTask = new MetricScheduledTask(metricProperties, statsdMetricWriter,
-                systemPublicMetrics, mwThreadPoolPublicMetrics, mwThreadStatePublicMetrics);
-        metricScheduledTask.setMwTomcatPublicMetrics(this.mwTomcatPublicMetrics);
+                systemPublicMetrics, threadPoolPublicMetrics, threadStatePublicMetrics);
+        metricScheduledTask.setTomcatPublicMetrics(this.tomcatPublicMetrics);
         return metricScheduledTask;
     }
 }

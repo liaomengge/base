@@ -1,6 +1,6 @@
 package cn.ly.base_common.mq.rabbitmq.convert;
 
-import cn.ly.base_common.utils.json.MwJsonUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
 import com.alibaba.fastjson.TypeReference;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
@@ -21,7 +21,7 @@ public class FastJsonMessageConverter extends AbstractMessageConverter {
     protected Message createMessage(Object obj, MessageProperties messageProperties) {
         byte[] bytes;
         try {
-            String jsonString = MwJsonUtil.toJson(obj);
+            String jsonString = LyJsonUtil.toJson(obj);
             bytes = jsonString.getBytes(DEFAULT_CHARSET);
         } catch (UnsupportedEncodingException e) {
             throw new MessageConversionException("Failed to convert Message content", e);
@@ -48,7 +48,7 @@ public class FastJsonMessageConverter extends AbstractMessageConverter {
             throw new MessageConversionException("Failed to convert Message content", e);
         }
 
-        return MwJsonUtil.fromJson(json);
+        return LyJsonUtil.fromJson(json);
     }
 
     public <T> T fromMessage(Message message, T t) {
@@ -63,7 +63,7 @@ public class FastJsonMessageConverter extends AbstractMessageConverter {
             throw new MessageConversionException("Failed to convert Message content", e);
         }
 
-        return MwJsonUtil.fromJson(json, new TypeReference<T>() {
+        return LyJsonUtil.fromJson(json, new TypeReference<T>() {
         });
     }
 }

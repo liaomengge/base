@@ -4,9 +4,9 @@ import cn.ly.base_common.dayu.custom.breaker.CircuitBreaker;
 import cn.ly.base_common.dayu.custom.consts.CircuitBreakerConst.Metric;
 import cn.ly.base_common.dayu.custom.domain.CircuitBreakerDomain;
 import cn.ly.base_common.dayu.custom.helper.CircuitBreakerRedisHelper;
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
-import cn.ly.base_common.utils.error.MwThrowableUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
+import cn.ly.base_common.utils.error.LyThrowableUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.timgroup.statsd.StatsDClient;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CircuitBreakerHandler {
 
-    private static final Logger logger = MwLogger.getInstance(CircuitBreakerHandler.class);
+    private static final Logger logger = LyLogger.getInstance(CircuitBreakerHandler.class);
 
     private StatsDClient statsDClient;
     private CircuitBreakerRedisHelper circuitBreakerRedisHelper;
@@ -40,7 +40,7 @@ public class CircuitBreakerHandler {
             failureCount = circuitBreakerRedisHelper.getFailureCount(resource);
             long latestFailureTime = circuitBreakerRedisHelper.getLatestFailureTime(resource);
             if (failureCount >= circuitBreakerRedisHelper.getCircuitBreakerConfig().getFailureThreshold()) {
-                if ((MwJdk8DateUtil.getMilliSecondsTime() - latestFailureTime) <= circuitBreakerRedisHelper.getCircuitBreakerConfig().getResetMilliSeconds()) {
+                if ((LyJdk8DateUtil.getMilliSecondsTime() - latestFailureTime) <= circuitBreakerRedisHelper.getCircuitBreakerConfig().getResetMilliSeconds()) {
                     //open status
                     logger.warn("Resource[{}], Custom Circuit Open...", resource);
                     Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(Metric.CIRCUIT_BREAKER_PREFIX + resource));
@@ -52,10 +52,10 @@ public class CircuitBreakerHandler {
             result = circuitBreaker.execute();
         } catch (Throwable t) {
             logger.warn("Resource[{}], request custom circuit handle failed ==> {}", resource,
-                    MwThrowableUtil.getStackTrace(t));
+                    LyThrowableUtil.getStackTrace(t));
             if (failureCount >= circuitBreakerRedisHelper.getCircuitBreakerConfig().getFailureThreshold()) {
                 circuitBreakerRedisHelper.getIRedisHelper().set(circuitBreakerRedisHelper.getLatestFailureTimeStr(resource),
-                        String.valueOf(MwJdk8DateUtil.getMilliSecondsTime()));
+                        String.valueOf(LyJdk8DateUtil.getMilliSecondsTime()));
                 throw t;
             }
             //todo 是否可以交换下位置

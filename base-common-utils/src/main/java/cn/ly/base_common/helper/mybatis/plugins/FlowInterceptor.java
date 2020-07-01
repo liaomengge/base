@@ -1,11 +1,11 @@
 package cn.ly.base_common.helper.mybatis.plugins;
 
-import cn.ly.base_common.utils.date.MwDateUtil;
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.properties.MwPropertiesUtil;
-import cn.ly.base_common.utils.string.MwStringUtil;
+import cn.ly.base_common.utils.date.LyDateUtil;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.properties.LyPropertiesUtil;
+import cn.ly.base_common.utils.string.LyStringUtil;
 import com.alibaba.fastjson.TypeReference;
 import com.google.common.collect.Lists;
 import lombok.Data;
@@ -43,7 +43,7 @@ import java.util.Properties;
 )
 public class FlowInterceptor implements Interceptor {
 
-    private static final Logger logger = MwLogger.getInstance(FlowInterceptor.class);
+    private static final Logger logger = LyLogger.getInstance(FlowInterceptor.class);
 
     private Boolean isEnableFailFast = Boolean.FALSE;
     private List<FlowConfig> flowConfigs = Lists.newArrayList();
@@ -117,15 +117,15 @@ public class FlowInterceptor implements Interceptor {
         if (parameterObject instanceof String) {
             result = parameterObject.toString();
         } else if (parameterObject instanceof Date) {
-            result = MwDateUtil.getDate2String((Date) parameterObject);
+            result = LyDateUtil.getDate2String((Date) parameterObject);
         } else if (parameterObject instanceof LocalDateTime) {
-            result = MwJdk8DateUtil.getDate2String((LocalDateTime) parameterObject);
+            result = LyJdk8DateUtil.getDate2String((LocalDateTime) parameterObject);
         } else if (parameterObject instanceof LocalDate) {
-            result = MwJdk8DateUtil.getDate2String((LocalDate) parameterObject);
+            result = LyJdk8DateUtil.getDate2String((LocalDate) parameterObject);
         } else if (parameterObject instanceof LocalTime) {
-            result = MwJdk8DateUtil.getDate2String((LocalTime) parameterObject);
+            result = LyJdk8DateUtil.getDate2String((LocalTime) parameterObject);
         } else {
-            result = MwStringUtil.getValue(parameterObject);
+            result = LyStringUtil.getValue(parameterObject);
         }
         return result;
     }
@@ -137,11 +137,11 @@ public class FlowInterceptor implements Interceptor {
 
     @Override
     public void setProperties(Properties properties) {
-        isEnableFailFast = MwPropertiesUtil.getBooleanProperty(properties, "isEnableFailFast", Boolean.FALSE);
-        String config = MwPropertiesUtil.getStringProperty(properties, "flowConfigs");
+        isEnableFailFast = LyPropertiesUtil.getBooleanProperty(properties, "isEnableFailFast", Boolean.FALSE);
+        String config = LyPropertiesUtil.getStringProperty(properties, "flowConfigs");
         if (StringUtils.isNotBlank(config)) {
             try {
-                flowConfigs = MwJsonUtil.fromJson(config, new TypeReference<List<FlowConfig>>() {
+                flowConfigs = LyJsonUtil.fromJson(config, new TypeReference<List<FlowConfig>>() {
                 });
             } catch (Exception e) {
                 logger.error("parse sql flow control config error", e);

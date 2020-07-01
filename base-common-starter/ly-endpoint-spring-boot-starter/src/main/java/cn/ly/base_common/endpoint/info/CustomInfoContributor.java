@@ -1,7 +1,7 @@
 package cn.ly.base_common.endpoint.info;
 
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
-import cn.ly.base_common.utils.net.MwNetworkUtil;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
+import cn.ly.base_common.utils.net.LyNetworkUtil;
 import com.google.common.collect.Maps;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.boot.actuate.info.InfoContributor;
@@ -26,12 +26,12 @@ public class CustomInfoContributor implements InfoContributor, EnvironmentAware 
     public void contribute(Info.Builder builder) {
         String springApplicationName = this.environment.getProperty("spring.application.name");
         String springActiveEnv = this.environment.getProperty("spring.profiles.active");
-        String address = MwNetworkUtil.getHostAddress();
+        String address = LyNetworkUtil.getHostAddress();
         LinkedHashMap<String, String> infoHashMap = Maps.newLinkedHashMap();
         infoHashMap.put("name", springApplicationName);
         infoHashMap.put("env", springActiveEnv);
         infoHashMap.put("address", address);
-        infoHashMap.put("time", MwJdk8DateUtil.getNowDate2String());
+        infoHashMap.put("time", LyJdk8DateUtil.getNowDate2String());
         builder.withDetail("info", infoHashMap);
     }
 }

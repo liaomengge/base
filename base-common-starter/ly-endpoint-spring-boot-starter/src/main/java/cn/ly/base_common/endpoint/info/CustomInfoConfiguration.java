@@ -1,7 +1,7 @@
 package cn.ly.base_common.endpoint.info;
 
 import cn.ly.base_common.endpoint.condition.ConditionalOnCustomProperty;
-import cn.ly.base_common.utils.date.MwJdk8DateUtil;
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.info.BuildProperties;
@@ -30,7 +30,7 @@ public class CustomInfoConfiguration {
                     return Optional.ofNullable(implementationVersion);
                 }).orElse("unknown");
         properties.setProperty("version", version);
-        properties.setProperty("time", MwJdk8DateUtil.getNowDate2String());
+        properties.setProperty("time", LyJdk8DateUtil.getNowDate2String());
         return new BuildProperties(properties);
     }
 

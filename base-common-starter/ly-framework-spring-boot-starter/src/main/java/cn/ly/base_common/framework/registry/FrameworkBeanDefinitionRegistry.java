@@ -1,6 +1,6 @@
 package cn.ly.base_common.framework.registry;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
  */
 public class FrameworkBeanDefinitionRegistry implements BeanDefinitionRegistryPostProcessor {
 
-    private static final Logger logger = MwLogger.getInstance(FrameworkBeanDefinitionRegistry.class);
+    private static final Logger logger = LyLogger.getInstance(FrameworkBeanDefinitionRegistry.class);
 
     private static final String FRAMEWORK_PKG = "cn.ly.service.base_framework";
 

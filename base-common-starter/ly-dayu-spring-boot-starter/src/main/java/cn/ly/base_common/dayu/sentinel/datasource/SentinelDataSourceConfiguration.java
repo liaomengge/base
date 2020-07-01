@@ -1,6 +1,6 @@
 package cn.ly.base_common.dayu.sentinel.datasource;
 
-import cn.ly.base_common.utils.json.MwJsonUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.slots.block.authority.AuthorityRule;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
@@ -22,7 +22,7 @@ public class SentinelDataSourceConfiguration {
     @Bean("giraffeFlowRuleDataSource")
     public GiraffeDataSource<List<FlowRule>> giraffeFlowRuleDataSource() {
         GiraffeDataSource<List<FlowRule>> giraffeDataSource = new GiraffeDataSource((Converter<String,
-                List<FlowRule>>) source -> MwJsonUtil.fromJson(source,
+                List<FlowRule>>) source -> LyJsonUtil.fromJson(source,
                 new TypeReference<List<FlowRule>>() {
                 }), "flows");
         return giraffeDataSource;
@@ -31,7 +31,7 @@ public class SentinelDataSourceConfiguration {
     @Bean("giraffeDegradeRuleDataSource")
     public GiraffeDataSource<List<DegradeRule>> giraffeDegradeRuleDataSource() {
         GiraffeDataSource<List<DegradeRule>> giraffeDataSource = new GiraffeDataSource((Converter<String,
-                List<DegradeRule>>) source -> MwJsonUtil.fromJson(source,
+                List<DegradeRule>>) source -> LyJsonUtil.fromJson(source,
                 new TypeReference<List<DegradeRule>>() {
                 }), "degrades");
         return giraffeDataSource;
@@ -40,7 +40,7 @@ public class SentinelDataSourceConfiguration {
     @Bean("giraffeAuthorityRuleDataSource")
     public GiraffeDataSource<List<AuthorityRule>> giraffeAuthorityRuleDataSource() {
         GiraffeDataSource<List<AuthorityRule>> giraffeDataSource = new GiraffeDataSource((Converter<String,
-                List<AuthorityRule>>) source -> MwJsonUtil.fromJson(source,
+                List<AuthorityRule>>) source -> LyJsonUtil.fromJson(source,
                 new TypeReference<List<AuthorityRule>>() {
                 }), "authorities");
         return giraffeDataSource;
@@ -49,7 +49,7 @@ public class SentinelDataSourceConfiguration {
     @Bean("giraffeParamFlowRuleDataSource")
     public GiraffeDataSource<List<ParamFlowRule>> giraffeParamFlowRuleDataSource() {
         GiraffeDataSource<List<ParamFlowRule>> giraffeDataSource = new GiraffeDataSource((Converter<String,
-                List<ParamFlowRule>>) source -> MwJsonUtil.fromJson(source,
+                List<ParamFlowRule>>) source -> LyJsonUtil.fromJson(source,
                 new TypeReference<List<ParamFlowRule>>() {
                 }), "paramFlows");
         return giraffeDataSource;
@@ -58,7 +58,7 @@ public class SentinelDataSourceConfiguration {
     @Bean("giraffeSystemRuleDataSource")
     public GiraffeDataSource<List<SystemRule>> giraffeSystemRuleDataSource() {
         GiraffeDataSource<List<SystemRule>> giraffeDataSource = new GiraffeDataSource((Converter<String,
-                List<SystemRule>>) source -> MwJsonUtil.fromJson(source,
+                List<SystemRule>>) source -> LyJsonUtil.fromJson(source,
                 new TypeReference<List<SystemRule>>() {
                 }), "systems");
         return giraffeDataSource;

@@ -11,4 +11,4 @@
 
 ###3. utils
 
-> 最常见的, 提供一些常用的Util类, 比如：MwDateUtil, MwStringUtil等
+> 最常见的, 提供一些常用的Util类, 比如：LyDateUtil, LyStringUtil等

@@ -9,7 +9,7 @@ import cn.ly.base_common.helper.retrofit.factory.RetrofitFactory;
 import cn.ly.base_common.retrofit.RetrofitProperties.HttpClientProperties;
 import cn.ly.base_common.retrofit.RetrofitProperties.SentinelProperties;
 import cn.ly.base_common.retrofit.RetrofitProperties.UrlHttpClientProperties;
-import cn.ly.base_common.utils.number.MwNumberUtil;
+import cn.ly.base_common.utils.number.LyNumberUtil;
 import com.google.common.collect.ImmutableMap;
 import com.timgroup.statsd.StatsDClient;
 import okhttp3.ConnectionPool;
@@ -130,11 +130,11 @@ public class RetrofitAutoConfiguration {
         if (CollectionUtils.isNotEmpty(urlHttpClientProperties)) {
             Map<String, OkHttpClient> okHttpClientMap =
                     urlHttpClientProperties.stream().collect(Collectors.toMap(UrlHttpClientProperties::getUrl,
-                            val -> newBuilder(MwNumberUtil.getIntValue(val.getReadTimeout(),
+                            val -> newBuilder(LyNumberUtil.getIntValue(val.getReadTimeout(),
                                     httpClientProperties.getReadTimeout()),
-                                    MwNumberUtil.getIntValue(val.getWriteTimeout(),
+                                    LyNumberUtil.getIntValue(val.getWriteTimeout(),
                                             httpClientProperties.getWriteTimeout()),
-                                    MwNumberUtil.getIntValue(val.getConnectTimeout(),
+                                    LyNumberUtil.getIntValue(val.getConnectTimeout(),
                                             httpClientProperties.getConnectTimeout()),
                                     connectionPool, sentinelRetrofitInterceptor, httpLoggingInterceptor).build(), (v1
                                     , v2) -> v2));

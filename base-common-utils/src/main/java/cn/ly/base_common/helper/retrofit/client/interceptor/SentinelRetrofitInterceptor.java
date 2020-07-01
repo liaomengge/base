@@ -1,9 +1,9 @@
 package cn.ly.base_common.helper.retrofit.client.interceptor;
 
-import cn.ly.base_common.utils.error.MwExceptionUtil;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.url.MwMoreUrlUtil;
 import cn.ly.base_common.helper.retrofit.consts.RetrofitMetricsConst;
+import cn.ly.base_common.utils.error.LyExceptionUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.url.LyMoreUrlUtil;
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.SphU;
@@ -26,7 +26,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SentinelRetrofitInterceptor implements Interceptor {
 
-    private static final Logger logger = MwLogger.getInstance(SentinelRetrofitInterceptor.class);
+    private static final Logger logger = LyLogger.getInstance(SentinelRetrofitInterceptor.class);
 
     private StatsDClient statsDClient;
 
@@ -45,10 +45,10 @@ public class SentinelRetrofitInterceptor implements Interceptor {
         } catch (BlockException e) {
             if (StringUtils.isNotBlank(hostWithPathResource)) {
                 logger.warn("Resource[{}], Retrofit Block Exception...", hostWithPathResource);
-                String methodSuffix = MwMoreUrlUtil.getUrlSuffix(hostWithPathResource);
+                String methodSuffix = LyMoreUrlUtil.getUrlSuffix(hostWithPathResource);
                 Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(methodSuffix + RetrofitMetricsConst.REQ_EXE_BLOCKED));
             }
-            throw MwExceptionUtil.unchecked(e);
+            throw LyExceptionUtil.unchecked(e);
         } catch (Throwable t) {
             Tracer.trace(t);
             throw t;

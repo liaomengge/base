@@ -2,10 +2,10 @@ package cn.ly.base_common.cache.task;
 
 import cn.ly.base_common.cache.CachePoolHelper;
 import cn.ly.base_common.cache.caffeine.CaffeineCache;
-import cn.ly.base_common.utils.log4j2.MwLogger;
-import cn.ly.base_common.utils.shutdown.MwShutdownUtil;
-import cn.ly.base_common.utils.thread.MwRuntimeUtil;
-import cn.ly.base_common.utils.thread.MwThreadFactoryBuilderUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.shutdown.LyShutdownUtil;
+import cn.ly.base_common.utils.thread.LyRuntimeUtil;
+import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import com.timgroup.statsd.StatsDClient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class CacheScheduledTask {
 
-    private static final Logger logger = MwLogger.getInstance(CacheScheduledTask.class);
+    private static final Logger logger = LyLogger.getInstance(CacheScheduledTask.class);
 
     private static final String METRIC_PREFIX = "metric.";
 
@@ -35,8 +35,8 @@ public class CacheScheduledTask {
     @PostConstruct
     private void init() {
         ScheduledThreadPoolExecutor poolExecutor =
-                new ScheduledThreadPoolExecutor(MwRuntimeUtil.getCpuNum(),
-                        MwThreadFactoryBuilderUtil.build("cache"), new ThreadPoolExecutor.CallerRunsPolicy());
+                new ScheduledThreadPoolExecutor(LyRuntimeUtil.getCpuNum(),
+                        LyThreadFactoryBuilderUtil.build("cache"), new ThreadPoolExecutor.CallerRunsPolicy());
         poolExecutor.scheduleAtFixedRate(this::metric, 60, 10, TimeUnit.SECONDS);
         this.registerShutdownHook(poolExecutor);
     }
@@ -58,7 +58,7 @@ public class CacheScheduledTask {
      * @param poolExecutor
      */
     protected void registerShutdownHook(ScheduledThreadPoolExecutor poolExecutor) {
-        MwShutdownUtil.registerShutdownHook(() -> {
+        LyShutdownUtil.registerShutdownHook(() -> {
             try {
                 logger.info("Metric Cache Scheduled Thread Pool Exist...");
             } finally {

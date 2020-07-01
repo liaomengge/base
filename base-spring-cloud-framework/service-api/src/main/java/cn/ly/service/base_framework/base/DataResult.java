@@ -1,9 +1,9 @@
 package cn.ly.service.base_framework.base;
 
+import cn.ly.base_common.utils.string.LyToStringUtil;
+import cn.ly.base_common.utils.trace.LyTraceLogUtil;
 import cn.ly.service.base_framework.base.code.IResultCode;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
-import cn.ly.base_common.utils.string.MwToStringUtil;
-import cn.ly.base_common.utils.trace.MwTraceLogUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +24,7 @@ public class DataResult<T> implements Serializable {
 
     public DataResult(boolean success) {
         this.success = success;
-        requestId = MwTraceLogUtil.get();
+        requestId = LyTraceLogUtil.get();
     }
 
     public DataResult(T data) {
@@ -163,7 +163,7 @@ public class DataResult<T> implements Serializable {
 
     @Override
     public String toString() {
-        return MwToStringUtil.toString(this);
+        return LyToStringUtil.toString(this);
     }
 
 }

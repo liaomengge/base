@@ -1,6 +1,6 @@
 package cn.ly.service.base_framework.common.filter;
 
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.service.base_framework.common.config.FilterConfig;
 import cn.ly.service.base_framework.common.config.ServiceConfig;
 import com.alibaba.dubbo.rpc.Filter;
@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 public abstract class AbstractFilter implements Filter {
 
-    protected final static MwLogger logger = MwLogger.getInstance(AbstractFilter.class);
+    protected final static LyLogger logger = LyLogger.getInstance(AbstractFilter.class);
 
     protected static final String SKIP_METHOD = "ping";
 

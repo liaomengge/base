@@ -1,11 +1,11 @@
 package cn.ly.service.base_framework.common.filter;
 
+import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.sign.LySignUtil;
 import cn.ly.service.base_framework.base.BaseRestRequest;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.base.StringRestResponse;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
-import cn.ly.base_common.utils.json.MwJsonUtil;
-import cn.ly.base_common.utils.sign.MwSignUtil;
 import cn.ly.service.base_framework.common.config.FilterConfig;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
 import com.alibaba.fastjson.TypeReference;
@@ -72,13 +72,13 @@ public class SignFilter extends AbstractFilter {
         String signConfig = filterConfig.getSign().getConfig();
         Map<String, Object> signConfigMap;
         try {
-            signConfigMap = MwJsonUtil.fromJson(signConfig, new TypeReference<Map<String, Object>>() {
+            signConfigMap = LyJsonUtil.fromJson(signConfig, new TypeReference<Map<String, Object>>() {
             });
         } catch (Exception e) {
             return false;
         }
         String appKey = MapUtils.getString(signConfigMap, appId);
 
-        return MwSignUtil.sign(appKey, paramsMap, "appKey").equals(signRequest.getSign());
+        return LySignUtil.sign(appKey, paramsMap, "appKey").equals(signRequest.getSign());
     }
 }

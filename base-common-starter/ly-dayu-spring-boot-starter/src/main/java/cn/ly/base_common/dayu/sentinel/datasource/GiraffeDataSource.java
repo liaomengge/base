@@ -1,7 +1,7 @@
 package cn.ly.base_common.dayu.sentinel.datasource;
 
 import cn.ly.base_common.dayu.sentinel.consts.SentinelConst;
-import cn.ly.base_common.utils.log4j2.MwLogger;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.csp.sentinel.datasource.AbstractDataSource;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class GiraffeDataSource<T> extends AbstractDataSource<String, T> implements EnvironmentAware,
         ApplicationListener<EnvironmentChangeEvent> {
 
-    private static final Logger logger = MwLogger.getInstance(GiraffeDataSource.class);
+    private static final Logger logger = LyLogger.getInstance(GiraffeDataSource.class);
 
     private Environment environment;
 

@@ -1,8 +1,8 @@
 package cn.ly.base_common.helper.delay;
 
 import cn.ly.base_common.helper.delay.domain.DelayPojo;
-import cn.ly.base_common.utils.date.MwDateUtil;
-import cn.ly.base_common.utils.json.MwJsonUtil;
+import cn.ly.base_common.utils.date.LyDateUtil;
+import cn.ly.base_common.utils.json.LyJsonUtil;
 import com.alibaba.fastjson.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.connection.Message;
@@ -43,10 +43,10 @@ public abstract class AbstractDelayDeqWorker extends AbstractDelayWorker impleme
             return;
         }
 
-        DelayPojo<T> delayPojo = MwJsonUtil.fromJson(jsonValue, new TypeReference<DelayPojo<T>>() {
+        DelayPojo<T> delayPojo = LyJsonUtil.fromJson(jsonValue, new TypeReference<DelayPojo<T>>() {
         });
         long delayExecTimeSecond = delayPojo.getDelayExecTimeSecond();
-        long currentTimeSecond = MwDateUtil.getSecondTime();
+        long currentTimeSecond = LyDateUtil.getSecondTime();
         if (currentTimeSecond > delayExecTimeSecond) {
             logger.info("该uid[{}], 理论执行时间[{}], 实际执行时间[{}], 执行超时时间差[{}]s", message, delayExecTimeSecond, currentTimeSecond, (currentTimeSecond - delayExecTimeSecond));
         }

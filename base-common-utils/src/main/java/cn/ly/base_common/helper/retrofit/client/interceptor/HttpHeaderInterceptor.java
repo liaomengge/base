@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.retrofit.client.interceptor;
 
-import cn.ly.base_common.utils.trace.MwTraceLogUtil;
+import cn.ly.base_common.utils.trace.LyTraceLogUtil;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -16,9 +16,9 @@ public class HttpHeaderInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request original = chain.request();
-        String traceId = MwTraceLogUtil.get();
+        String traceId = LyTraceLogUtil.get();
         if (StringUtils.isNotBlank(traceId)) {
-            Request.Builder requestBuilder = original.newBuilder().addHeader(MwTraceLogUtil.TRACE_ID, traceId);
+            Request.Builder requestBuilder = original.newBuilder().addHeader(LyTraceLogUtil.TRACE_ID, traceId);
             Request request = requestBuilder.build();
             return chain.proceed(request);
         }
