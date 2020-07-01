@@ -6,8 +6,8 @@ import com.google.common.base.Splitter;
 /**
  * Created by liaomengge on 2018/12/20.
  */
-public final class ToolConst {
+public interface ToolConst {
 
-    public static final Splitter SPLITTER = Splitter.on(",").omitEmptyStrings().trimResults();
-    public static final Joiner JOINER = Joiner.on(",").skipNulls();
+    Splitter SPLITTER = Splitter.on(",").omitEmptyStrings().trimResults();
+    Joiner JOINER = Joiner.on(",").skipNulls();
 }

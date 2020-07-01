@@ -2,15 +2,14 @@ def artifactId = "base-framework-bom"
 version = '0.0.6-SNAPSHOT'
 
 def versions = [
-        baseProcessor                   : '0.0.0.1-SNAPSHOT',
-        baseCommonUtils                 : '1.0.8.33-SNAPSHOT',
-        baseCommonMiddleware            : '1.0.6.18-SNAPSHOT',
-        baseCommonDayu                  : '0.0.3.15-SNAPSHOT',
-        baseCommonCache                 : '1.0.2.14-SNAPSHOT',
-        baseDubboFramework              : '1.0.5.23-SNAPSHOT',
-        baseSpringBootStarter           : '1.5.x.66-SNAPSHOT',
-        baseSpringCloudFramework        : '1.5.x.54-SNAPSHOT',
-        baseSpringCloudFramework_DIY    : '1.5.x.49-BASE-SNAPSHOT'
+        baseProcessor           : '0.0.0.1-SNAPSHOT',
+        baseCommonUtils         : '1.1.0-SNAPSHOT',
+        baseCommonMiddleware    : '1.1.0-SNAPSHOT',
+        baseCommonDayu          : '1.1.0-SNAPSHOT',
+        baseCommonCache         : '1.1.0-SNAPSHOT',
+        baseDubboFramework      : '1.0.7-SNAPSHOT',
+        baseSpringBootStarter   : '1.5.x.66-SNAPSHOT',
+        baseSpringCloudFramework: '1.5.x.54-SNAPSHOT'
 ]
 
 dependencyManagement {
@@ -52,8 +51,6 @@ dependencyManagement {
         dependency "cn.ly:ly-thread-pool-spring-boot-starter:${versions.baseSpringBootStarter}"
 
         dependency "cn.ly:base_dubbo_framework:${versions.baseDubboFramework}"
-
-        dependency "cn.ly:base_spring_cloud_framework_DIY:${versions.baseSpringCloudFramework_DIY}"
 
         dependency "cn.ly:base_spring_cloud_framework:${versions.baseSpringCloudFramework}"
 

@@ -40,7 +40,6 @@ version = '0.0.6-SNAPSHOT'
 
 def versions = [
         alibaba        : '1.5.1.RELEASE',
-        spring         : '4.3.25.RELEASE',
         springBoot     : '1.5.22.RELEASE',
         springCloud    : 'Edgware.SR6'
 ]
@@ -48,7 +47,6 @@ def versions = [
 dependencyManagement {
     imports {
         mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${versions.alibaba}"
-        mavenBom "org.springframework:spring-framework-bom:${versions.spring}"
         mavenBom "org.springframework.boot:spring-boot-dependencies:${versions.springBoot}"
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${versions.springCloud}"
     }

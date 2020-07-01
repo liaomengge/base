@@ -45,8 +45,8 @@ public abstract class BaseMQReceiver extends AbstractMQReceiver {
     public void stop() {
         simpleMessageListenerContainers.forEach(simpleMessageListenerContainer -> {
             if (simpleMessageListenerContainer.isRunning()) {
-                simpleMessageListenerContainer.stop(() -> logger.info("队列[{}]监听器已经停止...",
-                        simpleMessageListenerContainer.getDestinationName()));
+                simpleMessageListenerContainer.destroy();
+                logger.info("队列[{}]监听器已经停止...", simpleMessageListenerContainer.getDestinationName());
             }
         });
     }

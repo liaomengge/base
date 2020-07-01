@@ -15,7 +15,7 @@ public class FrameworkBeanDefinitionRegistry implements BeanDefinitionRegistryPo
 
     private static final Logger logger = MwLogger.getInstance(FrameworkBeanDefinitionRegistry.class);
 
-    public static final String FRAMEWORK_PKG = "cn.ly.service.base_framework";
+    private static final String FRAMEWORK_PKG = "cn.ly.service.base_framework";
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {

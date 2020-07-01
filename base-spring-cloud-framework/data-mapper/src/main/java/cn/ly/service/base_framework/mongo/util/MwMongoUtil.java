@@ -2,6 +2,7 @@ package cn.ly.service.base_framework.mongo.util;
 
 import cn.ly.base_common.utils.collection.MwMapUtil;
 import cn.ly.service.base_framework.mongo.domain.BaseMongoDoc;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.data.mongodb.core.query.Update;
 
@@ -10,9 +11,10 @@ import java.util.Map;
 /**
  * Created by liaomengge on 17/3/2.
  */
-public final class MwMongoUtil {
+@UtilityClass
+public class MwMongoUtil {
 
-    public static <T extends BaseMongoDoc> Update convertObjectToParams(T obj, String... excludePropertyName) {
+    public <T extends BaseMongoDoc> Update convertObjectToParams(T obj, String... excludePropertyName) {
         Map<String, Object> params = MwMapUtil.bean2Map(obj);
 
         Update update = new Update();
@@ -29,7 +31,7 @@ public final class MwMongoUtil {
         return update;
     }
 
-    public static Update convertMapToParams(Map<String, Object> map, String...
+    public Update convertMapToParams(Map<String, Object> map, String...
             excludePropertyName) {
         Update update = new Update();
         map.entrySet().stream().filter(entry -> {

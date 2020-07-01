@@ -22,7 +22,7 @@ import java.util.Objects;
 public class RedissonClientManager implements InitializingBean {
 
     private static final int SCAN_INTERVAL = 3_000;//单位:ms
-    public static final int CONNECT_TIMEOUT = 5_000;//单位:ms
+    private static final int CONNECT_TIMEOUT = 5_000;//单位:ms
 
     private String masterName;
     private String[] sentinelAddress;

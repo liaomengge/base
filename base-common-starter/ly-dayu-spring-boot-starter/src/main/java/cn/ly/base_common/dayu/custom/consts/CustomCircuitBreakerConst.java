@@ -3,7 +3,7 @@ package cn.ly.base_common.dayu.custom.consts;
 /**
  * Created by liaomengge on 2019/8/13.
  */
-public final class CustomCircuitBreakerConst {
+public interface CustomCircuitBreakerConst {
 
-    public static final String CUSTOM_CIRCUIT_BREAKER_PREFIX = "ly.dayu.custom";
+    String CUSTOM_CIRCUIT_BREAKER_PREFIX = "ly.dayu.custom";
 }

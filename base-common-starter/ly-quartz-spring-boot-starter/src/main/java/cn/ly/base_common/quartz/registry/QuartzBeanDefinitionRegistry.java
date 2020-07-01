@@ -35,7 +35,7 @@ public class QuartzBeanDefinitionRegistry implements EnvironmentAware, Applicati
 
     private static final Logger logger = MwLogger.getInstance(QuartzBeanDefinitionRegistry.class);
 
-    public static final String JOB_PKG = "ly.quartz.basePackage";
+    private static final String JOB_PKG = "ly.quartz.basePackage";
 
     private Environment environment;
     private static ApplicationContext applicationContext;

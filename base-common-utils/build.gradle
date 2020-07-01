@@ -16,7 +16,7 @@ dependencyUpdates {
 }
 
 group = 'cn.ly'
-version = '1.0.9-SNAPSHOT'
+version = '1.1.0-SNAPSHOT'
 
 targetCompatibility = 1.8
 sourceCompatibility = 1.8

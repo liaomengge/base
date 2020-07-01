@@ -18,7 +18,7 @@ import java.io.OutputStream;
  */
 public class JacksonWriterInterceptor implements WriterInterceptor {
 
-    public static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {
@@ -30,6 +30,7 @@ public class JacksonWriterInterceptor implements WriterInterceptor {
 
         DataResult<BaseRestResponse> result = new DataResult<>(true);
         BaseRestResponse restResponse = new BaseRestResponse() {
+            private static final long serialVersionUID = -4891503559850961000L;
         };
         restResponse.setStatus(ErrorCodeEnum.RPC_ERROR.getCode());
         String rpcErrorMsg = MwStringUtil.getValue(context.getEntity());
