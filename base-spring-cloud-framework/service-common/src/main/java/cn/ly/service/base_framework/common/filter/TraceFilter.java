@@ -16,7 +16,7 @@ import static cn.ly.base_common.utils.trace.LyTraceLogUtil.*;
  * Created by liaomengge on 2018/11/22.
  */
 @Order(0)
-public class TraceFilter extends AbstractFilter{
+public class TraceFilter extends AbstractFilter {
 
     @Override
     public Object doFilter(ProceedingJoinPoint joinPoint, FilterChain chain) throws Throwable {

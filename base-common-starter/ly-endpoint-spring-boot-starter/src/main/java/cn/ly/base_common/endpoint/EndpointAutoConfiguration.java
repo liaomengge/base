@@ -5,6 +5,7 @@ import org.springframework.boot.actuate.autoconfigure.InfoContributorAutoConfigu
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -15,5 +16,6 @@ import org.springframework.context.annotation.Import;
 @AutoConfigureBefore(InfoContributorAutoConfiguration.class)
 @AutoConfigureAfter(ProjectInfoAutoConfiguration.class)
 @Import(CustomInfoConfiguration.class)
+@EnableConfigurationProperties(EndpointProperties.class)
 public class EndpointAutoConfiguration {
 }

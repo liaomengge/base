@@ -38,7 +38,7 @@ public class LyExceptionUtil {
      * @param wrapped 包装过得异常
      * @return 解包后的异常
      */
-    public static Throwable unwrap(Throwable wrapped) {
+    public Throwable unwrap(Throwable wrapped) {
         Throwable unwrapped = wrapped;
         while (true) {
             if (unwrapped instanceof InvocationTargetException) {
