@@ -145,7 +145,7 @@ public class RestTemplateAutoConfiguration {
             messageConverters.add(mappingJackson2HttpMessageConverter);
         } else {
             FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
-            fastJsonHttpMessageConverter.setSupportedMediaTypes(ImmutableList.of(MediaType.APPLICATION_JSON_UTF8));
+            fastJsonHttpMessageConverter.setSupportedMediaTypes(ImmutableList.of(MediaType.APPLICATION_JSON));
             FastJsonConfig fastJsonConfig = new FastJsonConfig();
             fastJsonConfig.setSerializerFeatures(SerializerFeature.DisableCircularReferenceDetect);
             fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);

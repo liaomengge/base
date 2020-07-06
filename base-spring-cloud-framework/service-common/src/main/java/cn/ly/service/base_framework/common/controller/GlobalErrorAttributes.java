@@ -5,8 +5,8 @@ import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
-import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
 
@@ -16,8 +16,8 @@ import java.util.Map;
 public class GlobalErrorAttributes extends DefaultErrorAttributes {
 
     @Override
-    public Map<String, Object> getErrorAttributes(RequestAttributes requestAttributes, boolean includeStackTrace) {
-        Map<String, Object> errorAttributesMap = super.getErrorAttributes(requestAttributes, includeStackTrace);
+    public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
+        Map<String, Object> errorAttributesMap = super.getErrorAttributes(webRequest, includeStackTrace);
         String status = MapUtils.getString(errorAttributesMap, "status");
         String message = MapUtils.getString(errorAttributesMap, "message");
         String error = MapUtils.getString(errorAttributesMap, "error");

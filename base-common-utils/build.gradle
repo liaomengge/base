@@ -16,7 +16,7 @@ dependencyUpdates {
 }
 
 group = 'cn.ly'
-version = '1.1.2-SNAPSHOT'
+version = '1.1.2-test2-SNAPSHOT'
 
 targetCompatibility = 1.8
 sourceCompatibility = 1.8
@@ -109,6 +109,8 @@ dependencies {
     api "org.springframework.data:spring-data-redis"
     api "org.springframework.retry:spring-retry"
 
+    api "org.springframework.boot:spring-boot"
+
     api "org.slf4j:slf4j-api"
     api "org.apache.logging.log4j:log4j-slf4j-impl"
     api "org.apache.logging.log4j:log4j-core"
@@ -126,7 +128,7 @@ dependencies {
     api "org.apache.httpcomponents:httpasyncclient"
     api "org.apache.httpcomponents:httpcore"
 
-    api "org.hibernate:hibernate-validator"
+    api "org.hibernate.validator:hibernate-validator"
 
     api "com.timgroup:java-statsd-client"
 
@@ -138,16 +140,15 @@ dependencies {
 
     /***********************************华丽的分割线************************************************/
 
-    api "com.sun.mail:mailapi"
-    api "com.sun.mail:javax.mail"
+    api "com.sun.mail:jakarta.mail"
+
+    api "com.google.guava:guava"
 
     api "com.github.ben-manes.caffeine:caffeine"
     api "com.github.ben-manes.caffeine:guava"
     api "com.github.ben-manes.caffeine:jcache"
 
     api "com.squareup.okhttp3:okhttp"
-
-    api "com.google.guava:guava"
 
     api("org.apache.curator:curator-recipes") {
         exclude(group: 'org.apache.zookeeper', module: 'zookeeper')
@@ -156,7 +157,7 @@ dependencies {
     /***********************************华丽的分割线************************************************/
 
     api "javax.ws.rs:javax.ws.rs-api"
-    api "javax.servlet:servlet-api"
+    api "javax.servlet:javax.servlet-api"
 
     api "commons-io:commons-io"
     api "org.apache.commons:commons-lang3"

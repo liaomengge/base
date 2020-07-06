@@ -1,6 +1,7 @@
 package cn.ly.service.base_framework.util;
 
 import lombok.experimental.UtilityClass;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -10,23 +11,24 @@ import org.springframework.context.ConfigurableApplicationContext;
 @UtilityClass
 public class SpringBootUtils {
 
-    public SpringApplicationBuilder create(Object[] sources) {
+    public SpringApplicationBuilder create(Class<?>... sources) {
         return new SpringApplicationBuilder(sources);
     }
 
-    public ConfigurableApplicationContext run(Object source, String[] args) {
-        return run(new Object[]{source}, args);
+    public ConfigurableApplicationContext run(Class<?> source, String[] args) {
+        return run(new Class<?>[]{source}, args);
     }
 
-    public ConfigurableApplicationContext run(Object[] sources, String[] args) {
+    public ConfigurableApplicationContext run(Class<?>[] sources, String[] args) {
         return create(sources).run(args);
     }
 
-    public ConfigurableApplicationContext run(Object source, String[] args, boolean webEnvironment) {
-        return run(new Object[]{source}, args, webEnvironment);
+    public ConfigurableApplicationContext run(Class<?> source, String[] args, WebApplicationType webApplicationType) {
+        return run(new Class<?>[]{source}, args, webApplicationType);
     }
 
-    public ConfigurableApplicationContext run(Object[] sources, String[] args, boolean webEnvironment) {
-        return create(sources).web(webEnvironment).run(args);
+    public ConfigurableApplicationContext run(Class<?>[] sources, String[] args,
+                                              WebApplicationType webApplicationType) {
+        return create(sources).web(webApplicationType).run(args);
     }
 }

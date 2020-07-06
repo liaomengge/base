@@ -2,10 +2,10 @@ package cn.ly.service.base_framework.base;
 
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 

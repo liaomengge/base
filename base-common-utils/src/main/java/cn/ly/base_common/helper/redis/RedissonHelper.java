@@ -175,7 +175,7 @@ public class RedissonHelper implements IRedisHelper {
     }
 
     @Override
-    public ScanResult<Map.Entry<String, String>> hscan(String key, String cursor, ScanParams params) {
+    public ScanResult<Map.Entry<byte[], byte[]>> hscan(String key, String cursor, ScanParams params) {
         throw new UnsupportedOperationException("Redisson不兼容该返回结果集操作");
     }
 
@@ -252,7 +252,7 @@ public class RedissonHelper implements IRedisHelper {
     }
 
     @Override
-    public ScanResult<String> sscan(String key, String cursor, ScanParams params) {
+    public ScanResult<byte[]> sscan(String key, String cursor, ScanParams params) {
         throw new UnsupportedOperationException("Redisson不兼容该返回结果集操作");
     }
 

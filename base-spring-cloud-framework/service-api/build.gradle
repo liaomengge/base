@@ -1,6 +1,8 @@
 def artifactId = "base-spring-cloud-framework-api"
 
 dependencies {
+    api "javax.validation:validation-api"
+    api "org.hibernate.validator:hibernate-validator"
 }
 
 uploadArchives {

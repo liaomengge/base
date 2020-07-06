@@ -3,7 +3,7 @@ package cn.ly.service.base_framework.mongo.service;
 import cn.ly.service.base_framework.mongo.dao.impl.BaseMongoDao;
 import cn.ly.service.base_framework.mongo.domain.BaseMongoDoc;
 import cn.ly.service.base_framework.mongo.page.MongoPagination;
-import com.mongodb.WriteResult;
+import com.mongodb.client.result.UpdateResult;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Query;
@@ -58,27 +58,27 @@ public abstract class BaseMongoService<T extends BaseMongoDoc> {
         return baseMongoDao.findAll();
     }
 
-    public WriteResult updateFirst(Query query, Update update) {
+    public UpdateResult updateFirst(Query query, Update update) {
         return baseMongoDao.updateFirst(query, update);
     }
 
-    public WriteResult updateFirst(Query query, @NonNull T entity, String... excludePropertyName) {
+    public UpdateResult updateFirst(Query query, @NonNull T entity, String... excludePropertyName) {
         return baseMongoDao.updateFirst(query, entity, excludePropertyName);
     }
 
-    public WriteResult updateFirst(Query query, @NonNull Map<String, Object> map, String... excludePropertyName) {
+    public UpdateResult updateFirst(Query query, @NonNull Map<String, Object> map, String... excludePropertyName) {
         return baseMongoDao.updateFirst(query, map, excludePropertyName);
     }
 
-    public WriteResult updateMulti(Query query, Update update) {
+    public UpdateResult updateMulti(Query query, Update update) {
         return baseMongoDao.updateMulti(query, update);
     }
 
-    public WriteResult updateMulti(Query query, @NonNull T entity, String... excludePropertyName) {
+    public UpdateResult updateMulti(Query query, @NonNull T entity, String... excludePropertyName) {
         return baseMongoDao.updateMulti(query, entity, excludePropertyName);
     }
 
-    public WriteResult updateMulti(Query query, @NonNull Map<String, Object> map, String... excludePropertyName) {
+    public UpdateResult updateMulti(Query query, @NonNull Map<String, Object> map, String... excludePropertyName) {
         return baseMongoDao.updateMulti(query, map, excludePropertyName);
     }
 

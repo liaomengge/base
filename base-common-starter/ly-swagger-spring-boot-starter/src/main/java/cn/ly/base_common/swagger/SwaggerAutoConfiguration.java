@@ -1,16 +1,15 @@
 package cn.ly.base_common.swagger;
 
+import cn.ly.base_common.support.predicate._Predicates;
 import cn.ly.base_common.swagger.SwaggerProperties.ApiInfoWrapper;
 import cn.ly.base_common.swagger.annotation.EnableExtendSwaggerBootstrapUI;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -18,11 +17,12 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
+import springfox.documentation.spring.web.SpringfoxWebConfiguration;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
@@ -32,7 +32,7 @@ import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
  */
 @Configuration
 @EnableConfigurationProperties(SwaggerProperties.class)
-@EnableSwagger2
+@EnableSwagger2WebMvc
 @EnableExtendSwaggerBootstrapUI
 public class SwaggerAutoConfiguration {
 
@@ -40,9 +40,9 @@ public class SwaggerAutoConfiguration {
     private SwaggerProperties swaggerProperties;
 
     @Bean
-    @ConditionalOnClass(SpringfoxWebMvcConfiguration.class)
-    public WebMvcConfigurerAdapter addResourceHandlers() {
-        return new WebMvcConfigurerAdapter() {
+    @ConditionalOnClass(SpringfoxWebConfiguration.class)
+    public WebMvcConfigurer addResourceHandlers() {
+        return new WebMvcConfigurer() {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
                 registry.addResourceHandler("swagger-ui.html", "doc.html")
@@ -63,7 +63,7 @@ public class SwaggerAutoConfiguration {
                 .groupName(this.swaggerProperties.getGroupName())
                 .apiInfo(this.apiInfo())
                 .select()
-                .apis(Predicates.or(predicates))
+                .apis(_Predicates.or(predicates))
                 .paths(PathSelectors.any())
                 .build();
     }

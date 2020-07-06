@@ -5,7 +5,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.aopalliance.aop.Advice;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
+import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 
 /**
  * Created by liaomengge on 2018/6/29.

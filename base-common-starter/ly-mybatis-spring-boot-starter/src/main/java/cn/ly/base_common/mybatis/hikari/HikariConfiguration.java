@@ -4,8 +4,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -25,12 +25,12 @@ public class HikariConfiguration {
     @Primary
     @ConfigurationProperties("ly.mybatis.hikari.master")
     public HikariDataSource masterDataSource() {
-        return (HikariDataSource) DataSourceBuilder.create().type(HikariDataSource.class).build();
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
     @Bean(name = "slaveDataSource", destroyMethod = "close")
     @ConfigurationProperties("ly.mybatis.hikari.slave")
     public HikariDataSource slaveDataSource() {
-        return (HikariDataSource) DataSourceBuilder.create().type(HikariDataSource.class).build();
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 }

@@ -4,8 +4,7 @@ import cn.ly.base_common.logger.LoggerProperties;
 import cn.ly.base_common.utils.web.LyWebUtil;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.endpoint.LoggersEndpoint;
-import org.springframework.boot.actuate.endpoint.mvc.LoggersMvcEndpoint.InvalidLogLevelException;
+import org.springframework.boot.actuate.logging.LoggersEndpoint;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
@@ -55,7 +54,7 @@ public class LoggerServlet extends HttpServlet implements EnvironmentAware {
         LogLevel logLevel;
         try {
             logLevel = this.getLogLevel(loggerProperties.getLevel());
-        } catch (InvalidLogLevelException e) {
+        } catch (Exception e) {
             respBody.setSuccess(false);
             respBody.setMsg(e.getMessage());
             LyWebUtil.renderJson(resp, respBody);
@@ -63,7 +62,7 @@ public class LoggerServlet extends HttpServlet implements EnvironmentAware {
         }
 
         try {
-            loggersEndpoint.setLogLevel(loggerProperties.getPkg(), LogLevel.valueOf(logLevel.name()));
+            loggersEndpoint.configureLogLevel(loggerProperties.getPkg(), LogLevel.valueOf(logLevel.name()));
             respBody.setMsg("设置package[" + loggerProperties.getPkg() + "],级别[" + loggerProperties.getLevel() + "]成功");
         } catch (Exception e) {
             respBody.setSuccess(false);
@@ -73,11 +72,7 @@ public class LoggerServlet extends HttpServlet implements EnvironmentAware {
     }
 
     private LogLevel getLogLevel(String level) {
-        try {
-            return (level != null) ? LogLevel.valueOf(level.toUpperCase(Locale.ENGLISH)) : null;
-        } catch (IllegalArgumentException ex) {
-            throw new InvalidLogLevelException(level);
-        }
+        return (level != null) ? LogLevel.valueOf(level.toUpperCase(Locale.ENGLISH)) : null;
     }
 
     @Override

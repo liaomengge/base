@@ -56,7 +56,9 @@ public class LyMapUtil {
      * @return
      */
     public Map<String, Object> bean2Map(Object bean, String... excludePropertyName) {
-        if (null == bean) return Maps.newHashMap();
+        if (null == bean) {
+            return Maps.newHashMap();
+        }
 
         Class<?> type = bean.getClass();
         Map<String, Object> resultMap = Maps.newHashMap();
@@ -95,12 +97,16 @@ public class LyMapUtil {
      * @return
      */
     public Map<String, Object> bean2Map4Cglib(Object obj) {
-        if (null == obj) return Maps.newHashMap();
+        if (null == obj) {
+            return Maps.newHashMap();
+        }
 
         Map<String, Object> resultMap = Maps.newHashMap();
 
         BeanMap beanMap = BeanMap.create(obj);
-        for (Object key : beanMap.keySet()) resultMap.put(LyStringUtil.getValue(key), beanMap.get(key));
+        for (Object key : beanMap.keySet()) {
+            resultMap.put(LyStringUtil.getValue(key), beanMap.get(key));
+        }
         return resultMap;
     }
 
@@ -111,7 +117,9 @@ public class LyMapUtil {
      * @return
      */
     public Map<String, Object> bean2Map4Json(Object obj) {
-        if (null == obj) return Maps.newHashMap();
+        if (null == obj) {
+            return Maps.newHashMap();
+        }
         return LyJsonUtil.fromJson(LyJsonUtil.toJson(obj), new TypeReference<Map<String, Object>>() {
         });
     }
@@ -125,7 +133,9 @@ public class LyMapUtil {
      * @return
      */
     public Map<String, Object> bean2Map4FastJson(Object obj, boolean isFastJsonField, String... excludePropertyName) {
-        if (null == obj) return Maps.newHashMap();
+        if (null == obj) {
+            return Maps.newHashMap();
+        }
 
         Class<?> type = obj.getClass();
         Map<String, Object> resultMap = Maps.newHashMap();
@@ -154,11 +164,15 @@ public class LyMapUtil {
                     return null;
                 }
 
-                if (isFastJsonField) if (field != null) {
-                    JSONField jsonField = field.getAnnotation(JSONField.class);
-                    if (jsonField != null) {
-                        String annotationPropertyName = jsonField.name();
-                        if (StringUtils.isNotBlank(annotationPropertyName)) propertyName = annotationPropertyName;
+                if (isFastJsonField) {
+                    if (field != null) {
+                        JSONField jsonField = field.getAnnotation(JSONField.class);
+                        if (jsonField != null) {
+                            String annotationPropertyName = jsonField.name();
+                            if (StringUtils.isNotBlank(annotationPropertyName)) {
+                                propertyName = annotationPropertyName;
+                            }
+                        }
                     }
                 }
                 resultMap.put(propertyName, result);
@@ -176,7 +190,9 @@ public class LyMapUtil {
      * @return
      */
     public Map<String, Object> bean2Map4Jackson(Object obj, boolean isJacksonField, String... excludePropertyName) {
-        if (null == obj) return Maps.newHashMap();
+        if (null == obj) {
+            return Maps.newHashMap();
+        }
 
         Class<?> type = obj.getClass();
         Map<String, Object> resultMap = Maps.newHashMap();
@@ -205,11 +221,15 @@ public class LyMapUtil {
                     return null;
                 }
 
-                if (isJacksonField) if (field != null) {
-                    JsonProperty jsonProperty = field.getAnnotation(JsonProperty.class);
-                    if (jsonProperty != null) {
-                        String annotationPropertyName = jsonProperty.value();
-                        if (StringUtils.isNotBlank(annotationPropertyName)) propertyName = annotationPropertyName;
+                if (isJacksonField) {
+                    if (field != null) {
+                        JsonProperty jsonProperty = field.getAnnotation(JsonProperty.class);
+                        if (jsonProperty != null) {
+                            String annotationPropertyName = jsonProperty.value();
+                            if (StringUtils.isNotBlank(annotationPropertyName)) {
+                                propertyName = annotationPropertyName;
+                            }
+                        }
                     }
                 }
                 resultMap.put(propertyName, result);
@@ -225,7 +245,9 @@ public class LyMapUtil {
      * @return
      */
     public Map<String, Object> bean2Map4Jackson(Object obj) {
-        if (null == obj) return null;
+        if (null == obj) {
+            return null;
+        }
 
         return LyJacksonUtil.bean2Map(obj, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {
         });
@@ -240,7 +262,9 @@ public class LyMapUtil {
      * @return
      */
     public <T> T map2Bean(Map<String, Object> map, Class<T> clazz) {
-        if (null == map) return null;
+        if (null == map) {
+            return null;
+        }
 
         return LyJacksonUtil.map2Bean(map, clazz);
     }
@@ -253,8 +277,10 @@ public class LyMapUtil {
      * @param <T>
      * @return
      */
-    public <T> T map2Bean(Map<String, Object> map, com.fasterxml.jackson.core.type.TypeReference<?> typeReference) {
-        if (null == map) return null;
+    public <T> T map2Bean(Map<String, Object> map, com.fasterxml.jackson.core.type.TypeReference<T> typeReference) {
+        if (null == map) {
+            return null;
+        }
 
         return LyJacksonUtil.map2Bean(map, typeReference);
     }
@@ -266,7 +292,9 @@ public class LyMapUtil {
      * @param object
      */
     public void map2Bean(Map<String, Object> map, Object object) {
-        if (null == map || null == object) return;
+        if (null == map || null == object) {
+            return;
+        }
 
         try {
             BeanUtils.populate(object, map);
@@ -282,7 +310,9 @@ public class LyMapUtil {
      */
     public void map2BeanThrowEx(Map<String, Object> map, Object object) throws InvocationTargetException,
             IllegalAccessException {
-        if (null == map || null == object) return;
+        if (null == map || null == object) {
+            return;
+        }
 
         BeanUtils.populate(object, map);
     }
@@ -321,7 +351,9 @@ public class LyMapUtil {
      */
     public <K, V> Map<K, List<V>> toListMap(Iterable<? extends Map<K, V>> mapList) {
         HashMap<K, List<V>> resultMap = new HashMap<>();
-        if (IterableUtils.isEmpty(mapList)) return resultMap;
+        if (IterableUtils.isEmpty(mapList)) {
+            return resultMap;
+        }
 
         Set<Map.Entry<K, V>> entrySet;
         for (Map<K, V> map : mapList) {
@@ -334,7 +366,9 @@ public class LyMapUtil {
                 if (null == valueList) {
                     valueList = Lists.newArrayList(entry.getValue());
                     resultMap.put(key, valueList);
-                } else valueList.add(entry.getValue());
+                } else {
+                    valueList.add(entry.getValue());
+                }
             }
         }
 
@@ -372,7 +406,9 @@ public class LyMapUtil {
      */
     public <K, V> List<Map<K, V>> toMapList(Map<K, ? extends Iterable<V>> listMap) {
         List<Map<K, V>> resultList = new ArrayList<>();
-        if (MapUtils.isEmpty(listMap)) return resultList;
+        if (MapUtils.isEmpty(listMap)) {
+            return resultList;
+        }
 
         boolean isEnd;// 是否结束。标准是元素列表已耗尽
         int index = 0;// 值索引
@@ -388,10 +424,14 @@ public class LyMapUtil {
                 if (index < vListSize) {
                     map.put(entry.getKey(), vList.get(index));
                     // 当值列表中还有更多值（非最后一个）, 继续循环
-                    if (index != vListSize - 1) isEnd = false;
+                    if (index != vListSize - 1) {
+                        isEnd = false;
+                    }
                 }
             }
-            if (false == map.isEmpty()) resultList.add(map);
+            if (false == map.isEmpty()) {
+                resultList.add(map);
+            }
             index++;
         } while (false == isEnd);
 
@@ -445,12 +485,16 @@ public class LyMapUtil {
     public <K, V> String join(Map<K, V> map, String separator, String keyValueSeparator, boolean isIgnoreNull) {
         StringBuilder strBuilder = new StringBuilder(16);
         boolean isFirst = true;
-        for (Map.Entry<K, V> entry : map.entrySet())
+        for (Map.Entry<K, V> entry : map.entrySet()) {
             if (false == isIgnoreNull || entry.getKey() != null && entry.getValue() != null) {
-                if (isFirst) isFirst = false;
-                else strBuilder.append(separator);
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    strBuilder.append(separator);
+                }
                 strBuilder.append(Objects.toString(entry.getKey(), "")).append(keyValueSeparator).append(Objects.toString(entry.getValue(), ""));
             }
+        }
         return strBuilder.toString();
     }
 

@@ -90,7 +90,7 @@ public class HttpLoggingInterceptor implements Interceptor {
             if (Objects.nonNull(responseBody) && HttpHeaders.hasBody(response) && response.isSuccessful()) {
                 BufferedSource source = responseBody.source();
                 source.request(Long.MAX_VALUE);
-                Buffer buffer = source.getBuffer();
+                Buffer buffer = source.buffer();
 
                 Charset charset;
                 MediaType contentType = responseBody.contentType();

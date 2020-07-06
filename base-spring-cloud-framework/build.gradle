@@ -94,15 +94,15 @@ subprojects {
     }
 
     ext {
-        baseCommonMiddlewareVersion = '1.1.2-SNAPSHOT'
-        baseCommonUtilsVersion = '1.1.2-SNAPSHOT'
+        baseCommonMiddlewareVersion = '1.1.2-test2-SNAPSHOT'
+        baseCommonUtilsVersion = '1.1.2-test2-SNAPSHOT'
         nexusUrl = version.endsWith("-SNAPSHOT") ?
                 "http://127.0.0.1:8089/repository/fly-snapshots/" :
                 "http://127.0.0.1:8089/repository/fly-releases/"
     }
 
     def versions = [
-            platformBom: '0.0.5-SNAPSHOT'
+            platformBom: '1.0.1-SNAPSHOT'
     ]
 
     dependencyManagement {
@@ -133,7 +133,6 @@ subprojects {
         api "org.springframework.boot:spring-boot-starter-actuator"
 
         api "org.apache.tomcat.embed:tomcat-embed-core"
-        api "org.apache.tomcat.embed:tomcat-embed-logging-juli"
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'

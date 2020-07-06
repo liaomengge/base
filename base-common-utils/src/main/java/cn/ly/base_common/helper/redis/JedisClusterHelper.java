@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import redis.clients.jedis.*;
+import redis.clients.jedis.params.SetParams;
+import redis.clients.jedis.util.SafeEncoder;
 
 import java.util.Collections;
 import java.util.List;
@@ -104,8 +106,7 @@ public class JedisClusterHelper implements IRedisHelper {
 
     @Override
     public boolean lock(String key, String value, long expiredSeconds) {
-        String result = jedisCluster.set(LOCK_PREFIX + key, value, SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME,
-                expiredSeconds);
+        String result = jedisCluster.set(LOCK_PREFIX + key, value, SetParams.setParams().nx().ex((int) expiredSeconds));
         return LOCK_SUCCESS.equals(result);
     }
 
@@ -190,8 +191,8 @@ public class JedisClusterHelper implements IRedisHelper {
     }
 
     @Override
-    public ScanResult<Map.Entry<String, String>> hscan(String key, String cursor, ScanParams params) {
-        return jedisCluster.hscan(key, cursor, params);
+    public ScanResult<Map.Entry<byte[], byte[]>> hscan(String key, String cursor, ScanParams params) {
+        return jedisCluster.hscan(SafeEncoder.encode(key), SafeEncoder.encode(cursor), params);
     }
 
     //****************************************list*******************************************//
@@ -261,8 +262,8 @@ public class JedisClusterHelper implements IRedisHelper {
     }
 
     @Override
-    public ScanResult<String> sscan(String key, String cursor, ScanParams params) {
-        return jedisCluster.sscan(key, cursor, params);
+    public ScanResult<byte[]> sscan(String key, String cursor, ScanParams params) {
+        return jedisCluster.sscan(SafeEncoder.encode(key), SafeEncoder.encode(cursor), params);
     }
 
     //****************************************sort set*******************************************//

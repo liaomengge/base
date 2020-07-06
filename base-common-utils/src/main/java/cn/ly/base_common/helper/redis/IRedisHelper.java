@@ -83,7 +83,7 @@ public interface IRedisHelper {
 
     ScanResult<Map.Entry<String, String>> hscan(String key, String cursor);
 
-    ScanResult<Map.Entry<String, String>> hscan(String key, String cursor, ScanParams params);
+    ScanResult<Map.Entry<byte[], byte[]>> hscan(String key, String cursor, ScanParams params);
 
     //****************************************list*******************************************//
 
@@ -116,7 +116,7 @@ public interface IRedisHelper {
 
     void srem(String key, String... member);
 
-    ScanResult<String> sscan(String key, String cursor, ScanParams params);
+    ScanResult<byte[]> sscan(String key, String cursor, ScanParams params);
 
     //****************************************sort set*******************************************//
 

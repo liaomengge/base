@@ -8,5 +8,5 @@ import java.util.Map;
  */
 @FunctionalInterface
 public interface IRedisScan {
-    void doHandle(List<Map.Entry<String, String>> entries);
+    void doHandle(List<Map<String, String>> mapList);
 }

@@ -3,10 +3,10 @@ package cn.ly.service.base_framework.listener;
 import cn.ly.base_common.support.misc.consts.ToolConst;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.actuate.autoconfigure.ManagementServerProperties;
+import org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.boot.web.context.WebServerApplicationContext;
+import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -25,16 +25,16 @@ public class BaseWebServerInitializedListener {
     private static final String HTTP_PREFIX = "http://";
 
     @Order
-    @EventListener(EmbeddedServletContainerInitializedEvent.class)
-    public void afterWebInitialize(EmbeddedServletContainerInitializedEvent event) {
-        ConfigurableApplicationContext ctx = event.getApplicationContext();
-        if (isDevOrTestEnv(ctx)) {
-            ServerProperties serverProperties = ctx.getBean(ServerProperties.class);
-            ManagementServerProperties managementServerProperties = ctx.getBean(ManagementServerProperties.class);
-            String serverContextPath = serverProperties.getContextPath();
-            String managementContextPath = managementServerProperties.getContextPath();
-            String applicationName = ctx.getEnvironment().getProperty("spring.application.name");
-            String[] activeProfiles = ctx.getEnvironment().getActiveProfiles();
+    @EventListener(WebServerInitializedEvent.class)
+    public void afterWebInitialize(WebServerInitializedEvent event) {
+        WebServerApplicationContext context = event.getApplicationContext();
+        if (isDevOrTestEnv(context)) {
+            ServerProperties serverProperties = context.getBean(ServerProperties.class);
+            ManagementServerProperties managementServerProperties = context.getBean(ManagementServerProperties.class);
+            String serverContextPath = serverProperties.getServlet().getContextPath();
+            String managementContextPath = managementServerProperties.getServlet().getContextPath();
+            String applicationName = context.getEnvironment().getProperty("spring.application.name");
+            String[] activeProfiles = context.getEnvironment().getActiveProfiles();
 
             String pingUrl = HTTP_PREFIX + getIpAndPort(event) + serverContextPath + managementContextPath + "/info";
             StringBuilder sBuilder = new StringBuilder(16);
@@ -52,8 +52,8 @@ public class BaseWebServerInitializedListener {
         }
     }
 
-    private String getIpAndPort(EmbeddedServletContainerInitializedEvent event) {
-        int port = event.getEmbeddedServletContainer().getPort();
+    private String getIpAndPort(WebServerInitializedEvent event) {
+        int port = event.getWebServer().getPort();
         String hostAddress = null;
         try {
             InetAddress address = InetAddress.getLocalHost();
@@ -64,7 +64,7 @@ public class BaseWebServerInitializedListener {
         return hostAddress + ":" + port;
     }
 
-    private boolean isDevOrTestEnv(ConfigurableApplicationContext ctx) {
+    private boolean isDevOrTestEnv(WebServerApplicationContext ctx) {
         String[] activeProfiles = ctx.getEnvironment().getActiveProfiles();
         if (ArrayUtils.isNotEmpty(activeProfiles)) {
             return Arrays.stream(activeProfiles).anyMatch(val -> StringUtils.equalsIgnoreCase(val, "dev") || StringUtils.equalsIgnoreCase(val, "test"));

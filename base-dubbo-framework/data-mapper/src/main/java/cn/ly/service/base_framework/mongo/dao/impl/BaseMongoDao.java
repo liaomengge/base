@@ -5,7 +5,7 @@ import cn.ly.service.base_framework.mongo.dao.IBaseMongoDao;
 import cn.ly.service.base_framework.mongo.domain.BaseMongoDoc;
 import cn.ly.service.base_framework.mongo.page.MongoPagination;
 import cn.ly.service.base_framework.mongo.util.LyMongoUtil;
-import com.mongodb.WriteResult;
+import com.mongodb.client.result.UpdateResult;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -78,35 +78,35 @@ public abstract class BaseMongoDao<T extends BaseMongoDoc> implements IBaseMongo
     }
 
     @Override
-    public WriteResult updateFirst(Query query, Update update) {
+    public UpdateResult updateFirst(Query query, Update update) {
         return mongoTemplate.updateFirst(query, update, getEntityClass());
     }
 
     @Override
-    public WriteResult updateFirst(Query query, @NonNull T entity, String... excludePropertyName) {
+    public UpdateResult updateFirst(Query query, @NonNull T entity, String... excludePropertyName) {
         Update update = LyMongoUtil.convertObjectToParams(entity, excludePropertyName);
         return mongoTemplate.updateFirst(query, update, getEntityClass());
     }
 
     @Override
-    public WriteResult updateFirst(Query query, @NonNull Map<String, Object> map, String... excludePropertyName) {
+    public UpdateResult updateFirst(Query query, @NonNull Map<String, Object> map, String... excludePropertyName) {
         Update update = LyMongoUtil.convertMapToParams(map, excludePropertyName);
         return mongoTemplate.updateFirst(query, update, getEntityClass());
     }
 
     @Override
-    public WriteResult updateMulti(Query query, Update update) {
+    public UpdateResult updateMulti(Query query, Update update) {
         return mongoTemplate.updateMulti(query, update, getEntityClass());
     }
 
     @Override
-    public WriteResult updateMulti(Query query, @NonNull T entity, String... excludePropertyName) {
+    public UpdateResult updateMulti(Query query, @NonNull T entity, String... excludePropertyName) {
         Update update = LyMongoUtil.convertObjectToParams(entity, excludePropertyName);
         return mongoTemplate.updateMulti(query, update, getEntityClass());
     }
 
     @Override
-    public WriteResult updateMulti(Query query, @NonNull Map<String, Object> map, String... excludePropertyName) {
+    public UpdateResult updateMulti(Query query, @NonNull Map<String, Object> map, String... excludePropertyName) {
         Update update = LyMongoUtil.convertMapToParams(map, excludePropertyName);
         return mongoTemplate.updateMulti(query, update, getEntityClass());
     }

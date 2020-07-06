@@ -1,8 +1,8 @@
 package cn.ly.base_common.helper.async;
 
-import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
 import cn.ly.base_common.helper.async.callback.BaseFutureCallback;
 import cn.ly.base_common.helper.async.task.SingleTask;
+import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
 import com.google.common.util.concurrent.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

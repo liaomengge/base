@@ -2,10 +2,9 @@ package cn.ly.base_common.quartz.listener;
 
 import cn.ly.base_common.quartz.QuartzProperties;
 import cn.ly.base_common.quartz.listener.util.TriggerUtil;
+import cn.ly.base_common.utils.binder.LyBinderUtil;
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
-import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import com.alibaba.fastjson.TypeReference;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.Scheduler;
@@ -13,19 +12,18 @@ import org.quartz.TriggerKey;
 import org.quartz.impl.triggers.CronTriggerImpl;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.bind.PropertySourcesPropertyValues;
-import org.springframework.boot.bind.RelaxedDataBinder;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
-import org.springframework.core.env.MutablePropertySources;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/7/18.
@@ -55,8 +53,8 @@ public class QuartzListener implements EnvironmentAware, ApplicationListener<Env
 
     @Override
     public void onApplicationEvent(EnvironmentChangeEvent event) {
-        Optional<String> quartzChange = event.getKeys().stream().filter(val -> StringUtils.startsWithIgnoreCase(val,
-                "ly.quartz")).findFirst();
+        Optional<String> quartzChange = event.getKeys().stream()
+                .filter(val -> StringUtils.startsWithIgnoreCase(val, "ly.quartz")).findFirst();
         quartzChange.ifPresent(val -> Optional.ofNullable(schedulerFactoryBean).ifPresent(val2 -> {
             try {
                 Map<String, String> triggerDetailMap = buildTriggerDetail();
@@ -104,20 +102,10 @@ public class QuartzListener implements EnvironmentAware, ApplicationListener<Env
      */
     private Map<String, String> buildTriggerDetail() {
         Map<String, String> triggerDetailMap = Maps.newHashMap();
-        Map<String, LinkedHashMap<String, Object>> jobPropertiesMap = Maps.newHashMap();
-        MutablePropertySources propertySources = ((ConfigurableEnvironment) environment).getPropertySources();
-        new RelaxedDataBinder(jobPropertiesMap, "ly.quartz").bind(new PropertySourcesPropertyValues(propertySources));
-        LinkedHashMap<String, Object> subJobMap = jobPropertiesMap.get("jobs");
-        subJobMap = subJobMap.entrySet().stream()
-                .filter(val -> val.getValue() instanceof LinkedHashMap && StringUtils.isNumeric(val.getKey()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldVal, newVal) -> newVal,
-                        LinkedHashMap::new));
-        String jobJson = LyJsonUtil.toJson(subJobMap);
-        Map<String, QuartzProperties.JobInfo> jobJsonMap = LyJsonUtil.fromJson(jobJson,
-                new TypeReference<Map<String, QuartzProperties.JobInfo>>() {
-                });
-        Optional.ofNullable(jobJsonMap).ifPresent(val -> {
-            val.values().forEach(jobInfo -> {
+        QuartzProperties quartzProperties = LyBinderUtil.bind((ConfigurableEnvironment) environment, "ly.quartz",
+                QuartzProperties.class);
+        Optional.ofNullable(quartzProperties).map(QuartzProperties::getJobs).ifPresent(jobInfoList -> {
+            jobInfoList.forEach(jobInfo -> {
                 String pkgClassName = this.quartzProperties.getPackageName(jobInfo);
                 triggerDetailMap.put(pkgClassName + "Trigger", jobInfo.getCronExpression());
             });

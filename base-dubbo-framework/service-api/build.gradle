@@ -1,7 +1,8 @@
 def artifactId = "base-dubbo-framework-api"
 
 dependencies {
-    api "org.hibernate:hibernate-validator"
+    api "javax.validation:validation-api"
+    api "org.hibernate.validator:hibernate-validator"
     api "javax.annotation:javax.annotation-api"
 
     api "javax.el:javax.el-api"

@@ -6,8 +6,8 @@ import org.aopalliance.aop.Advice;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.util.Arrays;

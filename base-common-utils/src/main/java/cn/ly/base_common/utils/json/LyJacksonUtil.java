@@ -29,7 +29,7 @@ public class LyJacksonUtil {
         return objectMapper.readValue(jsonStr, objClass);
     }
 
-    public <T> T json2Bean(String jsonStr, TypeReference<?> typeReference) throws IOException {
+    public <T> T json2Bean(String jsonStr, TypeReference<T> typeReference) throws IOException {
         return objectMapper.readValue(jsonStr, typeReference);
     }
 
@@ -37,7 +37,7 @@ public class LyJacksonUtil {
         return objectMapper.convertValue(map, clazz);
     }
 
-    public <T, K, V> T map2Bean(Map<K, V> map, TypeReference<?> typeReference) {
+    public <T, K, V> T map2Bean(Map<K, V> map, TypeReference<T> typeReference) {
         return objectMapper.convertValue(map, typeReference);
     }
 
@@ -46,7 +46,7 @@ public class LyJacksonUtil {
         });
     }
 
-    public <K, V> Map<K, V> bean2Map(Object obj, TypeReference<?> typeReference) {
+    public <K, V> Map<K, V> bean2Map(Object obj, TypeReference<Map<K, V>> typeReference) {
         return objectMapper.convertValue(obj, typeReference);
     }
 }
