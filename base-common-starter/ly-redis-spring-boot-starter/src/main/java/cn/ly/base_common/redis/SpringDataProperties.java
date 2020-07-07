@@ -1,15 +1,18 @@
 package cn.ly.base_common.redis;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.data.redis.connection.RedisClusterConfiguration;
-import org.springframework.data.redis.connection.RedisNode;
-import org.springframework.data.redis.connection.RedisSentinelConfiguration;
+import org.springframework.data.redis.connection.*;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import redis.clients.jedis.JedisPoolConfig;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +31,8 @@ public class SpringDataProperties {
     private String password;
     private int port = 6379;
     private boolean ssl = false;
-    private long timeout = 2000L;
+    private Duration timeout = Duration.ofMillis(2000L);
+    private String clientName;
 
     private Sentinel sentinel;
     private Cluster cluster;
@@ -60,6 +64,10 @@ public class SpringDataProperties {
             RedisSentinelConfiguration config = new RedisSentinelConfiguration();
             config.master(sentinelProperties.getMaster());
             config.setSentinels(createSentinels(sentinelProperties));
+            if (getPassword() != null) {
+                config.setPassword(RedisPassword.of(getPassword()));
+            }
+            config.setDatabase(getDatabase());
             return config;
         }
         return null;
@@ -87,8 +95,62 @@ public class SpringDataProperties {
             if (cluster.getMaxRedirects() != null) {
                 config.setMaxRedirects(cluster.getMaxRedirects());
             }
+            if (getPassword() != null) {
+                config.setPassword(RedisPassword.of(getPassword()));
+            }
             return config;
         }
         return null;
+    }
+
+    public final RedisStandaloneConfiguration getStandaloneConfig() {
+        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+        if (StringUtils.hasText(getUrl())) {
+            ConnectionInfo connectionInfo = parseUrl(getUrl());
+            config.setHostName(connectionInfo.getHostName());
+            config.setPort(connectionInfo.getPort());
+            config.setPassword(RedisPassword.of(connectionInfo.getPassword()));
+        } else {
+            config.setHostName(getHost());
+            config.setPort(getPort());
+            config.setPassword(RedisPassword.of(getPassword()));
+        }
+        config.setDatabase(getDatabase());
+        return config;
+    }
+
+    protected ConnectionInfo parseUrl(String url) {
+        try {
+            URI uri = new URI(url);
+            boolean useSsl = (url.startsWith("rediss://"));
+            String password = null;
+            if (uri.getUserInfo() != null) {
+                password = uri.getUserInfo();
+                int index = password.indexOf(':');
+                if (index >= 0) {
+                    password = password.substring(index + 1);
+                }
+            }
+            return new ConnectionInfo(uri, useSsl, password);
+        } catch (URISyntaxException ex) {
+            throw new IllegalArgumentException("Malformed url '" + url + "'", ex);
+        }
+    }
+
+    @Getter
+    @AllArgsConstructor
+    protected static class ConnectionInfo {
+
+        private final URI uri;
+        private final boolean useSsl;
+        private final String password;
+
+        protected String getHostName() {
+            return this.uri.getHost();
+        }
+
+        protected int getPort() {
+            return this.uri.getPort();
+        }
     }
 }

@@ -29,9 +29,9 @@ public class FastJsonHttpMessageConvertWrapper extends FastJsonHttpMessageConver
             InputStream in = inputMessage.getBody();
             return JSON.parseObject(in, Charsets.UTF_8, type, getFastJsonConfig().getFeatures());
         } catch (JSONException ex) {
-            throw new HttpMessageNotReadableException("JSON parse error: " + ex.getMessage(), ex);
+            throw new HttpMessageNotReadableException("JSON parse error: " + ex.getMessage(), ex, inputMessage);
         } catch (IOException ex) {
-            throw new HttpMessageNotReadableException("I/O error while reading input message", ex);
+            throw new HttpMessageNotReadableException("I/O error while reading input message", ex, inputMessage);
         }
     }
 }
