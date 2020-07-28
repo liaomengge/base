@@ -2,8 +2,8 @@ package cn.ly.base_common.mq;
 
 import cn.ly.base_common.mq.MQLockProperties.ZkProperties;
 import cn.ly.base_common.mq.initializer.MQLockInitializer;
+import lombok.AllArgsConstructor;
 import org.I0Itec.zkclient.ZkClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -14,13 +14,13 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2019/8/29.
  */
+@AllArgsConstructor
 @Configuration
 @EnableConfigurationProperties(MQLockProperties.class)
 @AutoConfigureAfter(MQAutoConfiguration.class)
 public class MQLockAutoConfiguration {
 
-    @Autowired
-    private MQLockProperties mqLockProperties;
+    private final MQLockProperties mqLockProperties;
 
     @Bean
     @ConditionalOnMissingBean

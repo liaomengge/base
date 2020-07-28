@@ -4,7 +4,6 @@ import cn.ly.base_common.metric.retrofit.task.MetricRetrofitScheduledTask;
 import com.timgroup.statsd.StatsDClient;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,13 +21,13 @@ import org.springframework.context.annotation.Configuration;
 public class MetricRetrofitAutoConfiguration {
 
     private final OkHttpClient okHttpClient;
+    private final MetricRetrofitProperties metricRetrofitProperties;
 
-    public MetricRetrofitAutoConfiguration(ObjectProvider<OkHttpClient> objectProvider) {
+    public MetricRetrofitAutoConfiguration(ObjectProvider<OkHttpClient> objectProvider,
+                                           MetricRetrofitProperties metricRetrofitProperties) {
         this.okHttpClient = objectProvider.getIfAvailable();
+        this.metricRetrofitProperties = metricRetrofitProperties;
     }
-
-    @Autowired
-    private MetricRetrofitProperties metricRetrofitProperties;
 
     @Bean
     @ConditionalOnMissingBean

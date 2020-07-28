@@ -11,8 +11,8 @@ import javax.annotation.PostConstruct;
  * Created by liaomengge on 2019/7/5.
  */
 public class MybatisPointcutAdvisor extends AbstractPointcutAdvisor {
-
     private static final long serialVersionUID = 7750782644079477406L;
+
     private final String dsKeys;
     private final boolean defaultMaster;
     private final String mapperPackage;

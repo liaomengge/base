@@ -1,7 +1,7 @@
 package cn.ly.base_common.mail;
 
 import cn.ly.base_common.helper.mail.MailHelper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -13,13 +13,13 @@ import org.springframework.mail.MailSender;
 /**
  * Created by liaomengge on 2018/10/27.
  */
+@AllArgsConstructor
 @Configuration
 @ConditionalOnClass(MailSender.class)
 @EnableConfigurationProperties(MailProperties.class)
 public class MailAutoConfiguration {
 
-    @Autowired
-    private MailProperties mailProperties;
+    private final MailProperties mailProperties;
 
     @RefreshScope
     @Bean

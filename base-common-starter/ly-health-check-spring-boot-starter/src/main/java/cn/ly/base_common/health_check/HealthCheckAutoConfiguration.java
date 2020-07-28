@@ -10,6 +10,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ import java.util.Map;
  * Created by liaomengge on 2019/7/11.
  */
 @Configuration
+@EnableConfigurationProperties(HealthCheckProperties.class)
 public class HealthCheckAutoConfiguration implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;

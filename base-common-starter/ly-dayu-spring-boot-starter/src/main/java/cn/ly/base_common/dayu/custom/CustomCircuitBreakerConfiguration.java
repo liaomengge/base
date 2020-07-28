@@ -9,7 +9,7 @@ import cn.ly.base_common.helper.redis.IRedisHelper;
 import cn.ly.base_common.redis.RedisAutoConfiguration;
 import cn.ly.base_common.utils.number.LyNumberUtil;
 import com.timgroup.statsd.StatsDClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -25,14 +25,14 @@ import static cn.ly.base_common.dayu.custom.consts.CustomCircuitBreakerConst.CUS
 /**
  * Created by liaomengge on 2019/6/26.
  */
+@AllArgsConstructor
 @Configuration
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 @ConditionalOnProperty(prefix = CUSTOM_CIRCUIT_BREAKER_PREFIX, name = "enabled")
 @EnableConfigurationProperties(CustomCircuitBreakerProperties.class)
 public class CustomCircuitBreakerConfiguration {
 
-    @Autowired
-    private CustomCircuitBreakerProperties customCircuitBreakerProperties;
+    private final CustomCircuitBreakerProperties customCircuitBreakerProperties;
 
     @RefreshScope
     @Bean

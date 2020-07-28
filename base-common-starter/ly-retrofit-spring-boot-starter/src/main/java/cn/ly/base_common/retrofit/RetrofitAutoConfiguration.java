@@ -16,7 +16,6 @@ import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -47,11 +46,13 @@ public class RetrofitAutoConfiguration {
     private static final String DAYU_SENTINEL_ENABLED = "ly.dayu.sentinel.enabled";
     private static final String SPRING_APPLICATION_NAME = "spring.application.name";
 
-    @Autowired(required = false)
-    private Environment environment;
+    private final Environment environment;
+    private final RetrofitProperties retrofitProperties;
 
-    @Autowired
-    private RetrofitProperties retrofitProperties;
+    public RetrofitAutoConfiguration(Environment environment, RetrofitProperties retrofitProperties) {
+        this.environment = environment;
+        this.retrofitProperties = retrofitProperties;
+    }
 
     private OkHttpClient.Builder newBuilder(long readTimeout, long writeTime, long connectTime,
                                             ConnectionPool connectionPool,

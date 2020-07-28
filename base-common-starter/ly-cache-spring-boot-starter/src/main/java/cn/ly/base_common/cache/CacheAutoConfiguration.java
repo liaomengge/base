@@ -1,8 +1,6 @@
 package cn.ly.base_common.cache;
 
-import cn.ly.base_common.cache.CachePoolHelper;
 import cn.ly.base_common.cache.CacheProperties.*;
-import cn.ly.base_common.cache.LocalRedisDbCacheHelper;
 import cn.ly.base_common.cache.caffeine.CaffeineCacheManager;
 import cn.ly.base_common.cache.channel.RedisChannel;
 import cn.ly.base_common.cache.redis.RedisCache;
@@ -15,7 +13,6 @@ import com.github.benmanes.caffeine.cache.CaffeineSpec;
 import com.timgroup.statsd.StatsDClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -40,13 +37,12 @@ import java.util.stream.Collectors;
 public class CacheAutoConfiguration {
 
     private final RedissonHelper redissonHelper;
+    private final CacheProperties cacheProperties;
 
-    public CacheAutoConfiguration(ObjectProvider<RedissonHelper> objectProvider) {
+    public CacheAutoConfiguration(ObjectProvider<RedissonHelper> objectProvider, CacheProperties cacheProperties) {
         this.redissonHelper = objectProvider.getIfAvailable();
+        this.cacheProperties = cacheProperties;
     }
-
-    @Autowired
-    private CacheProperties cacheProperties;
 
     @RefreshScope
     @Bean

@@ -4,7 +4,6 @@ import cn.ly.base_common.metric.hikari.task.MetricHikariScheduledTask;
 import com.timgroup.statsd.StatsDClient;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -24,13 +23,13 @@ import java.util.List;
 public class MetricHikariAutoConfiguration {
 
     private final List<HikariDataSource> hikariDataSources;
+    private final MetricHikariProperties metricHikariProperties;
 
-    public MetricHikariAutoConfiguration(ObjectProvider<List<HikariDataSource>> objectProvider) {
+    public MetricHikariAutoConfiguration(ObjectProvider<List<HikariDataSource>> objectProvider,
+                                         MetricHikariProperties metricHikariProperties) {
         this.hikariDataSources = objectProvider.getIfAvailable();
+        this.metricHikariProperties = metricHikariProperties;
     }
-
-    @Autowired
-    private MetricHikariProperties metricHikariProperties;
 
     @Bean
     @ConditionalOnMissingBean

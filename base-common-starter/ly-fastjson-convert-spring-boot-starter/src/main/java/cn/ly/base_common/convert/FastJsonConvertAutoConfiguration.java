@@ -4,6 +4,7 @@ import cn.ly.base_common.convert.wrapper.FastJsonHttpMessageConvertWrapper;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -20,16 +21,13 @@ import java.util.Objects;
 /**
  * Created by liaomengge on 2018/12/10.
  */
+@AllArgsConstructor
 @Configuration
 @ConditionalOnClass(FastJsonHttpMessageConverter.class)
 @EnableConfigurationProperties(FastJsonConvertProperties.class)
 public class FastJsonConvertAutoConfiguration {
 
     private final FastJsonConvertProperties fastJsonConvertProperties;
-
-    public FastJsonConvertAutoConfiguration(FastJsonConvertProperties fastJsonConvertProperties) {
-        this.fastJsonConvertProperties = fastJsonConvertProperties;
-    }
 
     @Bean
     @ConditionalOnMissingBean

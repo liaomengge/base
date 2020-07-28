@@ -5,9 +5,9 @@ import cn.ly.base_common.mq.activemq.ActiveMQProperties.Pool;
 import cn.ly.base_common.mq.activemq.pool.MonitorPooledConnectionFactory;
 import cn.ly.base_common.mq.activemq.registry.ActiveMQQueueConfigBeanRegistryConfiguration;
 import com.timgroup.statsd.StatsDClient;
+import lombok.AllArgsConstructor;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.pool.PooledConnectionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -23,6 +23,7 @@ import javax.jms.ConnectionFactory;
 /**
  * Created by liaomengge on 2019/5/5.
  */
+@AllArgsConstructor
 @Configuration
 @ConditionalOnClass({ConnectionFactory.class, ActiveMQConnectionFactory.class})
 @ConditionalOnProperty(name = "ly.mq.type", havingValue = "activemq")
@@ -30,8 +31,7 @@ import javax.jms.ConnectionFactory;
 @Import(ActiveMQQueueConfigBeanRegistryConfiguration.class)
 public class ActiveMQAutoConfiguration {
 
-    @Autowired
-    private ActiveMQProperties activeMQProperties;
+    private final ActiveMQProperties activeMQProperties;
 
     @Bean(destroyMethod = "stop")
     @Primary

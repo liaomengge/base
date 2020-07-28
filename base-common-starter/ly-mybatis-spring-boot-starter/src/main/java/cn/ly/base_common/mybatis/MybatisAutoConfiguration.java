@@ -13,10 +13,10 @@ import cn.ly.base_common.support.datasource.DynamicDataSource;
 import cn.ly.base_common.support.datasource.enums.DbType;
 import com.github.pagehelper.PageInterceptor;
 import com.google.common.collect.Maps;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -41,6 +41,7 @@ import java.util.Properties;
 /**
  * Created by liaomengge on 2018/10/23.
  */
+@AllArgsConstructor
 @Configuration
 @ConditionalOnClass(SqlSessionFactoryBean.class)
 @EnableTransactionManagement(proxyTargetClass = true)
@@ -49,8 +50,7 @@ import java.util.Properties;
 @ExtendMapperScan("${ly.mybatis.basePackages}")
 public class MybatisAutoConfiguration {
 
-    @Autowired
-    private MybatisProperties mybatisProperties;
+    private final MybatisProperties mybatisProperties;
 
     @Bean("pageHelperProperties")
     @ConfigurationProperties(prefix = "ly.mybatis.pagehelper")

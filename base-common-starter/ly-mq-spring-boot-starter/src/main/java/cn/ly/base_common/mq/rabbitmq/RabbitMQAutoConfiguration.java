@@ -7,11 +7,11 @@ import cn.ly.base_common.mq.rabbitmq.callback.MQReturnCallback;
 import cn.ly.base_common.mq.rabbitmq.registry.RabbitMQQueueConfigBeanRegistryConfiguration;
 import com.rabbitmq.client.Channel;
 import com.timgroup.statsd.StatsDClient;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -30,6 +30,7 @@ import java.util.Objects;
 /**
  * Created by liaomengge on 2019/5/5.
  */
+@AllArgsConstructor
 @Configuration
 @ConditionalOnClass({RabbitTemplate.class, Channel.class})
 @ConditionalOnProperty(name = "ly.mq.type", havingValue = "rabbitmq", matchIfMissing = true)
@@ -37,8 +38,7 @@ import java.util.Objects;
 @Import(RabbitMQQueueConfigBeanRegistryConfiguration.class)
 public class RabbitMQAutoConfiguration {
 
-    @Autowired
-    private RabbitMQProperties rabbitMQProperties;
+    private final RabbitMQProperties rabbitMQProperties;
 
     @Bean
     @Primary

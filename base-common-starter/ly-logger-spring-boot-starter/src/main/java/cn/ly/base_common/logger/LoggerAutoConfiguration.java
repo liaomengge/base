@@ -1,7 +1,7 @@
 package cn.ly.base_common.logger;
 
 import cn.ly.base_common.logger.servlet.LoggerServlet;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.actuate.autoconfigure.endpoint.EndpointAutoConfiguration;
 import org.springframework.boot.actuate.logging.LoggersEndpoint;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -15,14 +15,14 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2019/1/21.
  */
+@AllArgsConstructor
 @Configuration
 @EnableConfigurationProperties(LoggerProperties.class)
 @AutoConfigureAfter(EndpointAutoConfiguration.class)
 @ConditionalOnBean(LoggersEndpoint.class)
 public class LoggerAutoConfiguration {
 
-    @Autowired
-    private LoggerProperties loggerProperties;
+    private final LoggerProperties loggerProperties;
 
     @RefreshScope
     @Bean

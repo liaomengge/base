@@ -12,7 +12,6 @@ import org.quartz.JobDetail;
 import org.quartz.impl.JobDetailImpl;
 import org.slf4j.Logger;
 import org.springframework.beans.BeanInstantiationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -44,8 +43,11 @@ public class QuartzAutoConfiguration {
 
     private final CopyOnWriteArrayList triggerKeyList = Lists.newCopyOnWriteArrayList();
 
-    @Autowired
-    private QuartzProperties quartzProperties;
+    private final QuartzProperties quartzProperties;
+
+    public QuartzAutoConfiguration(QuartzProperties quartzProperties) {
+        this.quartzProperties = quartzProperties;
+    }
 
     @Bean
     public QuartzListener quartzListener() {

@@ -3,7 +3,7 @@ package cn.ly.base_common.swagger;
 import cn.ly.base_common.support.predicate._Predicates;
 import cn.ly.base_common.swagger.SwaggerProperties.ApiInfoWrapper;
 import cn.ly.base_common.swagger.annotation.EnableExtendSwaggerBootstrapUI;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -30,14 +30,14 @@ import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
 /**
  * Created by liaomengge on 2019/1/23.
  */
+@AllArgsConstructor
 @Configuration
 @EnableConfigurationProperties(SwaggerProperties.class)
 @EnableSwagger2WebMvc
 @EnableExtendSwaggerBootstrapUI
 public class SwaggerAutoConfiguration {
 
-    @Autowired
-    private SwaggerProperties swaggerProperties;
+    private final SwaggerProperties swaggerProperties;
 
     @Bean
     @ConditionalOnClass(SpringfoxWebConfiguration.class)

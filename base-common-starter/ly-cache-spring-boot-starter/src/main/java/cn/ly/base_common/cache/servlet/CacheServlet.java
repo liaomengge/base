@@ -21,8 +21,8 @@ import static cn.ly.base_common.cache.servlet.enums.EvictTypeEnum.*;
  * Created by liaomengge on 2019/7/2.
  */
 public class CacheServlet extends HttpServlet {
-
     private static final long serialVersionUID = 2176404727096300110L;
+    
     @Autowired
     private CachePoolHelper cachePoolHelper;
 
