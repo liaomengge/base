@@ -2,8 +2,8 @@ package cn.ly.base_common.influx;
 
 import cn.ly.base_common.influx.consts.InfluxConst;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.Duration;
@@ -20,7 +20,8 @@ public class InfluxDBProperties {
     private String url;
     private String user;
     private String password;
-    private String policy;
+    private String retentionPolicy;
+    private String consistencyLevel;
     private AdditionalConfig additionalConfig = new AdditionalConfig();
 
     @Data
@@ -41,10 +42,14 @@ public class InfluxDBProperties {
     }
 
     public String getDb() {
-        return StringUtils.hasText(this.db) ? this.db : InfluxConst.DEFAULT_DATABASE;
+        return StringUtils.isNoneBlank(this.db) ? this.db : InfluxConst.DEFAULT_DATABASE;
     }
 
-    public String getPolicy() {
-        return StringUtils.hasText(this.policy) ? this.policy : "autogen";
+    public String getRetentionPolicy() {
+        return StringUtils.isNoneBlank(this.retentionPolicy) ? this.retentionPolicy : "autogen";
+    }
+
+    public String getConsistencyLevel() {
+        return StringUtils.isNoneBlank(this.consistencyLevel) ? this.consistencyLevel : "ONE";
     }
 }

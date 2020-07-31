@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.influxdb.InfluxDB;
+import org.influxdb.InfluxDB.ConsistencyLevel;
 import org.influxdb.InfluxDBFactory;
 
 import javax.annotation.PostConstruct;
@@ -57,7 +58,8 @@ public class InfluxDBConnection {
         } catch (Exception e) {
             log.error("create influx db fail", e);
         } finally {
-            influxDB.setRetentionPolicy(influxDBProperties.getPolicy());
+            influxDB.setRetentionPolicy(influxDBProperties.getRetentionPolicy());
+            influxDB.setConsistency(ConsistencyLevel.valueOf(influxDBProperties.getConsistencyLevel()));
         }
         influxDB.setLogLevel(InfluxDB.LogLevel.NONE);
         influxDB.enableBatch(InfluxConst.DEFAULT_INFLUX_BATCH_ACTIONS_LIMIT,
