@@ -25,6 +25,7 @@ import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -65,11 +66,12 @@ public class RestTemplateAutoConfiguration {
     private static final String DAYU_SENTINEL_ENABLED = "ly.dayu.sentinel.enabled";
     private static final String SPRING_APPLICATION_NAME = "spring.application.name";
 
-    private final Environment environment;
+    @Autowired(required = false)
+    private Environment environment;
+
     private final RestTemplateProperties restTemplateProperties;
 
-    public RestTemplateAutoConfiguration(Environment environment, RestTemplateProperties restTemplateProperties) {
-        this.environment = environment;
+    public RestTemplateAutoConfiguration(RestTemplateProperties restTemplateProperties) {
         this.restTemplateProperties = restTemplateProperties;
     }
 

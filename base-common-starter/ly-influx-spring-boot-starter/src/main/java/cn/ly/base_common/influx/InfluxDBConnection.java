@@ -3,6 +3,8 @@ package cn.ly.base_common.influx;
 import cn.ly.base_common.influx.consts.InfluxConst;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.ConnectionPool;
+import okhttp3.OkHttpClient;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 
@@ -33,8 +35,15 @@ public class InfluxDBConnection {
     public void init() {
         if (Objects.isNull(influxDB)) {
             try {
+                InfluxDBProperties.AdditionalConfig additionalConfig = influxDBProperties.getAdditionalConfig();
+                OkHttpClient.Builder builder = new OkHttpClient.Builder();
+                builder.connectTimeout(additionalConfig.getConnectTimeout().getSeconds(), TimeUnit.SECONDS)
+                        .readTimeout(additionalConfig.getReadTimeout().getSeconds(), TimeUnit.SECONDS)
+                        .writeTimeout(additionalConfig.getWriteTimeout().getSeconds(), TimeUnit.SECONDS)
+                        .retryOnConnectionFailure(true)
+                        .connectionPool(new ConnectionPool(additionalConfig.getMaxConnections(), 5L, TimeUnit.MINUTES));
                 influxDB = InfluxDBFactory.connect(influxDBProperties.getUrl(), influxDBProperties.getUser(),
-                        influxDBProperties.getPassword());
+                        influxDBProperties.getPassword(), builder);
             } catch (Exception e) {
                 log.error("connect influx db fail", e);
                 return;

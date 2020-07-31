@@ -3,9 +3,11 @@ package cn.ly.base_common.influx.helper;
 import cn.ly.base_common.influx.batch.InfluxBatchHandler;
 import cn.ly.base_common.influx.consts.InfluxConst;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.influxdb.dto.Point;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -25,7 +27,10 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class InfluxHelper {
 
-    private String appId = "-";
+    private String appId;
+
+    @Autowired(required = false)
+    private Environment environment;
 
     private final InfluxBatchHandler influxBatchHandler;
 
@@ -50,10 +55,9 @@ public class InfluxHelper {
     }
 
     public void write(String eventName, Map<String, String> tags, Map<String, Object> fields) {
-        Point.Builder builder = Point.measurement(InfluxConst.DEFAULT_MEASUREMENT)
-                .tag("appId", appId);
-        if (StringUtils.hasText(eventName)) {
-            builder.addField("eventName", eventName);
+        Point.Builder builder = Point.measurement(InfluxConst.DEFAULT_MEASUREMENT).tag("appId", appId);
+        if (StringUtils.isNoneBlank(eventName)) {
+            builder.tag("eventName", eventName);
         }
         if (!CollectionUtils.isEmpty(tags)) {
             builder.tag(tags);
@@ -62,52 +66,34 @@ public class InfluxHelper {
             builder.fields(fields);
         }
         builder.time(new NanoClock().nanos(), TimeUnit.NANOSECONDS);
-        influxBatchHandler.produce(builder.build());
+        write(builder.build());
     }
 
-    /****************************************************兼容老版本***********************************************/
-
-    public void logEvent(String eventName) {
-        logEvent(eventName, new HashMap<>());
-    }
-
-    public void logEvent(String eventName, Map<String, String> tags) {
-        logEvent(eventName, tags, new HashMap<>());
-    }
-
-    public void logEvent(String eventName, Map<String, String> tags, Map<String, Object> fields) {
-        Point.Builder builder = Point.measurement(InfluxConst.DEFAULT_MEASUREMENT)
-                .tag(InfluxConst.OLD_APPID_WATCH_NAME, appId)
-                .addField(InfluxConst.OLD_WATCH_VALUE, 1);
-        if (StringUtils.hasText(eventName)) {
-            builder.tag(InfluxConst.OLD_EVENT_WATCH_NAME, eventName);
-        }
-        if (!CollectionUtils.isEmpty(tags)) {
-            builder.tag(tags);
-        }
-        if (!CollectionUtils.isEmpty(fields)) {
-            builder.fields(fields);
-        }
-        influxBatchHandler.produce(builder.build());
-    }
-
-    /****************************************************兼容老版本***********************************************/
-
+    /**
+     * apollo app.id配置
+     */
     @PostConstruct
     public void init() {
-        Properties properties = new Properties();
-        InputStream in = null;
-        try {
-            in = Thread.currentThread().getContextClassLoader().getResourceAsStream("META-INF/app.properties");
-            properties.load(new InputStreamReader(in, StandardCharsets.UTF_8));
-            appId = properties.getProperty("app.id");
-        } catch (Exception e) {
-            log.warn("load app.properties fail", e);
-        } finally {
-            if (Objects.nonNull(in)) {
-                try {
-                    in.close();
-                } catch (IOException e) {
+        if (Objects.nonNull(environment)) {
+            appId = environment.getProperty("app.id");
+        }
+        if (StringUtils.isBlank(appId)) {
+            Properties properties = new Properties();
+            InputStream in = null;
+            try {
+                in = Thread.currentThread().getContextClassLoader().getResourceAsStream("META-INF/app.properties");
+                if (Objects.nonNull(in)) {
+                    properties.load(new InputStreamReader(in, StandardCharsets.UTF_8));
+                    appId = properties.getProperty("app.id");
+                }
+            } catch (Exception e) {
+                log.warn("load app.properties fail", e);
+            } finally {
+                if (Objects.nonNull(in)) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                    }
                 }
             }
         }

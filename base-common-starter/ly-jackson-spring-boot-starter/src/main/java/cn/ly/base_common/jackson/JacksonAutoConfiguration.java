@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -24,7 +24,6 @@ import java.util.Optional;
 /**
  * Created by liaomengge on 2019/1/25.
  */
-@AllArgsConstructor
 @Configuration
 @AutoConfigureAfter(org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class)
 @ConditionalOnClass(ObjectMapper.class)
@@ -33,7 +32,8 @@ import java.util.Optional;
         matchIfMissing = true)
 public class JacksonAutoConfiguration {
 
-    private final JacksonProperties jacksonProperties;
+    @Autowired(required = false)
+    private JacksonProperties jacksonProperties;
 
     @Bean
     @ConditionalOnMissingBean(MappingJackson2HttpMessageConverter.class)

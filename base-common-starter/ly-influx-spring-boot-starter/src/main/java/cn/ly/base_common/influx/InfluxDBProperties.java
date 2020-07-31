@@ -6,12 +6,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.Duration;
+
 /**
  * Created by liaomengge on 2020/7/21.
  */
 @Data
 @Validated
-@ConfigurationProperties("spring.influx")
+@ConfigurationProperties("ly.influx")
 public class InfluxDBProperties {
 
     private String db;
@@ -19,7 +21,24 @@ public class InfluxDBProperties {
     private String user;
     private String password;
     private String policy;
-    private boolean newVersionEnabled;
+    private AdditionalConfig additionalConfig = new AdditionalConfig();
+
+    @Data
+    public static class AdditionalConfig {
+        //queue config
+        private int numThreads = Runtime.getRuntime().availableProcessors();
+        private int queueCapacity = InfluxConst.DEFAULT_QUEUE_CAPACITY;//队列容量应配置大于等于批处理数
+
+        //influx batch config
+        private int batchSize = InfluxConst.DEFAULT_TAKE_BATCH_SIZE;
+        private int batchTimeout = InfluxConst.DEFAULT_TAKE_BATCH_TIMEOUT;
+
+        //okhttp config
+        private int maxConnections = InfluxConst.DEFAULT_MAX_CONNECTIONS;
+        private Duration connectTimeout = InfluxConst.DEFAULT_CONNECT_TIMEOUT;
+        private Duration readTimeout = InfluxConst.DEFAULT_READ_TIMEOUT;
+        private Duration writeTimeout = InfluxConst.DEFAULT_WRITE_TIMEOUT;
+    }
 
     public String getDb() {
         return StringUtils.hasText(this.db) ? this.db : InfluxConst.DEFAULT_DATABASE;

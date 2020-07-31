@@ -3,7 +3,8 @@ package cn.ly.base_common.influx.batch;
 import cn.ly.base_common.influx.InfluxDBConnection;
 import cn.ly.base_common.influx.InfluxDBProperties;
 import cn.ly.base_common.influx.consts.InfluxConst;
-import cn.ly.base_common.influx.util.QueueUtil;
+import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
+import com.google.common.collect.Queues;
 import lombok.extern.slf4j.Slf4j;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
@@ -12,8 +13,10 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,14 +25,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class InfluxBatchHandler {
 
-    private final int CPU_NUM = Runtime.getRuntime().availableProcessors();
-
-    private LinkedBlockingQueue<Point> linkedBlockingQueue =
-            new LinkedBlockingQueue<>(InfluxConst.DEFAULT_BLOCKING_QUEUE_SIZE);
-
-    private ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(CPU_NUM, CPU_NUM,
-            0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(32),
-            new ThreadPoolExecutor.CallerRunsPolicy());
+    private ExecutorService threadPoolExecutor;
+    private LinkedBlockingQueue<Point> linkedBlockingQueue;
 
     private final InfluxDBConnection influxDBConnection;
     private final InfluxDBProperties influxDBProperties;
@@ -57,7 +54,7 @@ public class InfluxBatchHandler {
 
     public void consume() {
         List<Point> pointList = new ArrayList<>();
-        QueueUtil.drainUninterruptibly(linkedBlockingQueue, pointList, InfluxConst.DEFAULT_TAKE_BATCH_SIZE,
+        Queues.drainUninterruptibly(linkedBlockingQueue, pointList, InfluxConst.DEFAULT_TAKE_BATCH_SIZE,
                 InfluxConst.DEFAULT_TAKE_BATCH_TIMEOUT, TimeUnit.MILLISECONDS);
         if (!CollectionUtils.isEmpty(pointList)) {
             influxDBConnection.getInfluxDB().write(BatchPoints.database(influxDBProperties.getDb())
@@ -67,7 +64,13 @@ public class InfluxBatchHandler {
 
     @PostConstruct
     public void init() {
-        for (int i = 0; i < CPU_NUM; i++) {
+        linkedBlockingQueue = new LinkedBlockingQueue<>(influxDBProperties.getAdditionalConfig().getQueueCapacity());
+        int numThreads = influxDBProperties.getAdditionalConfig().getNumThreads();
+        if (Objects.isNull(threadPoolExecutor)) {
+            threadPoolExecutor = Executors.newFixedThreadPool(numThreads,
+                    LyThreadFactoryBuilderUtil.build("influx-metrics"));
+        }
+        for (int i = 0; i < numThreads; i++) {
             threadPoolExecutor.execute(() -> {
                 while (true) {
                     try {
@@ -82,7 +85,7 @@ public class InfluxBatchHandler {
                     }
                 }
             });
+
         }
     }
-
 }

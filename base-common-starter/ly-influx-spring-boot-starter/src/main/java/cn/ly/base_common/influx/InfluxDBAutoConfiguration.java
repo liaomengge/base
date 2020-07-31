@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.influxdb.InfluxDB;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,14 +18,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(InfluxDBProperties.class)
 @ConditionalOnClass(InfluxDB.class)
-@ConditionalOnProperty(name = "spring.influx.new-version-enabled", havingValue = "true")
 public class InfluxDBAutoConfiguration {
 
     private final InfluxDBProperties influxDBProperties;
 
     @Bean(destroyMethod = "close")
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(prefix = "spring.influx", value = "enable", havingValue = "true")
     public InfluxDBConnection influxDBConnection() {
         return new InfluxDBConnection(influxDBProperties);
     }

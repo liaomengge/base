@@ -36,7 +36,7 @@ public class InfluxElapsedTimeAspect {
         } finally {
             long endTime = System.currentTimeMillis();
             try {
-                influxHelper.write(enableElapsedTime.value(), buildMethodFields(methodName, (endTime - startTime)));
+                influxHelper.write(enableElapsedTime.eventName(), buildMethodFields(methodName, (endTime - startTime)));
             } catch (Exception e) {
                 log.warn("log method elapsed fail", e);
             }
@@ -47,8 +47,6 @@ public class InfluxElapsedTimeAspect {
         Map<String, Object> methodFieldMap = new HashMap<>();
         methodFieldMap.put("methodName", methodName);
         methodFieldMap.put("elapsedTime", elapsedTime);
-        //兼容老版本
-        methodFieldMap.put("costMs", elapsedTime);
         return methodFieldMap;
     }
 }
