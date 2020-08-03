@@ -1,6 +1,5 @@
 package cn.ly.base_common.utils.collection;
 
-import com.google.common.base.Function;
 import com.google.common.collect.*;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.beanutils.BeanUtils;
@@ -10,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * Created by liaomengge on 16/4/20.
@@ -18,10 +18,28 @@ import java.util.*;
 public class LyListUtil {
 
     /**
+     * 统计list中重复数
+     *
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public <T> Map<T, Integer> countList(List<T> list) {
+        Map<T, Integer> map = new HashMap<>(list.size());
+        list.stream().forEach(val -> {
+            Integer count = map.get(val);
+            map.put(val, Objects.isNull(count) ? 1 : count + 1);
+        });
+        return map;
+    }
+
+    /**
      * 获取第一个元素, 如果List为空返回 null.
      */
     public <T> T getFirst(List<T> list) {
-        if (CollectionUtils.isEmpty(list)) return null;
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
         return list.get(0);
     }
 
@@ -29,7 +47,9 @@ public class LyListUtil {
      * 获取最后一个元素, 如果List为空返回null.
      */
     public <T> T getLast(List<T> list) {
-        if (CollectionUtils.isEmpty(list)) return null;
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
 
         return list.get(list.size() - 1);
     }
@@ -66,11 +86,12 @@ public class LyListUtil {
         // 克隆一个可修改的副本
         List<T> newSmaller = new ArrayList<>(smaller);
         List<T> result = new ArrayList<>(smaller.size());
-        for (T e : larger)
+        for (T e : larger) {
             if (newSmaller.contains(e)) {
                 result.add(e);
                 newSmaller.remove(e);
             }
+        }
         return result;
     }
 
@@ -83,7 +104,9 @@ public class LyListUtil {
         List<T> result = new ArrayList<>(list1);
         Iterator<? extends T> iterator = list2.iterator();
 
-        while (iterator.hasNext()) result.remove(iterator.next());
+        while (iterator.hasNext()) {
+            result.remove(iterator.next());
+        }
 
         return result;
     }
@@ -101,18 +124,24 @@ public class LyListUtil {
 
 
     public <T> Map<String, T> list2Map(List<T> list, String key, boolean isSort) {
-        if (list == null) return null;
+        if (list == null) {
+            return null;
+        }
 
         Map<String, T> map;
-        if (isSort) map = new TreeMap<>();
-        else map = new HashMap<>(list.size());
+        if (isSort) {
+            map = new TreeMap<>();
+        } else {
+            map = new HashMap<>(list.size());
+        }
 
-        for (T t : list)
+        for (T t : list) {
             try {
                 map.put(BeanUtils.getProperty(t, key), t);
             } catch (Exception e) {
                 return map;
             }
+        }
         return map;
     }
 
@@ -121,12 +150,16 @@ public class LyListUtil {
      ********************************************/
 
     public <T> Map<String, Collection<T>> transformMap(List<T> list, Function<T, String> function) {
-        if (list == null) return null;
+        if (list == null) {
+            return null;
+        }
 
         Multimap<String, T> resultMap = ArrayListMultimap.create();
         for (T t : list) {
             String value = function.apply(t);
-            if (StringUtils.isNotBlank(value)) resultMap.put(value, t);
+            if (StringUtils.isNotBlank(value)) {
+                resultMap.put(value, t);
+            }
         }
         return resultMap.asMap();
     }
@@ -149,8 +182,11 @@ public class LyListUtil {
         });
     }
 
-    public <T> Map<String, Collection<T>> transformMap2(List<T> list, Function<T, String> function) {
-        if (list == null) return null;
+    public <T> Map<String, Collection<T>> transformMap2(List<T> list,
+                                                        com.google.common.base.Function<T, String> function) {
+        if (list == null) {
+            return null;
+        }
 
         return Multimaps.index(list, function).asMap();
     }
@@ -179,10 +215,14 @@ public class LyListUtil {
     }
 
     public <T> void sortListByKey(List<Map<String, T>> list, String key, boolean asc) {
-        if (list == null) return;
+        if (list == null) {
+            return;
+        }
 
         Comparator<Map<String, T>> comparator = (o1, o2) -> {
-            if (asc) return MapUtils.getString(o1, key).compareTo(MapUtils.getString(o2, key));
+            if (asc) {
+                return MapUtils.getString(o1, key).compareTo(MapUtils.getString(o2, key));
+            }
             return MapUtils.getString(o1, key).compareTo(MapUtils.getString(o2, key));
         };
         Collections.sort(list, Ordering.from(comparator));
@@ -190,17 +230,23 @@ public class LyListUtil {
 
     public <T> List<T> transform(List<Map<String, T>> list, String key) {
         return Lists.transform(list, input -> {
-            if (input != null) return input.get(key);
+            if (input != null) {
+                return input.get(key);
+            }
             return null;
         });
     }
 
     public <T> List<T> transform2(List<Map<String, T>> list, String key) {
-        if (list == null) return null;
+        if (list == null) {
+            return null;
+        }
         List<T> resultList = Lists.newArrayList();
         list.stream().filter(map -> MapUtils.isNotEmpty(map)).forEach(map -> {
             T t = map.get(key);
-            if (t != null) resultList.add(t);
+            if (t != null) {
+                resultList.add(t);
+            }
         });
         return resultList;
     }
@@ -214,10 +260,14 @@ public class LyListUtil {
      * @return
      */
     public <K, V> List<Map<K, V>> removeEmptyElement(List<Map<K, V>> list) {
-        if (CollectionUtils.isEmpty(list)) return new ArrayList<>(16);
+        if (CollectionUtils.isEmpty(list)) {
+            return new ArrayList<>(16);
+        }
         for (int i = list.size() - 1; i >= 0; i--) {
             Map<K, V> element = list.get(i);
-            if (MapUtils.isEmpty(element)) list.remove(i);
+            if (MapUtils.isEmpty(element)) {
+                list.remove(i);
+            }
         }
         return list;
     }

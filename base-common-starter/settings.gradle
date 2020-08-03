@@ -1,5 +1,6 @@
 rootProject.name = 'base-common-starter'
 
+include 'ly-apollo-spring-boot-starter'
 include 'ly-async-spring-boot-starter'
 include 'ly-base-mybatis-spring-boot-starter'
 include 'ly-cache-spring-boot-starter'
