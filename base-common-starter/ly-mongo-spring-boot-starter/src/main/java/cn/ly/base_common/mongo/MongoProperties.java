@@ -1,6 +1,5 @@
 package cn.ly.base_common.mongo;
 
-import com.mongodb.MongoClientURI;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
@@ -19,8 +18,4 @@ public class MongoProperties {
     private String[] basePackages;
     @NotNull
     private String uri;
-
-    public MongoClientURI createMongoClientURI() {
-        return new MongoClientURI(uri);
-    }
 }

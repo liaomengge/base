@@ -6,11 +6,13 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 /**
  * Created by liaomengge on 2019/7/12.
  */
+@Configuration
 public class ExtendSecurityConfiguration {
 
     @Autowired(required = false)

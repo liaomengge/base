@@ -140,7 +140,6 @@ dependencyManagement {
 
         dependency "com.taobao.text:text-ui:0.0.2"
 
-
         dependency "com.alibaba:transmittable-thread-local:2.11.5"
         dependency "com.alibaba:log4j2-ttl-thread-context-map:1.3.2"
 
