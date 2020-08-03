@@ -1,13 +1,13 @@
 package cn.ly.base_common.multi.mybatis.configuration;
 
+import cn.ly.base_common.helper.mybatis.plugins.FlowInterceptor;
+import cn.ly.base_common.helper.mybatis.plugins.SqlInterceptor;
 import cn.ly.base_common.multi.mybatis.MybatisProperties;
 import cn.ly.base_common.multi.mybatis.batch.BatchGeneralService;
 import cn.ly.base_common.multi.mybatis.druid.DruidConfiguration3;
 import cn.ly.base_common.multi.mybatis.extend.ExtendMapperScan;
 import cn.ly.base_common.multi.mybatis.extend.ExtendSpringBootVFS;
 import cn.ly.base_common.multi.mybatis.hikari.HikariConfiguration3;
-import cn.ly.base_common.helper.mybatis.plugins.FlowInterceptor;
-import cn.ly.base_common.helper.mybatis.plugins.SqlInterceptor;
 import cn.ly.base_common.support.datasource.DynamicDataSource;
 import cn.ly.base_common.support.datasource.enums.DbType;
 import com.github.pagehelper.PageInterceptor;
@@ -35,7 +35,7 @@ import java.util.Properties;
  * Created by liaomengge on 2018/12/19.
  */
 @Configuration
-@ConditionalOnProperty(prefix = "ly.mybatis.three", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.mybatis.three", name = "enabled", havingValue = "true")
 @Import({DruidConfiguration3.class, HikariConfiguration3.class})
 @ExtendMapperScan(basePackages = "${ly.mybatis.three.basePackages}", sqlSessionFactoryRef = "threeSqlSessionFactory")
 public class DynamicDataSourceConfiguration3 {

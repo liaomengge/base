@@ -1,11 +1,11 @@
 package cn.ly.base_common.multi.shardingsphere.configuration;
 
+import cn.ly.base_common.helper.mybatis.plugins.FlowInterceptor;
+import cn.ly.base_common.helper.mybatis.plugins.SqlInterceptor;
 import cn.ly.base_common.multi.shardingsphere.ShardingSphereProperties;
 import cn.ly.base_common.multi.shardingsphere.batch.BatchGeneralService;
 import cn.ly.base_common.multi.shardingsphere.extend.ExtendMapperScan;
 import cn.ly.base_common.multi.shardingsphere.extend.ExtendSpringBootVFS;
-import cn.ly.base_common.helper.mybatis.plugins.FlowInterceptor;
-import cn.ly.base_common.helper.mybatis.plugins.SqlInterceptor;
 import com.github.pagehelper.PageInterceptor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.plugin.Interceptor;
@@ -38,7 +38,7 @@ import java.util.Properties;
  * Created by liaomengge on 2019/9/12.
  */
 @Configuration
-@ConditionalOnProperty(prefix = "ly.shardingsphere.four", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.shardingsphere.four", name = "enabled", havingValue = "true")
 @ExtendMapperScan(basePackages = "${ly.shardingsphere.four.mybatis.basePackages}", sqlSessionFactoryRef =
         "fourSqlSessionFactory")
 public class ShardingDataSourceConfiguration4 extends AbstractShardingDataSourceConfiguration {

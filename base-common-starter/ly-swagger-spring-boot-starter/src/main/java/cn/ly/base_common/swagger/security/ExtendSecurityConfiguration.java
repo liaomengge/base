@@ -36,7 +36,7 @@ public class ExtendSecurityConfiguration {
         boolean enableSwaggerBasicAuth = false;
         String defaultUserName = "admin", defaultPass = "123456";
         if (environment != null) {
-            Boolean enableAuth = environment.getProperty("ly.swagger.basic.enable", Boolean.class);
+            Boolean enableAuth = environment.getProperty("ly.swagger.basic.enabled", Boolean.class);
             enableSwaggerBasicAuth = BooleanUtils.toBooleanDefaultIfNull(enableAuth, false);
             if (enableSwaggerBasicAuth) {
                 //如果开启basic验证,从配置文件中获取用户名和密码

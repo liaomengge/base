@@ -1,13 +1,13 @@
 package cn.ly.base_common.multi.mybatis.configuration;
 
+import cn.ly.base_common.helper.mybatis.plugins.FlowInterceptor;
+import cn.ly.base_common.helper.mybatis.plugins.SqlInterceptor;
 import cn.ly.base_common.multi.mybatis.MybatisProperties;
 import cn.ly.base_common.multi.mybatis.batch.BatchGeneralService;
 import cn.ly.base_common.multi.mybatis.druid.DruidConfiguration5;
 import cn.ly.base_common.multi.mybatis.extend.ExtendMapperScan;
 import cn.ly.base_common.multi.mybatis.extend.ExtendSpringBootVFS;
 import cn.ly.base_common.multi.mybatis.hikari.HikariConfiguration5;
-import cn.ly.base_common.helper.mybatis.plugins.FlowInterceptor;
-import cn.ly.base_common.helper.mybatis.plugins.SqlInterceptor;
 import cn.ly.base_common.support.datasource.DynamicDataSource;
 import cn.ly.base_common.support.datasource.enums.DbType;
 import com.github.pagehelper.PageInterceptor;
@@ -35,7 +35,7 @@ import java.util.Properties;
  * Created by liaomengge on 2018/12/19.
  */
 @Configuration
-@ConditionalOnProperty(prefix = "ly.mybatis.five", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "ly.mybatis.five", name = "enabled", havingValue = "true")
 @Import({DruidConfiguration5.class, HikariConfiguration5.class})
 @ExtendMapperScan(basePackages = "${ly.mybatis.five.basePackages}", sqlSessionFactoryRef = "fiveSqlSessionFactory")
 public class DynamicDataSourceConfiguration5 {
