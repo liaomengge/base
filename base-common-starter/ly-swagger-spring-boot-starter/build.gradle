@@ -1,6 +1,7 @@
 dependencies {
     api "io.springfox:springfox-swagger2"
     api "io.springfox:springfox-swagger-ui"
-    api "com.github.xiaoymin:swagger-bootstrap-ui"
+    api "com.github.xiaoymin:knife4j-spring"
+    api "com.github.xiaoymin:knife4j-spring-ui"
     api "org.springframework:spring-webmvc"
 }

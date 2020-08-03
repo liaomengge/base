@@ -20,10 +20,18 @@ import static springfox.documentation.spring.web.plugins.Docket.DEFAULT_GROUP_NA
 public class SwaggerProperties {
 
     private boolean enabled;
+    private AuthBasic basic;
     @NotNull
     private String basePackage;
     private String groupName = DEFAULT_GROUP_NAME;
     private ApiInfoWrapper api = new ApiInfoWrapper();
+
+    @Data
+    public class AuthBasic {
+        private boolean enabled;
+        private String username;
+        private String password;
+    }
 
     @Data
     public class ApiInfoWrapper {

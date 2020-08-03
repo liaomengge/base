@@ -1,8 +1,7 @@
 package cn.ly.base_common.swagger.annotation;
 
 import cn.ly.base_common.swagger.security.ExtendSecurityConfiguration;
-import com.github.xiaoymin.swaggerbootstrapui.configuration.MarkdownFileConfiguration;
-import com.github.xiaoymin.swaggerbootstrapui.configuration.SwaggerBootstrapUIConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -13,6 +12,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({SwaggerBootstrapUIConfiguration.class, ExtendSecurityConfiguration.class, MarkdownFileConfiguration.class})
+@Import(ExtendSecurityConfiguration.class)
+@ComponentScan(basePackages = {"com.github.xiaoymin.knife4j.spring.plugin", "com.github.xiaoymin.knife4j.spring.web"})
 public @interface EnableExtendSwaggerBootstrapUI {
 }

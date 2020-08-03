@@ -1,13 +1,19 @@
 package cn.ly.base_common.swagger;
 
-import cn.ly.base_common.support.predicate._Predicates;
 import cn.ly.base_common.swagger.SwaggerProperties.ApiInfoWrapper;
 import cn.ly.base_common.swagger.annotation.EnableExtendSwaggerBootstrapUI;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.RequestHandler;
@@ -17,12 +23,11 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.SpringfoxWebConfiguration;
+import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
@@ -33,15 +38,32 @@ import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
 @AllArgsConstructor
 @Configuration
 @EnableConfigurationProperties(SwaggerProperties.class)
-@EnableSwagger2WebMvc
+@EnableSwagger2
 @EnableExtendSwaggerBootstrapUI
 public class SwaggerAutoConfiguration {
 
     private final SwaggerProperties swaggerProperties;
 
-    @Bean
-    @ConditionalOnClass(SpringfoxWebConfiguration.class)
-    public WebMvcConfigurer addResourceHandlers() {
+    @Bean("lySwaggerCorsFilter")
+    @ConditionalOnMissingBean(CorsFilter.class)
+    @ConditionalOnProperty(name = "ly.swagger.cors")
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.setMaxAge(10000L);
+        //匹配所有API
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        CorsFilter corsFilter = new CorsFilter(source);
+        return corsFilter;
+    }
+
+    @Bean("lySwaggerWebMvcConfigurer")
+    @ConditionalOnClass(SpringfoxWebMvcConfiguration.class)
+    public WebMvcConfigurer webMvcConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -63,7 +85,7 @@ public class SwaggerAutoConfiguration {
                 .groupName(this.swaggerProperties.getGroupName())
                 .apiInfo(this.apiInfo())
                 .select()
-                .apis(_Predicates.or(predicates))
+                .apis(Predicates.or(predicates))
                 .paths(PathSelectors.any())
                 .build();
     }

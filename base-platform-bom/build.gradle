@@ -69,9 +69,10 @@ dependencyManagement {
 
         dependency "com.javadeep:functional-lang:1.0.0"
 
-        dependency "io.springfox:springfox-swagger2:2.10.5"
-        dependency "io.springfox:springfox-swagger-ui:2.10.5"
-        dependency "com.github.xiaoymin:swagger-bootstrap-ui:1.9.6"
+        dependency "io.springfox:springfox-swagger2:2.9.2"
+        dependency "io.springfox:springfox-swagger-ui:2.9.2"
+        dependency "com.github.xiaoymin:knife4j-spring:2.0.4"
+        dependency "com.github.xiaoymin:knife4j-spring-ui:2.0.4"
 
         dependency("org.apache.curator:curator-client:4.0.1") {
             exclude 'org.apache.zookeeper:zookeeper'
