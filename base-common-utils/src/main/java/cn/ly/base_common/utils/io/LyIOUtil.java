@@ -22,10 +22,12 @@ public class LyIOUtil {
         } catch (IOException e) {
             logger.error("读取文件流失败", e);
         } finally {
-            if (inputStream != null) try {
-                inputStream.close();
-            } catch (IOException e) {
-                logger.error("关闭文件流失败", e);
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    logger.error("关闭文件流失败", e);
+                }
             }
         }
 
@@ -38,10 +40,12 @@ public class LyIOUtil {
         } catch (IOException e) {
             logger.error("读取文件流失败", e);
         } finally {
-            if (inputStream != null) try {
-                inputStream.close();
-            } catch (IOException e) {
-                logger.error("关闭文件流失败", e);
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    logger.error("关闭文件流失败", e);
+                }
             }
         }
 
@@ -54,10 +58,12 @@ public class LyIOUtil {
         } catch (IOException e) {
             logger.error("读取文件流失败", e);
         } finally {
-            if (input != null) try {
-                input.close();
-            } catch (IOException e) {
-                logger.error("关闭文件流失败", e);
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    logger.error("关闭文件流失败", e);
+                }
             }
         }
 
@@ -74,10 +80,12 @@ public class LyIOUtil {
         } catch (IOException e) {
             logger.error("读取文件流失败", e);
         } finally {
-            if (inputStream != null) try {
-                inputStream.close();
-            } catch (IOException e) {
-                logger.error("关闭文件流失败", e);
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    logger.error("关闭文件流失败", e);
+                }
             }
         }
 
@@ -90,10 +98,12 @@ public class LyIOUtil {
         } catch (IOException e) {
             logger.error("读取文件流失败", e);
         } finally {
-            if (input != null) try {
-                input.close();
-            } catch (IOException e) {
-                logger.error("关闭文件流失败", e);
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    logger.error("关闭文件流失败", e);
+                }
             }
         }
 
@@ -107,10 +117,12 @@ public class LyIOUtil {
      * @param closeable closeable object
      */
     public void close(Closeable closeable) throws IOException {
-        if (closeable != null) try {
-            closeable.close();
-        } catch (IOException e) {
-            throw new IOException("IOException occurred. ", e);
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (IOException e) {
+                throw new IOException("IOException occurred. ", e);
+            }
         }
     }
 
@@ -121,10 +133,14 @@ public class LyIOUtil {
      * @param closeable closeable object
      */
     public void closeQuietly(Closeable closeable) {
-        if (closeable == null) return;
-        if (closeable instanceof Flushable) try {
-            ((Flushable) closeable).flush();
-        } catch (IOException ignored) {
+        if (closeable == null) {
+            return;
+        }
+        if (closeable instanceof Flushable) {
+            try {
+                ((Flushable) closeable).flush();
+            } catch (IOException ignored) {
+            }
         }
         try {
             closeable.close();

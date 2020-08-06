@@ -36,7 +36,9 @@ public class LyBeanCopierUtil {
      * @param <T>
      */
     public <S, T> void copyProperties(S source, T target, IBeanCopier<S, T> iBeanCopier) {
-        if (source == null || target == null) return;
+        if (source == null || target == null) {
+            return;
+        }
 
         Class<?> sourceCls = source.getClass();
         Class<?> targetCls = target.getClass();
@@ -47,7 +49,9 @@ public class LyBeanCopierUtil {
 
             copier.copy(source, target, null);
 
-            if (iBeanCopier != null) iBeanCopier.afterCopy(source, target);
+            if (iBeanCopier != null) {
+                iBeanCopier.afterCopy(source, target);
+            }
         } catch (Exception e) {
             logger.error("copy bean error", e);
             BeanUtils.copyProperties(source, target);
@@ -59,17 +63,22 @@ public class LyBeanCopierUtil {
     }
 
     public <S, T> void copyProperties2(S source, T target, BiConsumer<S, T> biConsumer) {
-        if (source == null || target == null) return;
+        if (source == null || target == null) {
+            return;
+        }
 
         Class<?> sourceCls = source.getClass();
         Class<?> targetCls = target.getClass();
         String beanKey = generateKey(sourceCls, targetCls);
         try {
-            BeanCopier copier = beanCopierMap.computeIfAbsent(beanKey, s -> BeanCopier.create(sourceCls, targetCls, false));
+            BeanCopier copier = beanCopierMap.computeIfAbsent(beanKey, s -> BeanCopier.create(sourceCls, targetCls,
+                    false));
 
             copier.copy(source, target, null);
 
-            if (biConsumer != null) biConsumer.accept(source, target);
+            if (biConsumer != null) {
+                biConsumer.accept(source, target);
+            }
         } catch (Exception e) {
             logger.error("copy bean error", e);
             BeanUtils.copyProperties(source, target);

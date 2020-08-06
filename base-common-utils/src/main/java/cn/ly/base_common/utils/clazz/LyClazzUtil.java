@@ -14,8 +14,9 @@ public class LyClazzUtil {
 
     public String getCallClassName() {
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
-        if (stacktrace.length > STACK_TRACE_ELEMENT_THREE_INDEX)
+        if (stacktrace.length > STACK_TRACE_ELEMENT_THREE_INDEX) {
             return stacktrace[STACK_TRACE_ELEMENT_THREE_INDEX].getClassName();
+        }
         return StringUtils.EMPTY;
     }
 
@@ -30,8 +31,9 @@ public class LyClazzUtil {
 
     public String getCurrentClassName() {
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
-        if (stacktrace.length > STACK_TRACE_ELEMENT_TWO_INDEX)
+        if (stacktrace.length > STACK_TRACE_ELEMENT_TWO_INDEX) {
             return stacktrace[STACK_TRACE_ELEMENT_TWO_INDEX].getClassName();
+        }
         return StringUtils.EMPTY;
     }
 

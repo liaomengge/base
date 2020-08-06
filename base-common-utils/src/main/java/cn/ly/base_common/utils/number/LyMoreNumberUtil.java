@@ -110,7 +110,9 @@ public class LyMoreNumberUtil {
      * 将10进制的String安全的转化为Byte, 当str为空或非数字字符串时, 返回default值
      */
     public Byte toByteObject(String str, Byte defaultValue) {
-        if (StringUtils.isEmpty(str)) return defaultValue;
+        if (StringUtils.isEmpty(str)) {
+            return defaultValue;
+        }
         try {
             return Byte.valueOf(str);
         } catch (NumberFormatException nfe) {
@@ -129,7 +131,9 @@ public class LyMoreNumberUtil {
      * 将10进制的String安全的转化为Short, 当str为空或非数字字符串时, 返回default值
      */
     public Short toShortObject(String str, Short defaultValue) {
-        if (StringUtils.isEmpty(str)) return defaultValue;
+        if (StringUtils.isEmpty(str)) {
+            return defaultValue;
+        }
         try {
             return Short.valueOf(str);
         } catch (NumberFormatException nfe) {
@@ -148,7 +152,9 @@ public class LyMoreNumberUtil {
      * 将10进制的String安全的转化为Integer, 当str为空或非数字字符串时, 返回default值
      */
     public Integer toIntObject(String str, Integer defaultValue) {
-        if (StringUtils.isEmpty(str)) return defaultValue;
+        if (StringUtils.isEmpty(str)) {
+            return defaultValue;
+        }
         try {
             return Integer.valueOf(str);
         } catch (NumberFormatException nfe) {
@@ -167,7 +173,9 @@ public class LyMoreNumberUtil {
      * 将10进制的String安全的转化为Long, 当str为空或非数字字符串时, 返回default值
      */
     public Long toLongObject(String str, Long defaultValue) {
-        if (StringUtils.isEmpty(str)) return defaultValue;
+        if (StringUtils.isEmpty(str)) {
+            return defaultValue;
+        }
         try {
             return Long.valueOf(str);
         } catch (NumberFormatException nfe) {
@@ -186,7 +194,9 @@ public class LyMoreNumberUtil {
      * 将10进制的String安全的转化为Long, 当str为空或非数字字符串时, 返回default值
      */
     public Double toDoubleObject(String str, Double defaultValue) {
-        if (StringUtils.isEmpty(str)) return defaultValue;
+        if (StringUtils.isEmpty(str)) {
+            return defaultValue;
+        }
         try {
             return Double.valueOf(str);
         } catch (NumberFormatException nfe) {
@@ -199,7 +209,9 @@ public class LyMoreNumberUtil {
     }
 
     public String toString(Byte b) {
-        if (Objects.isNull(b)) return "";
+        if (Objects.isNull(b)) {
+            return "";
+        }
         return b.toString();
     }
 
@@ -208,7 +220,9 @@ public class LyMoreNumberUtil {
     }
 
     public String toString(Short s) {
-        if (Objects.isNull(s)) return "";
+        if (Objects.isNull(s)) {
+            return "";
+        }
         return s.toString();
     }
 
@@ -217,7 +231,9 @@ public class LyMoreNumberUtil {
     }
 
     public String toString(Integer i) {
-        if (Objects.isNull(i)) return "";
+        if (Objects.isNull(i)) {
+            return "";
+        }
         return i.toString();
     }
 
@@ -226,7 +242,9 @@ public class LyMoreNumberUtil {
     }
 
     public String toString(Long l) {
-        if (Objects.isNull(l)) return "";
+        if (Objects.isNull(l)) {
+            return "";
+        }
         return l.toString();
     }
 
@@ -235,7 +253,9 @@ public class LyMoreNumberUtil {
     }
 
     public String toString(Double d) {
-        if (Objects.isNull(d)) return "";
+        if (Objects.isNull(d)) {
+            return "";
+        }
         return d.toString();
     }
 }

@@ -76,7 +76,9 @@ public class LyDateUtil {
      * @return
      */
     public String getDate2String(Date date, String pattern) {
-        if (date == null) return "";
+        if (date == null) {
+            return "";
+        }
         return DateFormatUtils.format(date, pattern);
     }
 
@@ -118,7 +120,9 @@ public class LyDateUtil {
      *******************************************************/
 
     public long getDate2Long(Date date) {
-        if (date == null) return 0;
+        if (date == null) {
+            return 0;
+        }
         return date.getTime();
     }
 
@@ -162,7 +166,9 @@ public class LyDateUtil {
      * @return
      */
     public long getSecondTime(Date date) {
-        if (date == null) return 0;
+        if (date == null) {
+            return 0;
+        }
         return date.getTime() / INTERVAL_UNIT;
     }
 
@@ -181,7 +187,9 @@ public class LyDateUtil {
      * @return
      */
     public long getMilliSecondsTime(Date date) {
-        if (date == null) return 0;
+        if (date == null) {
+            return 0;
+        }
         return date.getTime();
     }
 
@@ -559,7 +567,9 @@ public class LyDateUtil {
         calendar.setTime(new Date());
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         //外国, 星期天为每个星期的第1天
-        if (day == 1) return 7;
+        if (day == 1) {
+            return 7;
+        }
         return day - 1;
     }
 
@@ -689,7 +699,9 @@ public class LyDateUtil {
     }
 
     public String format(Date date, String pattern) {
-        if (date == null) return "";
+        if (date == null) {
+            return "";
+        }
         return DateFormatUtils.format(date, pattern);
     }
 
@@ -697,7 +709,9 @@ public class LyDateUtil {
      * 判断日期是否在范围内, 包含相等的日期
      */
     public boolean isBetween(Date date, Date start, Date end) {
-        if (date == null || start == null || end == null || start.after(end)) return false;
+        if (date == null || start == null || end == null || start.after(end)) {
+            return false;
+        }
         return !date.before(start) && !date.after(end);
     }
 }

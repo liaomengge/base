@@ -194,7 +194,7 @@ public class LyRandomUtil {
      */
     public double nextDouble(Random random, double min, double max) {
         Validate.isTrue(max >= min, "Start value must be smaller or equal to end value.");
-        if (min == max) {
+        if (Double.compare(min, max) == 0) {
             return min;
         }
 

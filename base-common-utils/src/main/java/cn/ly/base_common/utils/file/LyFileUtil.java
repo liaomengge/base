@@ -1,9 +1,9 @@
 package cn.ly.base_common.utils.file;
 
-import cn.ly.base_common.utils.io.LyIOUtil;
-import cn.ly.base_common.utils.os.LyOSUtil;
 import cn.ly.base_common.support.misc.enums.OSTypeEnum;
+import cn.ly.base_common.utils.io.LyIOUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.os.LyOSUtil;
 import cn.ly.base_common.utils.regex.LyMatcherUtil;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import lombok.experimental.UtilityClass;
@@ -44,7 +44,9 @@ public class LyFileUtil {
      */
     public String getJarExecPath(Class clazz) {
         String path = clazz.getProtectionDomain().getCodeSource().getLocation().getPath();
-        if (LyOSUtil.getOSname().equals(OSTypeEnum.Windows)) return path.substring(1);
+        if (LyOSUtil.getOSname().equals(OSTypeEnum.Windows)) {
+            return path.substring(1);
+        }
         return path;
     }
 
@@ -103,8 +105,11 @@ public class LyFileUtil {
     public boolean delete(String fileName) {
         boolean result = false;
         File f = new File(fileName);
-        if (f.exists()) result = f.delete();
-        else result = true;
+        if (f.exists()) {
+            result = f.delete();
+        } else {
+            result = true;
+        }
         return result;
     }
 
@@ -122,8 +127,11 @@ public class LyFileUtil {
             File[] fileArr = dir.listFiles();
             for (int i = 0; i < fileArr.length; i++) {
                 File f = fileArr[i];
-                if (f.isFile()) files.add(f);
-                else files.addAll(getAllFiles(f.getPath()));
+                if (f.isFile()) {
+                    files.add(f);
+                } else {
+                    files.addAll(getAllFiles(f.getPath()));
+                }
             }
         }
         return files;
@@ -157,7 +165,9 @@ public class LyFileUtil {
                 File f = fileArr[i];
                 if (f.isDirectory()) {
                     files.add(f);
-                    if (isRecursive) files.addAll(getAllDirectory(f.getPath(), true));
+                    if (isRecursive) {
+                        files.addAll(getAllDirectory(f.getPath(), true));
+                    }
                 }
             }
         }
@@ -175,9 +185,15 @@ public class LyFileUtil {
         File[] fileArr = path.listFiles();
         ArrayList<File> files = new ArrayList<>();
 
-        if (fileArr == null) return files;
+        if (fileArr == null) {
+            return files;
+        }
 
-        for (File f : fileArr) if (f.isFile()) files.add(f);
+        for (File f : fileArr) {
+            if (f.isFile()) {
+                files.add(f);
+            }
+        }
         return files;
     }
 
@@ -194,12 +210,18 @@ public class LyFileUtil {
         File[] fileArr = path.listFiles((dir, name) -> {
             String lowerName = name.toLowerCase();
             String lowerSuffix = suffix.toLowerCase();
-            if (lowerName.endsWith(lowerSuffix)) return true;
+            if (lowerName.endsWith(lowerSuffix)) {
+                return true;
+            }
             return false;
         });
         List<File> files = new ArrayList<>();
 
-        for (File f : fileArr) if (f.isFile()) files.add(f);
+        for (File f : fileArr) {
+            if (f.isFile()) {
+                files.add(f);
+            }
+        }
         return files;
     }
 
@@ -212,9 +234,13 @@ public class LyFileUtil {
         for (int i = files.size() - 1; i >= 0; i--) {
             File f = files.get(i);
             logger.debug("准备删除文件：" + f.getAbsolutePath());
-            if (f.exists()) if (f.delete()) logger.debug("文件：" + f.getAbsolutePath() + " 删除成功！");
-            else
-                logger.debug("文件：" + f.getAbsolutePath() + " 删除失败！");
+            if (f.exists()) {
+                if (f.delete()) {
+                    logger.debug("文件：" + f.getAbsolutePath() + " 删除成功！");
+                } else {
+                    logger.debug("文件：" + f.getAbsolutePath() + " 删除失败！");
+                }
+            }
         }
 
     }
@@ -233,12 +259,18 @@ public class LyFileUtil {
         File[] fileArr = path.listFiles((dir, name) -> {
             String lowerName = name.toLowerCase();
             String lowerPrefix = prefix.toLowerCase();
-            if (lowerName.startsWith(lowerPrefix)) return true;
+            if (lowerName.startsWith(lowerPrefix)) {
+                return true;
+            }
             return false;
         });
         List<File> files = new ArrayList<>();
 
-        for (File f : fileArr) if (f.isFile()) files.add(f);
+        for (File f : fileArr) {
+            if (f.isFile()) {
+                files.add(f);
+            }
+        }
         return files;
     }
 
@@ -248,12 +280,18 @@ public class LyFileUtil {
         File[] fileArr = path.listFiles((dir, name) -> {
             String lowerName = name.toLowerCase();
             String lowerPrefix = prefix.toLowerCase();
-            if (lowerName.startsWith(lowerPrefix) && lowerName.endsWith(surfix)) return true;
+            if (lowerName.startsWith(lowerPrefix) && lowerName.endsWith(surfix)) {
+                return true;
+            }
             return false;
         });
         List<File> files = new ArrayList<>();
 
-        for (File f : fileArr) if (f.isFile()) files.add(f);
+        for (File f : fileArr) {
+            if (f.isFile()) {
+                files.add(f);
+            }
+        }
         return files;
     }
 
@@ -265,12 +303,18 @@ public class LyFileUtil {
             String lowerName = name.toLowerCase();
             String lowerPrefix = prefix.toLowerCase();
             String lowerExecludePrefix = execludePrefix.toLowerCase();
-            if (lowerName.startsWith(lowerPrefix) && !lowerName.startsWith(lowerExecludePrefix)) return true;
+            if (lowerName.startsWith(lowerPrefix) && !lowerName.startsWith(lowerExecludePrefix)) {
+                return true;
+            }
             return false;
         });
         List<File> files = new ArrayList<>();
 
-        for (File f : fileArr) if (f.isFile()) files.add(f);
+        for (File f : fileArr) {
+            if (f.isFile()) {
+                files.add(f);
+            }
+        }
         return files;
     }
 
@@ -283,7 +327,9 @@ public class LyFileUtil {
      */
     public String read(String fileName) throws IOException {
         File f = new File(fileName);
-        if (!f.exists()) return null;
+        if (!f.exists()) {
+            return null;
+        }
         FileInputStream fs = new FileInputStream(f);
         String result = null;
         byte[] b = new byte[fs.available()];
@@ -349,8 +395,12 @@ public class LyFileUtil {
     public void write(String fileName, byte[] contentBytes,
                       boolean autoCreateDir, boolean autoOverwrite) throws IOException {
 
-        if (autoCreateDir) createDirs(fileName);
-        if (autoOverwrite) delete(fileName);
+        if (autoCreateDir) {
+            createDirs(fileName);
+        }
+        if (autoOverwrite) {
+            delete(fileName);
+        }
         File f = new File(fileName);
         FileOutputStream fs = new FileOutputStream(f);
         fs.write(contentBytes);
@@ -376,7 +426,9 @@ public class LyFileUtil {
             rFile.seek(originLen);
             rFile.write(b);
             rFile.close();
-        } else if (createFileIfNoExist) write(fileName, fileContent);
+        } else if (createFileIfNoExist) {
+            write(fileName, fileContent);
+        }
     }
 
     public void append(String fileName, String fileContent) throws IOException {
@@ -436,9 +488,10 @@ public class LyFileUtil {
                 partFiles.size(), partFiles.size() * 3, 1, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(partFiles.size() * 2), LyThreadFactoryBuilderUtil.build("merge-file"));
 
-        for (int i = 0; i < partFiles.size(); i++)
+        for (int i = 0; i < partFiles.size(); i++) {
             threadPool.execute(new MergeRunnable(i * partFileSize,
                     mergeFileName, partFiles.get(i)));
+        }
 
     }
 
@@ -462,7 +515,9 @@ public class LyFileUtil {
     public void createDirs(String filePath) {
         File file = new File(filePath);
         File parent = file.getParentFile();
-        if (parent != null && !parent.exists()) parent.mkdirs();
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
+        }
 
     }
 

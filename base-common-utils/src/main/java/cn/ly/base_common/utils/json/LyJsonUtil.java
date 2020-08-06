@@ -45,7 +45,9 @@ public class LyJsonUtil {
      * @return
      */
     public String toJson(Object object) {
-        if (null == object) return null;
+        if (null == object) {
+            return null;
+        }
         return JSON.toJSONString(object);
     }
 
@@ -58,8 +60,12 @@ public class LyJsonUtil {
      * @return
      */
     public String toJson4Log(Object object) {
-        if (null == object) return null;
-        if (object instanceof String) return (String) object;
+        if (null == object) {
+            return null;
+        }
+        if (object instanceof String) {
+            return (String) object;
+        }
         return JSON.toJSONString(object, SerializerFeature.DisableCircularReferenceDetect);
     }
 
@@ -73,7 +79,9 @@ public class LyJsonUtil {
      * @return
      */
     public String toJson(Object object, SerializerFeature... features) {
-        if (null == object) return null;
+        if (null == object) {
+            return null;
+        }
         return JSON.toJSONString(object, features);
     }
 
@@ -99,10 +107,13 @@ public class LyJsonUtil {
      * @return
      */
     public String toJson4DateFormat(Object object, Map<String, Object> valueFormat) {
-        if (valueFormat == null || object == null) return toJson(object);
+        if (valueFormat == null || object == null) {
+            return toJson(object);
+        }
         ValueFilter valueFilter = (obj, propertyName, propertyValue) -> {
-            if (valueFormat.containsKey(propertyName))
+            if (valueFormat.containsKey(propertyName)) {
                 return LyDateUtil.getDate2String((Date) propertyValue, valueFormat.get(propertyName).toString());
+            }
             return propertyValue;
         };
 
@@ -117,9 +128,13 @@ public class LyJsonUtil {
      * @return
      */
     public String toJsonIgnoreProperty(Object object, String... ignorePropertyNames) {
-        if (ArrayUtils.isEmpty(ignorePropertyNames) || object == null) return toJson(object);
+        if (ArrayUtils.isEmpty(ignorePropertyNames) || object == null) {
+            return toJson(object);
+        }
         PropertyFilter propertyFilter = (obj, propertyName, propertyValue) -> {
-            if (ArrayUtils.indexOf(ignorePropertyNames, propertyName) == -1) return true;
+            if (ArrayUtils.indexOf(ignorePropertyNames, propertyName) == -1) {
+                return true;
+            }
             return false;
         };
         return JSON.toJSONString(object, propertyFilter);
@@ -133,9 +148,13 @@ public class LyJsonUtil {
      * @return
      */
     public String toJsonIncludeProperty(Object object, String... includePropertyNames) {
-        if (ArrayUtils.isEmpty(includePropertyNames) || object == null) return toJson(object);
+        if (ArrayUtils.isEmpty(includePropertyNames) || object == null) {
+            return toJson(object);
+        }
         PropertyFilter propertyFilter = (obj, propertyName, propertyValue) -> {
-            if (ArrayUtils.indexOf(includePropertyNames, propertyName) != -1) return true;
+            if (ArrayUtils.indexOf(includePropertyNames, propertyName) != -1) {
+                return true;
+            }
             return false;
         };
         return JSON.toJSONString(object, propertyFilter);
@@ -149,10 +168,14 @@ public class LyJsonUtil {
      * @return
      */
     public String toJsonReplaceProperty(Object object, Map<String, Object> replacePropertyMap) {
-        if (MapUtils.isEmpty(replacePropertyMap) || object == null) return toJson(object);
+        if (MapUtils.isEmpty(replacePropertyMap) || object == null) {
+            return toJson(object);
+        }
 
         NameFilter nameFilter = (object1, propertyName, propertyValue) -> {
-            if (replacePropertyMap.containsKey(propertyName)) return replacePropertyMap.get(propertyName).toString();
+            if (replacePropertyMap.containsKey(propertyName)) {
+                return replacePropertyMap.get(propertyName).toString();
+            }
             return propertyName;
         };
 

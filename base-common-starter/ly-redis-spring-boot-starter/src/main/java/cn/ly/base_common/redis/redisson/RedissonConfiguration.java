@@ -8,6 +8,7 @@ import cn.ly.base_common.utils.io.LyIOUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.redisson.config.ConfigSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -59,7 +60,8 @@ public class RedissonConfiguration {
         InputStream inputStream = null;
         try {
             inputStream = getConfigStream();
-            config = Config.fromJSON(inputStream);
+            ConfigSupport support = new ConfigSupport();
+            config = support.fromJSON(inputStream, Config.class);
         } catch (IOException e) {
             try {
                 inputStream = getConfigStream();

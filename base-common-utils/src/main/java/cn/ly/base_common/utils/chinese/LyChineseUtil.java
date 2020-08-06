@@ -20,8 +20,11 @@ public class LyChineseUtil {
      * @return
      */
     public boolean isNull(String str) {
-        if (str == null || "".equals(str.trim()) || "null".equalsIgnoreCase(str.trim())) return true;
-        else return false;
+        if (str == null || "".equals(str.trim()) || "null".equalsIgnoreCase(str.trim())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -31,12 +34,16 @@ public class LyChineseUtil {
      * @return int 得到的字符串长度
      */
     public int length(String s) {
-        if (s == null) return 0;
+        if (s == null) {
+            return 0;
+        }
         char[] c = s.toCharArray();
         int len = 0;
         for (int i = 0; i < c.length; i++) {
             len++;
-            if (!isLetter(c[i])) len++;
+            if (!isLetter(c[i])) {
+                len++;
+            }
         }
         return len;
     }
@@ -57,8 +64,11 @@ public class LyChineseUtil {
             // 判断是否为中文字符
             // 中文字符长度为1
             // 其他字符长度为0.5
-            if (temp.matches(chinese)) valueLength += 1;
-            else valueLength += 0.5;
+            if (temp.matches(chinese)) {
+                valueLength += 1;
+            } else {
+                valueLength += 0.5;
+            }
         }
         // 进位取整
         return Math.ceil(valueLength);

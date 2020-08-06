@@ -106,8 +106,6 @@ public class LyZipUtil {
         // 解压方式由 ZipArchiveInputStream 修改为 ZipFile,否则会出现解压后的文件内容不完整
         // 解压输入流
         ZipFile zipFile = new ZipFile(sourceFile);
-        //ZipArchiveInputStream zais = null;
-        //zais = new ZipArchiveInputStream(new FileInputStream(sourceFile));
         ZipArchiveEntry archiveEntry = null;
         // 把zip包中的每个文件读取出来
         // 然后把文件写到指定的文件夹
@@ -116,15 +114,9 @@ public class LyZipUtil {
         Enumeration<ZipArchiveEntry> entries = zipFile.getEntries();
         while (entries.hasMoreElements()) {
             archiveEntry = entries.nextElement();
-            // while ((archiveEntry = (ZipArchiveEntry) zais.getNextEntry()) !=
-            // null) {
-            // 获取文件名
             String entryFileName = archiveEntry.getName();
             // 构造解压出来的文件存放路径
             String entryFilePath = targetPath + entryFileName;
-            // byte[] content = new byte[(int) archiveEntry.getSize()];
-            // zais.read(content,0,content.length);
-            // OutputStream os = null;
             FileOutputStream fos = null;
             try {
                 // 目标文件输出流
@@ -136,15 +128,7 @@ public class LyZipUtil {
                         fos.write(buf, 0, n);
                     }
                 }
-                // 把解压出来的文件写到指定路径
-                // File entryFile = new File(entryFilePath);
-                // os = new BufferedOutputStream(new
-                // FileOutputStream(entryFile));
-                // os.write(content);
             } finally {
-                /*
-                 * if (os != null) { os.flush(); os.close(); }
-                 */
                 if (fos != null) {
                     fos.close();
                 }

@@ -40,19 +40,27 @@ public class LyThrowableUtil {
     }
 
     public String getStackTrace(Throwable t, boolean removeLF, int length) {
-        if (t == null) return "";
+        if (t == null) {
+            return "";
+        }
 
         StringWriter sw = new StringWriter(256);
         PrintWriter pw = new PrintWriter(sw);
         try {
             t.printStackTrace(pw);
             String stackTrace = sw.toString();
-            if (removeLF) stackTrace = LyStringUtil.replaceBlank(stackTrace);
-            if (length <= 0) return stackTrace;
+            if (removeLF) {
+                stackTrace = LyStringUtil.replaceBlank(stackTrace);
+            }
+            if (length <= 0) {
+                return stackTrace;
+            }
             int len = stackTrace.length() >= length ? length : stackTrace.length();
             return StringUtils.substring(stackTrace, 0, len);
         } finally {
-            if (pw != null) pw.close();
+            if (pw != null) {
+                pw.close();
+            }
         }
     }
 }

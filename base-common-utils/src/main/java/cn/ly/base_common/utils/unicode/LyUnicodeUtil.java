@@ -27,7 +27,7 @@ public class LyUnicodeUtil {
             }
             String code = m.group(1);
             int i = Integer.valueOf(code, 16).intValue();
-            byte bb[] = new byte[4];
+            byte[] bb = new byte[4];
             bb[0] = (byte) (i >> 8 & 0xff);
             bb[1] = (byte) (i & 0xff);
             ByteBuffer b = ByteBuffer.wrap(bb);

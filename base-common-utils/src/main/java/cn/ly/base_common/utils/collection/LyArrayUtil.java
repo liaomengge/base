@@ -25,8 +25,14 @@ public class LyArrayUtil {
      * @return
      */
     public String[] filter(String filterVal, String... array) {
-        if (array == null) return null;
-        for (int i = 0; i < array.length; i++) if (filterVal.equals(array[i])) return ArrayUtils.remove(array, i);
+        if (array == null) {
+            return null;
+        }
+        for (int i = 0; i < array.length; i++) {
+            if (filterVal.equals(array[i])) {
+                return ArrayUtils.remove(array, i);
+            }
+        }
         return array;
     }
 

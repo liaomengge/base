@@ -49,8 +49,11 @@ public class LyMoreCollectionUtil {
         Iterator<E> iterator = c.iterator();
         while (iterator.hasNext()) {
             E next = iterator.next();
-            if (predicate.test(next)) iterator.remove();
-            else consumer.accept(next);
+            if (predicate.test(next)) {
+                iterator.remove();
+            } else {
+                consumer.accept(next);
+            }
         }
     }
 
@@ -59,8 +62,11 @@ public class LyMoreCollectionUtil {
         Iterator<Map.Entry<K, V>> iterator = m.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<K, V> next = iterator.next();
-            if (predicate.test(next.getKey())) iterator.remove();
-            else consumer.accept(next);
+            if (predicate.test(next.getKey())) {
+                iterator.remove();
+            } else {
+                consumer.accept(next);
+            }
         }
     }
 
@@ -76,7 +82,9 @@ public class LyMoreCollectionUtil {
      * @return
      */
     public <T, K> List<K> convertList(List<T> list, Function<T, K> function) {
-        if (CollectionUtils.isEmpty(list)) return Lists.newArrayList();
+        if (CollectionUtils.isEmpty(list)) {
+            return Lists.newArrayList();
+        }
         return list.stream().map(function).filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 
@@ -118,7 +126,9 @@ public class LyMoreCollectionUtil {
      * @return
      */
     public <K, V> Map<K, V> convertMap(List<V> list, Function<V, K> keyFunc, Function<V, V> valFunc) {
-        if (CollectionUtils.isEmpty(list)) return Maps.newHashMap();
+        if (CollectionUtils.isEmpty(list)) {
+            return Maps.newHashMap();
+        }
         return list.stream().collect(Collectors.toMap(keyFunc, valFunc, (v1, v2) -> v2));
     }
 
@@ -135,7 +145,9 @@ public class LyMoreCollectionUtil {
      */
     public <K, V> Map<K, V> convertMap(List<V> list, Predicate<V> predicate, Function<V, K> keyFunc,
                                        Function<V, V> valFunc) {
-        if (CollectionUtils.isEmpty(list)) return Maps.newHashMap();
+        if (CollectionUtils.isEmpty(list)) {
+            return Maps.newHashMap();
+        }
         return list.stream().filter(predicate).collect(Collectors.toMap(keyFunc, valFunc, (v1, v2) -> v2));
     }
 
@@ -151,7 +163,9 @@ public class LyMoreCollectionUtil {
      * @param <V>
      */
     public <T, K, V> void fillList(List<T> list, Map<K, V> map, Function<T, K> function, Consumer<T> action) {
-        if (CollectionUtils.isEmpty(list) || MapUtils.isEmpty(map)) return;
+        if (CollectionUtils.isEmpty(list) || MapUtils.isEmpty(map)) {
+            return;
+        }
         list.stream().filter(val -> map.containsKey(function.apply(val))).forEach(action);
     }
 
@@ -169,7 +183,9 @@ public class LyMoreCollectionUtil {
      */
     public <T, K, V> void fillList(List<T> retList, List<V> fillList, Function<T, K> retEqFunc,
                                    Function<V, K> fillCovertFunc, BiConsumer<T, Map<K, V>> action) {
-        if (CollectionUtils.isEmpty(retList) || CollectionUtils.isEmpty(fillList)) return;
+        if (CollectionUtils.isEmpty(retList) || CollectionUtils.isEmpty(fillList)) {
+            return;
+        }
         Map<K, V> map = convertMap(fillList, fillCovertFunc);
         retList.stream().filter(val -> map.containsKey(retEqFunc.apply(val))).forEach(val -> action.accept(val, map));
     }
@@ -190,7 +206,9 @@ public class LyMoreCollectionUtil {
     public <T, K, V> void fillList(List<T> retList, List<V> fillList, Predicate<V> fillPredicate,
                                    Function<T, K> retEqFunc,
                                    Function<V, K> fillCovertFunc, BiConsumer<T, Map<K, V>> action) {
-        if (CollectionUtils.isEmpty(retList) || CollectionUtils.isEmpty(fillList)) return;
+        if (CollectionUtils.isEmpty(retList) || CollectionUtils.isEmpty(fillList)) {
+            return;
+        }
         Map<K, V> map = convertMap(fillList, fillPredicate, fillCovertFunc);
         retList.stream().filter(val -> map.containsKey(retEqFunc.apply(val))).forEach(val -> action.accept(val, map));
     }

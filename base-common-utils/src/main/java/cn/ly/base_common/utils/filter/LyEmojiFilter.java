@@ -16,7 +16,9 @@ public class LyEmojiFilter {
     }
 
     public String filterEmoji(String str, String replacement) {
-        if (StringUtils.isNotBlank(str)) return str.replaceAll(regex, replacement);
+        if (StringUtils.isNotBlank(str)) {
+            return str.replaceAll(regex, replacement);
+        }
         return StringUtils.defaultString(str, "");
     }
 

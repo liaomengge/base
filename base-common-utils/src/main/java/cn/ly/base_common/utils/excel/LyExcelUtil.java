@@ -63,21 +63,27 @@ public class LyExcelUtil {
                     }
                     rowNum++;
                 }
-                for (int i = currPage; i < wsArr.length; i++) workbook.removeSheet(i);
+                for (int i = currPage; i < wsArr.length; i++) {
+                    workbook.removeSheet(i);
+                }
                 workbook.write();
             } catch (Exception e) {
                 logger.error("Export Excel Fail", e);
             } finally {
-                if (workbook != null) try {
-                    workbook.close();
-                } catch (WriteException e) {
-                    logger.error("Close WorkBook Fail", e);
+                if (workbook != null) {
+                    try {
+                        workbook.close();
+                    } catch (WriteException e) {
+                        logger.error("Close WorkBook Fail", e);
+                    }
                 }
             }
         } catch (IOException e) {
             logger.error("Create WorkBook Fail", e);
         } finally {
-            if (out != null) LyIOUtil.closeQuietly(out);
+            if (out != null) {
+                LyIOUtil.closeQuietly(out);
+            }
         }
 
     }

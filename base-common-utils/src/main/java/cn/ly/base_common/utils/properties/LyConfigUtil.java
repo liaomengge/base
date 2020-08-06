@@ -27,11 +27,15 @@ public class LyConfigUtil {
     public final String CLASSPATH_FILE_FLAG = "classpath:";
 
     public Properties loadProperties(String fileName) {
-        if (StringUtils.isNotBlank(fileName))
-            if (absolutePathStart(fileName)) return loadPropertiesFromAbsoluteFile(fileName);
-            else if (fileName.startsWith(CLASSPATH_FILE_FLAG)) return loadPropertiesFromClasspathFile(fileName);
-            else
+        if (StringUtils.isNotBlank(fileName)) {
+            if (absolutePathStart(fileName)) {
+                return loadPropertiesFromAbsoluteFile(fileName);
+            } else if (fileName.startsWith(CLASSPATH_FILE_FLAG)) {
+                return loadPropertiesFromClasspathFile(fileName);
+            } else {
                 return loadPropertiesFromRelativeFile(fileName);
+            }
+        }
         return null;
     }
 
@@ -40,7 +44,9 @@ public class LyConfigUtil {
         try {
 
             File file = new File(fileName);
-            if (!file.exists()) return null;
+            if (!file.exists()) {
+                return null;
+            }
 
             try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),
                     StandardCharsets.UTF_8.name()))) {
@@ -55,7 +61,11 @@ public class LyConfigUtil {
 
     private boolean absolutePathStart(String path) {
         File[] files = File.listRoots();
-        for (File file : files) if (path.startsWith(file.getPath())) return true;
+        for (File file : files) {
+            if (path.startsWith(file.getPath())) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -66,15 +76,19 @@ public class LyConfigUtil {
         try {
             Enumeration<URL> urls = getClassLoader().getResources(fileName);
             list = new ArrayList<>();
-            while (urls.hasMoreElements()) list.add(urls.nextElement());
+            while (urls.hasMoreElements()) {
+                list.add(urls.nextElement());
+            }
         } catch (Throwable e) {
             logger.warn("load file[" + fileName + "] fail", e);
         }
 
-        if (list.isEmpty()) return null;
+        if (list.isEmpty()) {
+            return null;
+        }
 
         Properties properties = new Properties();
-        for (URL url : list)
+        for (URL url : list) {
             try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream(),
                     StandardCharsets.UTF_8.name()))) {
                 Properties p = new Properties();
@@ -83,6 +97,7 @@ public class LyConfigUtil {
             } catch (Throwable e) {
                 logger.warn("load file[" + fileName + "] fail", e);
             }
+        }
         return properties;
     }
 
@@ -94,12 +109,16 @@ public class LyConfigUtil {
 
     private ClassLoader getClassLoader() {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        if (classLoader == null) classLoader = LyConfigUtil.class.getClassLoader();
+        if (classLoader == null) {
+            classLoader = LyConfigUtil.class.getClassLoader();
+        }
         return classLoader;
     }
 
     private String addSeparator(String dir) {
-        if (!dir.endsWith(File.separator)) dir += File.separator;
+        if (!dir.endsWith(File.separator)) {
+            dir += File.separator;
+        }
         return dir;
     }
 }

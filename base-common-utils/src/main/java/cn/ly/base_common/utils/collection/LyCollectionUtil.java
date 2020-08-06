@@ -18,8 +18,12 @@ public class LyCollectionUtil {
      * 取得Collection的第一个元素, 如果collection为空返回null.
      */
     public <T> T getFirst(Collection<T> collection) {
-        if (CollectionUtils.isEmpty(collection)) return null;
-        if (collection instanceof List) return ((List<T>) collection).get(0);
+        if (CollectionUtils.isEmpty(collection)) {
+            return null;
+        }
+        if (collection instanceof List) {
+            return ((List<T>) collection).get(0);
+        }
         return collection.iterator().next();
     }
 
@@ -27,7 +31,9 @@ public class LyCollectionUtil {
      * 获取Collection的最后一个元素, 如果collection为空返回null.
      */
     public <T> T getLast(Collection<T> collection) {
-        if (CollectionUtils.isEmpty(collection)) return null;
+        if (CollectionUtils.isEmpty(collection)) {
+            return null;
+        }
 
         // 当类型List时, 直接取得最后一个元素.
         if (collection instanceof List) {
@@ -76,8 +82,11 @@ public class LyCollectionUtil {
 
         while (i.hasNext()) {
             T next = i.next();
-            if (next.compareTo(minCandidate) < 0) minCandidate = next;
-            else if (next.compareTo(maxCandidate) > 0) maxCandidate = next;
+            if (next.compareTo(minCandidate) < 0) {
+                minCandidate = next;
+            } else if (next.compareTo(maxCandidate) > 0) {
+                maxCandidate = next;
+            }
         }
         return Pair.of(minCandidate, maxCandidate);
     }
@@ -93,8 +102,11 @@ public class LyCollectionUtil {
 
         while (i.hasNext()) {
             T next = i.next();
-            if (comp.compare(next, minCandidate) < 0) minCandidate = next;
-            else if (comp.compare(next, maxCandidate) > 0) maxCandidate = next;
+            if (comp.compare(next, minCandidate) < 0) {
+                minCandidate = next;
+            } else if (comp.compare(next, maxCandidate) > 0) {
+                maxCandidate = next;
+            }
         }
 
         return Pair.of(minCandidate, maxCandidate);

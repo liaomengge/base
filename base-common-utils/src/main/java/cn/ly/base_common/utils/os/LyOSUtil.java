@@ -89,24 +89,43 @@ public class LyOSUtil {
      * @return 操作系统名
      */
     public OSTypeEnum getOSname() {
-        if (isAix()) instance.platform = OSTypeEnum.AIX;
-        else if (isDigitalUnix()) instance.platform = OSTypeEnum.Digital_Unix;
-        else if (isFreeBSD()) instance.platform = OSTypeEnum.FreeBSD;
-        else if (isHPUX()) instance.platform = OSTypeEnum.HP_UX;
-        else if (isIrix()) instance.platform = OSTypeEnum.Irix;
-        else if (isLinux()) instance.platform = OSTypeEnum.Linux;
-        else if (isMacOS()) instance.platform = OSTypeEnum.Mac_OS;
-        else if (isMacOSX()) instance.platform = OSTypeEnum.Mac_OS_X;
-        else if (isMPEiX()) instance.platform = OSTypeEnum.MPEiX;
-        else if (isNetWare()) instance.platform = OSTypeEnum.NetWare_411;
-        else if (isOpenVMS()) instance.platform = OSTypeEnum.OpenVMS;
-        else if (isOS2()) instance.platform = OSTypeEnum.OS2;
-        else if (isOS390()) instance.platform = OSTypeEnum.OS390;
-        else if (isOSF1()) instance.platform = OSTypeEnum.OSF1;
-        else if (isSolaris()) instance.platform = OSTypeEnum.Solaris;
-        else if (isSunOS()) instance.platform = OSTypeEnum.SunOS;
-        else if (isWindows()) instance.platform = OSTypeEnum.Windows;
-        else instance.platform = OSTypeEnum.Others;
-        return instance.platform;
+        if (isAix()) {
+            platform = OSTypeEnum.AIX;
+        } else if (isDigitalUnix()) {
+            platform = OSTypeEnum.Digital_Unix;
+        } else if (isFreeBSD()) {
+            platform = OSTypeEnum.FreeBSD;
+        } else if (isHPUX()) {
+            platform = OSTypeEnum.HP_UX;
+        } else if (isIrix()) {
+            platform = OSTypeEnum.Irix;
+        } else if (isLinux()) {
+            platform = OSTypeEnum.Linux;
+        } else if (isMacOS()) {
+            platform = OSTypeEnum.Mac_OS;
+        } else if (isMacOSX()) {
+            platform = OSTypeEnum.Mac_OS_X;
+        } else if (isMPEiX()) {
+            platform = OSTypeEnum.MPEiX;
+        } else if (isNetWare()) {
+            platform = OSTypeEnum.NetWare_411;
+        } else if (isOpenVMS()) {
+            platform = OSTypeEnum.OpenVMS;
+        } else if (isOS2()) {
+            platform = OSTypeEnum.OS2;
+        } else if (isOS390()) {
+            platform = OSTypeEnum.OS390;
+        } else if (isOSF1()) {
+            platform = OSTypeEnum.OSF1;
+        } else if (isSolaris()) {
+            platform = OSTypeEnum.Solaris;
+        } else if (isSunOS()) {
+            platform = OSTypeEnum.SunOS;
+        } else if (isWindows()) {
+            platform = OSTypeEnum.Windows;
+        } else {
+            platform = OSTypeEnum.Others;
+        }
+        return platform;
     }
 }

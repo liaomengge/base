@@ -78,7 +78,9 @@ public class LyJdk8DateUtil {
      * @return
      */
     public String getDate2String(LocalDateTime localDateTime, String pattern) {
-        if (localDateTime == null) return "";
+        if (localDateTime == null) {
+            return "";
+        }
         return localDateTime.format(DateTimeFormatter.ofPattern(pattern));
     }
 
@@ -92,7 +94,9 @@ public class LyJdk8DateUtil {
      * @return
      */
     public String getDate2String(LocalDate localDate, String pattern) {
-        if (localDate == null) return "";
+        if (localDate == null) {
+            return "";
+        }
         return localDate.format(DateTimeFormatter.ofPattern(pattern));
     }
 
@@ -116,7 +120,9 @@ public class LyJdk8DateUtil {
      * @return
      */
     public String getDate2String(LocalTime localTime, String pattern) {
-        if (localTime == null) return "";
+        if (localTime == null) {
+            return "";
+        }
         return localTime.format(DateTimeFormatter.ofPattern(pattern));
     }
 
@@ -226,12 +232,16 @@ public class LyJdk8DateUtil {
      *******************************************************/
 
     public long getDate2Long(LocalDateTime localDateTime) {
-        if (localDateTime == null) return 0;
+        if (localDateTime == null) {
+            return 0;
+        }
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
     public long getDate2Long(LocalDate localDate) {
-        if (localDate == null) return 0;
+        if (localDate == null) {
+            return 0;
+        }
         return localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
@@ -275,7 +285,9 @@ public class LyJdk8DateUtil {
      * @return
      */
     public long getSecondTime(LocalDateTime localDateTime) {
-        if (localDateTime == null) return 0;
+        if (localDateTime == null) {
+            return 0;
+        }
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond();
     }
 
@@ -294,7 +306,9 @@ public class LyJdk8DateUtil {
      * @return
      */
     public long getMilliSecondsTime(LocalDateTime localDateTime) {
-        if (localDateTime == null) return 0;
+        if (localDateTime == null) {
+            return 0;
+        }
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
@@ -799,8 +813,9 @@ public class LyJdk8DateUtil {
      */
     public boolean isBetween(LocalDateTime localDateTime, LocalDateTime startLocalDateTime,
                              LocalDateTime endLocalDateTime) {
-        if (localDateTime == null || startLocalDateTime == null || endLocalDateTime == null || startLocalDateTime.isAfter(endLocalDateTime))
+        if (localDateTime == null || startLocalDateTime == null || endLocalDateTime == null || startLocalDateTime.isAfter(endLocalDateTime)) {
             return false;
+        }
         return !localDateTime.isBefore(startLocalDateTime) && !localDateTime.isAfter(endLocalDateTime);
     }
 

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory.ConfirmType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
@@ -29,7 +30,7 @@ public class RabbitMQProperties {
     private String password;
     private Integer requestedHeartbeat;
     private Integer connectionTimeout;
-    private boolean publisherConfirms;
+    private ConfirmType publisherConfirmType;
     private boolean publisherReturns;
     private final Cache cache = new Cache();
     private final Retry retry = new Retry();

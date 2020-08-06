@@ -11,187 +11,261 @@ import java.math.RoundingMode;
 public class LyNumberUtil {
 
     public long getLongValue(Long v) {
-        if (v == null) return 0;
+        if (v == null) {
+            return 0;
+        }
         return v.longValue();
     }
 
     public long getLongValue(Long v, Long defaultVal) {
-        if (v == null) return getLongValue(defaultVal);
+        if (v == null) {
+            return getLongValue(defaultVal);
+        }
         return v.longValue();
     }
 
     public long getLongValue(Byte b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.longValue();
     }
 
     public long getLongValue(Short b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.longValue();
     }
 
     public long getLongValue(Integer b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.longValue();
     }
 
     public long getLongValue(BigDecimal v) {
-        if (v == null) return 0;
+        if (v == null) {
+            return 0;
+        }
         return v.longValue();
     }
 
     public int getIntValue(Integer b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.intValue();
     }
 
     public int getIntValue(Integer b, Integer defaultVal) {
-        if (b == null) return getIntValue(defaultVal);
+        if (b == null) {
+            return getIntValue(defaultVal);
+        }
         return b.intValue();
     }
 
     public int getIntValue(Byte b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.intValue();
     }
 
     public int getIntValue(Short b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.intValue();
     }
 
     public int getIntValue(Long b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.intValue();
     }
 
     public int getIntValue(BigDecimal b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.intValue();
     }
 
     public short getShortValue(Short b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.shortValue();
     }
 
     public double getShortValue(Short b, Short defaultVal) {
-        if (b == null) return getShortValue(defaultVal);
+        if (b == null) {
+            return getShortValue(defaultVal);
+        }
         return b.doubleValue();
     }
 
     public short getShortValue(Byte b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.shortValue();
     }
 
     public short getShortValue(Integer b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.shortValue();
     }
 
     public short getShortValue(Long b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.shortValue();
     }
 
     public int getShortValue(BigDecimal b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.shortValue();
     }
 
     public byte getByteValue(Byte b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.byteValue();
     }
 
     public byte getByteValue(Byte b, Byte defaultVal) {
-        if (b == null) return getByteValue(defaultVal);
+        if (b == null) {
+            return getByteValue(defaultVal);
+        }
         return b.byteValue();
     }
 
     public byte getByteValue(Short b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.byteValue();
     }
 
     public byte getByteValue(Integer b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.byteValue();
     }
 
     public byte getByteValue(Long b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.byteValue();
     }
 
     public byte getByteValue(BigDecimal b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.byteValue();
     }
 
     public double getDoubleValue(Double b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.doubleValue();
     }
 
     public double getDoubleValue(Double b, Double defaultVal) {
-        if (b == null) return getDoubleValue(defaultVal);
+        if (b == null) {
+            return getDoubleValue(defaultVal);
+        }
         return b.doubleValue();
     }
 
     public double getDoubleValue(Byte b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.doubleValue();
     }
 
     public double getDoubleValue(Short b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.doubleValue();
     }
 
     public double getDoubleValue(Integer b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.doubleValue();
     }
 
     public double getDoubleValue(Long b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.doubleValue();
     }
 
     public double getDoubleValue(BigDecimal b) {
-        if (b == null) return 0;
+        if (b == null) {
+            return 0;
+        }
         return b.doubleValue();
     }
 
     public BigDecimal getBiDecimal(Byte s) {
-        if (s == null) return null;
+        if (s == null) {
+            return null;
+        }
         return new BigDecimal(s.toString());
     }
 
     public BigDecimal getBiDecimal(Short s) {
-        if (s == null) return null;
+        if (s == null) {
+            return null;
+        }
         return new BigDecimal(s.toString());
     }
 
     public BigDecimal getBiDecimal(Integer s) {
-        if (s == null) return null;
+        if (s == null) {
+            return null;
+        }
         return new BigDecimal(s.toString());
     }
 
     public BigDecimal getBiDecimal(Long s) {
-        if (s == null) return null;
+        if (s == null) {
+            return null;
+        }
         return new BigDecimal(s.toString());
     }
 
     public BigDecimal getBiDecimal(Double s) {
-        if (s == null) return null;
+        if (s == null) {
+            return null;
+        }
         return new BigDecimal(s.toString());
     }
 
     public BigDecimal getBiDecimal(String s) {
-        if (StringUtils.isEmpty(s)) return null;
+        if (StringUtils.isEmpty(s)) {
+            return null;
+        }
         return new BigDecimal(s);
     }
 
@@ -200,32 +274,44 @@ public class LyNumberUtil {
      *************************************/
 
     public String getString(Byte num) {
-        if (num == null) return "";
+        if (num == null) {
+            return "";
+        }
         return num.toString();
     }
 
     public String getString(Short num) {
-        if (num == null) return "";
+        if (num == null) {
+            return "";
+        }
         return num.toString();
     }
 
     public String getString(Integer num) {
-        if (num == null) return "";
+        if (num == null) {
+            return "";
+        }
         return num.toString();
     }
 
     public String getString(Long num) {
-        if (num == null) return "";
+        if (num == null) {
+            return "";
+        }
         return num.toString();
     }
 
     public String getString(Float num) {
-        if (num == null) return "";
+        if (num == null) {
+            return "";
+        }
         return num.toString();
     }
 
     public String getString(Double num) {
-        if (num == null) return "";
+        if (num == null) {
+            return "";
+        }
         return num.toString();
     }
 
@@ -253,7 +339,9 @@ public class LyNumberUtil {
      */
     @Deprecated
     public byte getByteValue(String str, byte defaultValue) {
-        if (StringUtils.isBlank(str)) return defaultValue;
+        if (StringUtils.isBlank(str)) {
+            return defaultValue;
+        }
         return Byte.valueOf(str);
     }
 
@@ -277,7 +365,9 @@ public class LyNumberUtil {
      */
     @Deprecated
     public short getShortValue(String str, short defaultValue) {
-        if (StringUtils.isBlank(str)) return defaultValue;
+        if (StringUtils.isBlank(str)) {
+            return defaultValue;
+        }
         return Short.valueOf(str).shortValue();
     }
 
@@ -301,7 +391,9 @@ public class LyNumberUtil {
      */
     @Deprecated
     public int getIntValue(String str, int defaultValue) {
-        if (StringUtils.isBlank(str)) return defaultValue;
+        if (StringUtils.isBlank(str)) {
+            return defaultValue;
+        }
         return Integer.valueOf(str).intValue();
     }
 
@@ -325,7 +417,9 @@ public class LyNumberUtil {
      */
     @Deprecated
     public long getLongValue(String str, long defaultValue) {
-        if (StringUtils.isBlank(str)) return defaultValue;
+        if (StringUtils.isBlank(str)) {
+            return defaultValue;
+        }
         return Long.valueOf(str).longValue();
     }
 
@@ -349,7 +443,9 @@ public class LyNumberUtil {
      */
     @Deprecated
     public double getDoubleValue(String str, double defaultValue) {
-        if (StringUtils.isBlank(str)) return defaultValue;
+        if (StringUtils.isBlank(str)) {
+            return defaultValue;
+        }
         return Double.valueOf(str).doubleValue();
     }
 

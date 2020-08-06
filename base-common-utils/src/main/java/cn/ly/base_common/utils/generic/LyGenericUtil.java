@@ -13,7 +13,9 @@ public class LyGenericUtil {
         if (type instanceof ParameterizedType) {
             ParameterizedType pt = (ParameterizedType) type;
             Type[] types = pt.getActualTypeArguments();
-            if (types.length > 0 && types[0] instanceof Class) return (Class<T>) types[0];
+            if (types.length > 0 && types[0] instanceof Class) {
+                return (Class<T>) types[0];
+            }
         }
         return (Class<T>) Object.class;
     }

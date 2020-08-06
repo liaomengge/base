@@ -63,7 +63,7 @@ public class RabbitMQAutoConfiguration {
         if (Objects.nonNull(this.rabbitMQProperties.getConnectionTimeout())) {
             cachingConnectionFactory.setConnectionTimeout(this.rabbitMQProperties.getConnectionTimeout());
         }
-        cachingConnectionFactory.setPublisherConfirms(this.rabbitMQProperties.isPublisherConfirms());
+        cachingConnectionFactory.setPublisherConfirmType(this.rabbitMQProperties.getPublisherConfirmType());
         cachingConnectionFactory.setPublisherReturns(this.rabbitMQProperties.isPublisherReturns());
 
         if (Objects.nonNull(this.rabbitMQProperties.getCache().getChannel().getSize())) {
