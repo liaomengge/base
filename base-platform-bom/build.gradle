@@ -40,8 +40,8 @@ version = '1.0.1-SNAPSHOT'
 
 def versions = [
         alibaba    : '2.2.1.RELEASE',
-        springBoot : '2.2.8.RELEASE',
-        springCloud: 'Hoxton.SR6'
+        springBoot : '2.2.9.RELEASE',
+        springCloud: 'Hoxton.SR7'
 ]
 
 dependencyManagement {

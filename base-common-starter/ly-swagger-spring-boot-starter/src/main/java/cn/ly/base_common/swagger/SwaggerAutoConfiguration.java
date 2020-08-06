@@ -6,14 +6,9 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.RequestHandler;
@@ -43,23 +38,6 @@ import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
 public class SwaggerAutoConfiguration {
 
     private final SwaggerProperties swaggerProperties;
-
-    @Bean("lySwaggerCorsFilter")
-    @ConditionalOnMissingBean(CorsFilter.class)
-    @ConditionalOnProperty(name = "ly.swagger.cors")
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.setMaxAge(10000L);
-        //匹配所有API
-        source.registerCorsConfiguration("/**", corsConfiguration);
-        CorsFilter corsFilter = new CorsFilter(source);
-        return corsFilter;
-    }
 
     @Bean("lySwaggerWebMvcConfigurer")
     @ConditionalOnClass(SpringfoxWebMvcConfiguration.class)

@@ -80,7 +80,7 @@ public class ServiceAspect {
         try {
             filterChain = defaultFilterChain.cloneChain();
             Object retObj = filterChain.doFilter(joinPoint, filterChain);
-            buildResultLog(retObj, reqArgsBuilder);
+            buildResultLog(joinPoint, retObj, reqArgsBuilder);
             return retObj;
         } catch (Exception e) {
             buildExceptionResultLog(e, reqArgsBuilder);
@@ -107,11 +107,21 @@ public class ServiceAspect {
         return signature.getMethod().getName();
     }
 
-    private boolean isIgnoreLogMethod(ProceedingJoinPoint joinPoint) {
-        String ignoreMethodName = filterConfig.getLog().getIgnoreMethodName();
-        if (StringUtils.isNotBlank(ignoreMethodName)) {
+    private boolean isIgnoreLogArgsMethod(ProceedingJoinPoint joinPoint) {
+        String ignoreArgsMethodName = filterConfig.getLog().getIgnoreArgsMethodName();
+        if (StringUtils.isNotBlank(ignoreArgsMethodName)) {
             String methodName = getMethodName(joinPoint);
-            Iterable<String> iterable = SPLITTER.split(ignoreMethodName);
+            Iterable<String> iterable = SPLITTER.split(ignoreArgsMethodName);
+            return Iterables.contains(iterable, methodName);
+        }
+        return false;
+    }
+
+    private boolean isIgnoreLogResultMethod(ProceedingJoinPoint joinPoint) {
+        String ignoreResultMethodName = filterConfig.getLog().getIgnoreResultMethodName();
+        if (StringUtils.isNotBlank(ignoreResultMethodName)) {
+            String methodName = getMethodName(joinPoint);
+            Iterable<String> iterable = SPLITTER.split(ignoreResultMethodName);
             return Iterables.contains(iterable, methodName);
         }
         return false;
@@ -119,7 +129,7 @@ public class ServiceAspect {
 
     private StringBuilder buildArgs(ProceedingJoinPoint joinPoint) {
         StringBuilder sBuilder = new StringBuilder();
-        if (isIgnoreLogMethod(joinPoint)) {
+        if (isIgnoreLogArgsMethod(joinPoint)) {
             return sBuilder;
         }
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -159,16 +169,18 @@ public class ServiceAspect {
                 });
     }
 
-    private void buildResultLog(Object retObj, StringBuilder sBuilder) {
+    private void buildResultLog(ProceedingJoinPoint joinPoint, Object retObj, StringBuilder sBuilder) {
         long elapsedMilliseconds = LyJdk8DateUtil.getMilliSecondsTime() - TimeThreadLocalUtil.get();
-        if (retObj instanceof DataResult) {
-            DataResult dataResult = (DataResult) retObj;
-            dataResult.setElapsedMilliseconds(elapsedMilliseconds);
-            sBuilder.append(" result => " + LyJsonUtil.toJson4Log(dataResult));
-        } else if (retObj instanceof String) {
-            sBuilder.append(" result => " + retObj);
-        } else {
-            sBuilder.append(" result => " + LyJsonUtil.toJson4Log(retObj));
+        if (!isIgnoreLogResultMethod(joinPoint)) {
+            if (retObj instanceof DataResult) {
+                DataResult dataResult = (DataResult) retObj;
+                dataResult.setElapsedMilliseconds(elapsedMilliseconds);
+                sBuilder.append(" result => " + LyJsonUtil.toJson4Log(dataResult));
+            } else if (retObj instanceof String) {
+                sBuilder.append(" result => " + retObj);
+            } else {
+                sBuilder.append(" result => " + LyJsonUtil.toJson4Log(retObj));
+            }
         }
         LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
         logger.info("请求响应日志: {}", sBuilder.toString());

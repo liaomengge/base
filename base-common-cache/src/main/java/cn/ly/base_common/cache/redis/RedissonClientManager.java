@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.redisson.config.ConfigSupport;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -65,7 +66,8 @@ public class RedissonClientManager implements InitializingBean {
         InputStream inputStream = null;
         try {
             inputStream = getConfigStream();
-            config = Config.fromJSON(inputStream);
+            ConfigSupport support = new ConfigSupport();
+            config = support.fromJSON(inputStream, Config.class);
         } catch (IOException e) {
             try {
                 inputStream = getConfigStream();

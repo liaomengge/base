@@ -1,16 +1,15 @@
 package cn.ly.base_common.utils.http;
 
-import cn.ly.base_common.utils.log.LyAlarmLogUtil;
 import cn.ly.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import cn.ly.base_common.support.exception.CommunicationException;
 import cn.ly.base_common.utils.json.LyJsonUtil;
-import cn.ly.base_common.utils.log4j2.LyLogger;
+import cn.ly.base_common.utils.log.LyAlarmLogUtil;
 import cn.ly.base_common.utils.properties.LyConfigUtil;
 import cn.ly.base_common.utils.properties.LyPropertiesUtil;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import com.alibaba.fastjson.TypeReference;
 import lombok.Data;
-import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
@@ -28,7 +27,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -44,25 +42,27 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 16/12/13.
  */
-@UtilityClass
+@Slf4j
 public class LyHttpClientUtil3 {
 
-    private final Logger logger = LyLogger.getInstance(LyHttpClientUtil3.class);
+    private static final String DEFAULT_HTTPCLIENT_FILE = "classpath:httpclient.properties";
 
-    private final String DEFAULT_HTTPCLIENT_FILE = "classpath:httpclient.properties";
+    private static final String DEFAULT_ENCODING = "UTF-8";
+    private static final String DEFAULT_MEDIA_TYPE_JSON = "application/json";
+    private static final String DEFAULT_MEDIA_TYPE_FORM = "application/x-www-form-urlencoded";
 
-    private int RETRY_TIMES = 3;//重试3次
-    private int DEFAULT_TIME_OUT = 5_000;//默认5秒超时
+    private static final int DEFAULT_RETRY_TIMES = 3;//总请求次数,重试2次
+    private static final int DEFAULT_TIME_OUT = 5_000;//默认5秒超时
 
-    private int MAX_TOTAL = 512;//最大路由数
-    private int DEFAULT_MAX_PER_ROUTE = 256;//每个路由最大数
+    private static final int DEFAULT_MAX_TOTAL = 512;//最大路由数
+    private static final int DEFAULT_MAX_PER_ROUTE = 256;//每个路由最大数
 
-    private PoolingHttpClientConnectionManager poolConnManager;
-    private CloseableHttpClient httpClient;
+    private static PoolingHttpClientConnectionManager poolConnManager;
+    private static CloseableHttpClient httpClient;
 
-    {
+    static {
         HttpClientProperties httpClientProperties = initLoad();
-        int maxTotal = MAX_TOTAL, defaultMaxPerRoute = DEFAULT_MAX_PER_ROUTE;
+        int maxTotal = DEFAULT_MAX_TOTAL, defaultMaxPerRoute = DEFAULT_MAX_PER_ROUTE;
         Map<String, Integer> urlPerRouteMap = null;
         if (Objects.nonNull(httpClientProperties)) {
             maxTotal = httpClientProperties.getMaxTotal();
@@ -86,30 +86,31 @@ public class LyHttpClientUtil3 {
             });
         }
         httpClient =
-                HttpClients.custom().setConnectionManager(poolConnManager).setRetryHandler(new HttpRetryHandler(RETRY_TIMES)).build();
+                HttpClients.custom().setConnectionManager(poolConnManager).setRetryHandler(new HttpRetryHandler(DEFAULT_RETRY_TIMES)).build();
         closeIdleExpiredConnections(poolConnManager);
     }
 
-    private HttpClientProperties initLoad() {
+    private static HttpClientProperties initLoad() {
         HttpClientProperties httpClientProperties;
         try {
             httpClientProperties = new HttpClientProperties();
             Properties properties = LyConfigUtil.loadProperties(DEFAULT_HTTPCLIENT_FILE);
             if (Objects.nonNull(properties)) {
-                httpClientProperties.setMaxTotal(LyPropertiesUtil.getIntProperty(properties, "maxTotal", MAX_TOTAL));
+                httpClientProperties.setMaxTotal(LyPropertiesUtil.getIntProperty(properties, "maxTotal",
+                        DEFAULT_MAX_TOTAL));
                 httpClientProperties.setDefaultMaxPerRoute(LyPropertiesUtil.getIntProperty(properties,
                         "defaultMaxPerRoute", DEFAULT_MAX_PER_ROUTE));
                 httpClientProperties.setUrls(LyPropertiesUtil.getStringProperty(properties, "urls"));
                 return httpClientProperties;
             }
         } catch (Exception e) {
-            logger.warn("load [classpath:httpclient.properties] fail", e);
+            log.warn("load [classpath:httpclient.properties] fail", e);
         }
         return null;
     }
 
     @Data
-    private class HttpClientProperties {
+    private static class HttpClientProperties {
         private int maxTotal;
         private int defaultMaxPerRoute;
         private String urls;//格式如下：{"url":"maxPerRoute"}
@@ -119,31 +120,31 @@ public class LyHttpClientUtil3 {
      * GET
      ***************************************************************/
 
-    public String get(String url) {
-        return get(url, "utf-8", null);
+    public static String get(String url) {
+        return get(url, DEFAULT_ENCODING, null);
     }
 
-    public String get(String url, Header[] headers) {
-        return get(url, "utf-8", headers);
+    public static String get(String url, Header[] headers) {
+        return get(url, DEFAULT_ENCODING, headers);
     }
 
-    public String get(String url, int timeoutMilliSeconds) {
+    public static String get(String url, int timeoutMilliSeconds) {
         return get(url, timeoutMilliSeconds, null);
     }
 
-    public String get(String url, int timeoutMilliSeconds, Header[] headers) {
-        return get(url, "utf-8", timeoutMilliSeconds, headers);
+    public static String get(String url, int timeoutMilliSeconds, Header[] headers) {
+        return get(url, DEFAULT_ENCODING, timeoutMilliSeconds, headers);
     }
 
-    public String get(String url, String encoding, Header[] headers) {
+    public static String get(String url, String encoding, Header[] headers) {
         return get(url, encoding, DEFAULT_TIME_OUT, headers);
     }
 
-    public String get(String url, String encoding, int timeoutMilliSeconds) {
+    public static String get(String url, String encoding, int timeoutMilliSeconds) {
         return get(url, encoding, timeoutMilliSeconds, null);
     }
 
-    public String get(String url, String encoding, int timeoutMilliSeconds, Header[] headers) {
+    public static String get(String url, String encoding, int timeoutMilliSeconds, Header[] headers) {
         String result = null;
         CloseableHttpResponse httpResponse = null;
         try {
@@ -168,39 +169,39 @@ public class LyHttpClientUtil3 {
      * POST JSON
      ***************************************************************/
 
-    public String post(String url) {
-        return post(url, "", "application/json", RETRY_TIMES);
+    public static String post(String url) {
+        return post(url, "", DEFAULT_MEDIA_TYPE_JSON, DEFAULT_RETRY_TIMES);
     }
 
-    public String post(String url, int reTryTimes) {
-        return post(url, "", "application/json", reTryTimes);
+    public static String post(String url, int reTryTimes) {
+        return post(url, "", DEFAULT_MEDIA_TYPE_JSON, reTryTimes);
     }
 
-    public String post(String url, String postData, int timeoutMilliSeconds) {
+    public static String post(String url, String postData, int timeoutMilliSeconds) {
         return post(url, postData, timeoutMilliSeconds, null);
     }
 
-    public String post(String url, String postData, int timeoutMilliSeconds, Header[] header) {
-        return post(url, postData, "application/json", "utf-8", timeoutMilliSeconds, header);
+    public static String post(String url, String postData, int timeoutMilliSeconds, Header[] header) {
+        return post(url, postData, DEFAULT_MEDIA_TYPE_JSON, DEFAULT_ENCODING, timeoutMilliSeconds, header);
     }
 
-    public String post(String url, String postData, String mediaType, int reTryTimes) {
-        return post(url, postData, mediaType, "utf-8", null);
+    public static String post(String url, String postData, String mediaType, int reTryTimes) {
+        return post(url, postData, mediaType, DEFAULT_ENCODING, null);
     }
 
-    public String post(String url, String postData, String mediaType, Header[] header, int reTryTimes) {
-        return post(url, postData, mediaType, "utf-8", header);
+    public static String post(String url, String postData, String mediaType, Header[] header, int reTryTimes) {
+        return post(url, postData, mediaType, DEFAULT_ENCODING, header);
     }
 
-    public String post(String url, String postData, String mediaType, String encoding, int reTryTimes) {
+    public static String post(String url, String postData, String mediaType, String encoding, int reTryTimes) {
         return post(url, postData, mediaType, encoding, null);
     }
 
-    public String post(String url, String postData, String mediaType, String encoding, Header[] headers) {
+    public static String post(String url, String postData, String mediaType, String encoding, Header[] headers) {
         return post(url, postData, mediaType, encoding, DEFAULT_TIME_OUT, headers);
     }
 
-    public String post(String url, String postData, String mediaType, String encoding, int timeoutMilliSeconds
+    public static String post(String url, String postData, String mediaType, String encoding, int timeoutMilliSeconds
             , Header[] headers) {
         String result = null;
         CloseableHttpResponse httpResponse = null;
@@ -230,39 +231,40 @@ public class LyHttpClientUtil3 {
      * POST FORM
      ***************************************************************/
 
-    public String doFormPost(String url, List<NameValuePair> params, int timeoutMilliSeconds) {
+    public static String doFormPost(String url, List<NameValuePair> params, int timeoutMilliSeconds) {
         return doFormPost(url, params, timeoutMilliSeconds, null);
     }
 
-    public String doFormPost(String url, List<NameValuePair> params, int timeoutMilliSeconds, Header[] headers) {
-        return doFormPost(url, params, "application/x-www-form-urlencoded", "utf-8", timeoutMilliSeconds, headers
+    public static String doFormPost(String url, List<NameValuePair> params, int timeoutMilliSeconds, Header[] headers) {
+        return doFormPost(url, params, DEFAULT_MEDIA_TYPE_FORM, DEFAULT_ENCODING, timeoutMilliSeconds,
+                headers
         );
     }
 
-    public String doFormPost(String url, List<NameValuePair> params, String mediaType) {
-        return doFormPost(url, params, mediaType, "utf-8");
+    public static String doFormPost(String url, List<NameValuePair> params, String mediaType) {
+        return doFormPost(url, params, mediaType, DEFAULT_ENCODING);
     }
 
-    public String doFormPost(String url, List<NameValuePair> params, String mediaType, Header[] headers) {
-        return doFormPost(url, params, mediaType, "utf-8", headers);
+    public static String doFormPost(String url, List<NameValuePair> params, String mediaType, Header[] headers) {
+        return doFormPost(url, params, mediaType, DEFAULT_ENCODING, headers);
     }
 
-    public String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding) {
+    public static String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding) {
         return doFormPost(url, params, mediaType, encoding, DEFAULT_TIME_OUT);
     }
 
-    public String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
-                             Header[] headers) {
+    public static String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
+                                    Header[] headers) {
         return doFormPost(url, params, mediaType, encoding, DEFAULT_TIME_OUT, headers);
     }
 
-    public String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
-                             int timeoutMilliSeconds) {
+    public static String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
+                                    int timeoutMilliSeconds) {
         return doFormPost(url, params, mediaType, encoding, timeoutMilliSeconds, null);
     }
 
-    public String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
-                             int timeoutMilliSeconds, Header[] headers) {
+    public static String doFormPost(String url, List<NameValuePair> params, String mediaType, String encoding,
+                                    int timeoutMilliSeconds, Header[] headers) {
         String result = null;
         CloseableHttpResponse httpResponse = null;
         try {
@@ -295,21 +297,21 @@ public class LyHttpClientUtil3 {
         } else {
             LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
         }
-        logger.warn("调用服务失败, 服务地址: " + url, t);
+        log.warn("调用服务失败, 服务地址: " + url, t);
         throw new CommunicationException("调用服务失败, 服务地址: " + url + ", 异常类型: " + t.getClass() + ", 错误原因: " + t.getMessage());
     }
 
-    private void closeQuietly(CloseableHttpResponse httpResponse) {
+    private static void closeQuietly(CloseableHttpResponse httpResponse) {
         if (Objects.nonNull(httpResponse)) {
             try {
                 httpResponse.close();
             } catch (IOException e) {
-                logger.error("关闭http response失败", e);
+                log.error("关闭http response失败", e);
             }
         }
     }
 
-    private void closeIdleExpiredConnections(PoolingHttpClientConnectionManager connectionManager) {
+    private static void closeIdleExpiredConnections(PoolingHttpClientConnectionManager connectionManager) {
         ScheduledExecutorService service = new ScheduledThreadPoolExecutor(1,
                 LyThreadFactoryBuilderUtil.build("http-client-idle"));
         service.scheduleAtFixedRate(() -> {
@@ -317,7 +319,7 @@ public class LyHttpClientUtil3 {
                 connectionManager.closeExpiredConnections();
                 connectionManager.closeIdleConnections(10, TimeUnit.SECONDS);
             } catch (Exception e) {
-                logger.error("close expired/idle connections exception", e);
+                log.error("close expired/idle connections exception", e);
             }
         }, 5, 5, TimeUnit.SECONDS);
     }

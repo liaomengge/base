@@ -33,6 +33,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Created by liaomengge on 16/11/9.
+ */
 public class ServiceFilter extends AbstractFilter {
 
     @Setter
