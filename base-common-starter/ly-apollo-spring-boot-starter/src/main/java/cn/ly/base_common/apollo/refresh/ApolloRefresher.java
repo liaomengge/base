@@ -60,6 +60,7 @@ public class ApolloRefresher implements ApplicationContextAware {
             return Optional.ofNullable(configChange).map(ConfigChange::getNewValue)
                     .map(RefreshType::getRefreshType).orElse(RefreshType.PROPERTIES);
         }
+
         return RefreshType.getRefreshType(applicationContext.getEnvironment().getProperty(REFRESH_TYPE_KEY));
     }
 
