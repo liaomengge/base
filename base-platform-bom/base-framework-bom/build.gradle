@@ -1,5 +1,5 @@
 def artifactId = "base-framework-bom"
-version = '0.0.6-SNAPSHOT'
+version = '0.0.5-SNAPSHOT'
 
 def versions = [
         baseProcessor           : '0.0.0.1-SNAPSHOT',
