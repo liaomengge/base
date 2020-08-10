@@ -28,7 +28,7 @@ subprojects {
     apply plugin: "io.spring.dependency-management"
 
     group = 'cn.ly'
-    version = '1.5.x.55-SNAPSHOT'
+    version = '1.5.x.56-SNAPSHOT'
 
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
@@ -94,15 +94,15 @@ subprojects {
     }
 
     ext {
-        baseCommonMiddlewareVersion = '1.1.2-test2-SNAPSHOT'
-        baseCommonUtilsVersion = '1.1.2-test2-SNAPSHOT'
+        baseCommonMiddlewareVersion = '1.1.3-SNAPSHOT'
+        baseCommonUtilsVersion = '1.1.3-SNAPSHOT'
         nexusUrl = version.endsWith("-SNAPSHOT") ?
                 "http://127.0.0.1:8089/repository/fly-snapshots/" :
                 "http://127.0.0.1:8089/repository/fly-releases/"
     }
 
     def versions = [
-            platformBom: '1.0.1-SNAPSHOT'
+            platformBom: '1.0.2-SNAPSHOT'
     ]
 
     dependencyManagement {
