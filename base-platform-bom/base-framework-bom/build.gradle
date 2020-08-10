@@ -50,19 +50,19 @@ dependencyManagement {
         dependency "cn.ly:ly-swagger-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "cn.ly:ly-thread-pool-spring-boot-starter:${versions.baseSpringBootStarter}"
 
-        dependency "cn.ly:base_dubbo_framework:${versions.baseDubboFramework}"
+        dependency "cn.ly:base-dubbo-framework:${versions.baseDubboFramework}"
 
-        dependency "cn.ly:base_spring_cloud_framework:${versions.baseSpringCloudFramework}"
+        dependency "cn.ly:base-spring-cloud-framework:${versions.baseSpringCloudFramework}"
 
-        dependency "cn.ly:base_common_dayu:${versions.baseCommonDayu}"
+        dependency "cn.ly:base-common-dayu:${versions.baseCommonDayu}"
 
-        dependency "cn.ly:base_common_cache:${versions.baseCommonCache}"
+        dependency "cn.ly:base-common-cache:${versions.baseCommonCache}"
 
-        dependency "cn.ly:base_common_middleware:${versions.baseCommonMiddleware}"
+        dependency "cn.ly:base-common-middleware:${versions.baseCommonMiddleware}"
 
-        dependency "cn.ly:base_common_utils:${versions.baseCommonUtils}"
+        dependency "cn.ly:base-common-utils:${versions.baseCommonUtils}"
 
-        dependency "cn.ly:base_processor:${versions.baseProcessor}"
+        dependency "cn.ly:base-processor:${versions.baseProcessor}"
     }
     resolutionStrategy {
         cacheChangingModulesFor 0, 'seconds'
