@@ -32,7 +32,7 @@ subprojects {
     }
 
     def versions = [
-            platformBom: '1.0.2-GA'
+            platformBom: '1.0.2-SNAPSHOT'
     ]
 
     dependencyManagement {

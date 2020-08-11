@@ -1,15 +1,15 @@
 def artifactId = "base-framework-bom"
-version = '0.0.6-GA'
+version = '0.0.6-SNAPSHOT'
 
 def versions = [
-        baseProcessor           : '0.0.1-GA',
-        baseCommonUtils         : '1.1.3-GA',
-        baseCommonMiddleware    : '1.1.3-GA',
-        baseCommonDayu          : '1.1.3-GA',
-        baseCommonCache         : '1.1.3-GA',
-        baseDubboFramework      : '1.0.9-GA',
-        baseSpringBootStarter   : '1.5.x.68-GA',
-        baseSpringCloudFramework: '1.5.x.56-GA'
+        baseProcessor           : '0.0.1-SNAPSHOT',
+        baseCommonUtils         : '1.1.3-SNAPSHOT',
+        baseCommonMiddleware    : '1.1.3-SNAPSHOT',
+        baseCommonDayu          : '1.1.3-SNAPSHOT',
+        baseCommonCache         : '1.1.3-SNAPSHOT',
+        baseDubboFramework      : '1.0.9-SNAPSHOT',
+        baseSpringBootStarter   : '1.5.x.68-SNAPSHOT',
+        baseSpringCloudFramework: '1.5.x.56-SNAPSHOT'
 ]
 
 dependencyManagement {
