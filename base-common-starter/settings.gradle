@@ -35,4 +35,5 @@ include 'ly-rest-template-spring-boot-starter'
 include 'ly-retrofit-spring-boot-starter'
 include 'ly-swagger-spring-boot-starter'
 include 'ly-thread-pool-spring-boot-starter'
+include 'ly-xxl-job-spring-boot-starter'
 

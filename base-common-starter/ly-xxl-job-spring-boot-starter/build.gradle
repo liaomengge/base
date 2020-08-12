@@ -1,0 +1,4 @@
+dependencies {
+    api "com.xuxueli:xxl-job-core"
+    api "org.springframework.cloud:spring-cloud-commons"
+}
