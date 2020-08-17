@@ -1,14 +1,15 @@
-package cn.ly.base_common.eureka.endpoint;
+package cn.ly.base_common.nacos.endpoint;
 
-import cn.ly.base_common.eureka.consts.EurekaConst;
+import cn.ly.base_common.nacos.consts.NacosConst;
 import cn.ly.base_common.utils.error.LyThrowableUtil;
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.cloud.nacos.registry.NacosRegistration;
+import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.google.common.collect.Maps;
-import com.netflix.appinfo.InstanceInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
-import org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -18,8 +19,8 @@ import java.util.Map;
  * Created by liaomengge on 2020/8/15.
  */
 @Slf4j
-@Endpoint(id = EurekaConst.PULL_IN_ENDPOINT)
-public class EurekaPullInEndpoint implements ApplicationContextAware {
+@Endpoint(id = NacosConst.PULL_IN_ENDPOINT)
+public class NacosPullInEndpoint extends AbstractPullEndpoint implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
@@ -32,14 +33,15 @@ public class EurekaPullInEndpoint implements ApplicationContextAware {
     public Map<String, Object> pullIn() {
         Map<String, Object> retMap = Maps.newHashMap();
         try {
-            EurekaRegistration eurekaRegistration = applicationContext.getBean(EurekaRegistration.class);
-            eurekaRegistration.getApplicationInfoManager().setInstanceStatus(InstanceInfo.InstanceStatus.UP);
+            NacosDiscoveryProperties nacosDiscoveryProperties =
+                    applicationContext.getBean(NacosDiscoveryProperties.class);
+            NacosRegistration nacosRegistration = applicationContext.getBean(NacosRegistration.class);
+            Instance instance = getNacosInstance(nacosRegistration, true);
+            nacosDiscoveryProperties.namingMaintainServiceInstance().updateInstance(nacosDiscoveryProperties.getService(), instance);
 
-            InstanceInfo instanceInfo = eurekaRegistration.getApplicationInfoManager().getInfo();
-            eurekaRegistration.getEurekaClient().setStatus(InstanceInfo.InstanceStatus.UP, instanceInfo);
-            log.info("set service => {}, instance => {}, status => UP", eurekaRegistration.getServiceId(),
-                    eurekaRegistration.getHost());
-            retMap.put("status", instanceInfo.getStatus());
+            log.info("set service => {}, instance => {}, status => Enabled", nacosDiscoveryProperties.getService(),
+                    nacosDiscoveryProperties.getIp());
+            retMap.put("status", "Enabled");
             retMap.put("success", true);
         } catch (Exception e) {
             retMap.put("exception", LyThrowableUtil.getStackTrace(e));

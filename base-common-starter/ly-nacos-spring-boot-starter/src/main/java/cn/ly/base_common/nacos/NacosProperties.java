@@ -1,14 +1,14 @@
-package cn.ly.base_common.eureka;
+package cn.ly.base_common.nacos;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Created by liaomengge on 2020/8/15.
+ * Created by liaomengge on 2020/8/17.
  */
 @Data
-@ConfigurationProperties("ly.eureka")
-public class EurekaProperties {
+@ConfigurationProperties("ly.nacos")
+public class NacosProperties {
 
     private Registry registry = new Registry();
     private Pull pull = new Pull();

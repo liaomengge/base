@@ -21,21 +21,21 @@ public class EurekaServiceRegistryDecorator extends EurekaServiceRegistry {
 
     @Override
     public void register(EurekaRegistration reg) {
-        if (isRegisterControlEnabled(environment)) {
+        if (isRegisterEnabled(environment)) {
             eurekaServiceRegistry.register(reg);
         }
     }
 
     @Override
     public void deregister(EurekaRegistration reg) {
-        if (isRegisterControlEnabled(environment)) {
+        if (isRegisterEnabled(environment)) {
             eurekaServiceRegistry.deregister(reg);
         }
     }
 
     @Override
     public void setStatus(EurekaRegistration registration, String status) {
-        if (isRegisterControlEnabled(environment)) {
+        if (isRegisterEnabled(environment)) {
             eurekaServiceRegistry.setStatus(registration, status);
         }
     }
@@ -50,7 +50,7 @@ public class EurekaServiceRegistryDecorator extends EurekaServiceRegistry {
         eurekaServiceRegistry.close();
     }
 
-    private Boolean isRegisterControlEnabled(Environment environment) {
+    private Boolean isRegisterEnabled(Environment environment) {
         return environment.getProperty("ly.eureka.registry.enabled", Boolean.class, Boolean.TRUE);
     }
 

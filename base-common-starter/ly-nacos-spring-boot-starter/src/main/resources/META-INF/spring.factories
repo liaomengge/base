@@ -1,0 +1,3 @@
+org.springframework.context.ApplicationContextInitializer=cn.ly.base_common.nacos.initializer.NacosApplicationContextInitializer
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.ly.base_common.nacos.NacosAutoConfiguration

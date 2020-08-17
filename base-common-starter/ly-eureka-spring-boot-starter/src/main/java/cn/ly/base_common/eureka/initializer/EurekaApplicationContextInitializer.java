@@ -1,5 +1,6 @@
 package cn.ly.base_common.eureka.initializer;
 
+import cn.ly.base_common.eureka.EurekaProperties;
 import cn.ly.base_common.eureka.consts.EurekaConst;
 import cn.ly.base_common.eureka.decorator.EurekaServiceRegistryDecorator;
 import com.netflix.appinfo.InstanceInfo;
@@ -37,21 +38,21 @@ public class EurekaApplicationContextInitializer implements ApplicationContextIn
                 if (bean instanceof EurekaInstanceConfigBean) {
                     EurekaInstanceConfigBean instanceConfigBean = (EurekaInstanceConfigBean) bean;
 
-                    if (switchFlow.compareAndSet(false, true)) {
+                    EurekaProperties eurekaProperties = applicationContext.getBean(EurekaProperties.class);
+                    if (eurekaProperties.getPull().isEnabled() && switchFlow.compareAndSet(false, true)) {
                         instanceConfigBean.setInitialStatus(InstanceInfo.InstanceStatus.OUT_OF_SERVICE);
-
-                        Map<String, String> metaMap = instanceConfigBean.getMetadataMap();
-                        metaMap.put(EurekaConst.SPRING_BOOT_VERSION,
-                                SpringBootVersion.getVersion());
-                        metaMap.put(EurekaConst.SPRING_APPLICATION_NAME,
-                                environment.getProperty(EurekaConst.SPRING_APPLICATION_NAME));
-                        metaMap.put(EurekaConst.SPRING_APPLICATION_CONTEXT_PATH,
-                                environment.getProperty(EurekaConst.SPRING_APPLICATION_CONTEXT_PATH, "/"));
-                        metaMap.put(EurekaConst.SPRING_APPLICATION_SERVER_PORT,
-                                environment.getProperty(EurekaConst.SPRING_APPLICATION_SERVER_PORT));
-
                         log.info("set init status[OUT_OF_SERVICE] and meta data...");
                     }
+
+                    Map<String, String> metaMap = instanceConfigBean.getMetadataMap();
+                    metaMap.put(EurekaConst.SPRING_BOOT_VERSION,
+                            SpringBootVersion.getVersion());
+                    metaMap.put(EurekaConst.SPRING_APPLICATION_NAME,
+                            environment.getProperty(EurekaConst.SPRING_APPLICATION_NAME));
+                    metaMap.put(EurekaConst.SPRING_APPLICATION_CONTEXT_PATH,
+                            environment.getProperty(EurekaConst.SPRING_APPLICATION_CONTEXT_PATH, "/"));
+                    metaMap.put(EurekaConst.SPRING_APPLICATION_SERVER_PORT,
+                            environment.getProperty(EurekaConst.SPRING_APPLICATION_SERVER_PORT));
                 }
                 return bean;
             }
