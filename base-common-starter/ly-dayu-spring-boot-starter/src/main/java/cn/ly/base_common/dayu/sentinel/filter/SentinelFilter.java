@@ -35,7 +35,7 @@ import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
  */
 public class SentinelFilter implements Filter, EnvironmentAware {
 
-    private static final Logger logger = LyLogger.getInstance(SentinelFilter.class);
+    private static final Logger log = LyLogger.getInstance(SentinelFilter.class);
 
     private static final String FRAMEWORK_SENTINEL_ENABLED = "ly.framework.sentinel.enabled";
 
@@ -81,13 +81,13 @@ public class SentinelFilter implements Filter, EnvironmentAware {
             }
             if (StringUtils.isNotBlank(uriTarget) && !isExcludeUri(uriTarget)) {
                 origin = parseOrigin(httpServletRequest);
-                logger.info("[Sentinel Filter] Origin: {}, enter Uri Path: {}", origin, uriTarget);
+                log.info("[Sentinel Filter] Origin: {}, enter Uri Path: {}", origin, uriTarget);
                 ContextUtil.enter(WebServletConfig.WEB_SERVLET_CONTEXT_NAME, origin);
                 urlEntry = SphU.entry(uriTarget, EntryType.IN);
             }
             filterChain.doFilter(request, response);
         } catch (BlockException e) {
-            logger.warn("[Sentinel Filter] Block Exception when Origin: " + origin + " enter fall back uri: " + uriTarget, e);
+            log.warn("[Sentinel Filter] Block Exception when Origin: " + origin + " enter fall back uri: " + uriTarget, e);
             WebCallbackManager.getUrlBlockHandler().blocked(httpServletRequest, httpServletResponse, e);
             String finalUriTarget = uriTarget;
             Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(DayuConst.METRIC_SENTINEL_BLOCKED_PREFIX + finalUriTarget));

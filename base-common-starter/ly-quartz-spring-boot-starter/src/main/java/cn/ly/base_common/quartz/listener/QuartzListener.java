@@ -30,7 +30,7 @@ import java.util.Optional;
  */
 public class QuartzListener implements EnvironmentAware, ApplicationListener<EnvironmentChangeEvent>, Ordered {
 
-    private static final Logger logger = LyLogger.getInstance(QuartzListener.class);
+    private static final Logger log = LyLogger.getInstance(QuartzListener.class);
 
     private Environment environment;
 
@@ -67,12 +67,12 @@ public class QuartzListener implements EnvironmentAware, ApplicationListener<Env
                             String oldCronExpression = trigger.getCronExpression();
                             String newCronExpression = triggerDetailMap.get(name);
                             if (StringUtils.isBlank(oldCronExpression) || StringUtils.isBlank(newCronExpression)) {
-                                logger.warn("Trigger[{}], old core expression[{}] or new core expression[{}] is not " +
+                                log.warn("Trigger[{}], old core expression[{}] or new core expression[{}] is not " +
                                         "Illegal");
                                 continue;
                             }
                             if (!StringUtils.equals(oldCronExpression, newCronExpression)) {
-                                logger.info("Trigger[{}], old core expression[{}], new core expression[{}], change " +
+                                log.info("Trigger[{}], old core expression[{}], new core expression[{}], change " +
                                                 "time ===> {}",
                                         name, oldCronExpression, newCronExpression, LyJdk8DateUtil.getNowDate2String());
                                 CronTriggerImpl newTrigger = TriggerUtil.clone(trigger);
@@ -80,12 +80,12 @@ public class QuartzListener implements EnvironmentAware, ApplicationListener<Env
                                 scheduler.rescheduleJob(triggerKey, newTrigger);
                             }
                         } catch (Exception e) {
-                            logger.error("ReScheduleJob失败", e);
+                            log.error("ReScheduleJob失败", e);
                         }
                     }
                 }
             } catch (Exception e) {
-                logger.error("解析JobInfo失败", e);
+                log.error("解析JobInfo失败", e);
             }
         }));
     }

@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 public abstract class AbstractFilter implements Filter {
 
-    protected final static LyLogger logger = LyLogger.getInstance(AbstractFilter.class);
+    protected final static LyLogger log = LyLogger.getInstance(AbstractFilter.class);
 
     protected static final String SKIP_METHOD = "ping";
 

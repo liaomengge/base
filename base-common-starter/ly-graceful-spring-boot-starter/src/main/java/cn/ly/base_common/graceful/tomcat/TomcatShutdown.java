@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TomcatShutdown implements TomcatConnectorCustomizer, ApplicationListener<ContextClosedEvent> {
 
-    private static final Logger logger = LyLogger.getInstance(TomcatShutdown.class);
+    private static final Logger log = LyLogger.getInstance(TomcatShutdown.class);
 
     private volatile Connector connector;
 
@@ -42,7 +42,7 @@ public class TomcatShutdown implements TomcatConnectorCustomizer, ApplicationLis
             ThreadPoolExecutor executor = this.getThreadPoolExecutor();
             if (Objects.nonNull(executor)) {
                 executor.shutdown();
-                logger.info("tomcat shutdown start...");
+                log.info("tomcat shutdown start...");
                 try {
                     for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
                         try {
@@ -52,12 +52,12 @@ public class TomcatShutdown implements TomcatConnectorCustomizer, ApplicationLis
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
                         }
-                        logger.info("{} thread(s) active, {} seconds remaining", executor.getActiveCount(), remaining);
+                        log.info("{} thread(s) active, {} seconds remaining", executor.getActiveCount(), remaining);
                     }
                 } catch (Exception e) {
-                    logger.info("tomcat shutdown exception", e);
+                    log.info("tomcat shutdown exception", e);
                 }
-                logger.info("tomcat shutdown end...");
+                log.info("tomcat shutdown end...");
             }
         });
     }

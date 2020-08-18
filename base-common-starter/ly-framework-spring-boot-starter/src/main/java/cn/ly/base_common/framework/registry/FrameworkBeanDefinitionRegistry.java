@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
  */
 public class FrameworkBeanDefinitionRegistry implements BeanDefinitionRegistryPostProcessor {
 
-    private static final Logger logger = LyLogger.getInstance(FrameworkBeanDefinitionRegistry.class);
+    private static final Logger log = LyLogger.getInstance(FrameworkBeanDefinitionRegistry.class);
 
     private static final String FRAMEWORK_PKG = "cn.ly.service.base_framework";
 
@@ -21,7 +21,7 @@ public class FrameworkBeanDefinitionRegistry implements BeanDefinitionRegistryPo
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(beanDefinitionRegistry);
         int registeredNum = scanner.scan(FRAMEWORK_PKG);
-        logger.info("base framework registered number ===> [{}]", registeredNum);
+        log.info("base framework registered number ===> [{}]", registeredNum);
     }
 
     @Override

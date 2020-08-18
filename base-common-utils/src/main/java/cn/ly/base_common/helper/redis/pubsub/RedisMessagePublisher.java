@@ -14,7 +14,7 @@ import org.springframework.data.redis.listener.ChannelTopic;
  */
 public class RedisMessagePublisher implements MessagePublisher {
 
-    private static final Logger logger = LyLogger.getInstance(RedisMessagePublisher.class);
+    private static final Logger log = LyLogger.getInstance(RedisMessagePublisher.class);
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -34,7 +34,7 @@ public class RedisMessagePublisher implements MessagePublisher {
         try {
             stringRedisTemplate.convertAndSend(channelTopic.getTopic(), message);
         } catch (Exception e) {
-            logger.error("Publish Redis异常 ===> ", e);
+            log.error("Publish Redis异常 ===> ", e);
             if (mailHelper != null) {
                 mailHelper.sendTextMail(LyNetworkUtil.getHostAddress() + "/" + LyNetworkUtil.getHostName() +
                         "发布消息异常!", LyJdk8DateUtil.getNowDate2String() + " ===> " + LyThrowableUtil.getStackTrace(e));

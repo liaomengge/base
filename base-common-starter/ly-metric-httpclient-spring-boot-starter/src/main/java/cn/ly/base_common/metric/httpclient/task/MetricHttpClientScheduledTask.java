@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MetricHttpClientScheduledTask {
 
-    private static final Logger logger = LyLogger.getInstance(MetricHttpClientScheduledTask.class);
+    private static final Logger log = LyLogger.getInstance(MetricHttpClientScheduledTask.class);
 
     private static final String METRIC_HTTPCLIENT_PREFIX = "metric-http-client.";
 
@@ -85,9 +85,9 @@ public class MetricHttpClientScheduledTask {
                     TimeUnit.SECONDS.sleep(metricHttpClientProperties.getStatsInterval());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    logger.info("metric http client interrupt exit...");
+                    log.info("metric http client interrupt exit...");
                 } catch (Exception e) {
-                    logger.error("metric http client exception...", e);
+                    log.error("metric http client exception...", e);
                 }
             }
         }
@@ -106,6 +106,6 @@ public class MetricHttpClientScheduledTask {
         sBuilder.append(prefix + "pending => [" + poolStats.getPending() + "],");
         sBuilder.append(prefix + "available => [" + poolStats.getAvailable() + "],");
         sBuilder.append(prefix + "max => [" + poolStats.getMax() + "]");
-        logger.info(sBuilder.toString());
+        log.info(sBuilder.toString());
     }
 }

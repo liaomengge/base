@@ -15,14 +15,14 @@ import java.io.Reader;
 @UtilityClass
 public class LyMoreIOUtil {
 
-    private final Logger logger = LyLogger.getInstance(LyMoreIOUtil.class);
+    private final Logger log = LyLogger.getInstance(LyMoreIOUtil.class);
 
     public String loadScript(String fileName) {
         try (Reader reader =
                      new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName))) {
             return CharStreams.toString(reader);
         } catch (IOException e) {
-            logger.error("加载文件[" + fileName + "]失败", e);
+            log.error("加载文件[" + fileName + "]失败", e);
         }
 
         return null;

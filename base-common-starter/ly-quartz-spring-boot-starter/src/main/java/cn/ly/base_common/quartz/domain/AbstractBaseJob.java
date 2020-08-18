@@ -10,7 +10,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractBaseJob {
 
-    protected final Logger logger = LyLogger.getInstance(AbstractBaseJob.class);
+    protected final Logger log = LyLogger.getInstance(AbstractBaseJob.class);
 
     @Getter
     @Setter
@@ -18,7 +18,7 @@ public abstract class AbstractBaseJob {
 
     protected void init() {
         //初始化动作
-        logger.info("[" + getClass().getSimpleName() + "]开始执行...");
+        log.info("[" + getClass().getSimpleName() + "]开始执行...");
     }
 
     public abstract void work();
@@ -31,11 +31,11 @@ public abstract class AbstractBaseJob {
         try {
             work();
         } catch (Exception e) {
-            logger.error("执行[" + getClass().getSimpleName() + "]异常", e);
+            log.error("执行[" + getClass().getSimpleName() + "]异常", e);
         }
 
         long endTime = System.currentTimeMillis();
-        logger.info("执行完[{}]耗费: {}ms", getClass().getSimpleName(), (endTime - startTime));
+        log.info("执行完[{}]耗费: {}ms", getClass().getSimpleName(), (endTime - startTime));
 
         if (nextJob != null) {
             nextJob.execute();

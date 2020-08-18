@@ -6,7 +6,6 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.registry.NacosRegistration;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.google.common.collect.Maps;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
@@ -18,7 +17,6 @@ import java.util.Map;
 /**
  * Created by liaomengge on 2020/8/15.
  */
-@Slf4j
 @Endpoint(id = NacosConst.PULL_IN_ENDPOINT)
 public class NacosPullInEndpoint extends AbstractPullEndpoint implements ApplicationContextAware {
 

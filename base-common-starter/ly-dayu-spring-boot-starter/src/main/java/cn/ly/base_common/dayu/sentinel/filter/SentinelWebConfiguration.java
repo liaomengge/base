@@ -22,7 +22,7 @@ import java.util.List;
 @ConditionalOnWebApplication
 public class SentinelWebConfiguration {
 
-    private static final Logger logger = LyLogger.getInstance(SentinelWebConfiguration.class);
+    private static final Logger log = LyLogger.getInstance(SentinelWebConfiguration.class);
 
     @Autowired
     private SentinelProperties sentinelProperties;
@@ -48,7 +48,7 @@ public class SentinelWebConfiguration {
         }
         registration.setFilter(filter);
         registration.setOrder(filterProperties.getOrder());
-        logger.info("[Sentinel Starter] register Sentinel with urlPatterns: {}.", filterProperties.getUrlPatterns());
+        log.info("[Sentinel Starter] register Sentinel with urlPatterns: {}.", filterProperties.getUrlPatterns());
         return registration;
     }
 }

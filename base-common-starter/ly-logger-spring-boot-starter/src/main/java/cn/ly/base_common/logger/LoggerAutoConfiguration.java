@@ -1,6 +1,6 @@
-package cn.ly.base_common.logger;
+package cn.ly.base_common.log;
 
-import cn.ly.base_common.logger.servlet.LoggerServlet;
+import cn.ly.base_common.log.servlet.LoggerServlet;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.actuate.autoconfigure.endpoint.EndpointAutoConfiguration;
 import org.springframework.boot.actuate.logging.LoggersEndpoint;

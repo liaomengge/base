@@ -17,7 +17,7 @@ import java.util.concurrent.*;
 @AllArgsConstructor
 public class LyThreadPoolWrappedExecutor extends AbstractExecutorService implements LyThreadHelper, DisposableBean {
 
-    private static final Logger logger = LyLogger.getInstance(LyThreadPoolWrappedExecutor.class);
+    private static final Logger log = LyLogger.getInstance(LyThreadPoolWrappedExecutor.class);
 
     @Getter
     private final ThreadPoolExecutor threadPoolExecutor;
@@ -44,7 +44,7 @@ public class LyThreadPoolWrappedExecutor extends AbstractExecutorService impleme
 
     @Override
     public void doExceptionHandle(Throwable e) {
-        logger.error("Current Thread[{}], Exec Exception ===> {}", Thread.currentThread().getName(),
+        log.error("Current Thread[{}], Exec Exception ===> {}", Thread.currentThread().getName(),
                 LyThrowableUtil.getStackTrace(e));
     }
 

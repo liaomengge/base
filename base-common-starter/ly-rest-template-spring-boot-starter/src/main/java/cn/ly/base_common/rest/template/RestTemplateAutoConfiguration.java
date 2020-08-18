@@ -61,7 +61,7 @@ import java.util.concurrent.TimeUnit;
 @EnableConfigurationProperties(RestTemplateProperties.class)
 public class RestTemplateAutoConfiguration {
 
-    private static final Logger logger = LyLogger.getInstance(RestTemplateAutoConfiguration.class);
+    private static final Logger log = LyLogger.getInstance(RestTemplateAutoConfiguration.class);
 
     private static final String DAYU_SENTINEL_ENABLED = "ly.dayu.sentinel.enabled";
     private static final String SPRING_APPLICATION_NAME = "spring.application.name";
@@ -105,7 +105,7 @@ public class RestTemplateAutoConfiguration {
                     Optional.ofNullable(maxPerRoute).ifPresent(val2 -> poolingHttpClientConnectionManager.setMaxPerRoute(httpRoute, maxPerRoute));
                     Optional.ofNullable(readTimeout).ifPresent(val2 -> poolingHttpClientConnectionManager.setSocketConfig(httpHost, SocketConfig.custom().setSoTimeout(readTimeout).build()));
                 } catch (Exception e) {
-                    logger.warn("rest template http client properties url illegal", e);
+                    log.warn("rest template http client properties url illegal", e);
                 }
             });
         }
@@ -221,7 +221,7 @@ public class RestTemplateAutoConfiguration {
                 connectionManager.closeExpiredConnections();
                 connectionManager.closeIdleConnections(10, TimeUnit.SECONDS);
             } catch (Exception e) {
-                logger.error("close expired/idle connections exception", e);
+                log.error("close expired/idle connections exception", e);
             }
         }, 5, 5, TimeUnit.SECONDS);
     }

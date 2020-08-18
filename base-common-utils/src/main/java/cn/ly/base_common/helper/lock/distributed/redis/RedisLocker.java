@@ -198,9 +198,9 @@ public class RedisLocker implements DistributedLocker {
                 if (Objects.nonNull(rLock)) {
                     if (rLock.isHeldByCurrentThread()) {
                         rLock.unlock();
-                        logger.info("释放锁[{}]成功", rLock.getName());
+                        log.info("释放锁[{}]成功", rLock.getName());
                     } else if (rLock.getHoldCount() == 0 && rLock.isLocked()) {
-                        logger.warn("锁[{}]已expire, 已被自动释放, 请合理设置leaseTime时间", rLock.getName());
+                        log.warn("锁[{}]已expire, 已被自动释放, 请合理设置leaseTime时间", rLock.getName());
                     }
                 }
             }

@@ -11,10 +11,10 @@ import javax.jms.JMSException;
  */
 public class DefaultExceptionListener implements ExceptionListener {
 
-    private static final Logger logger = LyLogger.getInstance(DefaultExceptionListener.class);
+    private static final Logger log = LyLogger.getInstance(DefaultExceptionListener.class);
 
     @Override
     public void onException(JMSException e) {
-        logger.warn("JMSException error occurred", e);
+        log.warn("JMSException error occurred", e);
     }
 }

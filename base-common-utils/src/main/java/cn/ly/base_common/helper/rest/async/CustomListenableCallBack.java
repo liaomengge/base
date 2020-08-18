@@ -19,7 +19,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public abstract class CustomListenableCallBack<T> implements ListenableFutureCallback<T> {
 
-    protected static final Logger logger = LyLogger.getInstance(CustomListenableCallBack.class);
+    protected static final Logger log = LyLogger.getInstance(CustomListenableCallBack.class);
 
     private BaseRequest baseRequest;
 
@@ -37,6 +37,6 @@ public abstract class CustomListenableCallBack<T> implements ListenableFutureCal
         if (baseRequest != null && baseRequest.getData() != null) {
             requestParams = LyStringUtil.getValue(baseRequest.getData());
         }
-        logger.error("请求参数[{}], 异步调用服务失败, 状态码[{}], 异常原因 ===> [{}]", requestParams, statusCode, throwable.getMessage());
+        log.error("请求参数[{}], 异步调用服务失败, 状态码[{}], 异常原因 ===> [{}]", requestParams, statusCode, throwable.getMessage());
     }
 }

@@ -29,7 +29,7 @@ public class JvmMonitor extends AbstractMetricMonitor {
 
         if (memUsedRatio >= config.getMemMaxRatio()) {
             String log = "当前内存使用率" + memUsedRatio + "达到阈值" + config.getMemMaxRatio() + "!";
-            logger.warn(log);
+            log.warn(log);
         }
     }
 

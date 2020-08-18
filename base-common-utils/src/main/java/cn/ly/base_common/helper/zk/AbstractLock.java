@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class AbstractLock {
 
-    protected final Logger logger = LyLogger.getInstance(AbstractLock.class);
+    protected final Logger log = LyLogger.getInstance(AbstractLock.class);
 
     private int lockNumber = 1; //允许获取的锁数量(默认为1,即最小节点=自身时, 认为获得锁)
     private ZkClient zk = null;
@@ -100,13 +100,13 @@ public abstract class AbstractLock {
         String error;
         if (!rootNode.startsWith(SPLIT)) {
             error = "rootNode必须以" + SPLIT + "开头";
-            logger.error(error);
+            log.error(error);
             throw new RuntimeException(error);
         }
 
         if (rootNode.endsWith(SPLIT)) {
             error = "不能以" + SPLIT + "结尾";
-            logger.error(error);
+            log.error(error);
             throw new RuntimeException(error);
         }
 
@@ -145,7 +145,7 @@ public abstract class AbstractLock {
         selfNodeName = zk.createEphemeralSequential(selfNode + SPLIT, StringUtils.EMPTY);
         if (!StringUtils.isEmpty(selfNodeName)) {
             selfNodeFullName = selfNodeName;
-            logger.info("自身节点：" + selfNodeName + ",注册成功！");
+            log.info("自身节点：" + selfNodeName + ",注册成功！");
             selfNodeName = selfNodeName.substring(selfNode.length() + 1);
         }
         checkMin();
@@ -166,7 +166,7 @@ public abstract class AbstractLock {
     private synchronized void checkMin() {
         List<String> list = zk.getChildren(selfNode);
         if (CollectionUtils.isEmpty(list)) {
-            logger.error(selfNode + " 无任何子节点!");
+            log.error(selfNode + " 无任何子节点!");
             lockFail();
             handling = false;
             return;
@@ -180,7 +180,7 @@ public abstract class AbstractLock {
             if (list.get(i).equals(selfNodeName)) {
                 if (!handling) {
                     handling = true;
-                    logger.info("获得锁成功！");
+                    log.info("获得锁成功！");
                     lockSuccess();
                 }
                 return;
@@ -189,9 +189,9 @@ public abstract class AbstractLock {
 
         int selfIndex = list.indexOf(selfNodeName);
         if (selfIndex > 0) {
-            logger.info("前面还有节点" + list.get(selfIndex - 1) + ", 获取锁失败！");
+            log.info("前面还有节点" + list.get(selfIndex - 1) + ", 获取锁失败！");
         } else {
-            logger.info("获取锁失败！");
+            log.info("获取锁失败！");
         }
         lockFail();
 
@@ -244,7 +244,7 @@ public abstract class AbstractLock {
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            logger.error("Keep Running出错, 程序已退出", e);
+            log.error("Keep Running出错, 程序已退出", e);
         }
     }
 

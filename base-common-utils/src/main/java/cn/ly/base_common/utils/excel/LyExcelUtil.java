@@ -17,7 +17,7 @@ import java.util.Map;
 @UtilityClass
 public class LyExcelUtil {
 
-    private Logger logger = LyLogger.getInstance(LyExcelUtil.class);
+    private Logger log = LyLogger.getInstance(LyExcelUtil.class);
 
     private final int MAX_ROW = 65534;
 
@@ -68,18 +68,18 @@ public class LyExcelUtil {
                 }
                 workbook.write();
             } catch (Exception e) {
-                logger.error("Export Excel Fail", e);
+                log.error("Export Excel Fail", e);
             } finally {
                 if (workbook != null) {
                     try {
                         workbook.close();
                     } catch (WriteException e) {
-                        logger.error("Close WorkBook Fail", e);
+                        log.error("Close WorkBook Fail", e);
                     }
                 }
             }
         } catch (IOException e) {
-            logger.error("Create WorkBook Fail", e);
+            log.error("Create WorkBook Fail", e);
         } finally {
             if (out != null) {
                 LyIOUtil.closeQuietly(out);

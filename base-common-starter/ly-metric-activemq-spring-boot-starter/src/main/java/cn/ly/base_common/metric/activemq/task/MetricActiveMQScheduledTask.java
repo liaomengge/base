@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MetricActiveMQScheduledTask {
 
-    private static final Logger logger = LyLogger.getInstance(MetricActiveMQScheduledTask.class);
+    private static final Logger log = LyLogger.getInstance(MetricActiveMQScheduledTask.class);
 
     private static final String METRIC_REDIS_PREFIX = "metric-activemq.";
 
@@ -67,9 +67,9 @@ public class MetricActiveMQScheduledTask {
                     TimeUnit.SECONDS.sleep(metricActiveMQProperties.getStatsInterval());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    logger.info("metric activemq interrupt exit...");
+                    log.info("metric activemq interrupt exit...");
                 } catch (Exception e) {
-                    logger.error("metric activemq exception...", e);
+                    log.error("metric activemq exception...", e);
                 }
             }
         }
@@ -90,6 +90,6 @@ public class MetricActiveMQScheduledTask {
         sBuilder.append(prefix + "numIdle => [" + poolMonitor.getNumIdle() + "],");
         sBuilder.append(prefix + "numWaiters => [" + poolMonitor.getMaxWaitMillis() + "],");
         sBuilder.append(prefix + "maxWaitMillis => [" + poolMonitor.getMaxWaitMillis() + "]");
-        logger.info(sBuilder.toString());
+        log.info(sBuilder.toString());
     }
 }

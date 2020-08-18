@@ -1,11 +1,12 @@
 package cn.ly.base_common.nacos.decorator;
 
 import cn.ly.base_common.nacos.NacosProperties;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.registry.NacosServiceRegistry;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
@@ -18,8 +19,9 @@ import static org.springframework.util.ReflectionUtils.rethrowRuntimeException;
 /**
  * Created by liaomengge on 2020/8/17.
  */
-@Slf4j
 public class NacosServiceRegistryDecorator extends NacosServiceRegistry {
+
+    private static final Logger log = LyLogger.getInstance(NacosServiceRegistryDecorator.class);
 
     private AtomicBoolean switchFlow = new AtomicBoolean(false);
 

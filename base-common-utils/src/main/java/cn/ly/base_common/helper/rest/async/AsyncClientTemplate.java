@@ -32,7 +32,7 @@ public class AsyncClientTemplate extends Template.Async {
         try {
             listenableFuture = asyncRestTemplate.postForEntity(url, httpEntity, responseType);
         } catch (Throwable e) {
-            logger.error("调用服务失败, 请求参数[{}], 服务地址[{}], 异常原因 ===> [{}]", LyJsonUtil.toJson4Log(baseRequest.getData()), url, e.getMessage());
+            log.error("调用服务失败, 请求参数[{}], 服务地址[{}], 异常原因 ===> [{}]", LyJsonUtil.toJson4Log(baseRequest.getData()), url, e.getMessage());
         }
         return listenableFuture;
     }

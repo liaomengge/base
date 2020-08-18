@@ -16,7 +16,7 @@ import java.util.function.BiConsumer;
 @UtilityClass
 public class LyBeanCopierUtil {
 
-    private final Logger logger = LyLogger.getInstance(LyBeanCopierUtil.class);
+    private final Logger log = LyLogger.getInstance(LyBeanCopierUtil.class);
 
     private final Map<String, BeanCopier> beanCopierMap = new ConcurrentHashMap<>(16);
 
@@ -53,7 +53,7 @@ public class LyBeanCopierUtil {
                 iBeanCopier.afterCopy(source, target);
             }
         } catch (Exception e) {
-            logger.error("copy bean error", e);
+            log.error("copy bean error", e);
             BeanUtils.copyProperties(source, target);
         }
     }
@@ -80,7 +80,7 @@ public class LyBeanCopierUtil {
                 biConsumer.accept(source, target);
             }
         } catch (Exception e) {
-            logger.error("copy bean error", e);
+            log.error("copy bean error", e);
             BeanUtils.copyProperties(source, target);
         }
     }

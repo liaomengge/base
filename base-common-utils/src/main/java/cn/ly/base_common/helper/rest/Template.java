@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public interface Template {
 
-    Logger logger = LyLogger.getInstance(Template.class);
+    Logger log = LyLogger.getInstance(Template.class);
 
     @NoArgsConstructor
     abstract class Sync implements Template {

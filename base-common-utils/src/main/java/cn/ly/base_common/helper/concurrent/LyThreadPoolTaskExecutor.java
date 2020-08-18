@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Setter
 public class LyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
 
-    private static final Logger logger = LyLogger.getInstance(LyThreadPoolTaskExecutor.class);
+    private static final Logger log = LyLogger.getInstance(LyThreadPoolTaskExecutor.class);
     private static final long serialVersionUID = 1180516546843511746L;
 
     private String threadName;
@@ -44,7 +44,7 @@ public class LyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
         }
         ThreadPoolExecutor executor = super.getThreadPoolExecutor();
         if (Objects.nonNull(executor)) {
-            logger.info("thread pool[{}] shutdown start...", threadName);
+            log.info("thread pool[{}] shutdown start...", threadName);
             executor.shutdown();
             try {
                 for (long remaining = this.awaitTerminationSeconds; remaining > 0; remaining -= this.checkInterval) {
@@ -57,9 +57,9 @@ public class LyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
                     }
                 }
             } catch (Exception e) {
-                logger.info("thread pool[" + threadName + "] shutdown exception", e);
+                log.info("thread pool[" + threadName + "] shutdown exception", e);
             }
-            logger.info("thread pool[{}] shutdown end...", threadName);
+            log.info("thread pool[{}] shutdown end...", threadName);
         }
     }
 

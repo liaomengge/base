@@ -41,7 +41,7 @@ import java.util.Properties;
 )
 public class SqlInterceptor implements Interceptor {
 
-    private static final Logger logger = LyLogger.getInstance(SqlInterceptor.class);
+    private static final Logger log = LyLogger.getInstance(SqlInterceptor.class);
 
     private Boolean isEnableSqlLog = Boolean.FALSE;
 
@@ -170,6 +170,6 @@ public class SqlInterceptor implements Interceptor {
                 || sqlCommandType == SqlCommandType.DELETE) {
             sqlLog += ", Affect Count ===> " + LyMoreNumberUtil.toInt(LyStringUtil.getValue(obj));
         }
-        logger.info(sqlLog);
+        log.info(sqlLog);
     }
 }

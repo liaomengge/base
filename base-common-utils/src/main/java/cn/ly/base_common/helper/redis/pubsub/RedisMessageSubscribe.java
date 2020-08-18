@@ -13,7 +13,7 @@ import org.springframework.data.redis.connection.MessageListener;
  */
 public abstract class RedisMessageSubscribe implements MessageListener {
 
-    private static final Logger logger = LyLogger.getInstance(RedisMessageSubscribe.class);
+    private static final Logger log = LyLogger.getInstance(RedisMessageSubscribe.class);
 
     private static final String[] PUB_REG_EXP = {"*", "?", "[", "]", "\\"};
 
@@ -30,10 +30,10 @@ public abstract class RedisMessageSubscribe implements MessageListener {
         if (this.isSubscribe() && message != null) {
             String subscribeMessage = message.toString();
             if (StringUtils.isBlank(subscribeMessage) || containSpecialChar(subscribeMessage) || overMaxLength(subscribeMessage)) {
-                logger.warn("发布的消息[" + subscribeMessage + "]不合法!");
+                log.warn("发布的消息[" + subscribeMessage + "]不合法!");
                 return;
             }
-            logger.info("发布的消息 ===> " + subscribeMessage);
+            log.info("发布的消息 ===> " + subscribeMessage);
 
             this.doHandle(subscribeMessage);
         }

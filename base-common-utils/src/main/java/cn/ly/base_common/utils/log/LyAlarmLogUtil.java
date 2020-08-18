@@ -12,66 +12,66 @@ import org.slf4j.Logger;
 @UtilityClass
 public class LyAlarmLogUtil {
 
-    private final Logger logger = LyLogger.getInstance(LyAlarmLogUtil.class);
+    private final Logger log = LyLogger.getInstance(LyAlarmLogUtil.class);
 
     private interface AlarmEnum {
 
         String alarmName();
 
         default void warn() {
-            logger.warn("[" + this.alarmName() + "] !!!");
+            log.warn("[" + this.alarmName() + "] !!!");
         }
 
         default void warn(String msg) {
-            logger.warn("[" + this.alarmName() + "] ===> " + msg);
+            log.warn("[" + this.alarmName() + "] ===> " + msg);
         }
 
         default void warn(String format, Object arg) {
-            logger.warn("[" + this.alarmName() + "] ===> " + format, arg);
+            log.warn("[" + this.alarmName() + "] ===> " + format, arg);
         }
 
         default void warn(String format, Object arg1, Object arg2) {
-            logger.warn("[" + this.alarmName() + "] ===> " + format, arg1, arg2);
+            log.warn("[" + this.alarmName() + "] ===> " + format, arg1, arg2);
         }
 
         default void warn(String format, Object... arguments) {
-            logger.warn("[" + this.alarmName() + "] ===> " + format, arguments);
+            log.warn("[" + this.alarmName() + "] ===> " + format, arguments);
         }
 
         default void warn(Throwable t) {
-            logger.warn("[" + this.alarmName() + "] ===> ", t);
+            log.warn("[" + this.alarmName() + "] ===> ", t);
         }
 
         default void warn(String msg, Throwable t) {
-            logger.warn("[" + this.alarmName() + "] ===> " + msg, t);
+            log.warn("[" + this.alarmName() + "] ===> " + msg, t);
         }
 
         default void error() {
-            logger.error("[" + this.alarmName() + "] !!!");
+            log.error("[" + this.alarmName() + "] !!!");
         }
 
         default void error(String msg) {
-            logger.error("[" + this.alarmName() + "] ===> " + msg);
+            log.error("[" + this.alarmName() + "] ===> " + msg);
         }
 
         default void error(String format, Object arg) {
-            logger.error("[" + this.alarmName() + "] ===> " + format, arg);
+            log.error("[" + this.alarmName() + "] ===> " + format, arg);
         }
 
         default void error(String format, Object arg1, Object arg2) {
-            logger.error("[" + this.alarmName() + "] ===> " + format, arg1, arg2);
+            log.error("[" + this.alarmName() + "] ===> " + format, arg1, arg2);
         }
 
         default void error(String format, Object... arguments) {
-            logger.error("[" + this.alarmName() + "] ===> " + format, arguments);
+            log.error("[" + this.alarmName() + "] ===> " + format, arguments);
         }
 
         default void error(Throwable t) {
-            logger.error("[" + this.alarmName() + "] ===> ", t);
+            log.error("[" + this.alarmName() + "] ===> ", t);
         }
 
         default void error(String msg, Throwable t) {
-            logger.error("[" + this.alarmName() + "] ===> " + msg, t);
+            log.error("[" + this.alarmName() + "] ===> " + msg, t);
         }
     }
 

@@ -44,7 +44,7 @@ public class JedisClusterHelper implements IRedisHelper {
             try {
                 keys.addAll(connection.keys(pattern));
             } catch (Exception e) {
-                logger.error("get keys failed", e);
+                log.error("get keys failed", e);
             } finally {
                 if (connection != null) {
                     connection.close();

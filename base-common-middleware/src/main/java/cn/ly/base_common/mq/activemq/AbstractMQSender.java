@@ -9,7 +9,7 @@ import org.springframework.jms.core.MessagePostProcessor;
  */
 public abstract class AbstractMQSender {
 
-    protected static final Logger logger = LyLogger.getInstance(AbstractMQSender.class);
+    protected static final Logger log = LyLogger.getInstance(AbstractMQSender.class);
 
     public abstract void convertAndSend(String queueName, Object message);
 

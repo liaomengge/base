@@ -20,11 +20,11 @@ import java.util.Objects;
  */
 public abstract class AbstractMQMessageListener<T extends MQMessage> implements ChannelAwareMessageListener {
 
-    protected static final Logger logger = LyLogger.getInstance(AbstractMQMessageListener.class);
+    protected static final Logger log = LyLogger.getInstance(AbstractMQMessageListener.class);
 
     protected T parseMessage(Message message) {
         String receiveMsg = new String(message.getBody());
-        logger.info("receive message: {}", receiveMsg);
+        log.info("receive message: {}", receiveMsg);
 
         if (StringUtils.isBlank(receiveMsg)) {
             return null;

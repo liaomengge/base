@@ -43,7 +43,7 @@ import java.util.Properties;
 )
 public class FlowInterceptor implements Interceptor {
 
-    private static final Logger logger = LyLogger.getInstance(FlowInterceptor.class);
+    private static final Logger log = LyLogger.getInstance(FlowInterceptor.class);
 
     private Boolean isEnableFailFast = Boolean.FALSE;
     private List<FlowConfig> flowConfigs = Lists.newArrayList();
@@ -77,7 +77,7 @@ public class FlowInterceptor implements Interceptor {
                             }
                         }
                         if (isFind) {
-                            logger.warn("SQL[{}], Access Forbidden!!!", beautifySql(boundSql.getSql()));
+                            log.warn("SQL[{}], Access Forbidden!!!", beautifySql(boundSql.getSql()));
                             throw new SQLException("Access Forbidden!!!");
                         }
                     }
@@ -105,7 +105,7 @@ public class FlowInterceptor implements Interceptor {
                 }
                 return StringUtils.equals(resolveParameter(propertyValue), keyValue.getValue());
             } catch (Exception e) {
-                logger.error("judge parameter match exception", e);
+                log.error("judge parameter match exception", e);
                 return false;
             }
         }
@@ -144,7 +144,7 @@ public class FlowInterceptor implements Interceptor {
                 flowConfigs = LyJsonUtil.fromJson(config, new TypeReference<List<FlowConfig>>() {
                 });
             } catch (Exception e) {
-                logger.error("parse sql flow control config error", e);
+                log.error("parse sql flow control config error", e);
                 flowConfigs = Lists.newArrayList();
             }
         }

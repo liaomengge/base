@@ -26,7 +26,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SentinelRetrofitInterceptor implements Interceptor {
 
-    private static final Logger logger = LyLogger.getInstance(SentinelRetrofitInterceptor.class);
+    private static final Logger log = LyLogger.getInstance(SentinelRetrofitInterceptor.class);
 
     private StatsDClient statsDClient;
 
@@ -44,7 +44,7 @@ public class SentinelRetrofitInterceptor implements Interceptor {
             response = chain.proceed(request);
         } catch (BlockException e) {
             if (StringUtils.isNotBlank(hostWithPathResource)) {
-                logger.warn("Resource[{}], Retrofit Block Exception...", hostWithPathResource);
+                log.warn("Resource[{}], Retrofit Block Exception...", hostWithPathResource);
                 String methodSuffix = LyMoreUrlUtil.getUrlSuffix(hostWithPathResource);
                 Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(methodSuffix + RetrofitMetricsConst.REQ_EXE_BLOCKED));
             }

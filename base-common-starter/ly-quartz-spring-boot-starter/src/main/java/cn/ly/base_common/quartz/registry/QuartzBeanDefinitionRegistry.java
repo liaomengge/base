@@ -33,7 +33,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 public class QuartzBeanDefinitionRegistry implements EnvironmentAware, ApplicationContextAware,
         BeanDefinitionRegistryPostProcessor {
 
-    private static final Logger logger = LyLogger.getInstance(QuartzBeanDefinitionRegistry.class);
+    private static final Logger log = LyLogger.getInstance(QuartzBeanDefinitionRegistry.class);
 
     private static final String JOB_PKG = "ly.quartz.basePackage";
 
@@ -71,7 +71,7 @@ public class QuartzBeanDefinitionRegistry implements EnvironmentAware, Applicati
             registry.registerBeanDefinition(beanClassName, beanDefinition);
             jobBeanDefinitionSet.add(beanClassName);
         }
-        logger.info("job registered number[{}], details ===> {}", jobBeanDefinitionSet.size(),
+        log.info("job registered number[{}], details ===> {}", jobBeanDefinitionSet.size(),
                 jobBeanDefinitionSet.toString());
     }
 

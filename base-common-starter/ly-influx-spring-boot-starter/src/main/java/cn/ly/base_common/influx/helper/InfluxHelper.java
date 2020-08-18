@@ -2,9 +2,10 @@ package cn.ly.base_common.influx.helper;
 
 import cn.ly.base_common.influx.batch.InfluxBatchHandler;
 import cn.ly.base_common.influx.consts.InfluxConst;
-import lombok.extern.slf4j.Slf4j;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import org.apache.commons.lang3.StringUtils;
 import org.influxdb.dto.Point;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
@@ -24,8 +25,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 2020/7/21.
  */
-@Slf4j
 public class InfluxHelper {
+
+    private static final Logger log = LyLogger.getInstance(InfluxHelper.class);
 
     private String appId;
 

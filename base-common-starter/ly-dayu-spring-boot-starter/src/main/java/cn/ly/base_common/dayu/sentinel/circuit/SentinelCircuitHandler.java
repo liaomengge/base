@@ -23,7 +23,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SentinelCircuitHandler {
 
-    private static final Logger logger = LyLogger.getInstance(SentinelCircuitHandler.class);
+    private static final Logger log = LyLogger.getInstance(SentinelCircuitHandler.class);
 
     private StatsDClient statsDClient;
 
@@ -39,7 +39,7 @@ public class SentinelCircuitHandler {
         } catch (BlockException e) {
             result = handleBlockException(resource, circuitBreaker, e);
         } catch (Throwable t) {
-            logger.warn("Resource[{}], request sentinel circuit handle failed ==> {}", resource,
+            log.warn("Resource[{}], request sentinel circuit handle failed ==> {}", resource,
                     LyThrowableUtil.getStackTrace(t));
             Tracer.trace(t);
             throw t;

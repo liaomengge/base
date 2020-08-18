@@ -23,7 +23,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class RetrofitHelper {
 
-    private static final Logger logger = LyLogger.getInstance(RetrofitHelper.class);
+    private static final Logger log = LyLogger.getInstance(RetrofitHelper.class);
 
     private final RetryTemplate retryTemplate;
 
@@ -100,9 +100,9 @@ public class RetrofitHelper {
     private void handleThrowable(Throwable t) {
         if (t instanceof BlockException || LyExceptionUtil.unwrap(t) instanceof BlockException) {
             BlockException e = (BlockException) LyExceptionUtil.unwrap(t);
-            Optional.ofNullable(e).map(BlockException::getRule).map(AbstractRule::getResource).ifPresent(val -> logger.warn("Retrofit Block处理异常 ===> ", t));
+            Optional.ofNullable(e).map(BlockException::getRule).map(AbstractRule::getResource).ifPresent(val -> log.warn("Retrofit Block处理异常 ===> ", t));
         } else {
-            logger.warn("处理异常 ===> ", t);
+            log.warn("处理异常 ===> ", t);
         }
     }
 }

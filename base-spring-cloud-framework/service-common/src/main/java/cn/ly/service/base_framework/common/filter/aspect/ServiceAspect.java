@@ -54,7 +54,7 @@ import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ServiceAspect {
 
-    private static final Logger logger = LyLogger.getInstance(ServiceAspect.class);
+    private static final Logger log = LyLogger.getInstance(ServiceAspect.class);
 
     @Getter
     private FilterChain defaultFilterChain;
@@ -183,14 +183,14 @@ public class ServiceAspect {
             }
         }
         LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
-        logger.info("请求响应日志: {}", sBuilder.toString());
+        log.info("请求响应日志: {}", sBuilder.toString());
     }
 
     private void buildExceptionResultLog(Exception e, StringBuilder sBuilder) {
         long elapsedMilliseconds = LyJdk8DateUtil.getMilliSecondsTime() - TimeThreadLocalUtil.get();
         sBuilder.append(" exception result => " + LyThrowableUtil.getStackTrace(e));
         LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
-        logger.error("请求响应日志: {}", sBuilder.toString());
+        log.error("请求响应日志: {}", sBuilder.toString());
     }
 
     @PostConstruct
@@ -212,6 +212,6 @@ public class ServiceAspect {
         }
         defaultFilterChain.sortFilters();
         LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, NumberUtils.INTEGER_ZERO.toString());
-        logger.info("sort filter chain ===> {}", defaultFilterChain.printFilters());
+        log.info("sort filter chain ===> {}", defaultFilterChain.printFilters());
     }
 }

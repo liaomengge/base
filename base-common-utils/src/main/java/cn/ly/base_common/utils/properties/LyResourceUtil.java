@@ -18,7 +18,7 @@ import java.util.Properties;
 @UtilityClass
 public class LyResourceUtil {
 
-    private final Logger logger = LyLogger.getInstance(LyResourceUtil.class);
+    private final Logger log = LyLogger.getInstance(LyResourceUtil.class);
 
     public URL getResource(String resourceName) {
         return Thread.currentThread().getContextClassLoader().getResource(resourceName);
@@ -37,7 +37,7 @@ public class LyResourceUtil {
                 properties.load(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             }
         } catch (Exception e) {
-            logger.warn("load file [" + resourceName + "] fail", e);
+            log.warn("load file [" + resourceName + "] fail", e);
         } finally {
             LyIOUtil.closeQuietly(inputStream);
         }

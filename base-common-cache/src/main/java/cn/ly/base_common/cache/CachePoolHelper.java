@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 public class CachePoolHelper {
 
-    private static final Logger logger = LyLogger.getInstance(CachePoolHelper.class);
+    private static final Logger log = LyLogger.getInstance(CachePoolHelper.class);
 
     private final CaffeineCacheManager caffeineCacheManager;
 
@@ -123,7 +123,7 @@ public class CachePoolHelper {
                     }
                     return level2Json;
                 } catch (Exception e) {
-                    logger.error("获取一二级缓存region[" + region + "],key[" + key + "]失败", e);
+                    log.error("获取一二级缓存region[" + region + "],key[" + key + "]失败", e);
                 }
             }
 
@@ -199,7 +199,7 @@ public class CachePoolHelper {
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.PUT).region(region).key(key).value(value).build();
             sendPubCmd(cacheDomain);
         } catch (Exception e) {
-            logger.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
+            log.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
         }
     }
 
@@ -218,7 +218,7 @@ public class CachePoolHelper {
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.PUT).region(region).key(key).value(json).build();
             sendPubCmd(cacheDomain);
         } catch (Exception e) {
-            logger.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
+            log.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
         }
     }
 
@@ -236,7 +236,7 @@ public class CachePoolHelper {
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.PUT).region(region).key(key).value(value).build();
             sendPubCmd(cacheDomain);
         } catch (Exception e) {
-            logger.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
+            log.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
         }
     }
 
@@ -255,7 +255,7 @@ public class CachePoolHelper {
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.PUT).region(region).key(key).value(json).build();
             sendPubCmd(cacheDomain);
         } catch (Exception e) {
-            logger.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
+            log.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
         }
     }
 
@@ -291,7 +291,7 @@ public class CachePoolHelper {
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.DEL).region(region).key(key).build();
             sendPubCmd(cacheDomain);
         } catch (Exception e) {
-            logger.error("删除一二级缓存region[" + region + "],key[" + key + "]失败", e);
+            log.error("删除一二级缓存region[" + region + "],key[" + key + "]失败", e);
         }
     }
 
@@ -314,16 +314,16 @@ public class CachePoolHelper {
             if (Objects.isNull(cacheDomain)) {
                 return;
             }
-            logger.info("[Topic]同步一级缓存信息 ===> {}", msg);
+            log.info("[Topic]同步一级缓存信息 ===> {}", msg);
             NotifyTypeEnum notifyTypeEnum = cacheDomain.getNotifyTypeEnum();
             switch (notifyTypeEnum) {
                 case PUT:
-                    logger.info("[Topic]设置一级缓存key[{}],value[{}]", cacheDomain.getKey(), cacheDomain.getValue());
+                    log.info("[Topic]设置一级缓存key[{}],value[{}]", cacheDomain.getKey(), cacheDomain.getValue());
                     caffeineCacheManager.getCache(cacheDomain.getRegion()).set(cacheDomain.getKey(),
                             cacheDomain.getValue());
                     break;
                 case DEL:
-                    logger.info("[Topic]删除一级缓存key[{}]", cacheDomain.getKey());
+                    log.info("[Topic]删除一级缓存key[{}]", cacheDomain.getKey());
                     caffeineCacheManager.getCache(cacheDomain.getRegion()).evict(cacheDomain.getKey());
                     break;
                 default:

@@ -29,7 +29,7 @@
 //@AllArgsConstructor
 //public class SentinelHandlerInterceptor extends HandlerInterceptorAdapter {
 //
-//    private static final Logger logger = LyLogger.getInstance(SentinelHandlerInterceptor.class);
+//    private static final Logger log = LyLogger.getInstance(SentinelHandlerInterceptor.class);
 //
 //    private static final String WEB_INTERCEPTOR_CONTEXT_NAME = "sentinel_web_interceptor_context";
 //
@@ -48,12 +48,12 @@
 //            if (urlCleaner != null) {
 //                uriTarget = urlCleaner.clean(uriTarget);
 //            }
-//            logger.info("[Sentinel Pre Filter] Origin: {} enter Uri Path: {}", origin, uriTarget);
+//            log.info("[Sentinel Pre Filter] Origin: {} enter Uri Path: {}", origin, uriTarget);
 //            ContextUtil.enter(WEB_INTERCEPTOR_CONTEXT_NAME, origin);
 //            SphU.entry(uriTarget, EntryType.IN);
 //            return true;
 //        } catch (BlockException ex) {
-//            logger.warn(String.format("[Sentinel Pre Filter] Block Exception when Origin: %s enter fall back uri: %s",
+//            log.warn(String.format("[Sentinel Pre Filter] Block Exception when Origin: %s enter fall back uri: %s",
 //                    origin, uriTarget), ex);
 //            WebCallbackManager.getUrlBlockHandler().blocked(request, response, ex);
 //            String finalUriTarget = uriTarget;

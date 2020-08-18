@@ -58,7 +58,7 @@ public class CircuitBreakerResourceAspect extends AbstractAspectSupport {
             if (failureCount >= circuitBreakerRedisHelper.getCircuitBreakerConfig().getFailureThreshold()) {
                 if ((LyJdk8DateUtil.getMilliSecondsTime() - latestFailureTime) <= circuitBreakerRedisHelper.getCircuitBreakerConfig().getResetMilliSeconds()) {
                     //open status
-                    logger.warn("Resource[{}], Custom Circuit Open...", resource);
+                    log.warn("Resource[{}], Custom Circuit Open...", resource);
                     Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(CircuitBreakerConst.Metric.CIRCUIT_BREAKER_PREFIX + resource));
                     return super.handleFallback(joinPoint, circuitBreakerResource);
                 }
@@ -67,10 +67,10 @@ public class CircuitBreakerResourceAspect extends AbstractAspectSupport {
             //close status
             return joinPoint.proceed();
         } catch (CircuitBreakerException e) {
-            logger.warn("Resource[{}], request fallback handle ==> {}", resource, LyThrowableUtil.getStackTrace(e));
+            log.warn("Resource[{}], request fallback handle ==> {}", resource, LyThrowableUtil.getStackTrace(e));
             throw e;
         } catch (Throwable t) {
-            logger.warn("Resource[{}], request custom circuit handle failed ==> {}", resource,
+            log.warn("Resource[{}], request custom circuit handle failed ==> {}", resource,
                     LyThrowableUtil.getStackTrace(t));
             if (failureCount >= circuitBreakerRedisHelper.getCircuitBreakerConfig().getFailureThreshold()) {
                 circuitBreakerRedisHelper.getIRedisHelper().set(circuitBreakerRedisHelper.getLatestFailureTimeStr(resource),

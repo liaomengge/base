@@ -4,12 +4,12 @@ import cn.ly.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import cn.ly.base_common.support.exception.CommunicationException;
 import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.log.LyAlarmLogUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.properties.LyConfigUtil;
 import cn.ly.base_common.utils.properties.LyPropertiesUtil;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import com.alibaba.fastjson.TypeReference;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
@@ -27,6 +27,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -42,8 +43,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 16/12/13.
  */
-@Slf4j
 public class LyHttpClientUtil3 {
+
+    private static final Logger log = LyLogger.getInstance(LyHttpClientUtil3.class);
 
     private static final String DEFAULT_HTTPCLIENT_FILE = "classpath:httpclient.properties";
 

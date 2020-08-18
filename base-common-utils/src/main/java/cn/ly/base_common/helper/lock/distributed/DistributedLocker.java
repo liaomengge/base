@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  */
 public interface DistributedLocker {
 
-    Logger logger = LyLogger.getInstance(DistributedLocker.class);
+    Logger log = LyLogger.getInstance(DistributedLocker.class);
 
     String REDIS_LOCKER_PREFIX = "lock:";
     String ZK_LOCKER_PREFIX = "/curator";

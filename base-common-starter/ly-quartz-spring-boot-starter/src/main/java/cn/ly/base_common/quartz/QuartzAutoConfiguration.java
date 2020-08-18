@@ -39,7 +39,7 @@ import static cn.ly.base_common.quartz.registry.QuartzBeanDefinitionRegistry.get
 @Import(QuartzBeanRegistryConfiguration.class)
 public class QuartzAutoConfiguration {
 
-    private static final Logger logger = LyLogger.getInstance(QuartzAutoConfiguration.class);
+    private static final Logger log = LyLogger.getInstance(QuartzAutoConfiguration.class);
 
     private final CopyOnWriteArrayList triggerKeyList = Lists.newCopyOnWriteArrayList();
 
@@ -59,7 +59,7 @@ public class QuartzAutoConfiguration {
     public SchedulerFactoryBean schedulerFactoryBean() {
         List<CronTrigger> cronTriggerList = this.buildJobTrigger();
         if (cronTriggerList.isEmpty()) {
-            logger.warn("not found corn trigger, please check quartz properties!!!");
+            log.warn("not found corn trigger, please check quartz properties!!!");
             throw new BeanInstantiationException(SchedulerFactoryBean.class, "not found corn trigger, " +
                     "please check quartz properties");
         }
@@ -101,10 +101,10 @@ public class QuartzAutoConfiguration {
                 cronTriggerList.add(cronTrigger);
                 triggerKeyList.add(cronTrigger.getKey());
             } catch (Exception e) {
-                logger.warn("load job trigger class[" + triggerName + "]fail!!!", e);
+                log.warn("load job trigger class[" + triggerName + "]fail!!!", e);
             }
         }
-        logger.info("load job trigger(" + cronTriggerList.size() + ") ===> [" +
+        log.info("load job trigger(" + cronTriggerList.size() + ") ===> [" +
                 cronTriggerList.parallelStream().map(val -> val.getKey().getName()).reduce((val, val2) -> val + ',' + val2).orElse("") + "]");
         return cronTriggerList;
     }
@@ -113,7 +113,7 @@ public class QuartzAutoConfiguration {
         List<JobDetailImpl> jobDetailList = Lists.newArrayList();
         Map<String, Object> beanMap = getJobBeanMap();
         if (beanMap.isEmpty()) {
-            logger.warn("the package[" + this.quartzProperties.getBasePackage() + "]'s class don't exist or not " +
+            log.warn("the package[" + this.quartzProperties.getBasePackage() + "]'s class don't exist or not " +
                     "inherit AbstractBaseJob");
             return jobDetailList;
         }
@@ -122,7 +122,7 @@ public class QuartzAutoConfiguration {
             String pkgClassName = this.quartzProperties.getPackageName(jobInfo);
             Object obj = beanMap.get(pkgClassName);
             if (Objects.isNull(obj)) {
-                logger.warn("not found class[{}], please check quartz properties(" +
+                log.warn("not found class[{}], please check quartz properties(" +
                         "1.inherit AbstractBaseJob;2.{} must exist)!!!", pkgClassName, pkgClassName);
                 continue;
             }
@@ -137,7 +137,7 @@ public class QuartzAutoConfiguration {
                 JobDetailImpl jobDetail = (JobDetailImpl) methodInvokingJobDetailFactoryBean.getObject();
                 jobDetailList.add(jobDetail);
             } catch (Exception e) {
-                logger.warn("load job detail class[" + pkgClassName + "]fail!!!", e);
+                log.warn("load job detail class[" + pkgClassName + "]fail!!!", e);
             }
         }
         return jobDetailList;

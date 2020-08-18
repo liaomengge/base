@@ -134,7 +134,7 @@ public class ServiceFilter extends AbstractFilter {
             logData.setElapsedMilliseconds(elapsedMilliseconds);
             dataResult.setElapsedMilliseconds(elapsedMilliseconds);
 
-            logger.error(logData);
+            log.error(logData);
 
             return result;
         } finally {
@@ -226,13 +226,13 @@ public class ServiceFilter extends AbstractFilter {
 
     private void handleException(LyLogData logData, boolean hasException) {
         if (hasException) {
-            logger.error(logData);
+            log.error(logData);
             if (serviceConfig.isSendEmail() && mailHelper != null) {
                 mailHelper.sendTextMail(LyNetworkUtil.getHostAddress() + "/" + LyNetworkUtil.getHostName() +
                         "-[" + serviceConfig.getServiceName() + "] ERROR!", LyJsonUtil.toJson4Log(logData));
             }
             return;
         }
-        logger.info(logData);
+        log.info(logData);
     }
 }

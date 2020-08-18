@@ -19,7 +19,7 @@ import java.util.List;
 @UtilityClass
 public class Ly7ZUtil {
 
-    private Logger logger = LyLogger.getInstance(Ly7ZUtil.class);
+    private Logger log = LyLogger.getInstance(Ly7ZUtil.class);
 
     /**
      * 将文件压缩为 7z 格式
@@ -45,7 +45,7 @@ public class Ly7ZUtil {
         // 读取目标路径
         File sevenZFile = new File(targetPath);
         SevenZOutputFile sevenZOutput = null;
-        logger.debug("Attempting to create " + targetPath + ".......");
+        log.debug("Attempting to create " + targetPath + ".......");
 
         sevenZOutput = new SevenZOutputFile(sevenZFile);
         // 遍历 File List 逐个压缩
@@ -64,7 +64,7 @@ public class Ly7ZUtil {
         }
         sevenZOutput.close();
         sevenZFile = null;
-        logger.debug("Archive " + targetPath + " created successfully.......");
+        log.debug("Archive " + targetPath + " created successfully.......");
 
     }
 

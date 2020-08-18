@@ -3,8 +3,8 @@ package cn.ly.base_common.utils.http;
 import cn.ly.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import cn.ly.base_common.support.exception.CommunicationException;
 import cn.ly.base_common.utils.log.LyAlarmLogUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -17,6 +17,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -29,8 +30,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 16/12/13.
  */
-@Slf4j
 public class LyHttpClientUtil2 {
+
+    private static final Logger log = LyLogger.getInstance(LyHttpClientUtil2.class);
 
     private static final String DEFAULT_ENCODING = "UTF-8";
     private static final String DEFAULT_MEDIA_TYPE_JSON = "application/json";

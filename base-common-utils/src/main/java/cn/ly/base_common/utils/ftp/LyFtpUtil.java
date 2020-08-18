@@ -19,7 +19,7 @@ import java.io.InputStream;
 @UtilityClass
 public class LyFtpUtil {
 
-    private Logger logger = LyLogger.getInstance(LyFtpUtil.class);
+    private Logger log = LyLogger.getInstance(LyFtpUtil.class);
 
     /**
      * 将流上传到指定远程服务器
@@ -36,7 +36,7 @@ public class LyFtpUtil {
     public void upload(String serverIP, int serverPort, String ftpUser,
                        String ftpPwd, String fileName, InputStream inputStream, String remoteFilePath) throws Exception {
 
-        logger.info("start uploading file[{}] to ftp...", fileName);
+        log.info("start uploading file[{}] to ftp...", fileName);
         FTPClient client = null;
         try {
             client = getFtpClient(serverIP, serverPort, ftpUser, ftpPwd);
@@ -44,7 +44,7 @@ public class LyFtpUtil {
         } finally {
             closeClient(client);
         }
-        logger.info("complete uploading file[{}] to ftp...", fileName);
+        log.info("complete uploading file[{}] to ftp...", fileName);
     }
 
     public void upload(FTPClient client, String fileName, InputStream inputStream, String remoteFilePath) throws Exception {
@@ -213,7 +213,7 @@ public class LyFtpUtil {
                     client.logout();
                     client.disconnect(true);
                 } catch (Exception e) {
-                    logger.info("close Ftp Connection error!", e);
+                    log.info("close Ftp Connection error!", e);
                 }
             }
             client = null;
@@ -237,28 +237,28 @@ public class LyFtpUtil {
 
         @Override
         public void started() {
-            logger.debug(optType + ": FTP Starting...");
+            log.debug(optType + ": FTP Starting...");
         }
 
         @Override
         public void transferred(int length) {
-            logger.debug(optType + ":Transferring..." + length);
+            log.debug(optType + ":Transferring..." + length);
         }
 
         @Override
         public void completed() {
             isCompleted = true;
-            logger.debug(optType + ":Complete!");
+            log.debug(optType + ":Complete!");
         }
 
         @Override
         public void aborted() {
-            logger.warn(optType + ":Abort!");
+            log.warn(optType + ":Abort!");
         }
 
         @Override
         public void failed() {
-            logger.warn(optType + ":Failed!");
+            log.warn(optType + ":Failed!");
         }
     }
 
@@ -286,7 +286,7 @@ public class LyFtpUtil {
             ftpClient.setType(FTPClient.TYPE_BINARY);
             return ftpClient;
         } catch (Exception e) {
-            logger.error("ftp connection error", e);
+            log.error("ftp connection error", e);
         }
         return ftpClient;
     }

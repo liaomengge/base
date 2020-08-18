@@ -3,8 +3,9 @@ package cn.ly.base_common.graceful.undertow;
 import cn.ly.base_common.graceful.GracefulProperties;
 import cn.ly.base_common.graceful.consts.GracefulConst;
 import cn.ly.base_common.utils.collection.LyCollectionUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import io.undertow.Undertow;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServer;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
@@ -17,8 +18,9 @@ import java.util.Optional;
 /**
  * Created by liaomengge on 2020/7/4.
  */
-@Slf4j
 public class UndertowShutdown implements ApplicationListener<ContextClosedEvent> {
+
+    private static final Logger log = LyLogger.getInstance(UndertowShutdown.class);
 
     @Autowired
     private GracefulProperties gracefulProperties;

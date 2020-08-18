@@ -36,7 +36,7 @@ public class RateLimitFilter extends AbstractFilter {
         try {
             rateConfigMap = LyJsonUtil.fromJson(rateLimitConfig, Map.class);
         } catch (Exception e) {
-            logger.warn("限流配置[{}]格式错误,不合法", rateLimitConfig);
+            log.warn("限流配置[{}]格式错误,不合法", rateLimitConfig);
             return invoker.invoke(invocation);
         }
 
@@ -45,12 +45,12 @@ public class RateLimitFilter extends AbstractFilter {
         }
         double qps = LyMoreNumberUtil.toDouble(MapUtils.getString(rateConfigMap, methodName), -1);
         if (qps <= 0) {
-            logger.warn("方法[{}],限流配置[{}],QPS配置不合法", methodName, rateLimitConfig);
+            log.warn("方法[{}],限流配置[{}],QPS配置不合法", methodName, rateLimitConfig);
             return invoker.invoke(invocation);
         }
         RateLimiter rateLimiter = resourceLimiterMap.computeIfAbsent(methodName, key -> RateLimiter.create(qps));
         if (rateLimiter.getRate() != qps) {
-            logger.info("methodName[{}], 老QPS[{}], 新QPS[{}]", methodName, rateLimiter.getRate(), qps);
+            log.info("methodName[{}], 老QPS[{}], 新QPS[{}]", methodName, rateLimiter.getRate(), qps);
             rateLimiter.setRate(qps);
         }
 
@@ -79,7 +79,7 @@ public class RateLimitFilter extends AbstractFilter {
 
         logData.setResult(result.getValue());
         logData.setRestUrl(url.getAbsolutePath());
-        logger.info(logData);
+        log.info(logData);
 
         return result;
     }

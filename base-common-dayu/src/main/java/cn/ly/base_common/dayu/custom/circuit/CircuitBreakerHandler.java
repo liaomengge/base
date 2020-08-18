@@ -20,7 +20,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CircuitBreakerHandler {
 
-    private static final Logger logger = LyLogger.getInstance(CircuitBreakerHandler.class);
+    private static final Logger log = LyLogger.getInstance(CircuitBreakerHandler.class);
 
     private StatsDClient statsDClient;
     private CircuitBreakerRedisHelper circuitBreakerRedisHelper;
@@ -42,7 +42,7 @@ public class CircuitBreakerHandler {
             if (failureCount >= circuitBreakerRedisHelper.getCircuitBreakerConfig().getFailureThreshold()) {
                 if ((LyJdk8DateUtil.getMilliSecondsTime() - latestFailureTime) <= circuitBreakerRedisHelper.getCircuitBreakerConfig().getResetMilliSeconds()) {
                     //open status
-                    logger.warn("Resource[{}], Custom Circuit Open...", resource);
+                    log.warn("Resource[{}], Custom Circuit Open...", resource);
                     Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(Metric.CIRCUIT_BREAKER_PREFIX + resource));
                     return circuitBreaker.fallback();
                 }
@@ -51,7 +51,7 @@ public class CircuitBreakerHandler {
             //close status
             result = circuitBreaker.execute();
         } catch (Throwable t) {
-            logger.warn("Resource[{}], request custom circuit handle failed ==> {}", resource,
+            log.warn("Resource[{}], request custom circuit handle failed ==> {}", resource,
                     LyThrowableUtil.getStackTrace(t));
             if (failureCount >= circuitBreakerRedisHelper.getCircuitBreakerConfig().getFailureThreshold()) {
                 circuitBreakerRedisHelper.getIRedisHelper().set(circuitBreakerRedisHelper.getLatestFailureTimeStr(resource),

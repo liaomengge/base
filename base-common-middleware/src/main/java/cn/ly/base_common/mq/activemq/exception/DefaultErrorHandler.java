@@ -9,10 +9,10 @@ import org.springframework.util.ErrorHandler;
  */
 public class DefaultErrorHandler implements ErrorHandler {
 
-    private static final Logger logger = LyLogger.getInstance(DefaultErrorHandler.class);
+    private static final Logger log = LyLogger.getInstance(DefaultErrorHandler.class);
 
     @Override
     public void handleError(Throwable t) {
-        logger.warn("Unexpected error occurred", t);
+        log.warn("Unexpected error occurred", t);
     }
 }

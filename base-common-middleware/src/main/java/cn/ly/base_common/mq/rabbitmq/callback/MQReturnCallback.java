@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class MQReturnCallback implements RabbitTemplate.ReturnCallback {
 
-    private static final Logger logger = LyLogger.getInstance(MQReturnCallback.class);
+    private static final Logger log = LyLogger.getInstance(MQReturnCallback.class);
 
     @Override
     public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
@@ -26,6 +26,6 @@ public class MQReturnCallback implements RabbitTemplate.ReturnCallback {
         returnMap.put("exchange", exchange);
         returnMap.put("routingKey", routingKey);
 
-        logger.error("Return Callback Failed, Detail Message[{}]", LyJsonUtil.toJson4Log(returnMap));
+        log.error("Return Callback Failed, Detail Message[{}]", LyJsonUtil.toJson4Log(returnMap));
     }
 }

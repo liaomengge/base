@@ -19,7 +19,7 @@ import java.util.concurrent.Executor;
 @EnableAsync(proxyTargetClass = true)
 public class AsyncAutoConfiguration {
 
-    private static final Logger logger = LyLogger.getInstance(AsyncAutoConfiguration.class);
+    private static final Logger log = LyLogger.getInstance(AsyncAutoConfiguration.class);
 
     @Bean
     @ConditionalOnMissingBean
@@ -32,7 +32,7 @@ public class AsyncAutoConfiguration {
 
             @Override
             public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-                return (ex, method, params) -> logger.error("Current Thread[{}], Invoking Async Method[{}], Exec " +
+                return (ex, method, params) -> log.error("Current Thread[{}], Invoking Async Method[{}], Exec " +
                                 "Exception ===> {}", Thread.currentThread().getName(), method,
                         LyThrowableUtil.getStackTrace(ex));
             }

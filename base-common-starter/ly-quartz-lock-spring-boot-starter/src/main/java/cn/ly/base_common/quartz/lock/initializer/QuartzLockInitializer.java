@@ -49,7 +49,7 @@ public class QuartzLockInitializer extends AbstractLock implements EnvironmentAw
     protected void lockSuccess() {
         if (Objects.nonNull(schedulerFactoryBean) && !schedulerFactoryBean.isRunning()) {
             schedulerFactoryBean.start();
-            logger.info("Machine[{}], quartz acquire lock success, start up...", LyNetworkUtil.getHostAddress());
+            log.info("Machine[{}], quartz acquire lock success, start up...", LyNetworkUtil.getHostAddress());
         }
         this.registerShutdownHook(schedulerFactoryBean);
     }
@@ -58,7 +58,7 @@ public class QuartzLockInitializer extends AbstractLock implements EnvironmentAw
     protected void lockFail() {
         if (Objects.nonNull(schedulerFactoryBean) && schedulerFactoryBean.isRunning()) {
             schedulerFactoryBean.stop();
-            logger.info("Machine[{}], quartz acquire lock fail, start fail...", LyNetworkUtil.getHostAddress());
+            log.info("Machine[{}], quartz acquire lock fail, start fail...", LyNetworkUtil.getHostAddress());
         }
     }
 
@@ -73,7 +73,7 @@ public class QuartzLockInitializer extends AbstractLock implements EnvironmentAw
             Optional.ofNullable(mailHelper).ifPresent(val -> val.sendTextMail(applicationName,
                     applicationName + " quartz start up..."));
         } catch (Exception e) {
-            logger.error(applicationName + " quartz start exception", e);
+            log.error(applicationName + " quartz start exception", e);
         }
     }
 
@@ -85,13 +85,13 @@ public class QuartzLockInitializer extends AbstractLock implements EnvironmentAw
     private void registerShutdownHook(SchedulerFactoryBean schedulerFactoryBean) {
         LyShutdownUtil.registerShutdownHook(() -> {
             try {
-                logger.info("Quartz Scheduler FactoryBean Exist...");
+                log.info("Quartz Scheduler FactoryBean Exist...");
             } finally {
                 if (schedulerFactoryBean != null) {
                     try {
                         schedulerFactoryBean.destroy();
                     } catch (SchedulerException e) {
-                        logger.error("Destroy Quartz Scheduler Exception", e);
+                        log.error("Destroy Quartz Scheduler Exception", e);
                     }
                 }
             }

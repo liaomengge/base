@@ -66,7 +66,7 @@ public class SignFilter extends AbstractFilter {
 
         logData.setResult(result.getValue());
         logData.setRestUrl(url.getAbsolutePath());
-        logger.info(logData);
+        log.info(logData);
 
         return result;
     }

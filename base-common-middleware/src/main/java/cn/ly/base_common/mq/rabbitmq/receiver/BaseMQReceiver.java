@@ -72,7 +72,7 @@ public abstract class BaseMQReceiver extends AbstractMQReceiver implements Initi
     @Override
     public void stop() {
         if (simpleMessageListenerContainer.isRunning()) {
-            simpleMessageListenerContainer.stop(() -> logger.info("队列[{}]监听器已经停止...",
+            simpleMessageListenerContainer.stop(() -> log.info("队列[{}]监听器已经停止...",
                     Arrays.toString(simpleMessageListenerContainer.getQueueNames())));
         }
     }

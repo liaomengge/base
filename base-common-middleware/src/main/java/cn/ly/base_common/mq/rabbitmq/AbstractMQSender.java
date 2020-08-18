@@ -8,7 +8,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractMQSender {
 
-    protected static final Logger logger = LyLogger.getInstance(AbstractMQSender.class);
+    protected static final Logger log = LyLogger.getInstance(AbstractMQSender.class);
 
     public abstract void convertAndSend(int routeKeyHash, Object object);
 

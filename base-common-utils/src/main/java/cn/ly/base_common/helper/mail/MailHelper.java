@@ -29,7 +29,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class MailHelper implements InitializingBean {
 
-    private static Logger logger = LyLogger.getInstance(MailHelper.class);
+    private static Logger log = LyLogger.getInstance(MailHelper.class);
 
     private ThreadPoolExecutor mailThreadPool = LyThreadPoolExecutorUtil.buildCpuCoreThreadPool("mail",
             new LinkedBlockingQueue<>(32), new ThreadPoolExecutor.DiscardPolicy());
@@ -319,9 +319,9 @@ public class MailHelper implements InitializingBean {
             try {
                 mailSender.send(mailMessage);
                 sendSuccessCount++;
-                logger.info(senderUserName + " 向 " + to + " 发送邮件成功!");
+                log.info(senderUserName + " 向 " + to + " 发送邮件成功!");
             } catch (Exception e) {
-                logger.error("sendEmail to [" + to + "]失败!", e);
+                log.error("sendEmail to [" + to + "]失败!", e);
             }
         }
     }
@@ -356,9 +356,9 @@ public class MailHelper implements InitializingBean {
             try {
                 mailSender.send(mailMessage);
                 sendSuccessCount++;
-                logger.info(senderUserName + " 向 " + to + " 发送邮件成功!");
+                log.info(senderUserName + " 向 " + to + " 发送邮件成功!");
             } catch (Exception e) {
-                logger.error("sendEmail to [" + to + "]失败!", e);
+                log.error("sendEmail to [" + to + "]失败!", e);
             }
         }
     }
@@ -394,9 +394,9 @@ public class MailHelper implements InitializingBean {
 
                 mailSender.send(mimeMessage);
                 sendSuccessCount++;
-                logger.info(senderUserName + " 向 " + to + " 发送邮件成功!");
+                log.info(senderUserName + " 向 " + to + " 发送邮件成功!");
             } catch (Exception e) {
-                logger.error("sendEmail to [" + to + "]失败!", e);
+                log.error("sendEmail to [" + to + "]失败!", e);
             }
         }
     }
@@ -439,9 +439,9 @@ public class MailHelper implements InitializingBean {
 
                 mailSender.send(mimeMessage);
                 sendSuccessCount++;
-                logger.info(senderUserName + " 向 " + to + " 发送邮件成功!");
+                log.info(senderUserName + " 向 " + to + " 发送邮件成功!");
             } catch (Exception e) {
-                logger.error("sendEmail to [" + to + "]失败!", e);
+                log.error("sendEmail to [" + to + "]失败!", e);
             }
         }
     }
@@ -485,9 +485,9 @@ public class MailHelper implements InitializingBean {
 
                 mailSender.send(mimeMessage);
                 sendSuccessCount++;
-                logger.info(senderUserName + " 向 " + to + " 发送邮件成功!");
+                log.info(senderUserName + " 向 " + to + " 发送邮件成功!");
             } catch (Exception e) {
-                logger.error("sendEmail to [" + to + "]失败!", e);
+                log.error("sendEmail to [" + to + "]失败!", e);
             }
         }
     }

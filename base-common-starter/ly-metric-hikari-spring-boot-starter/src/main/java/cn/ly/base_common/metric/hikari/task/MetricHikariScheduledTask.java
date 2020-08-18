@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MetricHikariScheduledTask {
 
-    private static final Logger logger = LyLogger.getInstance(MetricHikariScheduledTask.class);
+    private static final Logger log = LyLogger.getInstance(MetricHikariScheduledTask.class);
 
     private static final String METRIC_HIKARI_PREFIX = "metric-hikari.";
 
@@ -87,9 +87,9 @@ public class MetricHikariScheduledTask {
                     TimeUnit.SECONDS.sleep(metricHikariProperties.getStatsInterval());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    logger.info("metric hikari interrupt exit...");
+                    log.info("metric hikari interrupt exit...");
                 } catch (Exception e) {
-                    logger.error("metric hikari exception...", e);
+                    log.error("metric hikari exception...", e);
                 }
             }
         }
@@ -113,7 +113,7 @@ public class MetricHikariScheduledTask {
         sBuilder.append(prefix + "threadsAwaitingConnection => [" + poolStatBean.getThreadsAwaitingConnection() + "],");
         sBuilder.append(prefix + "maximumPoolSize => [" + poolStatBean.getMaximumPoolSize() + "],");
         sBuilder.append(prefix + "minimumIdle => [" + poolStatBean.getMinimumIdle() + "]");
-        logger.info(sBuilder.toString());
+        log.info(sBuilder.toString());
     }
 
     private URI parseJdbcUrl(String url) {

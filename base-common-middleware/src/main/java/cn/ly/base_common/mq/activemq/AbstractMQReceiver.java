@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public abstract class AbstractMQReceiver implements DisposableBean {
 
-    protected static final Logger logger = LyLogger.getInstance(AbstractMQReceiver.class);
+    protected static final Logger log = LyLogger.getInstance(AbstractMQReceiver.class);
 
     @Setter
     protected boolean asyncExec = false;//非异步执行
@@ -40,7 +40,7 @@ public abstract class AbstractMQReceiver implements DisposableBean {
     protected void registerShutdownHook(SimpleMessageListenerContainer... simpleMessageListenerContainers) {
         LyShutdownUtil.registerShutdownHook(() -> {
             try {
-                logger.info("ActiveMQ Listener Exist...");
+                log.info("ActiveMQ Listener Exist...");
             } finally {
                 if (simpleMessageListenerContainers != null && simpleMessageListenerContainers.length > 0) {
                     Arrays.stream(simpleMessageListenerContainers).forEach(listenerContainer -> listenerContainer.shutdown());

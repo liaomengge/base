@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class CacheScheduledTask {
 
-    private static final Logger logger = LyLogger.getInstance(CacheScheduledTask.class);
+    private static final Logger log = LyLogger.getInstance(CacheScheduledTask.class);
 
     private static final String METRIC_PREFIX = "metric.";
 
@@ -60,7 +60,7 @@ public class CacheScheduledTask {
     protected void registerShutdownHook(ScheduledThreadPoolExecutor poolExecutor) {
         LyShutdownUtil.registerShutdownHook(() -> {
             try {
-                logger.info("Metric Cache Scheduled Thread Pool Exist...");
+                log.info("Metric Cache Scheduled Thread Pool Exist...");
             } finally {
                 if (poolExecutor != null) {
                     poolExecutor.shutdown();

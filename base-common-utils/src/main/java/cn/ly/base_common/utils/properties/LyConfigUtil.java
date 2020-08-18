@@ -22,7 +22,7 @@ import java.util.Properties;
 @UtilityClass
 public class LyConfigUtil {
 
-    private final Logger logger = LyLogger.getInstance(LyConfigUtil.class);
+    private final Logger log = LyLogger.getInstance(LyConfigUtil.class);
 
     public final String CLASSPATH_FILE_FLAG = "classpath:";
 
@@ -54,7 +54,7 @@ public class LyConfigUtil {
                 properties.load(bufferedReader);
             }
         } catch (Throwable e) {
-            logger.warn("load file[" + fileName + "] fail", e);
+            log.warn("load file[" + fileName + "] fail", e);
         }
         return properties;
     }
@@ -80,7 +80,7 @@ public class LyConfigUtil {
                 list.add(urls.nextElement());
             }
         } catch (Throwable e) {
-            logger.warn("load file[" + fileName + "] fail", e);
+            log.warn("load file[" + fileName + "] fail", e);
         }
 
         if (list.isEmpty()) {
@@ -95,7 +95,7 @@ public class LyConfigUtil {
                 p.load(bufferedReader);
                 properties.putAll(p);
             } catch (Throwable e) {
-                logger.warn("load file[" + fileName + "] fail", e);
+                log.warn("load file[" + fileName + "] fail", e);
             }
         }
         return properties;

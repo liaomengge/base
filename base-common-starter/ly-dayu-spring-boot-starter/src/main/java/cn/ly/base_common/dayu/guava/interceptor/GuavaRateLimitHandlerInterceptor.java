@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentMap;
 @AllArgsConstructor
 public class GuavaRateLimitHandlerInterceptor extends HandlerInterceptorAdapter {
 
-    private static final Logger logger = LyLogger.getInstance(GuavaRateLimitHandlerInterceptor.class);
+    private static final Logger log = LyLogger.getInstance(GuavaRateLimitHandlerInterceptor.class);
 
     @Getter
     private static final ConcurrentMap<String, RateLimiter> resourceLimiterMap = Maps.newConcurrentMap();
@@ -49,13 +49,13 @@ public class GuavaRateLimitHandlerInterceptor extends HandlerInterceptorAdapter 
                     new TypeReference<List<FlowRule>>() {
                     });
         } catch (Exception e) {
-            logger.warn("[Guava RateLimit], [flow] rule parse exception", e);
+            log.warn("[Guava RateLimit], [flow] rule parse exception", e);
         }
         if (CollectionUtils.isNotEmpty(flowRules)) {
             Optional<FlowRule> flowRuleOptional =
                     flowRules.stream().filter(val -> StringUtils.equalsIgnoreCase(uriTarget, val.getResource())).findFirst();
             if (flowRuleOptional.isPresent() && flowRuleOptional.get().getCount() > 0.0d) {
-                logger.info("[Guava RateLimit Interceptor], Uri Path: {}", uriTarget);
+                log.info("[Guava RateLimit Interceptor], Uri Path: {}", uriTarget);
                 RateLimiter rateLimiter = resourceLimiterMap.computeIfAbsent(uriTarget,
                         key -> RateLimiter.create(flowRuleOptional.get().getCount()));
                 if (!rateLimiter.tryAcquire()) {

@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public abstract class AbstractAspectSupport {
 
-    protected static final Logger logger = LyLogger.getInstance(AbstractAspectSupport.class);
+    protected static final Logger log = LyLogger.getInstance(AbstractAspectSupport.class);
 
     protected Object handleFallback(ProceedingJoinPoint pjp, CircuitBreakerResource circuitBreakerResource) throws Throwable {
         String fallback = circuitBreakerResource.fallback();
@@ -28,7 +28,7 @@ public abstract class AbstractAspectSupport {
                 return ReflectionUtils.invokeMethod(method, pjp.getTarget());
             }
         }
-        logger.warn("fallback method not found!!!");
+        log.warn("fallback method not found!!!");
         throw new CircuitBreakerException("000700", "熔断异常");
     }
 }

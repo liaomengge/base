@@ -10,7 +10,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractMetricMonitor {
 
-    protected final Logger logger = LyLogger.getInstance(AbstractMetricMonitor.class);
+    protected final Logger log = LyLogger.getInstance(AbstractMetricMonitor.class);
 
     @Setter
     protected StatsDClient statsDClient;

@@ -57,13 +57,13 @@ public abstract class RetryMQMessageListener<T extends MQMessage> extends BaseMQ
             rabbitMQMonitor.monitorCount(MetricsConst.DEQUEUE_COUNT + "." + queueConfig.getExchangeName());
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (ClassCastException | JSONException e) {
-            logger.error("Receive Message[" + LyJsonUtil.toJson4Log(t) + "] Format Error ===> ", e);
+            log.error("Receive Message[" + LyJsonUtil.toJson4Log(t) + "] Format Error ===> ", e);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (ShutdownSignalException | ConsumerCancelledException e) {
-            logger.error("Handle Message[" + LyJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
+            log.error("Handle Message[" + LyJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
         } catch (Exception e) {
             rabbitMQMonitor.monitorCount(MetricsConst.EXEC_EXCEPTION + "." + queueConfig.getExchangeName());
-            logger.error("Handle Message[" + LyJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
+            log.error("Handle Message[" + LyJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
             try {
                 MessageProperties messageProperties = message.getMessageProperties();
                 Map<String, Object> headerMap = messageProperties.getHeaders();
@@ -82,7 +82,7 @@ public abstract class RetryMQMessageListener<T extends MQMessage> extends BaseMQ
 
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
             } catch (IOException ioe) {
-                logger.error("Enq Message[" + message.toString() + "], Reject/Nack Exception ===> ", ioe);
+                log.error("Enq Message[" + message.toString() + "], Reject/Nack Exception ===> ", ioe);
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             }
         } finally {

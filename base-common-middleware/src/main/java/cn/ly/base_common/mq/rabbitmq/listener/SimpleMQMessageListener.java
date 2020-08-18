@@ -23,7 +23,7 @@ public abstract class SimpleMQMessageListener<T extends MQMessage> extends BaseM
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (Exception e) {
             rabbitMQMonitor.monitorCount(MetricsConst.EXEC_ACK_EXCEPTION + "." + queueConfig.getExchangeName());
-            logger.error("Enq Message[" + message.toString() + "], Ack Exception ===> ", e);
+            log.error("Enq Message[" + message.toString() + "], Ack Exception ===> ", e);
             throw new AmqpRejectAndDontRequeueException("Ack Exception", e);
         }
 

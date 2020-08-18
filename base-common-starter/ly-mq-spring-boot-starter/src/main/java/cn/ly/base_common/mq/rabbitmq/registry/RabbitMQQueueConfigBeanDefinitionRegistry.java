@@ -28,7 +28,7 @@ import java.util.Optional;
 public class RabbitMQQueueConfigBeanDefinitionRegistry implements EnvironmentAware,
         BeanDefinitionRegistryPostProcessor {
 
-    private static final Logger logger = LyLogger.getInstance(RabbitMQQueueConfigBeanDefinitionRegistry.class);
+    private static final Logger log = LyLogger.getInstance(RabbitMQQueueConfigBeanDefinitionRegistry.class);
 
     private final ScopeMetadataResolver scopeMetadataResolver = new AnnotationScopeMetadataResolver();
 

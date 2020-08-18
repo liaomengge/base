@@ -14,19 +14,19 @@ import java.nio.charset.Charset;
 @UtilityClass
 public class LyIOUtil {
 
-    private final Logger logger = LyLogger.getInstance(LyIOUtil.class);
+    private final Logger log = LyLogger.getInstance(LyIOUtil.class);
 
     public final byte[] toByteArray(InputStream inputStream) {
         try {
             return IOUtils.toByteArray(inputStream);
         } catch (IOException e) {
-            logger.error("读取文件流失败", e);
+            log.error("读取文件流失败", e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    logger.error("关闭文件流失败", e);
+                    log.error("关闭文件流失败", e);
                 }
             }
         }
@@ -38,13 +38,13 @@ public class LyIOUtil {
         try {
             return IOUtils.toByteArray(inputStream, size);
         } catch (IOException e) {
-            logger.error("读取文件流失败", e);
+            log.error("读取文件流失败", e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    logger.error("关闭文件流失败", e);
+                    log.error("关闭文件流失败", e);
                 }
             }
         }
@@ -56,13 +56,13 @@ public class LyIOUtil {
         try {
             return IOUtils.toByteArray(input, encoding);
         } catch (IOException e) {
-            logger.error("读取文件流失败", e);
+            log.error("读取文件流失败", e);
         } finally {
             if (input != null) {
                 try {
                     input.close();
                 } catch (IOException e) {
-                    logger.error("关闭文件流失败", e);
+                    log.error("关闭文件流失败", e);
                 }
             }
         }
@@ -78,13 +78,13 @@ public class LyIOUtil {
         try {
             return IOUtils.toString(inputStream, charset);
         } catch (IOException e) {
-            logger.error("读取文件流失败", e);
+            log.error("读取文件流失败", e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    logger.error("关闭文件流失败", e);
+                    log.error("关闭文件流失败", e);
                 }
             }
         }
@@ -96,13 +96,13 @@ public class LyIOUtil {
         try {
             return IOUtils.toString(input);
         } catch (IOException e) {
-            logger.error("读取文件流失败", e);
+            log.error("读取文件流失败", e);
         } finally {
             if (input != null) {
                 try {
                     input.close();
                 } catch (IOException e) {
-                    logger.error("关闭文件流失败", e);
+                    log.error("关闭文件流失败", e);
                 }
             }
         }

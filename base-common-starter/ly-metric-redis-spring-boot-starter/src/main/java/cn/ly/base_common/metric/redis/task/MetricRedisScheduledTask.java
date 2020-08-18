@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MetricRedisScheduledTask {
 
-    private static final Logger logger = LyLogger.getInstance(MetricRedisScheduledTask.class);
+    private static final Logger log = LyLogger.getInstance(MetricRedisScheduledTask.class);
 
     private static final String METRIC_REDIS_PREFIX = "metric-redis.";
     private static final String JMX_NAME_BASE = "org.apache.commons.pool2:type=GenericObjectPool,name=";
@@ -96,9 +96,9 @@ public class MetricRedisScheduledTask {
                     TimeUnit.SECONDS.sleep(metricRedisProperties.getStatsInterval());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    logger.info("metric redis interrupt exit...");
+                    log.info("metric redis interrupt exit...");
                 } catch (Exception e) {
-                    logger.error("metric redis exception...", e);
+                    log.error("metric redis exception...", e);
                 }
             }
         }
@@ -167,7 +167,7 @@ public class MetricRedisScheduledTask {
         sBuilder.append(metricPrefix + "numIdle => [" + poolStatBean.getNumIdle() + "],");
         sBuilder.append(metricPrefix + "maxTotal => [" + poolStatBean.getMaxTotal() + "],");
         sBuilder.append(metricPrefix + "nuLyaiters => [" + poolStatBean.getNuLyaiters() + "]");
-        logger.info(sBuilder.toString());
+        log.info(sBuilder.toString());
     }
 
     @Data

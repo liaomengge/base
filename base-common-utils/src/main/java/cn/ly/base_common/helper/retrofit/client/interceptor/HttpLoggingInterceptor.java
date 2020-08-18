@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class HttpLoggingInterceptor implements Interceptor {
 
-    private static final Logger logger = LyLogger.getInstance(HttpLoggingInterceptor.class);
+    private static final Logger log = LyLogger.getInstance(HttpLoggingInterceptor.class);
 
     private final String projName;
 
@@ -60,10 +60,10 @@ public class HttpLoggingInterceptor implements Interceptor {
             tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
             LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(tookMs));
             if (isIgnoreLogMethod(request)) {
-                logger.warn("请求路径 ==> [{}], 请求异常 ===> [{}], 耗时[{}]ms",
+                log.warn("请求路径 ==> [{}], 请求异常 ===> [{}], 耗时[{}]ms",
                         buildReqUrl(request), LyThrowableUtil.getStackTrace(t), tookMs);
             } else {
-                logger.warn("请求路径 ==> [{}], 请求参数 ==> [{}], 请求异常 ===> [{}], 耗时[{}]ms",
+                log.warn("请求路径 ==> [{}], 请求参数 ==> [{}], 请求异常 ===> [{}], 耗时[{}]ms",
                         buildReqUrl(request), buildReqStr(request), LyThrowableUtil.getStackTrace(t), tookMs);
             }
             throw t;
@@ -100,18 +100,18 @@ public class HttpLoggingInterceptor implements Interceptor {
                 }
 
                 if (isIgnoreLogMethod(request)) {
-                    logger.info("请求路径 ==> [{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl, respStr, tookMs);
+                    log.info("请求路径 ==> [{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl, respStr, tookMs);
                 } else {
-                    logger.info("请求路径 ==> [{}], 请求参数 ==> [{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl, reqStr,
+                    log.info("请求路径 ==> [{}], 请求参数 ==> [{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl, reqStr,
                             respStr, tookMs);
                 }
                 statIncrement(prefix + RetrofitMetricsConst.REQ_EXE_SUC);
             } else {
                 if (isIgnoreLogMethod(request)) {
-                    logger.warn("请求路径 ==> [{}], 错误码[{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl,
+                    log.warn("请求路径 ==> [{}], 错误码[{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl,
                             response.code(), response.message(), tookMs);
                 } else {
-                    logger.warn("请求路径 ==> [{}], 请求参数 ==> [{}], 错误码[{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl,
+                    log.warn("请求路径 ==> [{}], 请求参数 ==> [{}], 错误码[{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl,
                             reqStr, response.code(), response.message(), tookMs);
                 }
                 statIncrement(prefix + RetrofitMetricsConst.REQ_EXE_FAIL);

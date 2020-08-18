@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 @UtilityClass
 public class LyMetricLogUtil {
 
-    private Logger logger = LoggerFactory.getLogger(LyMetricLogUtil.class);
+    private Logger log = LoggerFactory.getLogger(LyMetricLogUtil.class);
 
     /**
      * 字符串填充形式log
@@ -21,7 +21,7 @@ public class LyMetricLogUtil {
      * @param arguments
      */
     public void info(String format, Object... arguments) {
-        logger.info(String.format(format, arguments));
+        log.info(String.format(format, arguments));
     }
 
     /**
@@ -30,6 +30,6 @@ public class LyMetricLogUtil {
      * @param object
      */
     public void info(Object object) {
-        logger.info(LyJsonUtil.toJson4Log(object));
+        log.info(LyJsonUtil.toJson4Log(object));
     }
 }

@@ -19,7 +19,7 @@ import java.util.concurrent.Future;
 @AllArgsConstructor
 public class LyThreadPoolTaskWrappedExecutor implements AsyncListenableTaskExecutor, LyThreadHelper, DisposableBean {
 
-    private static final Logger logger = LyLogger.getInstance(LyThreadPoolTaskWrappedExecutor.class);
+    private static final Logger log = LyLogger.getInstance(LyThreadPoolTaskWrappedExecutor.class);
 
     @Getter
     private final ThreadPoolTaskExecutor threadPoolTaskExecutor;
@@ -56,7 +56,7 @@ public class LyThreadPoolTaskWrappedExecutor implements AsyncListenableTaskExecu
 
     @Override
     public void doExceptionHandle(Throwable e) {
-        logger.error("Current Thread[{}], Exec Exception ===> {}", Thread.currentThread().getName(),
+        log.error("Current Thread[{}], Exec Exception ===> {}", Thread.currentThread().getName(),
                 LyThrowableUtil.getStackTrace(e));
     }
 

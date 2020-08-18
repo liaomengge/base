@@ -28,7 +28,7 @@ import java.util.TreeMap;
 @UtilityClass
 public class LyWebUtil {
 
-    public final Logger logger = LyLogger.getInstance(Charsets.class);
+    public final Logger log = LyLogger.getInstance(Charsets.class);
 
     /**
      * 获取Get/Post请求参数(文件上传除外)
@@ -115,12 +115,12 @@ public class LyWebUtil {
         try {
             request.setCharacterEncoding(contentType);
         } catch (UnsupportedEncodingException e) {
-            logger.warn("unsupported contentType[" + contentType + "]", e);
+            log.warn("unsupported contentType[" + contentType + "]", e);
         }
         try {
             return LyIOUtil.toString(request.getReader());
         } catch (IOException e) {
-            logger.error("read request stream fail", e);
+            log.error("read request stream fail", e);
         }
         return "";
     }
@@ -149,7 +149,7 @@ public class LyWebUtil {
             writer.write(LyJsonUtil.toJson(result));
             writer.flush();
         } catch (IOException e) {
-            logger.error("write response stream exception", e);
+            log.error("write response stream exception", e);
         }
     }
 

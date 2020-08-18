@@ -20,7 +20,7 @@ import java.util.Optional;
 public class GiraffeDataSource<T> extends AbstractDataSource<String, T> implements EnvironmentAware,
         ApplicationListener<EnvironmentChangeEvent> {
 
-    private static final Logger logger = LyLogger.getInstance(GiraffeDataSource.class);
+    private static final Logger log = LyLogger.getInstance(GiraffeDataSource.class);
 
     private Environment environment;
 
@@ -61,14 +61,14 @@ public class GiraffeDataSource<T> extends AbstractDataSource<String, T> implemen
         try {
             T newValue = loadConfig();
             if (newValue == null) {
-                logger.info("[GiraffeDataSource] INFO: [{}] rule config is null, you may have to check your data " +
+                log.info("[GiraffeDataSource] INFO: [{}] rule config is null, you may have to check your data " +
                         "source", this.rule);
             }
             if (getProperty().updateValue(newValue)) {
-                logger.info("[DynamicSentinelProperty] [" + this.rule + "] rule config be updated to: " + newValue);
+                log.info("[DynamicSentinelProperty] [" + this.rule + "] rule config be updated to: " + newValue);
             }
         } catch (Throwable ex) {
-            logger.warn("[GiraffeDataSource] Error when loading [" + this.rule + "] rule config", ex);
+            log.warn("[GiraffeDataSource] Error when loading [" + this.rule + "] rule config", ex);
         }
     }
 

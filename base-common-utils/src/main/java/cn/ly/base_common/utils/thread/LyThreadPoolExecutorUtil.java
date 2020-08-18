@@ -14,7 +14,7 @@ import java.util.concurrent.*;
 @UtilityClass
 public class LyThreadPoolExecutorUtil {
 
-    private final Logger logger = LyLogger.getInstance(LyThreadPoolExecutorUtil.class);
+    private final Logger log = LyLogger.getInstance(LyThreadPoolExecutorUtil.class);
 
     public ThreadPoolExecutor buildThreadPool(int corePoolSize, int maximumPoolSize, String threadName,
                                               long keepAliveTime, TimeUnit unit,
@@ -207,7 +207,7 @@ public class LyThreadPoolExecutorUtil {
                                      int checkInterval) {
         LyShutdownUtil.registerShutdownHook(() -> {
             if (Objects.nonNull(threadPoolExecutor)) {
-                logger.info("thread pool[{}] shutdown start...", threadPoolExecutor);
+                log.info("thread pool[{}] shutdown start...", threadPoolExecutor);
                 threadPoolExecutor.shutdown();
                 try {
                     for (long remaining = awaitTerminationSeconds; remaining > 0; remaining -= checkInterval) {
@@ -221,9 +221,9 @@ public class LyThreadPoolExecutorUtil {
                         }
                     }
                 } catch (Exception e) {
-                    logger.info("thread pool[" + threadPoolExecutor + "] shutdown exception", e);
+                    log.info("thread pool[" + threadPoolExecutor + "] shutdown exception", e);
                 }
-                logger.info("thread pool[{}] shutdown end...", threadPoolExecutor);
+                log.info("thread pool[{}] shutdown end...", threadPoolExecutor);
             }
         });
     }

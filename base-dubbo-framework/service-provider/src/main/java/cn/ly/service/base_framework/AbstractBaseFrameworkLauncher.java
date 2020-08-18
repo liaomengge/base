@@ -8,7 +8,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractBaseFrameworkLauncher {
 
-    protected static final Logger logger = LyLogger.getInstance(AbstractBaseFrameworkLauncher.class);
+    protected static final Logger log = LyLogger.getInstance(AbstractBaseFrameworkLauncher.class);
     protected static final byte[] lifeCycleLock = new byte[0];
 
 }

@@ -1,13 +1,14 @@
 package cn.ly.base_common.influx;
 
 import cn.ly.base_common.influx.consts.InfluxConst;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDB.ConsistencyLevel;
 import org.influxdb.InfluxDBFactory;
+import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import java.util.Objects;
@@ -16,8 +17,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 2020/7/21.
  */
-@Slf4j
 public class InfluxDBConnection {
+
+    private static final Logger log = LyLogger.getInstance(InfluxDBConnection.class);
 
     @Getter
     private InfluxDB influxDB;

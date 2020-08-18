@@ -24,10 +24,10 @@ public abstract class AbstractDelayDeqWorker extends AbstractDelayWorker impleme
         if (message != null) {
             String subscribeMessage = message.toString();
             if (StringUtils.isBlank(subscribeMessage) || this.containSpecialChar(subscribeMessage)) {
-                logger.warn("发布的消息[" + subscribeMessage + "]不合法!");
+                log.warn("发布的消息[" + subscribeMessage + "]不合法!");
                 return;
             }
-            logger.info("Delay发布的消息 ===> " + subscribeMessage);
+            log.info("Delay发布的消息 ===> " + subscribeMessage);
 
             this.doHandle(subscribeMessage);
         }
@@ -48,7 +48,7 @@ public abstract class AbstractDelayDeqWorker extends AbstractDelayWorker impleme
         long delayExecTimeSecond = delayPojo.getDelayExecTimeSecond();
         long currentTimeSecond = LyDateUtil.getSecondTime();
         if (currentTimeSecond > delayExecTimeSecond) {
-            logger.info("该uid[{}], 理论执行时间[{}], 实际执行时间[{}], 执行超时时间差[{}]s", message, delayExecTimeSecond, currentTimeSecond, (currentTimeSecond - delayExecTimeSecond));
+            log.info("该uid[{}], 理论执行时间[{}], 实际执行时间[{}], 执行超时时间差[{}]s", message, delayExecTimeSecond, currentTimeSecond, (currentTimeSecond - delayExecTimeSecond));
         }
 
         this.process(delayPojo);

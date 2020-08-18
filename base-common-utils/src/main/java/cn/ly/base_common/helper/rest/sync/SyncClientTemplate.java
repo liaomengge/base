@@ -68,11 +68,11 @@ public class SyncClientTemplate extends Template.Sync {
                 LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                        logger.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
+                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
                                         LyJsonUtil.toJson4Log(responseEntity.getBody()));
                     } else {
-                        logger.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
+                        log.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
                                 LyJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
                                         LyJsonUtil.toJson4Log(responseEntity.getBody()));
@@ -113,11 +113,11 @@ public class SyncClientTemplate extends Template.Sync {
                 LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                        logger.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
+                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
                                         LyJsonUtil.toJson4Log(responseEntity.getBody()));
                     } else {
-                        logger.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
+                        log.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
                                 LyJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
                                         LyJsonUtil.toJson4Log(responseEntity.getBody()));
@@ -151,11 +151,11 @@ public class SyncClientTemplate extends Template.Sync {
                 LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                        logger.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
+                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
                                         LyJsonUtil.toJson4Log(responseEntity.getBody()));
                     } else {
-                        logger.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
+                        log.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
                                 LyJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
                                 Objects.isNull(responseEntity) ? null :
                                         LyJsonUtil.toJson4Log(responseEntity.getBody()));
@@ -180,17 +180,17 @@ public class SyncClientTemplate extends Template.Sync {
             BlockException e = (BlockException) LyExceptionUtil.unwrap(t);
             Optional.ofNullable(e).map(BlockException::getRule).map(AbstractRule::getResource).ifPresent(val -> {
                 if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                    logger.error("调用服务失败, 服务地址[{}], 异常原因 ===> [{}]", url, "[" + e + "] Block Exception...");
+                    log.error("调用服务失败, 服务地址[{}], 异常原因 ===> [{}]", url, "[" + e + "] Block Exception...");
                 } else {
-                    logger.error("调用服务失败, 请求参数[{}], 服务地址[{}], 异常原因 ===> [{}]",
+                    log.error("调用服务失败, 请求参数[{}], 服务地址[{}], 异常原因 ===> [{}]",
                             LyJsonUtil.toJson4Log(baseRequest.getData()), url, "[" + e + "] Block Exception...");
                 }
             });
         } else {
             if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                logger.error("调用服务失败, 服务地址[{}], 异常原因 ===> [{}]", url, t.getMessage());
+                log.error("调用服务失败, 服务地址[{}], 异常原因 ===> [{}]", url, t.getMessage());
             } else {
-                logger.error("调用服务失败, 请求参数[{}], 服务地址[{}], 异常原因 ===> [{}]",
+                log.error("调用服务失败, 请求参数[{}], 服务地址[{}], 异常原因 ===> [{}]",
                         LyJsonUtil.toJson4Log(baseRequest.getData()), url, t.getMessage());
             }
         }

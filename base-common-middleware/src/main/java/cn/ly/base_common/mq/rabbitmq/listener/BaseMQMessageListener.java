@@ -49,7 +49,7 @@ public abstract class BaseMQMessageListener<T extends MQMessage> extends Abstrac
             rabbitMQMonitor.monitorCount(MetricsConst.DEQUEUE_COUNT + "." + queueConfig.getExchangeName());
         } catch (Exception e) {
             rabbitMQMonitor.monitorCount(MetricsConst.EXEC_EXCEPTION + "." + queueConfig.getExchangeName());
-            logger.error("Handle Message[" + LyJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
+            log.error("Handle Message[" + LyJsonUtil.toJson4Log(t) + "] Failed ===> ", e);
         } finally {
             endTime = LyJdk8DateUtil.getMilliSecondsTime();
             rabbitMQMonitor.monitorTime(MetricsConst.RECEIVE_2_HANDLE_EXEC_TIME + "." + queueConfig.getExchangeName()

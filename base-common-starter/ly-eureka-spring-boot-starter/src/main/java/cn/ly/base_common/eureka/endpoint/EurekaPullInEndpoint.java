@@ -2,9 +2,10 @@ package cn.ly.base_common.eureka.endpoint;
 
 import cn.ly.base_common.eureka.consts.EurekaConst;
 import cn.ly.base_common.utils.error.LyThrowableUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Maps;
 import com.netflix.appinfo.InstanceInfo;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
@@ -17,9 +18,10 @@ import java.util.Map;
 /**
  * Created by liaomengge on 2020/8/15.
  */
-@Slf4j
 @Endpoint(id = EurekaConst.PULL_IN_ENDPOINT)
 public class EurekaPullInEndpoint implements ApplicationContextAware {
+
+    private static final Logger log = LyLogger.getInstance(EurekaPullInEndpoint.class);
 
     private ApplicationContext applicationContext;
 

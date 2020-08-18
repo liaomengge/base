@@ -1,9 +1,10 @@
 package cn.ly.base_common.xxljob;
 
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.xxl.job.core.executor.XxlJobExecutor;
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -19,12 +20,13 @@ import java.util.Objects;
 /**
  * Created by liaomengge on 2020/8/11.
  */
-@Slf4j
 @Configuration
 @ConditionalOnProperty(prefix = "ly.xxl-job", name = "enabled")
 @ConditionalOnClass(XxlJobSpringExecutor.class)
 @EnableConfigurationProperties(XxlJobProperties.class)
 public class XxlJobAutoConfiguration {
+
+    private static final Logger log = LyLogger.getInstance(XxlJobAutoConfiguration.class);
 
     @Value("${spring.application.name}")
     private String appName;

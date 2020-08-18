@@ -12,7 +12,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
  */
 public class MQConfirmCallback implements RabbitTemplate.ConfirmCallback {
 
-    private static final Logger logger = LyLogger.getInstance(MQConfirmCallback.class);
+    private static final Logger log = LyLogger.getInstance(MQConfirmCallback.class);
 
     private MailHelper mailHelper;
 
@@ -24,7 +24,7 @@ public class MQConfirmCallback implements RabbitTemplate.ConfirmCallback {
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
         //可能存在恶意消息投递攻击
         if (!ack) {
-            logger.error("send message to exchange failed, cause ===> {}", cause);
+            log.error("send message to exchange failed, cause ===> {}", cause);
             mailHelper.sendTextMail(LyNetworkUtil.getHostAddress() + "/" + LyNetworkUtil.getHostName() +
                     "-[RabbitMQ Confirm Callback]失败!", cause);
         }

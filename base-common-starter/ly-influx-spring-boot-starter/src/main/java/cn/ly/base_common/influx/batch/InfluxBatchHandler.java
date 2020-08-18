@@ -3,11 +3,12 @@ package cn.ly.base_common.influx.batch;
 import cn.ly.base_common.influx.InfluxDBConnection;
 import cn.ly.base_common.influx.InfluxDBProperties;
 import cn.ly.base_common.influx.consts.InfluxConst;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import com.google.common.collect.Queues;
-import lombok.extern.slf4j.Slf4j;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
+import org.slf4j.Logger;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
@@ -22,8 +23,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 2020/7/21.
  */
-@Slf4j
 public class InfluxBatchHandler {
+
+    private static final Logger log = LyLogger.getInstance(InfluxBatchHandler.class);
 
     private ExecutorService threadPoolExecutor;
     private LinkedBlockingQueue<Point> linkedBlockingQueue;

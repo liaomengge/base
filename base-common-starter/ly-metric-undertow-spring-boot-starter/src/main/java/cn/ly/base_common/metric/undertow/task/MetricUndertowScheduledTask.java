@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MetricUndertowScheduledTask {
 
-    private static final Logger logger = LyLogger.getInstance(MetricUndertowScheduledTask.class);
+    private static final Logger log = LyLogger.getInstance(MetricUndertowScheduledTask.class);
 
     private static final String METRIC_HTTPCLIENT_PREFIX = "metric-undertow.";
     private static final String JMX_NAME_BASE = "org.xnio:type=Xnio,provider=\"nio\",worker=\"XNIO-1\"";
@@ -69,9 +69,9 @@ public class MetricUndertowScheduledTask {
                     TimeUnit.SECONDS.sleep(metricUndertowProperties.getStatsInterval());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    logger.info("metric undertow interrupt exit...");
+                    log.info("metric undertow interrupt exit...");
                 } catch (Exception e) {
-                    logger.error("metric undertow exception...", e);
+                    log.error("metric undertow exception...", e);
                 }
             }
         }
@@ -105,7 +105,7 @@ public class MetricUndertowScheduledTask {
         sBuilder.append(metricPrefix + "workerQueueSize => [" + poolStatBean.getWorkerQueueSize() + "],");
         sBuilder.append(metricPrefix + "coreWorkerPoolSize => [" + poolStatBean.getCoreWorkerPoolSize() + "],");
         sBuilder.append(metricPrefix + "maxWorkerPoolSize => [" + poolStatBean.getMaxWorkerPoolSize() + "]");
-        logger.info(sBuilder.toString());
+        log.info(sBuilder.toString());
     }
 
     @Data

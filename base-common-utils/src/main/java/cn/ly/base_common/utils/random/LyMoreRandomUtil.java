@@ -14,7 +14,7 @@ import java.util.Map;
 @UtilityClass
 public class LyMoreRandomUtil {
 
-    private Logger logger = LyLogger.getInstance(LyMoreRandomUtil.class);
+    private Logger log = LyLogger.getInstance(LyMoreRandomUtil.class);
 
     private final double PI = 3.14;
 
@@ -60,7 +60,7 @@ public class LyMoreRandomUtil {
             throw new IndexOutOfBoundsException("len[" + len + "]>" + PRIME_NUMBER_MAP.size() + ", over max limit");
         }
         if (num >= maxNumPrime) {
-            logger.warn("num[{}]>={}, over max limit, maybe generator repeated random number", num, maxNumPrime);
+            log.warn("num[{}]>={}, over max limit, maybe generator repeated random number", num, maxNumPrime);
         }
         long seed = Math.round(maxNumPrime / PI);
         return (seed * (num + seed)) % maxNumPrime;

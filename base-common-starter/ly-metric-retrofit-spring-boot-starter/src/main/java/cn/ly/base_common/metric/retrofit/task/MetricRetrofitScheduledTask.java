@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MetricRetrofitScheduledTask {
 
-    private static final Logger logger = LyLogger.getInstance(MetricRetrofitScheduledTask.class);
+    private static final Logger log = LyLogger.getInstance(MetricRetrofitScheduledTask.class);
 
     private static final String METRIC_RETROFIT_PREFIX = "metric-retrofit.";
 
@@ -61,7 +61,7 @@ public class MetricRetrofitScheduledTask {
                                 statsDClient.recordExecutionTime(connectionCountPrefix, connectionCount);
                                 statsDClient.recordExecutionTime(idleConnectionCountPrefix, idleConnectionCount);
                             } else {
-                                logger.info(connectionCountPrefix + " => [" + connectionCount + "], "
+                                log.info(connectionCountPrefix + " => [" + connectionCount + "], "
                                         + idleConnectionCountPrefix + " => [" + idleConnectionCount + "]");
                             }
                         }
@@ -70,9 +70,9 @@ public class MetricRetrofitScheduledTask {
                     TimeUnit.SECONDS.sleep(metricRetrofitProperties.getStatsInterval());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    logger.info("metric retrofit interrupt exit...");
+                    log.info("metric retrofit interrupt exit...");
                 } catch (Exception e) {
-                    logger.error("metric retrofit exception...", e);
+                    log.error("metric retrofit exception...", e);
                 }
             }
         }

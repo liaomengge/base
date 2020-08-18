@@ -56,14 +56,14 @@ public class MQLockInitializer extends AbstractLock implements EnvironmentAware,
         Optional.ofNullable(baseActiveMQReceiverMap).ifPresent(val -> val.forEach((key, value) -> {
             if (isSingleton(key)) {
                 value.start();
-                logger.info("Ip[{}], Singleton ActiveMQ[{}] acquire lock success, start up...",
+                log.info("Ip[{}], Singleton ActiveMQ[{}] acquire lock success, start up...",
                         LyNetworkUtil.getHostAddress(), key);
             }
         }));
         Optional.ofNullable(baseRabbitMQReceiverMap).ifPresent(val -> val.forEach((key, value) -> {
             if (isSingleton(key)) {
                 value.start();
-                logger.info("Ip[{}], Singleton RabbitMQ[{}] acquire lock success, start up...",
+                log.info("Ip[{}], Singleton RabbitMQ[{}] acquire lock success, start up...",
                         LyNetworkUtil.getHostAddress(), key);
             }
         }));
@@ -74,14 +74,14 @@ public class MQLockInitializer extends AbstractLock implements EnvironmentAware,
         Optional.ofNullable(baseActiveMQReceiverMap).ifPresent(val -> val.forEach((key, value) -> {
             if (isSingleton(key)) {
                 value.stop();
-                logger.info("Ip[{}], Singleton ActiveMQ[{}] acquire lock fail, start fail...",
+                log.info("Ip[{}], Singleton ActiveMQ[{}] acquire lock fail, start fail...",
                         LyNetworkUtil.getHostAddress(), key);
             }
         }));
         Optional.ofNullable(baseRabbitMQReceiverMap).ifPresent(val -> val.forEach((key, value) -> {
             if (isSingleton(key)) {
                 value.stop();
-                logger.info("Ip[{}], Singleton RabbitMQ[{}] acquire lock fail, start fail...",
+                log.info("Ip[{}], Singleton RabbitMQ[{}] acquire lock fail, start fail...",
                         LyNetworkUtil.getHostAddress(), key);
             }
         }));
@@ -102,7 +102,7 @@ public class MQLockInitializer extends AbstractLock implements EnvironmentAware,
                     BaseMQReceiver baseMQReceiver = baseRabbitMQReceiverMap.get(val2);
                     Optional.ofNullable(baseMQReceiver).ifPresent(val3 -> {
                         val3.start();
-                        logger.info("Ip[{}], Prototype ActiveMQ[{}], start up...", LyNetworkUtil.getHostAddress(),
+                        log.info("Ip[{}], Prototype ActiveMQ[{}], start up...", LyNetworkUtil.getHostAddress(),
                                 val2);
                     });
                 }));
@@ -115,7 +115,7 @@ public class MQLockInitializer extends AbstractLock implements EnvironmentAware,
                             baseActiveMQReceiverMap.get(val2);
                     Optional.ofNullable(baseMQReceiver).ifPresent(val3 -> {
                         val3.start();
-                        logger.info("Ip[{}], Prototype RabbitMQ[{}], start up...", LyNetworkUtil.getHostAddress()
+                        log.info("Ip[{}], Prototype RabbitMQ[{}], start up...", LyNetworkUtil.getHostAddress()
                                 , val2);
                     });
                 }));
@@ -124,7 +124,7 @@ public class MQLockInitializer extends AbstractLock implements EnvironmentAware,
             Optional.ofNullable(mailHelper).ifPresent(val -> val.sendTextMail(applicationName,
                     applicationName + " mq start up..."));
         } catch (Exception e) {
-            logger.error(applicationName + " mq start exception", e);
+            log.error(applicationName + " mq start exception", e);
         }
     }
 

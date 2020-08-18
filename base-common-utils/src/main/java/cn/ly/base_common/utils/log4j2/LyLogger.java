@@ -13,11 +13,11 @@ import java.util.IllegalFormatException;
 
 
 /**
- * Created by liaomengge on 8/11/17.
+ * Created by liaomengge on 17/11/17.
  */
 public class LyLogger implements Logger {
 
-    private final Logger logger;
+    private final Logger log;
 
     private final static String WRAPPER = "";
 
@@ -25,7 +25,7 @@ public class LyLogger implements Logger {
 
     public LyLogger(Class clazz) {
         this.clazz = clazz;
-        logger = LoggerFactory.getLogger(clazz);
+        log = LoggerFactory.getLogger(clazz);
     }
 
     public static LyLogger getInstance(Class clazz) {
@@ -44,27 +44,27 @@ public class LyLogger implements Logger {
 
     @Override
     public void trace(String format) {
-        logger.trace(WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
+        log.trace(WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
     }
 
     @Override
     public void trace(String format, Object arg) {
-        logger.trace(WRAPPER + replaceFormat(format, arg) + WRAPPER);
+        log.trace(WRAPPER + replaceFormat(format, arg) + WRAPPER);
     }
 
     @Override
     public void trace(String format, Object arg1, Object arg2) {
-        logger.trace(WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
+        log.trace(WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
     }
 
     @Override
     public void trace(String format, Object... arguments) {
-        logger.trace(WRAPPER + replaceFormat(format, arguments) + WRAPPER);
+        log.trace(WRAPPER + replaceFormat(format, arguments) + WRAPPER);
     }
 
     @Override
     public void trace(String format, Throwable t) {
-        logger.trace(WRAPPER + addTraceAndEscapeJson(format) + " " +
+        log.trace(WRAPPER + addTraceAndEscapeJson(format) + " " +
                 LyEscapeJsonUtil.escapeJson(LyThrowableUtil.getStackTrace(t, true)) + WRAPPER);
     }
 
@@ -75,27 +75,27 @@ public class LyLogger implements Logger {
 
     @Override
     public void trace(Marker marker, String format) {
-        logger.trace(marker, WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
+        log.trace(marker, WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
     }
 
     @Override
     public void trace(Marker marker, String format, Object arg) {
-        logger.trace(marker, WRAPPER + replaceFormat(format, arg) + WRAPPER);
+        log.trace(marker, WRAPPER + replaceFormat(format, arg) + WRAPPER);
     }
 
     @Override
     public void trace(Marker marker, String format, Object arg1, Object arg2) {
-        logger.trace(marker, WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
+        log.trace(marker, WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
     }
 
     @Override
     public void trace(Marker marker, String format, Object... arguments) {
-        logger.trace(marker, WRAPPER + replaceFormat(format, arguments) + WRAPPER);
+        log.trace(marker, WRAPPER + replaceFormat(format, arguments) + WRAPPER);
     }
 
     @Override
     public void trace(Marker marker, String format, Throwable t) {
-        logger.trace(marker, WRAPPER + addTraceAndEscapeJson(format) + " " +
+        log.trace(marker, WRAPPER + addTraceAndEscapeJson(format) + " " +
                 LyEscapeJsonUtil.escapeJson(LyThrowableUtil.getStackTrace(t, true)) + WRAPPER);
     }
 
@@ -106,27 +106,27 @@ public class LyLogger implements Logger {
 
     @Override
     public void debug(String format) {
-        logger.debug(WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
+        log.debug(WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
     }
 
     @Override
     public void debug(String format, Object arg) {
-        logger.debug(WRAPPER + replaceFormat(format, arg) + WRAPPER);
+        log.debug(WRAPPER + replaceFormat(format, arg) + WRAPPER);
     }
 
     @Override
     public void debug(String format, Object arg1, Object arg2) {
-        logger.debug(WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
+        log.debug(WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
     }
 
     @Override
     public void debug(String format, Object... arguments) {
-        logger.debug(WRAPPER + replaceFormat(format, arguments) + WRAPPER);
+        log.debug(WRAPPER + replaceFormat(format, arguments) + WRAPPER);
     }
 
     @Override
     public void debug(String format, Throwable t) {
-        logger.debug(WRAPPER + addTraceAndEscapeJson(format) + " " +
+        log.debug(WRAPPER + addTraceAndEscapeJson(format) + " " +
                 LyEscapeJsonUtil.escapeJson(LyThrowableUtil.getStackTrace(t, true)) + WRAPPER);
     }
 
@@ -136,32 +136,32 @@ public class LyLogger implements Logger {
     }
 
     public void debug(LyLogData logData) {
-        logger.debug(formatLogData(logData));
+        log.debug(formatLogData(logData));
     }
 
     @Override
     public void debug(Marker marker, String format) {
-        logger.debug(marker, WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
+        log.debug(marker, WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
     }
 
     @Override
     public void debug(Marker marker, String format, Object arg) {
-        logger.debug(marker, WRAPPER + replaceFormat(format, arg) + WRAPPER);
+        log.debug(marker, WRAPPER + replaceFormat(format, arg) + WRAPPER);
     }
 
     @Override
     public void debug(Marker marker, String format, Object arg1, Object arg2) {
-        logger.debug(marker, WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
+        log.debug(marker, WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
     }
 
     @Override
     public void debug(Marker marker, String format, Object... arguments) {
-        logger.debug(marker, WRAPPER + replaceFormat(format, arguments) + WRAPPER);
+        log.debug(marker, WRAPPER + replaceFormat(format, arguments) + WRAPPER);
     }
 
     @Override
     public void debug(Marker marker, String format, Throwable t) {
-        logger.debug(marker, WRAPPER + addTraceAndEscapeJson(format) + " " +
+        log.debug(marker, WRAPPER + addTraceAndEscapeJson(format) + " " +
                 LyEscapeJsonUtil.escapeJson(LyThrowableUtil.getStackTrace(t, true)) + WRAPPER);
     }
 
@@ -172,27 +172,27 @@ public class LyLogger implements Logger {
 
     @Override
     public void info(String format) {
-        logger.info(WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
+        log.info(WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
     }
 
     @Override
     public void info(String format, Object arg) {
-        logger.info(WRAPPER + replaceFormat(format, arg) + WRAPPER);
+        log.info(WRAPPER + replaceFormat(format, arg) + WRAPPER);
     }
 
     @Override
     public void info(String format, Object arg1, Object arg2) {
-        logger.info(WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
+        log.info(WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
     }
 
     @Override
     public void info(String format, Object... arguments) {
-        logger.info(WRAPPER + replaceFormat(format, arguments) + WRAPPER);
+        log.info(WRAPPER + replaceFormat(format, arguments) + WRAPPER);
     }
 
     @Override
     public void info(String format, Throwable t) {
-        logger.info(WRAPPER + addTraceAndEscapeJson(format) + " " +
+        log.info(WRAPPER + addTraceAndEscapeJson(format) + " " +
                 LyEscapeJsonUtil.escapeJson(LyThrowableUtil.getStackTrace(t, true)) + WRAPPER);
     }
 
@@ -202,32 +202,32 @@ public class LyLogger implements Logger {
     }
 
     public void info(LyLogData logData) {
-        logger.info(formatLogData(logData));
+        log.info(formatLogData(logData));
     }
 
     @Override
     public void info(Marker marker, String format) {
-        logger.info(marker, WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
+        log.info(marker, WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
     }
 
     @Override
     public void info(Marker marker, String format, Object arg) {
-        logger.info(marker, WRAPPER + replaceFormat(format, arg) + WRAPPER);
+        log.info(marker, WRAPPER + replaceFormat(format, arg) + WRAPPER);
     }
 
     @Override
     public void info(Marker marker, String format, Object arg1, Object arg2) {
-        logger.info(marker, WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
+        log.info(marker, WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
     }
 
     @Override
     public void info(Marker marker, String format, Object... arguments) {
-        logger.info(marker, WRAPPER + replaceFormat(format, arguments) + WRAPPER);
+        log.info(marker, WRAPPER + replaceFormat(format, arguments) + WRAPPER);
     }
 
     @Override
     public void info(Marker marker, String format, Throwable t) {
-        logger.info(marker, WRAPPER + addTraceAndEscapeJson(format) + " " +
+        log.info(marker, WRAPPER + addTraceAndEscapeJson(format) + " " +
                 LyEscapeJsonUtil.escapeJson(LyThrowableUtil.getStackTrace(t, true)) + WRAPPER);
     }
 
@@ -238,27 +238,27 @@ public class LyLogger implements Logger {
 
     @Override
     public void warn(String format) {
-        logger.warn(WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
+        log.warn(WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
     }
 
     @Override
     public void warn(String format, Object arg) {
-        logger.warn(WRAPPER + replaceFormat(format, arg) + WRAPPER);
+        log.warn(WRAPPER + replaceFormat(format, arg) + WRAPPER);
     }
 
     @Override
     public void warn(String format, Object... arguments) {
-        logger.warn(WRAPPER + replaceFormat(format, arguments) + WRAPPER);
+        log.warn(WRAPPER + replaceFormat(format, arguments) + WRAPPER);
     }
 
     @Override
     public void warn(String format, Object arg1, Object arg2) {
-        logger.warn(WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
+        log.warn(WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
     }
 
     @Override
     public void warn(String format, Throwable t) {
-        logger.warn(WRAPPER + addTraceAndEscapeJson(format) + " " +
+        log.warn(WRAPPER + addTraceAndEscapeJson(format) + " " +
                 LyEscapeJsonUtil.escapeJson(LyThrowableUtil.getStackTrace(t, true)) + WRAPPER);
     }
 
@@ -268,32 +268,32 @@ public class LyLogger implements Logger {
     }
 
     public void warn(LyLogData logData) {
-        logger.warn(formatLogData(logData));
+        log.warn(formatLogData(logData));
     }
 
     @Override
     public void warn(Marker marker, String format) {
-        logger.warn(marker, WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
+        log.warn(marker, WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
     }
 
     @Override
     public void warn(Marker marker, String format, Object arg) {
-        logger.warn(marker, WRAPPER + replaceFormat(format, arg) + WRAPPER);
+        log.warn(marker, WRAPPER + replaceFormat(format, arg) + WRAPPER);
     }
 
     @Override
     public void warn(Marker marker, String format, Object arg1, Object arg2) {
-        logger.warn(marker, WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
+        log.warn(marker, WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
     }
 
     @Override
     public void warn(Marker marker, String format, Object... arguments) {
-        logger.warn(marker, WRAPPER + replaceFormat(format, arguments) + WRAPPER);
+        log.warn(marker, WRAPPER + replaceFormat(format, arguments) + WRAPPER);
     }
 
     @Override
     public void warn(Marker marker, String format, Throwable t) {
-        logger.warn(marker, WRAPPER + addTraceAndEscapeJson(format) + " " +
+        log.warn(marker, WRAPPER + addTraceAndEscapeJson(format) + " " +
                 LyEscapeJsonUtil.escapeJson(LyThrowableUtil.getStackTrace(t, true)) + WRAPPER);
     }
 
@@ -304,27 +304,27 @@ public class LyLogger implements Logger {
 
     @Override
     public void error(String format) {
-        logger.error(WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
+        log.error(WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
     }
 
     @Override
     public void error(String format, Object arg) {
-        logger.error(WRAPPER + replaceFormat(format, arg) + WRAPPER);
+        log.error(WRAPPER + replaceFormat(format, arg) + WRAPPER);
     }
 
     @Override
     public void error(String format, Object arg1, Object arg2) {
-        logger.error(WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
+        log.error(WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
     }
 
     @Override
     public void error(String format, Object... arguments) {
-        logger.error(WRAPPER + replaceFormat(format, arguments) + WRAPPER);
+        log.error(WRAPPER + replaceFormat(format, arguments) + WRAPPER);
     }
 
     @Override
     public void error(String format, Throwable t) {
-        logger.error(WRAPPER + addTraceAndEscapeJson(format) + " " +
+        log.error(WRAPPER + addTraceAndEscapeJson(format) + " " +
                 LyEscapeJsonUtil.escapeJson(LyThrowableUtil.getStackTrace(t, true)) + WRAPPER);
     }
 
@@ -334,32 +334,32 @@ public class LyLogger implements Logger {
     }
 
     public void error(LyLogData logData) {
-        logger.error(formatLogData(logData));
+        log.error(formatLogData(logData));
     }
 
     @Override
     public void error(Marker marker, String format) {
-        logger.error(marker, WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
+        log.error(marker, WRAPPER + addTraceAndEscapeJson(format) + WRAPPER);
     }
 
     @Override
     public void error(Marker marker, String format, Object arg) {
-        logger.error(marker, WRAPPER + replaceFormat(format, arg) + WRAPPER);
+        log.error(marker, WRAPPER + replaceFormat(format, arg) + WRAPPER);
     }
 
     @Override
     public void error(Marker marker, String format, Object arg1, Object arg2) {
-        logger.error(marker, WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
+        log.error(marker, WRAPPER + replaceFormat(format, arg1, arg2) + WRAPPER);
     }
 
     @Override
     public void error(Marker marker, String format, Object... arguments) {
-        logger.error(marker, WRAPPER + replaceFormat(format, arguments) + WRAPPER);
+        log.error(marker, WRAPPER + replaceFormat(format, arguments) + WRAPPER);
     }
 
     @Override
     public void error(Marker marker, String format, Throwable t) {
-        logger.error(marker, WRAPPER + addTraceAndEscapeJson(format) + " " +
+        log.error(marker, WRAPPER + addTraceAndEscapeJson(format) + " " +
                 LyEscapeJsonUtil.escapeJson(LyThrowableUtil.getStackTrace(t, true)) + WRAPPER);
     }
 

@@ -1,13 +1,14 @@
 package cn.ly.base_common.influx.aspect;
 
 import cn.ly.base_common.influx.helper.InfluxHelper;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,10 +16,11 @@ import java.util.Map;
 /**
  * Created by liaomengge on 2020/7/21.
  */
-@Slf4j
 @Aspect
 @AllArgsConstructor
 public class InfluxElapsedTimeAspect {
+
+    private static final Logger log = LyLogger.getInstance(InfluxElapsedTimeAspect.class);
 
     private final InfluxHelper influxHelper;
 

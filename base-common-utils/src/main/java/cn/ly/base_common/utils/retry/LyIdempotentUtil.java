@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 @UtilityClass
 public class LyIdempotentUtil {
 
-    private final Logger logger = LyLogger.getInstance(LyIdempotentUtil.class);
+    private final Logger log = LyLogger.getInstance(LyIdempotentUtil.class);
 
     private final int RETRY_NUM = 3;
 
@@ -25,14 +25,14 @@ public class LyIdempotentUtil {
                 }
             } catch (Exception e) {
                 count++;
-                logger.info("重试次数: {}", count);
+                log.info("重试次数: {}", count);
                 helper.doException(e);
                 continue;
             }
         }
 
         if (reTry < 0) {
-            logger.error("重试" + RETRY_NUM + "次,仍执行失败");
+            log.error("重试" + RETRY_NUM + "次,仍执行失败");
             helper.doRetryOver();
         }
     }

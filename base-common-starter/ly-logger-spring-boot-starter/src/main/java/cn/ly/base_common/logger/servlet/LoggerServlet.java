@@ -1,6 +1,6 @@
-package cn.ly.base_common.logger.servlet;
+package cn.ly.base_common.log.servlet;
 
-import cn.ly.base_common.logger.LoggerProperties;
+import cn.ly.base_common.log.LoggerProperties;
 import cn.ly.base_common.utils.web.LyWebUtil;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

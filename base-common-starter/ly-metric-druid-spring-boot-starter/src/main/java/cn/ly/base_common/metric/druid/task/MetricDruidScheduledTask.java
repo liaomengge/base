@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MetricDruidScheduledTask {
 
-    private static final Logger logger = LyLogger.getInstance(MetricDruidScheduledTask.class);
+    private static final Logger log = LyLogger.getInstance(MetricDruidScheduledTask.class);
 
     private static final String METRIC_DRUID_PREFIX = "metric-druid.";
 
@@ -89,14 +89,14 @@ public class MetricDruidScheduledTask {
                             }
                         }));
                     } catch (Exception e) {
-                        logger.error("druid stats exception", e);
+                        log.error("druid stats exception", e);
                     }
                     TimeUnit.SECONDS.sleep(metricDruidProperties.getStatsInterval());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    logger.info("metric druid interrupt exit...");
+                    log.info("metric druid interrupt exit...");
                 } catch (Exception e) {
-                    logger.error("metric druid exception...", e);
+                    log.error("metric druid exception...", e);
                 }
             }
         }

@@ -28,7 +28,7 @@
 //@Data
 //public class MetricScheduledTask {
 //
-//    private static final Logger logger = LyLogger.getInstance(MetricScheduledTask.class);
+//    private static final Logger log = LyLogger.getInstance(MetricScheduledTask.class);
 //
 //    private static final String METRIC_PREFIX = "metric.";
 //
@@ -116,7 +116,7 @@
 //    private void registerShutdownHook(ScheduledThreadPoolExecutor poolExecutor) {
 //        LyShutdownUtil.registerShutdownHook(() -> {
 //            try {
-//                logger.info("Metric Scheduled Thread Pool Exist...");
+//                log.info("Metric Scheduled Thread Pool Exist...");
 //            } finally {
 //                if (poolExecutor != null) {
 //                    poolExecutor.shutdown();

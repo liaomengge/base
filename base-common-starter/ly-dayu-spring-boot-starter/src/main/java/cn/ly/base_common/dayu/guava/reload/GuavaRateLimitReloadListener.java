@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  */
 public class GuavaRateLimitReloadListener implements EnvironmentAware, ApplicationListener<EnvironmentChangeEvent> {
 
-    private static final Logger logger = LyLogger.getInstance(GuavaRateLimitReloadListener.class);
+    private static final Logger log = LyLogger.getInstance(GuavaRateLimitReloadListener.class);
 
     private Environment environment;
 
@@ -55,7 +55,7 @@ public class GuavaRateLimitReloadListener implements EnvironmentAware, Applicati
                 flowRuleList = LyJsonUtil.fromJson(flowRules, new TypeReference<List<FlowRule>>() {
                 });
             } catch (Exception e) {
-                logger.warn("[Guava RateLimit], [flow] rule parse exception", e);
+                log.warn("[Guava RateLimit], [flow] rule parse exception", e);
             }
             if (CollectionUtils.isNotEmpty(flowRuleList)) {
                 flowRuleList = flowRuleList.stream()
@@ -67,7 +67,7 @@ public class GuavaRateLimitReloadListener implements EnvironmentAware, Applicati
                     rateLimiterMap.clear();
                     flowRuleList.stream().forEach(flowRule -> rateLimiterMap.put(flowRule.getResource(),
                             RateLimiter.create(flowRule.getCount())));
-                    logger.info("[Guava RateLimit], [flow] rule config be updated to: " + flowRuleList.toString());
+                    log.info("[Guava RateLimit], [flow] rule config be updated to: " + flowRuleList.toString());
                 }
             }
         }

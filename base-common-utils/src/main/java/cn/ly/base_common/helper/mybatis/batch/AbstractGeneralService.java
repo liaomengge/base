@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public abstract class AbstractGeneralService {
 
-    protected final Logger logger = LyLogger.getInstance(AbstractGeneralService.class);
+    protected final Logger log = LyLogger.getInstance(AbstractGeneralService.class);
 
     protected final int segmentNumber = 500;
 
@@ -45,7 +45,7 @@ public abstract class AbstractGeneralService {
                 }
             }
         } catch (Exception e) {
-            logger.error("batch insert failed", e);
+            log.error("batch insert failed", e);
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
@@ -78,7 +78,7 @@ public abstract class AbstractGeneralService {
                 }
             }
         } catch (Exception e) {
-            logger.error("batch insert failed", e);
+            log.error("batch insert failed", e);
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
@@ -114,7 +114,7 @@ public abstract class AbstractGeneralService {
                 }
             }
         } catch (Exception e) {
-            logger.error("batch update failed", e);
+            log.error("batch update failed", e);
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
@@ -148,7 +148,7 @@ public abstract class AbstractGeneralService {
                 }
             }
         } catch (Exception e) {
-            logger.error("batch update failed", e);
+            log.error("batch update failed", e);
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
@@ -184,7 +184,7 @@ public abstract class AbstractGeneralService {
                 }
             }
         } catch (Exception e) {
-            logger.error("batch update failed", e);
+            log.error("batch update failed", e);
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
@@ -217,7 +217,7 @@ public abstract class AbstractGeneralService {
                 }
             }
         } catch (Exception e) {
-            logger.error("batch update failed", e);
+            log.error("batch update failed", e);
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
@@ -236,7 +236,7 @@ public abstract class AbstractGeneralService {
             sqlSession = sqlSessionFactory.openSession();
             sqlSession.select(statement, parameter, handler);
         } catch (Exception e) {
-            logger.error("query for map failed", e);
+            log.error("query for map failed", e);
         } finally {
             if (sqlSession != null) {
                 sqlSession.close();

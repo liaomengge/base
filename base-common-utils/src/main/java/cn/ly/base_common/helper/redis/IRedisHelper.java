@@ -15,7 +15,7 @@ import java.util.Set;
  */
 public interface IRedisHelper {
 
-    Logger logger = LyLogger.getInstance(IRedisHelper.class);
+    Logger log = LyLogger.getInstance(IRedisHelper.class);
 
     String LOCK_PREFIX = "lock:";
     String SET_IF_NOT_EXIST = "NX";

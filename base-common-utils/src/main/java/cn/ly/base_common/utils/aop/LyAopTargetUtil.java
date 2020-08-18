@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 @UtilityClass
 public class LyAopTargetUtil {
 
-    private final Logger logger = LyLogger.getInstance(LyAopTargetUtil.class);
+    private final Logger log = LyLogger.getInstance(LyAopTargetUtil.class);
 
     /**
      * 通过cglib获取代理对象(必须开启exposeProxy=true)
@@ -36,7 +36,7 @@ public class LyAopTargetUtil {
                 return (T) proxy;
             }
         } catch (IllegalStateException e) {
-            logger.warn("exposeProxy必须配置true", e);
+            log.warn("exposeProxy必须配置true", e);
         }
         return target;
     }

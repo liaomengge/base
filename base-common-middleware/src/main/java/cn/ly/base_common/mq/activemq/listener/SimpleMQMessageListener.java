@@ -24,7 +24,7 @@ public abstract class SimpleMQMessageListener<T extends MQMessage> extends BaseM
             message.acknowledge();
         } catch (JMSException e) {
             activeMQMonitor.monitorCount(MetricsConst.EXEC_ACK_EXCEPTION + "." + this.queueConfig.getBaseQueueName());
-            logger.error("Enq Message[" + message.toString() + "], Ack Exception ===> ", e);
+            log.error("Enq Message[" + message.toString() + "], Ack Exception ===> ", e);
         }
 
         super.onMessage(message);

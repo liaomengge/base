@@ -28,7 +28,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SentinelHttpRequestInterceptor implements ClientHttpRequestInterceptor {
 
-    private static final Logger logger = LyLogger.getInstance(SentinelHttpRequestInterceptor.class);
+    private static final Logger log = LyLogger.getInstance(SentinelHttpRequestInterceptor.class);
 
     private StatsDClient statsDClient;
 
@@ -47,7 +47,7 @@ public class SentinelHttpRequestInterceptor implements ClientHttpRequestIntercep
             response = execution.execute(request, body);
         } catch (BlockException e) {
             if (StringUtils.isNotBlank(hostWithPathResource)) {
-                logger.warn("Resource[{}], RestTemplate Block Exception...", hostWithPathResource);
+                log.warn("Resource[{}], RestTemplate Block Exception...", hostWithPathResource);
                 String methodSuffix = LyMoreUrlUtil.getUrlSuffix(hostWithPathResource);
                 Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(methodSuffix + RestMetricsConst.REQ_EXE_BLOCKED));
             }

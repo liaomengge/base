@@ -20,7 +20,7 @@ import java.sql.SQLException;
  */
 public class LyApplicationContextUtil {
 
-    private static final Logger logger = LyLogger.getInstance(LyApplicationContextUtil.class);
+    private static final Logger log = LyLogger.getInstance(LyApplicationContextUtil.class);
 
     private static ConfigurableApplicationContext context = null;
     private volatile static LyApplicationContextUtil instance = null;
@@ -106,16 +106,16 @@ public class LyApplicationContextUtil {
         //加载log4j2.xml
         File configFile = new File(log4j2ConfigFile);
         if (!configFile.exists()) {
-            logger.error("log4j2 config file:" + configFile.getAbsolutePath() + " not exist");
+            log.error("log4j2 config file:" + configFile.getAbsolutePath() + " not exist");
             return;
         }
-        logger.info("log4j2 config file:" + configFile.getAbsolutePath());
+        log.info("log4j2 config file:" + configFile.getAbsolutePath());
 
         try {
             //注:这一句必须放在整个应用第一次LoggerFactory.getLogger(XXX.class)前执行
             System.setProperty("log4j.configurationFile", configFile.getAbsolutePath());
         } catch (Exception e) {
-            logger.error("log4j2 initialize error:" + e.getLocalizedMessage());
+            log.error("log4j2 initialize error:" + e.getLocalizedMessage());
             return;
         }
 
@@ -123,7 +123,7 @@ public class LyApplicationContextUtil {
         configFile = new File(springConfigFile);
 
         if (!configFile.exists()) {
-            logger.error("spring config file:" + configFile.getAbsolutePath() + " not exist");
+            log.error("spring config file:" + configFile.getAbsolutePath() + " not exist");
             return;
         }
 

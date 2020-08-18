@@ -21,7 +21,7 @@ import java.util.List;
 @UtilityClass
 public class LyZipUtil {
 
-    private Logger logger = LyLogger.getInstance(LyZipUtil.class);
+    private Logger log = LyLogger.getInstance(LyZipUtil.class);
 
     /**
      * 将文件压缩为 Zip 格式
@@ -50,7 +50,7 @@ public class LyZipUtil {
         ZipArchiveOutputStream zaos = new ZipArchiveOutputStream(zipFile);
         // Use Zip64 extensions for all entries where they are required
         zaos.setUseZip64(Zip64Mode.AsNeeded);
-        logger.debug("Attempting to create " + targetPath + ".......");
+        log.debug("Attempting to create " + targetPath + ".......");
         // 遍历 File List
         for (int i = 0; i < filesToArchive.size(); i++) {
             File file = filesToArchive.get(i);
@@ -76,7 +76,7 @@ public class LyZipUtil {
         }
         zaos.finish();
         zaos.close();
-        logger.debug("Archive " + targetPath + " created successfully.......");
+        log.debug("Archive " + targetPath + " created successfully.......");
 
     }
 

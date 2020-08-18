@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ContextShutdown implements ApplicationListener<ContextClosedEvent>, ApplicationContextAware {
 
-    private static final Logger logger = LyLogger.getInstance(ContextShutdown.class);
+    private static final Logger log = LyLogger.getInstance(ContextShutdown.class);
 
     private ApplicationContext applicationContext;
     private GracefulProperties gracefulProperties;
@@ -38,7 +38,7 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
 
     @Override
     public void onApplicationEvent(ContextClosedEvent event) {
-        logger.info("context close start...");
+        log.info("context close start...");
         Map<String, ThreadPoolTaskExecutor> taskExecutorMap =
                 applicationContext.getBeansOfType(ThreadPoolTaskExecutor.class);
         if (MapUtils.isNotEmpty(taskExecutorMap)) {
@@ -67,11 +67,11 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
                 }
             });
         }
-        logger.info("context close end...");
+        log.info("context close end...");
     }
 
     private void shutdown(String threadName, ThreadPoolTaskExecutor taskExecutor) {
-        logger.info("thread pool task executor[{}] shutdown start...", threadName);
+        log.info("thread pool task executor[{}] shutdown start...", threadName);
         try {
             for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
                 try {
@@ -82,17 +82,17 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-                logger.info("thread pool task executor[{}], {} thread(s) active, {} seconds remaining",
+                log.info("thread pool task executor[{}], {} thread(s) active, {} seconds remaining",
                         threadName, taskExecutor.getThreadPoolExecutor().getActiveCount(), remaining);
             }
         } catch (Exception e) {
-            logger.info("thread pool task executor[" + threadName + "] shutdown exception", e);
+            log.info("thread pool task executor[" + threadName + "] shutdown exception", e);
         }
-        logger.info("thread pool task executor[{}] shutdown end...", threadName);
+        log.info("thread pool task executor[{}] shutdown end...", threadName);
     }
 
     private void shutdown(String threadName, ThreadPoolTaskScheduler taskScheduler) {
-        logger.info("thread pool task scheduler[{}] shutdown start...", threadName);
+        log.info("thread pool task scheduler[{}] shutdown start...", threadName);
         try {
             for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
                 try {
@@ -104,17 +104,17 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-                logger.info("thread pool task scheduler[{}], {} thread(s) active, {} seconds remaining",
+                log.info("thread pool task scheduler[{}], {} thread(s) active, {} seconds remaining",
                         threadName, taskScheduler.getScheduledThreadPoolExecutor().getActiveCount(), remaining);
             }
         } catch (Exception e) {
-            logger.info("thread pool task scheduler[" + threadName + "] shutdown exception", e);
+            log.info("thread pool task scheduler[" + threadName + "] shutdown exception", e);
         }
-        logger.info("thread pool task scheduler[{}] shutdown end...", threadName);
+        log.info("thread pool task scheduler[{}] shutdown end...", threadName);
     }
 
     private void shutdown(String threadName, ThreadPoolExecutor executor) {
-        logger.info("thread pool executor[{}] shutdown start...", threadName);
+        log.info("thread pool executor[{}] shutdown start...", threadName);
         try {
             for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
                 try {
@@ -125,12 +125,12 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-                logger.info("thread pool task scheduler[{}], {} thread(s) active, {} seconds remaining",
+                log.info("thread pool task scheduler[{}], {} thread(s) active, {} seconds remaining",
                         threadName, executor.getActiveCount(), remaining);
             }
         } catch (Exception e) {
-            logger.info("thread pool executor[" + threadName + "] shutdown exception", e);
+            log.info("thread pool executor[" + threadName + "] shutdown exception", e);
         }
-        logger.info("thread pool executor[{}] shutdown end...", threadName);
+        log.info("thread pool executor[{}] shutdown end...", threadName);
     }
 }

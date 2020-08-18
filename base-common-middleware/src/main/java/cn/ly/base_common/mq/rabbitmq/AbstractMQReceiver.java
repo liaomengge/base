@@ -14,7 +14,7 @@ import java.util.concurrent.Executor;
  */
 public abstract class AbstractMQReceiver implements DisposableBean {
 
-    protected static final Logger logger = LyLogger.getInstance(AbstractMQReceiver.class);
+    protected static final Logger log = LyLogger.getInstance(AbstractMQReceiver.class);
 
     public abstract void start();
 
@@ -32,7 +32,7 @@ public abstract class AbstractMQReceiver implements DisposableBean {
     protected void registerShutdownHook(AbstractMessageListenerContainer listenerContainer) {
         LyShutdownUtil.registerShutdownHook(() -> {
             try {
-                logger.info("RabbitMQ Listener Exist...");
+                log.info("RabbitMQ Listener Exist...");
             } finally {
                 if (listenerContainer != null) {
                     listenerContainer.shutdown();

@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @UtilityClass
 public class LyFileUtil {
 
-    private Logger logger = LyLogger.getInstance(LyFileUtil.class);
+    private Logger log = LyLogger.getInstance(LyFileUtil.class);
 
     /**
      * 判断文件是否存在
@@ -90,7 +90,7 @@ public class LyFileUtil {
             p.load(LyFileUtil.class.getResourceAsStream(fileName));
             return p;
         } catch (Exception e) {
-            logger.error("Load " + fileName + " Properties Fail", e);
+            log.error("Load " + fileName + " Properties Fail", e);
         }
         return null;
     }
@@ -233,12 +233,12 @@ public class LyFileUtil {
     public void delete(List<File> files) {
         for (int i = files.size() - 1; i >= 0; i--) {
             File f = files.get(i);
-            logger.debug("准备删除文件：" + f.getAbsolutePath());
+            log.debug("准备删除文件：" + f.getAbsolutePath());
             if (f.exists()) {
                 if (f.delete()) {
-                    logger.debug("文件：" + f.getAbsolutePath() + " 删除成功！");
+                    log.debug("文件：" + f.getAbsolutePath() + " 删除成功！");
                 } else {
-                    logger.debug("文件：" + f.getAbsolutePath() + " 删除失败！");
+                    log.debug("文件：" + f.getAbsolutePath() + " 删除失败！");
                 }
             }
         }
@@ -565,7 +565,7 @@ public class LyFileUtil {
                 os = new FileOutputStream(partFileName);
                 os.write(b, 0, s);
             } catch (IOException e) {
-                logger.error("Split File Fail", e);
+                log.error("Split File Fail", e);
             } finally {
                 LyIOUtil.closeQuietly(os);
             }
@@ -601,7 +601,7 @@ public class LyFileUtil {
                 rFile.write(b);
                 rFile.close();
             } catch (IOException e) {
-                logger.error("Merge File Fail", e);
+                log.error("Merge File Fail", e);
             }
         }
     }

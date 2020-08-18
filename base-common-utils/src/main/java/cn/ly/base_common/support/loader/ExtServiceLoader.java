@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class ExtServiceLoader {
 
-    private static final Logger logger = LyLogger.getInstance(ExtensionLoader.class);
+    private static final Logger log = LyLogger.getInstance(ExtensionLoader.class);
 
     private static final String PREFIX_DEFAULT = "META-INF/";
     private static final String PREFIX_SERVICES = PREFIX_DEFAULT + "services/";
@@ -97,7 +97,7 @@ public class ExtServiceLoader {
                 this.checkExtensionType(clz);
                 classMap.putIfAbsent(className, clz);
             } catch (Exception e) {
-                logger.error(serviceType.getName() + ": Error load extension class", e);
+                log.error(serviceType.getName() + ": Error load extension class", e);
             }
         }
 
@@ -143,7 +143,7 @@ public class ExtServiceLoader {
                 this.parseLine(serviceType, url, line, classNames);
             }
         } catch (Exception e) {
-            logger.error(serviceType.getName() + ": Error reading spi configuration file", e);
+            log.error(serviceType.getName() + ": Error reading spi configuration file", e);
         } finally {
             try {
                 if (reader != null) {
@@ -153,7 +153,7 @@ public class ExtServiceLoader {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                logger.error(serviceType.getName() + ": Error closing spi configuration file", e);
+                log.error(serviceType.getName() + ": Error closing spi configuration file", e);
             }
         }
     }

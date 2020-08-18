@@ -47,7 +47,7 @@ public class SimpleMQSender extends BaseMQSender {
     @Override
     protected void initBinding() {
         if (StringUtils.isBlank(this.queueConfig.getExchangeName()) || ArrayUtils.isEmpty(this.queueConfig.buildQueueNames())) {
-            logger.error("目标队列为空/交换机为空/队列数为空, 无法初始化绑定, 请检查配置！");
+            log.error("目标队列为空/交换机为空/队列数为空, 无法初始化绑定, 请检查配置！");
             return;
         }
         DirectExchange directExchange = new DirectExchange(this.queueConfig.getExchangeName(), true, false);
