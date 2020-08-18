@@ -20,23 +20,18 @@ public class BaseRestResponse<T> implements Serializable {
     /**
      * 业务返回码 000000表示成功
      */
-    private String errNo;
+    private String code;
 
     /**
      * 业务返回约定的文案
      */
-    private String errMsg;
-
-    /**
-     * 业务方返回的异常链详情
-     */
-    private String errException;
+    private String msg;
 
     private T data;
 
     public BaseRestResponse() {
-        errNo = SystemResultCode.SUCCESS.getCode();
-        errMsg = SystemResultCode.SUCCESS.getDescription();
+        code = SystemResultCode.SUCCESS.getCode();
+        msg = SystemResultCode.SUCCESS.getMsg();
     }
 
     public BaseRestResponse(T data) {
@@ -44,32 +39,22 @@ public class BaseRestResponse<T> implements Serializable {
         this.data = data;
     }
 
-    public BaseRestResponse(String errNo, String errMsg) {
-        this.errNo = errNo;
-        this.errMsg = errMsg;
+    public BaseRestResponse(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 
-    public BaseRestResponse(String errNo, String errMsg, String errException) {
-        this(errNo, errMsg);
-        this.errException = errException;
-    }
-
-    public BaseRestResponse(String errNo, String errMsg, String errException, T data) {
-        this(errNo, errMsg, errException);
+    public BaseRestResponse(String code, String msg, T data) {
+        this(code, msg);
         this.data = data;
     }
 
     public BaseRestResponse(IResultCode resultCode) {
-        this(resultCode.getCode(), resultCode.getDescription());
+        this(resultCode.getCode(), resultCode.getMsg());
     }
 
-    public BaseRestResponse(IResultCode resultCode, String errMsg) {
-        this(resultCode.getCode(), errMsg);
-    }
-
-    public BaseRestResponse(IResultCode resultCode, String errMsg, String errException) {
-        this(resultCode, errMsg);
-        this.errException = errException;
+    public BaseRestResponse(IResultCode resultCode, String msg) {
+        this(resultCode.getCode(), msg);
     }
 
     /****************************************华丽分分割线****************************************/
@@ -86,16 +71,12 @@ public class BaseRestResponse<T> implements Serializable {
         return new BaseRestResponse<>(resultCode);
     }
 
-    public static <T> BaseRestResponse<T> fail(IResultCode resultCode, String errMsg) {
-        return new BaseRestResponse<>(resultCode, errMsg);
-    }
-
-    public static <T> BaseRestResponse<T> fail(IResultCode resultCode, String errMsg, String errException) {
-        return new BaseRestResponse<>(resultCode, errMsg, errException);
+    public static <T> BaseRestResponse<T> fail(IResultCode resultCode, String msg) {
+        return new BaseRestResponse<>(resultCode, msg);
     }
 
     public static <T> boolean isSuccess(BaseRestResponse<T> response) {
-        return Optional.ofNullable(response).map(BaseRestResponse::getErrNo).map(val ->
+        return Optional.ofNullable(response).map(BaseRestResponse::getCode).map(val ->
                 StringUtils.equalsIgnoreCase(val, SystemResultCode.SUCCESS.getCode())).orElse(Boolean.FALSE).booleanValue();
     }
 
@@ -104,7 +85,7 @@ public class BaseRestResponse<T> implements Serializable {
     }
 
     public static <T> T getDate(BaseRestResponse<T> response) {
-        return Optional.ofNullable(response).filter(val -> StringUtils.equalsIgnoreCase(val.getErrNo(),
+        return Optional.ofNullable(response).filter(val -> StringUtils.equalsIgnoreCase(val.getCode(),
                 SystemResultCode.SUCCESS.getCode())).map(BaseRestResponse::getData).orElse(null);
     }
 

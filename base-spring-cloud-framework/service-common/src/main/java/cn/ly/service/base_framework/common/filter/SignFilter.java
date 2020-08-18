@@ -4,7 +4,6 @@ import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.sign.LySignUtil;
 import cn.ly.service.base_framework.base.BaseRestRequest;
 import cn.ly.service.base_framework.base.DataResult;
-import cn.ly.service.base_framework.base.StringRestResponse;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
 import cn.ly.service.base_framework.common.config.FilterConfig;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
@@ -43,13 +42,7 @@ public class SignFilter extends AbstractFilter {
                 }
             }
         }
-        DataResult<StringRestResponse> dataResult = new DataResult<>(false);
-
-        StringRestResponse restResponse = new StringRestResponse();
-        restResponse.setErrNo(SystemResultCode.SIGN_ERROR.getCode());
-        restResponse.setErrMsg(SystemResultCode.SIGN_ERROR.getDescription());
-        dataResult.setData(restResponse);
-        return dataResult;
+        return DataResult.fail(SystemResultCode.SIGN_ERROR);
     }
 
     private boolean isDisableAndIgnoreMethodName(ProceedingJoinPoint joinPoint) {
@@ -65,7 +58,6 @@ public class SignFilter extends AbstractFilter {
         String appId = signRequest.getAppId();
         paramsMap.put("appId", appId);
         paramsMap.put("language", signRequest.getLanguage());
-        paramsMap.put("requestId", signRequest.getRequestId());
         paramsMap.put("timeZone", signRequest.getTimeZone());
         paramsMap.put("timestamp", signRequest.getTimestamp());
 

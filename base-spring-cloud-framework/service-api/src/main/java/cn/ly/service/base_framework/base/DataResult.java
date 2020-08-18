@@ -1,7 +1,6 @@
 package cn.ly.service.base_framework.base;
 
 import cn.ly.base_common.utils.string.LyToStringUtil;
-import cn.ly.base_common.utils.trace.LyTraceLogUtil;
 import cn.ly.service.base_framework.base.code.IResultCode;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
 import lombok.Getter;
@@ -24,14 +23,13 @@ public class DataResult<T> implements Serializable {
 
     public DataResult(boolean success) {
         this.success = success;
-        requestId = LyTraceLogUtil.get();
     }
 
     public DataResult(T data) {
         this(true);
         this.data = data;
-        sysErrCode = SystemResultCode.SUCCESS.getCode();
-        sysErrDesc = SystemResultCode.SUCCESS.getDescription();
+        sysCode = SystemResultCode.SUCCESS.getCode();
+        sysMsg = SystemResultCode.SUCCESS.getMsg();
     }
 
     public DataResult(boolean success, T data) {
@@ -39,47 +37,47 @@ public class DataResult<T> implements Serializable {
         this.data = data;
     }
 
-    public DataResult(String sysErrCode, String sysErrDesc) {
+    public DataResult(String sysCode, String sysMsg) {
         this(false);
-        this.sysErrCode = sysErrCode;
-        this.sysErrDesc = sysErrDesc;
+        this.sysCode = sysCode;
+        this.sysMsg = sysMsg;
     }
 
-    public DataResult(String sysErrCode, String sysErrDesc, T data) {
-        this(sysErrCode, sysErrDesc);
+    public DataResult(String sysCode, String sysMsg, T data) {
+        this(sysCode, sysMsg);
         this.data = data;
     }
 
-    public DataResult(String sysErrCode, String sysErrDesc, String sysException) {
-        this(sysErrCode, sysErrDesc);
+    public DataResult(String sysCode, String sysMsg, String sysException) {
+        this(sysCode, sysMsg);
         this.sysException = sysException;
     }
 
-    public DataResult(String sysErrCode, String sysErrDesc, String sysException, T data) {
-        this(sysErrCode, sysErrDesc, sysException);
+    public DataResult(String sysCode, String sysMsg, String sysException, T data) {
+        this(sysCode, sysMsg, sysException);
         this.data = data;
     }
 
-    public DataResult(String sysErrCode, String sysErrDesc, long elapsedMilliseconds) {
-        this(sysErrCode, sysErrDesc);
+    public DataResult(String sysCode, String sysMsg, long elapsedMilliseconds) {
+        this(sysCode, sysMsg);
         this.elapsedMilliseconds = elapsedMilliseconds;
     }
 
-    public DataResult(String sysErrCode, String sysErrDesc, long elapsedMilliseconds, T data) {
-        this(sysErrCode, sysErrDesc, elapsedMilliseconds);
+    public DataResult(String sysCode, String sysMsg, long elapsedMilliseconds, T data) {
+        this(sysCode, sysMsg, elapsedMilliseconds);
         this.data = data;
     }
 
     public DataResult(IResultCode resultCode) {
-        this(resultCode.getCode(), resultCode.getDescription());
+        this(resultCode.getCode(), resultCode.getMsg());
     }
 
-    public DataResult(IResultCode resultCode, String sysErrDesc) {
-        this(resultCode.getCode(), sysErrDesc);
+    public DataResult(IResultCode resultCode, String sysMsg) {
+        this(resultCode.getCode(), sysMsg);
     }
 
-    public DataResult(IResultCode resultCode, String sysErrDesc, String sysException) {
-        this(resultCode, sysErrDesc);
+    public DataResult(IResultCode resultCode, String sysMsg, String sysException) {
+        this(resultCode, sysMsg);
         this.sysException = sysException;
     }
 
@@ -87,8 +85,8 @@ public class DataResult<T> implements Serializable {
 
     public static <T> DataResult<T> success() {
         DataResult<T> dataResult = new DataResult<>(true);
-        dataResult.setSysErrCode(SystemResultCode.SUCCESS.getCode());
-        dataResult.setSysErrDesc(SystemResultCode.SUCCESS.getDescription());
+        dataResult.setSysCode(SystemResultCode.SUCCESS.getCode());
+        dataResult.setSysMsg(SystemResultCode.SUCCESS.getMsg());
         return dataResult;
     }
 
@@ -97,25 +95,25 @@ public class DataResult<T> implements Serializable {
     }
 
     public static <T> DataResult<T> fail() {
-        return fail(SystemResultCode.SERVER_ERROR.getDescription());
+        return fail(SystemResultCode.SERVER_ERROR.getMsg());
     }
 
-    public static <T> DataResult<T> fail(String sysErrDesc) {
-        return fail(SystemResultCode.SERVER_ERROR, sysErrDesc);
+    public static <T> DataResult<T> fail(String sysMsg) {
+        return fail(SystemResultCode.SERVER_ERROR, sysMsg);
     }
 
     public static <T> DataResult<T> fail(IResultCode resultCode) {
-        return fail(resultCode, resultCode.getDescription());
+        return fail(resultCode, resultCode.getMsg());
     }
 
-    public static <T> DataResult<T> fail(IResultCode resultCode, String sysErrDesc) {
-        return fail(resultCode, sysErrDesc, "");
+    public static <T> DataResult<T> fail(IResultCode resultCode, String sysMsg) {
+        return fail(resultCode, sysMsg, "");
     }
 
-    public static <T> DataResult<T> fail(IResultCode resultCode, String sysErrDesc, String sysException) {
+    public static <T> DataResult<T> fail(IResultCode resultCode, String sysMsg, String sysException) {
         DataResult<T> dataResult = new DataResult<>(false);
-        dataResult.setSysErrCode(resultCode.getCode());
-        dataResult.setSysErrDesc(sysErrDesc);
+        dataResult.setSysCode(resultCode.getCode());
+        dataResult.setSysMsg(sysMsg);
         dataResult.setSysException(sysException);
         return dataResult;
     }
@@ -139,12 +137,12 @@ public class DataResult<T> implements Serializable {
     /**
      * 错误代码
      */
-    private String sysErrCode = "";
+    private String sysCode = "";
 
     /**
      * 错误描述
      */
-    private String sysErrDesc = "";
+    private String sysMsg = "";
 
     /**
      * 异常详情
@@ -155,11 +153,6 @@ public class DataResult<T> implements Serializable {
      * 处理耗时(毫秒)
      */
     private long elapsedMilliseconds;
-
-    /**
-     * 调用链id
-     */
-    private String requestId;
 
     @Override
     public String toString() {

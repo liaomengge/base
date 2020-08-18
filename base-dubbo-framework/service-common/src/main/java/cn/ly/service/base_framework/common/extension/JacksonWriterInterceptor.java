@@ -32,7 +32,7 @@ public class JacksonWriterInterceptor implements WriterInterceptor {
         BaseRestResponse restResponse = new BaseRestResponse() {
             private static final long serialVersionUID = -4891503559850961000L;
         };
-        restResponse.setStatus(ErrorCodeEnum.RPC_ERROR.getCode());
+        restResponse.setCode(ErrorCodeEnum.RPC_ERROR.getCode());
         String rpcErrorMsg = LyStringUtil.getValue(context.getEntity());
         if (rpcErrorMsg.contains("Unrecognized field")) {
             rpcErrorMsg = "[请求参数格式错误](" + rpcErrorMsg + ")";

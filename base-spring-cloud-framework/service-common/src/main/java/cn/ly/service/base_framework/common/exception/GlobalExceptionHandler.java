@@ -38,12 +38,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public DataResult defaultErrorHandler(Exception e) {
         DataResult dataResult = buildAlarm(e);
         if (e instanceof AbstractAppException) {
-            dataResult.setSysErrCode(((AbstractAppException) e).getErrCode());
-            dataResult.setSysErrDesc(((AbstractAppException) e).getErrMsg());
+            dataResult.setSysCode(((AbstractAppException) e).getErrCode());
+            dataResult.setSysMsg(((AbstractAppException) e).getErrMsg());
         }
         if (e instanceof AbstractAppRuntimeException) {
-            dataResult.setSysErrCode(((AbstractAppRuntimeException) e).getErrCode());
-            dataResult.setSysErrDesc(((AbstractAppRuntimeException) e).getErrMsg());
+            dataResult.setSysCode(((AbstractAppRuntimeException) e).getErrCode());
+            dataResult.setSysMsg(((AbstractAppRuntimeException) e).getErrMsg());
         }
 
         dataResult.setSysException(LyThrowableUtil.getStackTrace(e));

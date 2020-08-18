@@ -9,6 +9,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Response;
 
+/**
+ * Created by liaomengge on 16/12/3.
+ */
 public class ValidationExceptionMapper extends RpcExceptionMapper {
 
     @Override

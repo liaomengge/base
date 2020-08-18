@@ -10,7 +10,7 @@ import static cn.ly.base_common.utils.trace.LyTraceLogUtil.generateDefaultTraceL
 import static cn.ly.base_common.utils.trace.LyTraceLogUtil.generateRandomSed;
 
 /**
- * Created by liaomengge on 17/7/11.
+ * Created by liaomengge on 16/7/11.
  */
 public class TraceFilter extends AbstractFilter {
 

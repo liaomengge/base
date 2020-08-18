@@ -1,7 +1,6 @@
 package cn.ly.service.base_framework.base;
 
 import cn.ly.base_common.utils.string.LyToStringUtil;
-import cn.ly.base_common.utils.trace.LyTraceLogUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +18,6 @@ public class DataResult<T> implements Serializable {
 
     public DataResult(boolean success) {
         this.success = success;
-        this.traceId = LyTraceLogUtil.get();
     }
 
     public DataResult(T data) {
@@ -27,19 +25,19 @@ public class DataResult<T> implements Serializable {
         this.data = data;
     }
 
-    public DataResult(String sysErrCode, String sysErrDesc) {
+    public DataResult(String sysCode, String sysMsg) {
         this(false);
-        this.sysErrCode = sysErrCode;
-        this.sysErrDesc = sysErrDesc;
+        this.sysCode = sysCode;
+        this.sysMsg = sysMsg;
     }
 
-    public DataResult(String sysErrCode, String sysErrDesc, String sysException) {
-        this(sysErrCode, sysErrDesc);
+    public DataResult(String sysCode, String sysMsg, String sysException) {
+        this(sysCode, sysMsg);
         this.sysException = sysException;
     }
 
-    public DataResult(String sysErrCode, String sysErrDesc, long elapsedMilliseconds) {
-        this(sysErrCode, sysErrDesc);
+    public DataResult(String sysCode, String sysMsg, long elapsedMilliseconds) {
+        this(sysCode, sysMsg);
         this.elapsedMilliseconds = elapsedMilliseconds;
     }
 
@@ -56,12 +54,12 @@ public class DataResult<T> implements Serializable {
     /**
      * 错误代码
      */
-    private String sysErrCode = "";
+    private String sysCode = "";
 
     /**
      * 错误描述
      */
-    private String sysErrDesc = "";
+    private String sysMsg = "";
 
     /**
      * 异常详情
@@ -72,11 +70,6 @@ public class DataResult<T> implements Serializable {
      * 处理耗时(毫秒)
      */
     private long elapsedMilliseconds;
-
-    /**
-     * 调用链id
-     */
-    private String traceId;
 
     @Override
     public String toString() {

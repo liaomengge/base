@@ -20,7 +20,7 @@ public abstract class BaseRestResponse implements Serializable {
     /**
      * 状态 000000表示成功
      */
-    private String status;
+    private String code;
 
     /**
      * 提示消息

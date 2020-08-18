@@ -1,7 +1,6 @@
 package cn.ly.service.base_framework.common.filter;
 
 import cn.ly.service.base_framework.base.DataResult;
-import cn.ly.service.base_framework.base.StringRestResponse;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
 import cn.ly.service.base_framework.common.config.FilterConfig;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
@@ -33,12 +32,6 @@ public class FailFastFilter extends AbstractFilter {
         if (!Iterables.contains(iterable, methodName)) {
             return chain.doFilter(joinPoint, chain);
         }
-        DataResult<StringRestResponse> dataResult = new DataResult<>(false);
-
-        StringRestResponse restResponse = new StringRestResponse();
-        restResponse.setErrNo(SystemResultCode.FAIL_FAST_ERROR.getCode());
-        restResponse.setErrMsg(SystemResultCode.FAIL_FAST_ERROR.getDescription());
-        dataResult.setData(restResponse);
-        return dataResult;
+        return DataResult.fail(SystemResultCode.FAIL_FAST_ERROR);
     }
 }

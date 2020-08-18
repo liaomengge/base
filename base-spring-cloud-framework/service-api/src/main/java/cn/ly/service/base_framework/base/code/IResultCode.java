@@ -9,5 +9,5 @@ public interface IResultCode extends Serializable {
 
     String getCode();
 
-    String getDescription();
+    String getMsg();
 }

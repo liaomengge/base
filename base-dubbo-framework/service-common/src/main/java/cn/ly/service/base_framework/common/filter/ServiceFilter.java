@@ -74,7 +74,7 @@ public class ServiceFilter extends AbstractFilter {
                         hasException = true;
                         logData.setErrorStack(LyThrowableUtil.getStackTrace(result.getException()));
                         String errorCode = ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getCode();
-                        String errorDesc = ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getDescription();
+                        String errorDesc = ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getMsg();
                         String errorException = logData.getErrorStack();
 
                         Throwable throwable = rpcResult.getException();
@@ -87,8 +87,8 @@ public class ServiceFilter extends AbstractFilter {
                             errorDesc = ((AbstractAppRuntimeException) throwable).getErrMsg();
                         }
 
-                        nullResult.setSysErrCode(errorCode);
-                        nullResult.setSysErrDesc(errorDesc);
+                        nullResult.setSysCode(errorCode);
+                        nullResult.setSysMsg(errorDesc);
                         if (serviceConfig.isThrowException()) {
                             nullResult.setSysException(errorException);
                         }
@@ -119,7 +119,7 @@ public class ServiceFilter extends AbstractFilter {
             logData.setErrorStack(LyThrowableUtil.getStackTrace(e));
             //其它未知异常处理
             DataResult dataResult = new DataResult(ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getCode(),
-                    ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getDescription());
+                    ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getMsg());
             if (serviceConfig.isThrowException()) {
                 dataResult.setSysException(LyThrowableUtil.getStackTrace(e));
             }

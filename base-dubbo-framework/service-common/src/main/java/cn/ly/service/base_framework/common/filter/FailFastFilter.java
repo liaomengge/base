@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 
 /**
- * Created by liaomengge on 2018/9/19.
+ * Created by liaomengge on 2016/9/19.
  */
 public class FailFastFilter extends AbstractFilter {
 
@@ -37,8 +37,8 @@ public class FailFastFilter extends AbstractFilter {
         logData.setHostIp(rpcContext.getLocalAddressString());
 
         Map<String, Object> rpcResponseMap = Maps.newHashMap();
-        rpcResponseMap.put("status", ErrorCodeEnum.FAIL_FAST_ERROR.getCode());
-        rpcResponseMap.put("msg", ErrorCodeEnum.FAIL_FAST_ERROR.getDescription());
+        rpcResponseMap.put("code", ErrorCodeEnum.FAIL_FAST_ERROR.getCode());
+        rpcResponseMap.put("msg", ErrorCodeEnum.FAIL_FAST_ERROR.getMsg());
 
         DataResult<Map<String, Object>> dataResult = new DataResult<>(rpcResponseMap);
         RpcResult result = new RpcResult(dataResult);

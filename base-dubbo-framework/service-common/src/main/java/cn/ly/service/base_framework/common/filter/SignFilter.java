@@ -53,8 +53,8 @@ public class SignFilter extends AbstractFilter {
         logData.setHostIp(rpcContext.getLocalAddressString());
 
         Map<String, Object> rpcResponseMap = Maps.newHashMap();
-        rpcResponseMap.put("status", ServiceConst.ResponseStatus.ErrorCodeEnum.SIGN_ERROR.getCode());
-        rpcResponseMap.put("msg", ServiceConst.ResponseStatus.ErrorCodeEnum.SIGN_ERROR.getDescription());
+        rpcResponseMap.put("code", ServiceConst.ResponseStatus.ErrorCodeEnum.SIGN_ERROR.getCode());
+        rpcResponseMap.put("msg", ServiceConst.ResponseStatus.ErrorCodeEnum.SIGN_ERROR.getMsg());
 
         DataResult<Map<String, Object>> dataResult = new DataResult<>(rpcResponseMap);
         RpcResult result = new RpcResult(dataResult);

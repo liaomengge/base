@@ -30,5 +30,5 @@ public enum SystemResultCode implements IResultCode {
     BIZ_DEFAULT_ERROR("100000", "业务处理失败");
 
     private final String code;
-    private final String description;
+    private final String msg;
 }

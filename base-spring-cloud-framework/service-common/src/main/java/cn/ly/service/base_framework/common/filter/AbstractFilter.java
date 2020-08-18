@@ -12,5 +12,5 @@ public abstract class AbstractFilter implements ServiceFilter {
     protected String getMethodName(ProceedingJoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         return signature.getMethod().getName();
-    }
+    }   
 }

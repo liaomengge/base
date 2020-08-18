@@ -2,7 +2,6 @@ package cn.ly.service.base_framework.common.filter;
 
 import cn.ly.base_common.utils.validator.LyParamValidatorUtil;
 import cn.ly.service.base_framework.base.DataResult;
-import cn.ly.service.base_framework.base.StringRestResponse;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -32,13 +31,7 @@ public class ParamValidateFilter extends AbstractFilter {
             }
         });
         if (!checkResults.isEmpty()) {
-            DataResult<StringRestResponse> dataResult = new DataResult<>(false);
-
-            StringRestResponse restResponse = new StringRestResponse();
-            restResponse.setErrNo(SystemResultCode.PARAM_ERROR.getCode());
-            restResponse.setErrMsg(JOINER.join(checkResults));
-            dataResult.setData(restResponse);
-            return dataResult;
+            return DataResult.fail(SystemResultCode.PARAM_ERROR, JOINER.join(checkResults));
         }
         return chain.doFilter(joinPoint, chain);
     }

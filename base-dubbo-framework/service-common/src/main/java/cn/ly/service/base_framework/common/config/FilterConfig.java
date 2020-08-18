@@ -3,7 +3,7 @@ package cn.ly.service.base_framework.common.config;
 import lombok.Data;
 
 /**
- * Created by liaomengge on 2018/9/21.
+ * Created by liaomengge on 2016/9/21.
  */
 @Data
 public class FilterConfig {

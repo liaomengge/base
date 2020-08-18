@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Created by liaomengge on 2018/9/20.
+ * Created by liaomengge on 2016/9/20.
  */
 public class RateLimitFilter extends AbstractFilter {
 
@@ -66,8 +66,8 @@ public class RateLimitFilter extends AbstractFilter {
         logData.setHostIp(rpcContext.getLocalAddressString());
 
         Map<String, Object> rpcResponseMap = Maps.newHashMap();
-        rpcResponseMap.put("status", ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_BUSY_ERROR.getCode());
-        rpcResponseMap.put("msg", ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_BUSY_ERROR.getDescription());
+        rpcResponseMap.put("code", ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_BUSY_ERROR.getCode());
+        rpcResponseMap.put("msg", ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_BUSY_ERROR.getMsg());
 
         DataResult<Map<String, Object>> dataResult = new DataResult<>(rpcResponseMap);
         RpcResult result = new RpcResult(dataResult);
