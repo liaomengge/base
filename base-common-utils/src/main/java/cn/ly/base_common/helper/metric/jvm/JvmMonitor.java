@@ -1,8 +1,8 @@
 package cn.ly.base_common.helper.metric.jvm;
 
 import cn.ly.base_common.helper.metric.AbstractMetricMonitor;
-import cn.ly.base_common.utils.number.LyNumberUtil;
 import cn.ly.base_common.helper.metric.consts.SysMetricsConst;
+import cn.ly.base_common.utils.number.LyNumberUtil;
 import lombok.Setter;
 
 /**
@@ -28,8 +28,8 @@ public class JvmMonitor extends AbstractMetricMonitor {
         statsDClient.time(metricsPrefix + prefix + SysMetricsConst.JVM_MEM_TOTAL + suffix, (long) totalMem);
 
         if (memUsedRatio >= config.getMemMaxRatio()) {
-            String log = "当前内存使用率" + memUsedRatio + "达到阈值" + config.getMemMaxRatio() + "!";
-            log.warn(log);
+            String monitorValue = "当前内存使用率" + memUsedRatio + "达到阈值" + config.getMemMaxRatio() + "!";
+            log.warn(monitorValue);
         }
     }
 
