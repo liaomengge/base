@@ -84,7 +84,7 @@ public class SystemClock {
     /**
      * @return 当前时间字符串表现形式
      */
-    public static String currentTime() {
+    public static String currentTimeMillisStr() {
         return new Timestamp(currentTimeMillis()).toString();
     }
 }
