@@ -1,4 +1,4 @@
-package cn.ly.base_common.log;
+package cn.ly.base_common.logger;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

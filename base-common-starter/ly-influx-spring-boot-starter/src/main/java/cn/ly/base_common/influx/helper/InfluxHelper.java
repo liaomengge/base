@@ -40,27 +40,12 @@ public class InfluxHelper {
         this.influxBatchHandler = influxBatchHandler;
     }
 
-    public void write(Point point) {
-        influxBatchHandler.produce(point);
-    }
-
     public void write(Map<String, Object> fields) {
         write(new HashMap<>(), fields);
     }
 
     public void write(Map<String, String> tags, Map<String, Object> fields) {
-        write("", tags, fields);
-    }
-
-    public void write(String eventName, Map<String, Object> fields) {
-        write(eventName, new HashMap<>(), fields);
-    }
-
-    public void write(String eventName, Map<String, String> tags, Map<String, Object> fields) {
         Point.Builder builder = Point.measurement(InfluxConst.DEFAULT_MEASUREMENT).tag("appId", appId);
-        if (StringUtils.isNoneBlank(eventName)) {
-            builder.tag("eventName", eventName);
-        }
         if (!CollectionUtils.isEmpty(tags)) {
             builder.tag(tags);
         }
@@ -69,6 +54,10 @@ public class InfluxHelper {
         }
         builder.time(new NanoClock().nanos(), TimeUnit.NANOSECONDS);
         write(builder.build());
+    }
+
+    public void write(Point point) {
+        influxBatchHandler.produce(point);
     }
 
     /**

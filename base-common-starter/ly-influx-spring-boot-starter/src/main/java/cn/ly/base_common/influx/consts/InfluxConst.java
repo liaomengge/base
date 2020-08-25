@@ -13,8 +13,10 @@ public interface InfluxConst {
     /**
      * influx batch properties
      */
-    int DEFAULT_INFLUX_BATCH_ACTIONS_LIMIT = 1000;
-    int DEFAULT_INFLUX_BATCH_INTERVAL_DURATION = 100;
+    int DEFAULT_BATCH_ACTIONS_LIMIT = 1000;
+    int DEFAULT_BATCH_INTERVAL_DURATION = 1000;
+    int DEFAULT_JITTER_INTERVAL_DURATION = 5;
+    int DEFAULT_BUFFER_LIMIT = 10000;
 
     /**
      * local block queue batch properties

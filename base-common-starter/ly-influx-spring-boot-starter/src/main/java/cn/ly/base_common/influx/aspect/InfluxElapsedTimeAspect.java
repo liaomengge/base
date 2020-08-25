@@ -38,7 +38,7 @@ public class InfluxElapsedTimeAspect {
         } finally {
             long endTime = System.currentTimeMillis();
             try {
-                influxHelper.write(enableElapsedTime.eventName(), buildMethodFields(methodName, (endTime - startTime)));
+                influxHelper.write( buildMethodFields(methodName, (endTime - startTime)));
             } catch (Exception e) {
                 log.warn("log method elapsed fail", e);
             }

@@ -50,6 +50,6 @@ public class InfluxDBProperties {
     }
 
     public String getConsistencyLevel() {
-        return StringUtils.isNoneBlank(this.consistencyLevel) ? this.consistencyLevel : "ONE";
+        return StringUtils.isNoneBlank(this.consistencyLevel) ? this.consistencyLevel : "ALL";
     }
 }

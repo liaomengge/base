@@ -13,7 +13,7 @@ public interface DistributedLocker {
     Logger log = LyLogger.getInstance(DistributedLocker.class);
 
     String REDIS_LOCKER_PREFIX = "lock:";
-    String ZK_LOCKER_PREFIX = "/curator";
+    String ZK_LOCKER_PREFIX = "/lock/";
     long DEFAULT_TIMEOUT = 5;
     TimeUnit DEFAULT_TIME_UNIT = TimeUnit.SECONDS;
 }

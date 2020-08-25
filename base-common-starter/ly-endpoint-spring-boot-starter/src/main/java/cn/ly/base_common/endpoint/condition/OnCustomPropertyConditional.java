@@ -17,7 +17,7 @@ public class OnCustomPropertyConditional extends SpringBootCondition {
     public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
         Environment environment = context.getEnvironment();
         Boolean managementBuildEnabled = environment.getProperty("management.info.build.enabled", Boolean.class);
-        Boolean endpointsInfoEnabled = environment.getProperty("endpoints.info.enabled", Boolean.class);
+        Boolean endpointsInfoEnabled = environment.getProperty("management.endpoint.info.enabled", Boolean.class);
         if (Objects.nonNull(managementBuildEnabled) && managementBuildEnabled.booleanValue()
                 && Objects.nonNull(endpointsInfoEnabled) && endpointsInfoEnabled.booleanValue()) {
             return ConditionOutcome.match("match");

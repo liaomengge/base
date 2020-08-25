@@ -1,6 +1,6 @@
-package cn.ly.base_common.log.servlet;
+package cn.ly.base_common.logger.servlet;
 
-import cn.ly.base_common.log.LoggerProperties;
+import cn.ly.base_common.logger.LoggerProperties;
 import cn.ly.base_common.utils.web.LyWebUtil;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +43,10 @@ public class LoggerServlet extends HttpServlet implements EnvironmentAware {
 
     private void doHandle(HttpServletRequest req, HttpServletResponse resp) {
         RespBody respBody = new RespBody();
-        Boolean enabled = this.environment.getProperty("endpoints.loggers.enabled", Boolean.class);
+        Boolean enabled = this.environment.getProperty("management.endpoint.loggers.enabled", Boolean.class);
         if (!Boolean.TRUE.equals(enabled)) {
             respBody.setSuccess(false);
-            respBody.setMsg("endpoints.loggers.enabled必须开启");
+            respBody.setMsg("management.endpoint.loggers.enabled必须开启");
             LyWebUtil.renderJson(resp, respBody);
             return;
         }
