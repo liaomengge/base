@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.rest.interceptor;
 
-import cn.ly.base_common.helper.rest.consts.RestMetricsConst;
+import cn.ly.base_common.helper.rest.consts.ReqMetricsConst;
 import cn.ly.base_common.utils.error.LyExceptionUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.url.LyMoreUrlUtil;
@@ -49,7 +49,7 @@ public class SentinelHttpRequestInterceptor implements ClientHttpRequestIntercep
             if (StringUtils.isNotBlank(hostWithPathResource)) {
                 log.warn("Resource[{}], RestTemplate Block Exception...", hostWithPathResource);
                 String methodSuffix = LyMoreUrlUtil.getUrlSuffix(hostWithPathResource);
-                Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(methodSuffix + RestMetricsConst.REQ_EXE_BLOCKED));
+                Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(methodSuffix + ReqMetricsConst.REQ_EXE_BLOCKED));
             }
             throw LyExceptionUtil.unchecked(e);
         } catch (Throwable t) {

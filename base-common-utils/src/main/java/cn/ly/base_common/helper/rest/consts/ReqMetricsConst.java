@@ -3,7 +3,7 @@ package cn.ly.base_common.helper.rest.consts;
 /**
  * Created by liaomengge on 17/11/9.
  */
-public interface RestMetricsConst {
+public interface ReqMetricsConst {
 
     /**
      * 请求执行正常次数

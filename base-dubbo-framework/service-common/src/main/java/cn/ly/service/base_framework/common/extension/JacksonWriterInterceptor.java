@@ -1,7 +1,7 @@
 package cn.ly.service.base_framework.common.extension;
 
 import cn.ly.base_common.utils.string.LyStringUtil;
-import cn.ly.service.base_framework.base.BaseRestResponse;
+import cn.ly.service.base_framework.base.BaseResponse;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.ServiceConst.ResponseStatus.ErrorCodeEnum;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -28,8 +28,8 @@ public class JacksonWriterInterceptor implements WriterInterceptor {
             return;
         }
 
-        DataResult<BaseRestResponse> result = new DataResult<>(true);
-        BaseRestResponse restResponse = new BaseRestResponse() {
+        DataResult<BaseResponse> result = new DataResult<>(true);
+        BaseResponse restResponse = new BaseResponse() {
             private static final long serialVersionUID = -4891503559850961000L;
         };
         restResponse.setCode(ErrorCodeEnum.RPC_ERROR.getCode());

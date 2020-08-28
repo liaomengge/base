@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.rest;
 
-import cn.ly.base_common.helper.rest.consts.RestMetricsConst;
+import cn.ly.base_common.helper.rest.consts.ReqMetricsConst;
 import cn.ly.base_common.helper.rest.data.BaseRequest;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.url.LyMoreUrlUtil;
@@ -60,11 +60,11 @@ public interface Template {
 
         protected void statRestExec(String prefix, boolean isSuccess, long diffTime) {
             if (isSuccess) {
-                statsDClient.increment(prefix + RestMetricsConst.REQ_EXE_SUC);
+                statsDClient.increment(prefix + ReqMetricsConst.REQ_EXE_SUC);
             } else {
-                statsDClient.increment(prefix + RestMetricsConst.REQ_EXE_FAIL);
+                statsDClient.increment(prefix + ReqMetricsConst.REQ_EXE_FAIL);
             }
-            statsDClient.recordExecutionTime(prefix + RestMetricsConst.REQ_EXE_TIME, diffTime, 1);
+            statsDClient.recordExecutionTime(prefix + ReqMetricsConst.REQ_EXE_TIME, diffTime, 1);
         }
     }
 

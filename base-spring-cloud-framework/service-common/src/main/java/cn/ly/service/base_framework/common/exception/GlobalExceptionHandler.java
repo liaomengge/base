@@ -10,10 +10,12 @@ import cn.ly.service.base_framework.base.code.SystemResultCode;
 import org.redisson.client.RedisException;
 import org.springframework.amqp.AmqpException;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.JmsException;
+import org.springframework.transaction.TransactionException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -65,7 +67,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private DataResult buildAlarm(Exception e) {
         DataResult dataResult = DataResult.fail(SystemResultCode.SERVER_ERROR);
-        if (e instanceof JedisException || e instanceof RedisException) {
+        if (e instanceof SerializationException || e instanceof JedisException || e instanceof RedisException) {
             BASE_PREFIX_REDIS.error(e);
             return DataResult.fail(SystemResultCode.REDIS_ERROR);
         }
@@ -73,7 +75,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             BASE_PREFIX_MQ.error(e);
             return DataResult.fail(SystemResultCode.MQ_ERROR);
         }
-        if (e instanceof DataAccessException || e instanceof SQLException) {
+        if (e instanceof TransactionException || e instanceof DataAccessException || e instanceof SQLException) {
             BASE_PREFIX_DB.error(e);
             return DataResult.fail(SystemResultCode.DB_ERROR);
         }

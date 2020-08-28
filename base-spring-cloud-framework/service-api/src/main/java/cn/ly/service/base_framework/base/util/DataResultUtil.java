@@ -1,6 +1,6 @@
 package cn.ly.service.base_framework.base.util;
 
-import cn.ly.service.base_framework.base.BaseRestResponse;
+import cn.ly.service.base_framework.base.BaseResponse;
 import cn.ly.service.base_framework.base.DataResult;
 import lombok.experimental.UtilityClass;
 
@@ -39,35 +39,35 @@ public class DataResultUtil {
 
     /************************************************华丽分分割线*******************************************************/
 
-    public <T, R extends BaseRestResponse<T>> boolean isResponseSuccess(DataResult<R> result) {
+    public <T, R extends BaseResponse<T>> boolean isResponseSuccess(DataResult<R> result) {
         return Optional.ofNullable(result).filter(DataResult::isSuccess).map(DataResult::getData)
-                .map(BaseRestResponse::isSuccess).orElse(Boolean.FALSE)
+                .map(BaseResponse::isSuccess).orElse(Boolean.FALSE)
                 .booleanValue();
     }
 
-    public <T, R extends BaseRestResponse<T>> boolean isResponseFail(DataResult<R> result) {
+    public <T, R extends BaseResponse<T>> boolean isResponseFail(DataResult<R> result) {
         return !isResponseSuccess(result);
     }
 
-    public <T, R extends BaseRestResponse<T>> T getResponseData(DataResult<R> result) {
+    public <T, R extends BaseResponse<T>> T getResponseData(DataResult<R> result) {
         return getOptionalResponseData(result).orElse(null);
     }
 
-    public <T, R extends BaseRestResponse<T>> Optional<T> getOptionalResponseData(DataResult<R> result) {
+    public <T, R extends BaseResponse<T>> Optional<T> getOptionalResponseData(DataResult<R> result) {
         return Optional.ofNullable(result).filter(DataResult::isSuccess).map(DataResult::getData)
-                .filter(BaseRestResponse::isSuccess)
-                .map(BaseRestResponse::getData);
+                .filter(BaseResponse::isSuccess)
+                .map(BaseResponse::getData);
     }
 
-    public <T, R extends BaseRestResponse<T>, RS> RS getResponseData(DataResult<R> result, Function<T, RS> function) {
+    public <T, R extends BaseResponse<T>, RS> RS getResponseData(DataResult<R> result, Function<T, RS> function) {
         return getOptionalResponseData(result, function).orElse(null);
     }
 
-    public <T, R extends BaseRestResponse<T>, RS> Optional<RS> getOptionalResponseData(DataResult<R> result,
-                                                                                       Function<T, RS> function) {
+    public <T, R extends BaseResponse<T>, RS> Optional<RS> getOptionalResponseData(DataResult<R> result,
+                                                                                   Function<T, RS> function) {
         return Optional.ofNullable(result).filter(DataResult::isSuccess).map(DataResult::getData)
-                .filter(BaseRestResponse::isSuccess)
-                .map(BaseRestResponse::getData)
+                .filter(BaseResponse::isSuccess)
+                .map(BaseResponse::getData)
                 .map(function);
     }
 }

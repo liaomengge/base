@@ -68,7 +68,7 @@ public class ServiceAspect {
     @Autowired
     private StatsDClient statsDClient;
 
-    @Around("target(cn.ly.service.base_framework.api.BaseFrameworkRestService) " +
+    @Around("target(cn.ly.service.base_framework.api.BaseFrameworkService) " +
             "&& execution(public * *(..)) " +
             "&& !@annotation(cn.ly.service.base_framework.common.annotation.IgnoreServiceAop)")
     public Object proceed(ProceedingJoinPoint joinPoint) throws Throwable {

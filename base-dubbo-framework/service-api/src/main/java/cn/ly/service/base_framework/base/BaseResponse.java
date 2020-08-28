@@ -13,10 +13,10 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class BaseRestResponse implements Serializable {
+public abstract class BaseResponse implements Serializable {
 
     private static final long serialVersionUID = -8750943144463247125L;
-    
+
     /**
      * 状态 000000表示成功
      */

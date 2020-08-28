@@ -13,7 +13,7 @@ import java.util.Optional;
  * Created by liaomengge on 16/4/12.
  */
 @Data
-public class BaseRestResponse<T> implements Serializable {
+public class BaseResponse<T> implements Serializable {
 
     private static final long serialVersionUID = -7757311391986476066L;
 
@@ -29,68 +29,68 @@ public class BaseRestResponse<T> implements Serializable {
 
     private T data;
 
-    public BaseRestResponse() {
+    public BaseResponse() {
         code = SystemResultCode.SUCCESS.getCode();
         msg = SystemResultCode.SUCCESS.getMsg();
     }
 
-    public BaseRestResponse(T data) {
+    public BaseResponse(T data) {
         this();
         this.data = data;
     }
 
-    public BaseRestResponse(String code, String msg) {
+    public BaseResponse(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public BaseRestResponse(String code, String msg, T data) {
+    public BaseResponse(String code, String msg, T data) {
         this(code, msg);
         this.data = data;
     }
 
-    public BaseRestResponse(IResultCode resultCode) {
+    public BaseResponse(IResultCode resultCode) {
         this(resultCode.getCode(), resultCode.getMsg());
     }
 
-    public BaseRestResponse(IResultCode resultCode, String msg) {
+    public BaseResponse(IResultCode resultCode, String msg) {
         this(resultCode.getCode(), msg);
     }
 
     /****************************************华丽分分割线****************************************/
 
-    public static <T> BaseRestResponse<T> success() {
-        return new BaseRestResponse<>();
+    public static <T> BaseResponse<T> success() {
+        return new BaseResponse<>();
     }
 
-    public static <T> BaseRestResponse<T> success(T data) {
-        return new BaseRestResponse<>(data);
+    public static <T> BaseResponse<T> success(T data) {
+        return new BaseResponse<>(data);
     }
 
-    public static <T> BaseRestResponse<T> fail(IResultCode resultCode) {
-        return new BaseRestResponse<>(resultCode);
+    public static <T> BaseResponse<T> fail(IResultCode resultCode) {
+        return new BaseResponse<>(resultCode);
     }
 
-    public static <T> BaseRestResponse<T> fail(IResultCode resultCode, String msg) {
-        return new BaseRestResponse<>(resultCode, msg);
+    public static <T> BaseResponse<T> fail(IResultCode resultCode, String msg) {
+        return new BaseResponse<>(resultCode, msg);
     }
 
-    public static <T> boolean isSuccess(BaseRestResponse<T> response) {
-        return Optional.ofNullable(response).map(BaseRestResponse::getCode).map(val ->
+    public static <T> boolean isSuccess(BaseResponse<T> response) {
+        return Optional.ofNullable(response).map(BaseResponse::getCode).map(val ->
                 StringUtils.equalsIgnoreCase(val, SystemResultCode.SUCCESS.getCode())).orElse(Boolean.FALSE).booleanValue();
     }
 
-    public static <T> boolean isFail(BaseRestResponse<T> response) {
+    public static <T> boolean isFail(BaseResponse<T> response) {
         return !isSuccess(response);
     }
 
-    public static <T> T getDate(BaseRestResponse<T> response) {
+    public static <T> T getDate(BaseResponse<T> response) {
         return Optional.ofNullable(response).filter(val -> StringUtils.equalsIgnoreCase(val.getCode(),
-                SystemResultCode.SUCCESS.getCode())).map(BaseRestResponse::getData).orElse(null);
+                SystemResultCode.SUCCESS.getCode())).map(BaseResponse::getData).orElse(null);
     }
 
-    public static <T> BaseRestResponse<T> of(T data) {
-        return new BaseRestResponse<>(data);
+    public static <T> BaseResponse<T> of(T data) {
+        return new BaseResponse<>(data);
     }
 
     @Override

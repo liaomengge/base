@@ -3,7 +3,7 @@ package cn.ly.service.base_framework.common.filter;
 import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogData;
 import cn.ly.base_common.utils.sign.LySignUtil;
-import cn.ly.service.base_framework.base.BaseRestRequest;
+import cn.ly.service.base_framework.base.BaseRequest;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.MetricsConst;
 import cn.ly.service.base_framework.common.consts.ServiceConst;
@@ -35,9 +35,9 @@ public class SignFilter extends AbstractFilter {
         }
 
         Object[] args = invocation.getArguments();
-        BaseRestRequest signRequest;
+        BaseRequest signRequest;
         if (ArrayUtils.isNotEmpty(args)) {
-            signRequest = (BaseRestRequest) invocation.getArguments()[0];
+            signRequest = (BaseRequest) invocation.getArguments()[0];
             if (signRequest != null) {
                 if (this.isSignOk(signRequest)) {
                     return invoker.invoke(invocation);
@@ -71,7 +71,7 @@ public class SignFilter extends AbstractFilter {
         return result;
     }
 
-    private boolean isSignOk(BaseRestRequest signRequest) {
+    private boolean isSignOk(BaseRequest signRequest) {
         TreeMap<String, Object> paramsMap = new TreeMap<>();
 
         String appId = signRequest.getAppId();
