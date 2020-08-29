@@ -72,64 +72,77 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
 
     private void shutdown(String threadName, ThreadPoolTaskExecutor taskExecutor) {
         log.info("thread pool task executor[{}] shutdown start...", threadName);
-        try {
-            for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
-                try {
-                    if (taskExecutor.getThreadPoolExecutor().awaitTermination(Math.min(remaining, GracefulConst.CHECK_INTERVAL),
-                            TimeUnit.SECONDS)) {
-                        continue;
+        taskExecutor.shutdown();
+        if (this.gracefulProperties.getTimeout() > 0) {
+            try {
+                for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
+                    try {
+                        if (taskExecutor.getThreadPoolExecutor().awaitTermination(Math.min(remaining,
+                                GracefulConst.CHECK_INTERVAL),
+                                TimeUnit.SECONDS)) {
+                            break;
+                        }
+                    } catch (InterruptedException e) {
+                        log.warn("Interrupted while waiting for executor [" + threadName + "] to terminate");
+                        Thread.currentThread().interrupt();
                     }
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
+                    log.info("thread pool task executor[{}], {} thread(s) active, {} seconds remaining",
+                            threadName, taskExecutor.getThreadPoolExecutor().getActiveCount(), remaining);
                 }
-                log.info("thread pool task executor[{}], {} thread(s) active, {} seconds remaining",
-                        threadName, taskExecutor.getThreadPoolExecutor().getActiveCount(), remaining);
+            } catch (Exception e) {
+                log.info("thread pool task executor[" + threadName + "] shutdown exception", e);
             }
-        } catch (Exception e) {
-            log.info("thread pool task executor[" + threadName + "] shutdown exception", e);
         }
         log.info("thread pool task executor[{}] shutdown end...", threadName);
     }
 
     private void shutdown(String threadName, ThreadPoolTaskScheduler taskScheduler) {
         log.info("thread pool task scheduler[{}] shutdown start...", threadName);
-        try {
-            for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
-                try {
-                    if (taskScheduler.getScheduledThreadPoolExecutor().awaitTermination(Math.min(remaining,
-                            GracefulConst.CHECK_INTERVAL),
-                            TimeUnit.SECONDS)) {
-                        continue;
+        taskScheduler.shutdown();
+        if (this.gracefulProperties.getTimeout() > 0) {
+            try {
+                for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
+                    try {
+                        if (taskScheduler.getScheduledThreadPoolExecutor().awaitTermination(Math.min(remaining,
+                                GracefulConst.CHECK_INTERVAL),
+                                TimeUnit.SECONDS)) {
+                            break;
+                        }
+                    } catch (InterruptedException e) {
+                        log.warn("Interrupted while waiting for executor [" + threadName + "] to terminate");
+                        Thread.currentThread().interrupt();
                     }
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
+                    log.info("thread pool task scheduler[{}], {} thread(s) active, {} seconds remaining",
+                            threadName, taskScheduler.getScheduledThreadPoolExecutor().getActiveCount(), remaining);
                 }
-                log.info("thread pool task scheduler[{}], {} thread(s) active, {} seconds remaining",
-                        threadName, taskScheduler.getScheduledThreadPoolExecutor().getActiveCount(), remaining);
+            } catch (Exception e) {
+                log.info("thread pool task scheduler[" + threadName + "] shutdown exception", e);
             }
-        } catch (Exception e) {
-            log.info("thread pool task scheduler[" + threadName + "] shutdown exception", e);
         }
         log.info("thread pool task scheduler[{}] shutdown end...", threadName);
     }
 
     private void shutdown(String threadName, ThreadPoolExecutor executor) {
         log.info("thread pool executor[{}] shutdown start...", threadName);
-        try {
-            for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
-                try {
-                    if (executor.awaitTermination(Math.min(remaining, GracefulConst.CHECK_INTERVAL),
-                            TimeUnit.SECONDS)) {
-                        continue;
+        executor.shutdown();
+        if (this.gracefulProperties.getTimeout() > 0) {
+            try {
+                for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
+                    try {
+                        if (executor.awaitTermination(Math.min(remaining, GracefulConst.CHECK_INTERVAL),
+                                TimeUnit.SECONDS)) {
+                            break;
+                        }
+                    } catch (InterruptedException e) {
+                        log.warn("Interrupted while waiting for executor [" + threadName + "] to terminate");
+                        Thread.currentThread().interrupt();
                     }
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
+                    log.info("thread pool task scheduler[{}], {} thread(s) active, {} seconds remaining",
+                            threadName, executor.getActiveCount(), remaining);
                 }
-                log.info("thread pool task scheduler[{}], {} thread(s) active, {} seconds remaining",
-                        threadName, executor.getActiveCount(), remaining);
+            } catch (Exception e) {
+                log.info("thread pool executor[" + threadName + "] shutdown exception", e);
             }
-        } catch (Exception e) {
-            log.info("thread pool executor[" + threadName + "] shutdown exception", e);
         }
         log.info("thread pool executor[{}] shutdown end...", threadName);
     }

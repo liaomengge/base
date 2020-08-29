@@ -1,7 +1,7 @@
 package cn.ly.base_common.utils.thread;
 
+import cn.ly.base_common.helper.concurrent.LyThreadPoolExecutor;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import cn.ly.base_common.utils.shutdown.LyShutdownUtil;
 import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 
@@ -194,37 +194,54 @@ public class LyThreadPoolExecutorUtil {
         return buildCpuCoreThreadPool(threadName, new LinkedBlockingQueue<>(queueCapacity));
     }
 
-    public void registerShutdownHook(ThreadPoolExecutor threadPoolExecutor) {
-        registerShutdownHook(threadPoolExecutor, 10, 2);
+    public void awaitShutdown(ThreadPoolExecutor executor) {
+        awaitShutdown(executor, 10, 2);
     }
 
     /**
-     * @param threadPoolExecutor
+     * @param executor
      * @param awaitTerminationSeconds 等待超时时间
      * @param checkInterval           check时间间隔
      */
-    public void registerShutdownHook(ThreadPoolExecutor threadPoolExecutor, int awaitTerminationSeconds,
-                                     int checkInterval) {
-        LyShutdownUtil.registerShutdownHook(() -> {
-            if (Objects.nonNull(threadPoolExecutor)) {
-                log.info("thread pool[{}] shutdown start...", threadPoolExecutor);
-                threadPoolExecutor.shutdown();
+    public void awaitShutdown(ThreadPoolExecutor executor, int awaitTerminationSeconds, int checkInterval) {
+        if (executor instanceof LyThreadPoolExecutor) {
+            LyThreadPoolExecutor lyThreadPoolExecutor = (LyThreadPoolExecutor) executor;
+            awaitShutdown(lyThreadPoolExecutor.getThreadName(), lyThreadPoolExecutor, awaitTerminationSeconds,
+                    checkInterval);
+            return;
+        }
+        awaitShutdown("default", executor, awaitTerminationSeconds, checkInterval);
+    }
+
+    /**
+     * @param threadName              线程名
+     * @param executor      线程池
+     * @param awaitTerminationSeconds 等待超时时间
+     * @param checkInterval           check时间间隔
+     */
+    public void awaitShutdown(String threadName, ThreadPoolExecutor executor,
+                              int awaitTerminationSeconds, int checkInterval) {
+        if (Objects.nonNull(executor)) {
+            log.info("thread pool[{}] shutdown start...", executor);
+            executor.shutdown();
+            if (awaitTerminationSeconds > 0) {
                 try {
                     for (long remaining = awaitTerminationSeconds; remaining > 0; remaining -= checkInterval) {
                         try {
-                            if (threadPoolExecutor.awaitTermination(Math.min(remaining, checkInterval),
+                            if (executor.awaitTermination(Math.min(remaining, checkInterval),
                                     TimeUnit.SECONDS)) {
-                                continue;
+                                break;
                             }
                         } catch (InterruptedException e) {
+                            log.warn("Interrupted while waiting for executor [" + threadName + "] to terminate");
                             Thread.currentThread().interrupt();
                         }
                     }
                 } catch (Exception e) {
-                    log.info("thread pool[" + threadPoolExecutor + "] shutdown exception", e);
+                    log.info("thread pool[" + executor + "] shutdown exception", e);
                 }
-                log.info("thread pool[{}] shutdown end...", threadPoolExecutor);
             }
-        });
+            log.info("thread pool[{}] shutdown end...", executor);
+        }
     }
 }

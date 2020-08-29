@@ -43,19 +43,23 @@ public class TomcatShutdown implements TomcatConnectorCustomizer, ApplicationLis
             if (Objects.nonNull(executor)) {
                 executor.shutdown();
                 log.info("tomcat shutdown start...");
-                try {
-                    for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
-                        try {
-                            if (executor.awaitTermination(Math.min(remaining, GracefulConst.CHECK_INTERVAL), TimeUnit.SECONDS)) {
-                                continue;
+                if (this.gracefulProperties.getTimeout() > 0) {
+                    try {
+                        for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
+                            try {
+                                if (executor.awaitTermination(Math.min(remaining, GracefulConst.CHECK_INTERVAL),
+                                        TimeUnit.SECONDS)) {
+                                    break;
+                                }
+                            } catch (InterruptedException e) {
+                                log.warn("Interrupted while waiting for executor [tomcat] to terminate");
+                                Thread.currentThread().interrupt();
                             }
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
+                            log.info("{} thread(s) active, {} seconds remaining", executor.getActiveCount(), remaining);
                         }
-                        log.info("{} thread(s) active, {} seconds remaining", executor.getActiveCount(), remaining);
+                    } catch (Exception e) {
+                        log.info("tomcat shutdown exception", e);
                     }
-                } catch (Exception e) {
-                    log.info("tomcat shutdown exception", e);
                 }
                 log.info("tomcat shutdown end...");
             }

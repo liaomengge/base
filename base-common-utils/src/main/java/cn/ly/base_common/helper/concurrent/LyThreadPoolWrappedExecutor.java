@@ -2,7 +2,6 @@ package cn.ly.base_common.helper.concurrent;
 
 import cn.ly.base_common.utils.error.LyThrowableUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -75,6 +74,6 @@ public class LyThreadPoolWrappedExecutor extends AbstractExecutorService impleme
 
     @Override
     public void destroy() {
-        LyThreadPoolExecutorUtil.registerShutdownHook(threadPoolExecutor);
+        threadPoolExecutor.shutdown();
     }
 }
