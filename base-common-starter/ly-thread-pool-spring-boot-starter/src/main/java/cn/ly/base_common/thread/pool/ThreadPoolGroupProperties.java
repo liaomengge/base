@@ -1,18 +1,22 @@
 package cn.ly.base_common.thread.pool;
 
-import cn.ly.base_common.support.extension.ExtensionLoader;
+import cn.ly.base_common.thread.pool.enums.QueueTypeEnum;
+import cn.ly.base_common.thread.pool.enums.RejectionPolicyEnum;
 import cn.ly.base_common.thread.pool.queue.ResizableCapacityLinkedBlockIngQueue;
 import cn.ly.base_common.utils.thread.LyRuntimeUtil;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Streams;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.ServiceLoader;
 import java.util.concurrent.*;
 
-import static cn.ly.base_common.thread.pool.ThreadPoolGroupProperties.QueueTypeEnum.RESIZABLE_CAPACITY_LINKED_BLOCKING_QUEUE;
-import static cn.ly.base_common.thread.pool.ThreadPoolGroupProperties.RejectionPolicyEnum.CALLER_RUNS;
+import static cn.ly.base_common.thread.pool.enums.QueueTypeEnum.RESIZABLE_CAPACITY_LINKED_BLOCKING_QUEUE;
+import static cn.ly.base_common.thread.pool.enums.RejectionPolicyEnum.*;
 
 /**
  * Created by liaomengge on 2019/5/17.
@@ -28,16 +32,16 @@ public class ThreadPoolGroupProperties {
         private boolean ttlEnabled = false;
         private String threadName;
         private String beanName;
-        private int corePoolSize = LyRuntimeUtil.getCpuNum();
-        private int maxPoolSize = corePoolSize * 2;
-        private int keepAliveSeconds = 30;
-        private int queueCapacity = 64;
-        private boolean allowCoreThreadTimeOut = false;
+        private int corePoolSize = LyRuntimeUtil.getCpuNum();//可动态修改
+        private int maxPoolSize = corePoolSize * 2;//可动态修改
+        private int keepAliveSeconds = 30;//可动态修改
+        private int queueCapacity = 64;//可动态修改
+        private boolean allowCoreThreadTimeOut = false;//可动态修改
         private boolean waitForTasksToCompleteOnShutdown = false;
         private int checkInterval = 2;//默认：check时间间隔2s
         private int awaitTerminationSeconds = 0;
-        private QueueTypeEnum queueType = RESIZABLE_CAPACITY_LINKED_BLOCKING_QUEUE;
-        private RejectionPolicyEnum rejectionPolicy = CALLER_RUNS;
+        private String queueType = RESIZABLE_CAPACITY_LINKED_BLOCKING_QUEUE.getQueueType();
+        private String rejectionPolicy = CALLER_RUNS_POLICY.getRejectionPolicy();//可动态修改
 
         public String buildThreadName() {
             if (StringUtils.isBlank(this.getThreadName())) {
@@ -55,7 +59,8 @@ public class ThreadPoolGroupProperties {
 
         public BlockingQueue buildBlockingQueue() {
             BlockingQueue blockingQueue;
-            switch (this.queueType) {
+            QueueTypeEnum queueTypeEnum = QueueTypeEnum.matchQueueType(this.queueType);
+            switch (queueTypeEnum) {
                 case ARRAY_BLOCKING_QUEUE:
                     blockingQueue = new ArrayBlockingQueue(getQueueCapacity());
                     break;
@@ -74,8 +79,11 @@ public class ThreadPoolGroupProperties {
                 case LINKED_BLOCKING_DEQUE:
                     blockingQueue = new LinkedBlockingDeque(getQueueCapacity());
                     break;
-                case PRIORITY_BLOCKING_QUEUE:
+                case LINKED_TRANSFER_QUEUE:
                     blockingQueue = new LinkedTransferQueue();
+                    break;
+                case PRIORITY_BLOCKING_QUEUE:
+                    blockingQueue = new PriorityBlockingQueue(getQueueCapacity());
                     break;
                 default:
                     blockingQueue = new ResizableCapacityLinkedBlockIngQueue<>(getQueueCapacity());
@@ -85,30 +93,23 @@ public class ThreadPoolGroupProperties {
         }
 
         public RejectedExecutionHandler buildRejectionPolicy() {
-            RejectedExecutionHandler rejectedExecutionHandler;
-            switch (this.rejectionPolicy) {
-                case CALLER_RUNS:
-                    rejectedExecutionHandler = new ThreadPoolExecutor.CallerRunsPolicy();
-                    break;
-                case DISCARD:
-                    rejectedExecutionHandler = new ThreadPoolExecutor.DiscardPolicy();
-                    break;
-                case DISCARD_OLDEST:
-                    rejectedExecutionHandler = new ThreadPoolExecutor.DiscardOldestPolicy();
-                    break;
-                case ABORT:
-                    rejectedExecutionHandler = new ThreadPoolAbortPolicy(buildBeanName());
-                    break;
-                case CUSTOM:
-                    ExtensionLoader<RejectedExecutionHandler> loader =
-                            ExtensionLoader.getLoader(RejectedExecutionHandler.class);
-                    rejectedExecutionHandler = loader.getExtension(buildBeanName());
-                    break;
-                default:
-                    rejectedExecutionHandler = new ThreadPoolExecutor.CallerRunsPolicy();
-                    break;
+            RejectionPolicyEnum rejectionPolicyEnum = RejectionPolicyEnum.matchRejectionPolicy(this.rejectionPolicy);
+            if (rejectionPolicyEnum == CALLER_RUNS_POLICY) {
+                return new ThreadPoolExecutor.CallerRunsPolicy();
             }
-            return rejectedExecutionHandler;
+            if (rejectionPolicyEnum == DISCARD_POLICY) {
+                return new ThreadPoolExecutor.DiscardPolicy();
+            }
+            if (rejectionPolicyEnum == DISCARD_OLDEST_POLICY) {
+                return new ThreadPoolExecutor.DiscardOldestPolicy();
+            }
+            if (rejectionPolicyEnum == ABORT_POLICY) {
+                return new ThreadPoolAbortPolicy(buildBeanName());
+            }
+            ServiceLoader<RejectedExecutionHandler> serviceLoader = ServiceLoader.load(RejectedExecutionHandler.class);
+            Optional<RejectedExecutionHandler> rejectedExecutionHandler = Streams.stream(serviceLoader)
+                    .filter(val -> StringUtils.equals(this.rejectionPolicy, val.getClass().getSimpleName())).findFirst();
+            return rejectedExecutionHandler.orElseGet(ThreadPoolExecutor.CallerRunsPolicy::new);
         }
     }
 
@@ -125,14 +126,5 @@ public class ThreadPoolGroupProperties {
             throw new RejectedExecutionException("ThreadPoolName [" + threadBeanName + "], Task " + r.toString() + " " +
                     "rejected from " + e.toString());
         }
-    }
-
-    public enum RejectionPolicyEnum {
-        ABORT, CALLER_RUNS, DISCARD, DISCARD_OLDEST, CUSTOM
-    }
-
-    public enum QueueTypeEnum {
-        ARRAY_BLOCKING_QUEUE, LINKED_BLOCKING_QUEUE, RESIZABLE_CAPACITY_LINKED_BLOCKING_QUEUE,
-        SYNCHRONOUS_QUEUE, DELAY_QUEUE, LINKED_BLOCKING_DEQUE, PRIORITY_BLOCKING_QUEUE
     }
 }

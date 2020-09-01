@@ -23,6 +23,8 @@ public class LyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
     private static final Logger log = LyLogger.getInstance(LyThreadPoolTaskExecutor.class);
     private static final long serialVersionUID = 1180516546843511746L;
 
+    private final Object poolSizeMonitor = new Object();
+
     private String threadName;
 
     private BlockingQueue<Runnable> blockingQueue;
@@ -42,7 +44,8 @@ public class LyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
         if (Objects.nonNull(this.blockingQueue)) {
             return blockingQueue;
         }
-        return super.createQueue(queueCapacity);
+        this.blockingQueue = super.createQueue(queueCapacity);
+        return blockingQueue;
     }
 
     @Override

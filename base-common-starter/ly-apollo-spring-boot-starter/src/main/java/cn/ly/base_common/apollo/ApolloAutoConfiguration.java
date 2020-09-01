@@ -2,7 +2,6 @@ package cn.ly.base_common.apollo;
 
 import cn.ly.base_common.apollo.listener.ApolloRefreshListener;
 import cn.ly.base_common.apollo.refresh.ApolloRefresher;
-import cn.ly.base_common.support.misc.consts.ToolConst;
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigChangeListener;
 import com.ctrip.framework.apollo.ConfigService;
@@ -14,6 +13,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
 
 /**
  * Created by liaomengge on 2020/8/1.
@@ -42,7 +43,7 @@ public class ApolloAutoConfiguration {
     @ConditionalOnMissingBean({ApolloRefreshListener.class})
     public ApolloRefreshListener apolloAutoRefreshListener(ApolloRefresher apolloRefresher) {
         ApolloRefreshListener apolloAutoRefreshListener = new ApolloRefreshListener(apolloRefresher);
-        ToolConst.SPLITTER.split(this.namespaces).forEach(namespace -> {
+        SPLITTER.split(this.namespaces).forEach(namespace -> {
             Config config = ConfigService.getConfig(namespace);
             config.addChangeListener(apolloAutoRefreshListener);
         });

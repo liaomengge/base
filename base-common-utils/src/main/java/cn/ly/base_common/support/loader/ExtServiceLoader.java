@@ -1,7 +1,6 @@
 package cn.ly.base_common.support.loader;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import cn.ly.base_common.support.extension.ExtensionLoader;
 import lombok.Getter;
 import org.slf4j.Logger;
 
@@ -20,42 +19,92 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Created by liaomengge on 2019/10/16.
  */
-public class ExtServiceLoader {
+public class ExtServiceLoader<T> {
 
-    private static final Logger log = LyLogger.getInstance(ExtensionLoader.class);
+    private static final Logger log = LyLogger.getInstance(ExtServiceLoader.class);
 
     private static final String PREFIX_DEFAULT = "META-INF/";
     private static final String PREFIX_SERVICES = PREFIX_DEFAULT + "services/";
 
-    private Class<?> serviceType;
+    private Class<T> serviceType;
     private ClassLoader classLoader;
+    private Map<String, T> singletonInstances;
     @Getter
-    private Map<String, Class<?>> extensionClasses;
+    private Map<String, Class<T>> extensionClasses;
+    private static Map<Class<?>, ExtServiceLoader<?>> extServiceLoaders = new ConcurrentHashMap<>();
 
-    private volatile static ExtServiceLoader extServiceLoader = null;
-
-    public static ExtServiceLoader getInstance(Class<?> serviceType) {
-        if (extServiceLoader == null) {
-            synchronized (ExtServiceLoader.class) {
-                if (extServiceLoader == null) {
-                    extServiceLoader = new ExtServiceLoader(serviceType);
-                }
-            }
-        }
-        return extServiceLoader;
-    }
-
-    private ExtServiceLoader(Class<?> serviceType) {
+    private ExtServiceLoader(Class<T> serviceType) {
         this(serviceType, Thread.currentThread().getContextClassLoader());
     }
 
-    private ExtServiceLoader(Class<?> serviceType, ClassLoader classLoader) {
+    private ExtServiceLoader(Class<T> serviceType, ClassLoader classLoader) {
         this.serviceType = serviceType;
         this.classLoader = classLoader;
         this.extensionClasses = loadExtensionClasses(PREFIX_SERVICES);
+        this.singletonInstances = new ConcurrentHashMap<>();
     }
 
-    private ConcurrentMap<String, Class<?>> loadExtensionClasses(String prefix) {
+    public T getInstance(Class<T> clz, boolean single) {
+        return getInstance(clz.getName(), single);
+    }
+
+    public T getInstance(String serviceName, boolean single) {
+        Class<T> clz = extensionClasses.get(serviceName);
+        if (clz != null) {
+            try {
+                if (single) {
+                    return this.getSingletonInstance(clz, serviceName);
+                }
+                return clz.newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException(serviceType.getName() + ": Error when getExtension ", e);
+            }
+        }
+        return null;
+    }
+
+    private T getSingletonInstance(Class<T> clz, String serviceName) throws InstantiationException,
+            IllegalAccessException {
+        synchronized (singletonInstances) {
+            T singleton = singletonInstances.get(serviceName);
+            if (singleton == null) {
+                singleton = clz.newInstance();
+                singletonInstances.put(serviceName, singleton);
+            }
+            return singleton;
+        }
+    }
+
+    public static <T> ExtServiceLoader<T> getLoader(Class<T> serviceType) {
+        return getLoader(serviceType, Thread.currentThread().getContextClassLoader());
+    }
+
+    public static <T> ExtServiceLoader<T> getLoader(Class<T> serviceType, ClassLoader classLoader) {
+        if (serviceType == null) {
+            throw new RuntimeException("Error extension serviceType is null");
+        }
+
+        ExtServiceLoader<T> loader = (ExtServiceLoader<T>) extServiceLoaders.get(serviceType);
+        if (loader == null) {
+            loader = initExtServiceLoader(serviceType, classLoader);
+        }
+
+        return loader;
+    }
+
+    private static synchronized <T> ExtServiceLoader<T> initExtServiceLoader(Class<T> serviceType,
+                                                                             ClassLoader classLoader) {
+        ExtServiceLoader<T> loader = (ExtServiceLoader<T>) extServiceLoaders.get(serviceType);
+        if (loader == null) {
+            loader = new ExtServiceLoader<>(serviceType, classLoader);
+            extServiceLoaders.putIfAbsent(serviceType, loader);
+            loader = (ExtServiceLoader<T>) extServiceLoaders.get(serviceType);
+        }
+
+        return loader;
+    }
+
+    private ConcurrentMap<String, Class<T>> loadExtensionClasses(String prefix) {
         String fullName = prefix + serviceType.getName();
         List<String> classNames = new ArrayList<>();
 
@@ -76,22 +125,22 @@ public class ExtServiceLoader {
                 this.parseUrl(serviceType, url, classNames);
             }
         } catch (Exception e) {
-            throw new RuntimeException("ExtensionLoader loadExtensionClasses error, prefix: " +
+            throw new RuntimeException("ExtServiceLoader loadExtensionClasses error, prefix: " +
                     prefix + " serviceType: " + serviceType, e);
         }
 
         return loadClass(classNames);
     }
 
-    private ConcurrentMap<String, Class<?>> loadClass(List<String> classNames) {
-        ConcurrentMap<String, Class<?>> classMap = new ConcurrentHashMap<>();
+    private ConcurrentMap<String, Class<T>> loadClass(List<String> classNames) {
+        ConcurrentMap<String, Class<T>> classMap = new ConcurrentHashMap<>();
         for (String className : classNames) {
             try {
-                Class<?> clz;
+                Class<T> clz;
                 if (classLoader == null) {
-                    clz = Class.forName(className);
+                    clz = (Class<T>) Class.forName(className);
                 } else {
-                    clz = Class.forName(className, false, classLoader);
+                    clz = (Class<T>) Class.forName(className, false, classLoader);
                 }
 
                 this.checkExtensionType(clz);

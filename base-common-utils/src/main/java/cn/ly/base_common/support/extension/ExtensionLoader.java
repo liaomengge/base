@@ -141,10 +141,6 @@ public class ExtensionLoader<T> {
         return loader;
     }
 
-    private static synchronized <T> ExtensionLoader<T> initExtensionLoader(Class<T> serviceType) {
-        return initExtensionLoader(serviceType, Thread.currentThread().getContextClassLoader());
-    }
-
     private static synchronized <T> ExtensionLoader<T> initExtensionLoader(Class<T> serviceType, ClassLoader classLoader) {
         ExtensionLoader<T> loader = (ExtensionLoader<T>) extensionLoaders.get(serviceType);
         if (loader == null) {

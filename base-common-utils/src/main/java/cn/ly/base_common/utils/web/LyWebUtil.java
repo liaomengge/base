@@ -1,7 +1,6 @@
 package cn.ly.base_common.utils.web;
 
 import cn.ly.base_common.support.misc.Charsets;
-import cn.ly.base_common.support.misc.consts.ToolConst;
 import cn.ly.base_common.utils.io.LyIOUtil;
 import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
@@ -21,6 +20,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.TreeMap;
+
+import static cn.ly.base_common.support.misc.consts.ToolConst.JOINER;
 
 /**
  * Created by liaomengge on 17/11/7.
@@ -89,7 +90,7 @@ public class LyWebUtil {
             if (values == null || values.length == 0) {
                 paramMap.put(paramName, null);
             } else {
-                paramMap.put(paramName, ToolConst.JOINER.join(values));
+                paramMap.put(paramName, JOINER.join(values));
             }
         }
         return paramMap;

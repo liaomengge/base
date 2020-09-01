@@ -1,6 +1,5 @@
 package cn.ly.service.base_framework.listener;
 
-import cn.ly.base_common.support.misc.consts.ToolConst;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties;
@@ -15,6 +14,8 @@ import org.springframework.util.ClassUtils;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+
+import static cn.ly.base_common.support.misc.consts.ToolConst.JOINER;
 
 /**
  * Created by liaomengge on 2019/11/29.
@@ -41,7 +42,7 @@ public class BaseWebServerInitializedListener {
             sBuilder.append("\n");
             sBuilder.append("---------------------------------------------------------------------------").append("\n");
             sBuilder.append("APPLICATION NAME: ").append(applicationName).append("\n");
-            sBuilder.append("ACTIVE PROFILES:  ").append(ToolConst.JOINER.join(activeProfiles)).append("\n");
+            sBuilder.append("ACTIVE PROFILES:  ").append(JOINER.join(activeProfiles)).append("\n");
             sBuilder.append("PING URL:         ").append(pingUrl).append("\n");
             if (ClassUtils.isPresent("springfox.documentation.spring.web.plugins.Docket", null)) {
                 String swaggerUrl = HTTP_PREFIX + getIpAndPort(event) + serverContextPath + "/doc.html";
