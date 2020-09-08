@@ -3,6 +3,7 @@ package cn.ly.base_common.influx;
 import cn.ly.base_common.influx.consts.InfluxConst;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+import org.influxdb.InfluxDB.LogLevel;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
@@ -18,10 +19,13 @@ public class InfluxDBProperties {
 
     private String db;
     private String url;
-    private String user;
+    private String username;
     private String password;
     private String retentionPolicy;
     private String consistencyLevel;
+    private LogLevel logLevel = LogLevel.NONE;
+    private boolean isGzipEnabled = true;
+    private boolean isBatchEnabled = true;
     private AdditionalConfig additionalConfig = new AdditionalConfig();
 
     @Data

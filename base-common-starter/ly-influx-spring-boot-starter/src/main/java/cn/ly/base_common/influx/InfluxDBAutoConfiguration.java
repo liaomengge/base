@@ -1,6 +1,5 @@
 package cn.ly.base_common.influx;
 
-import cn.ly.base_common.influx.aspect.InfluxElapsedTimeAspect;
 import cn.ly.base_common.influx.batch.InfluxBatchHandler;
 import cn.ly.base_common.influx.helper.InfluxHelper;
 import lombok.AllArgsConstructor;
@@ -38,11 +37,5 @@ public class InfluxDBAutoConfiguration {
     @ConditionalOnMissingBean
     public InfluxHelper influxHelper(InfluxBatchHandler influxBatchHandler) {
         return new InfluxHelper(influxBatchHandler);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public InfluxElapsedTimeAspect influxElapsedTimeAspect(InfluxHelper influxHelper) {
-        return new InfluxElapsedTimeAspect(influxHelper);
     }
 }

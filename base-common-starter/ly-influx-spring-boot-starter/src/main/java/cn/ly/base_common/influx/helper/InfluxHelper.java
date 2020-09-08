@@ -4,6 +4,7 @@ import cn.ly.base_common.influx.batch.InfluxBatchHandler;
 import cn.ly.base_common.influx.consts.InfluxConst;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import org.apache.commons.lang3.StringUtils;
+import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -58,6 +56,14 @@ public class InfluxHelper {
 
     public void write(Point point) {
         influxBatchHandler.produce(point);
+    }
+
+    public void write(List<Point> pointList) {
+        write(BatchPoints.builder().points(pointList).build());
+    }
+
+    public void write(BatchPoints batchPoints) {
+        influxBatchHandler.getInfluxDBConnection().getInfluxDB().write(batchPoints);
     }
 
     /**

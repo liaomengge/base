@@ -12,6 +12,7 @@ import org.influxdb.InfluxDB.ConsistencyLevel;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Query;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.Objects;
@@ -27,6 +28,9 @@ public class InfluxDBConnection {
     @Getter
     private InfluxDB influxDB;
     private InfluxDBProperties influxDBProperties;
+
+    @Autowired(required = false)
+    private BatchOptions batchOptions;
 
     public InfluxDBConnection(InfluxDBProperties influxDBProperties) {
         this.influxDBProperties = influxDBProperties;
@@ -48,7 +52,7 @@ public class InfluxDBConnection {
                         .writeTimeout(additionalConfig.getWriteTimeout().getSeconds(), TimeUnit.SECONDS)
                         .retryOnConnectionFailure(true)
                         .connectionPool(new ConnectionPool(additionalConfig.getMaxConnections(), 5L, TimeUnit.MINUTES));
-                influxDB = InfluxDBFactory.connect(influxDBProperties.getUrl(), influxDBProperties.getUser(),
+                influxDB = InfluxDBFactory.connect(influxDBProperties.getUrl(), influxDBProperties.getUsername(),
                         influxDBProperties.getPassword(), builder);
             } catch (Exception e) {
                 log.error("connect influx db fail", e);
@@ -56,26 +60,36 @@ public class InfluxDBConnection {
             }
 
         }
+
         try {
             createDatabase(influxDBProperties.getDb());
             influxDB.setDatabase(influxDBProperties.getDb());
         } catch (Exception e) {
             log.error("create influx db fail", e);
+            return;
         } finally {
             influxDB.setRetentionPolicy(influxDBProperties.getRetentionPolicy());
             influxDB.setConsistency(ConsistencyLevel.valueOf(influxDBProperties.getConsistencyLevel()));
+            influxDB.setLogLevel(influxDBProperties.getLogLevel());
         }
-        influxDB.setLogLevel(InfluxDB.LogLevel.NONE);
 
-        BatchOptions batchOptions =
-                BatchOptions.DEFAULTS
+        if (influxDBProperties.isGzipEnabled()) {
+            influxDB.enableGzip();
+        }
+
+        if (influxDBProperties.isBatchEnabled()) {
+            BatchOptions defaultBatchOptions = batchOptions;
+            if (Objects.isNull(defaultBatchOptions)) {
+                defaultBatchOptions = BatchOptions.DEFAULTS
                         .actions(InfluxConst.DEFAULT_BATCH_ACTIONS_LIMIT)
                         .flushDuration(InfluxConst.DEFAULT_BATCH_INTERVAL_DURATION)
                         .jitterDuration(InfluxConst.DEFAULT_JITTER_INTERVAL_DURATION)
                         .bufferLimit(InfluxConst.DEFAULT_BUFFER_LIMIT)
                         .threadFactory(LyThreadFactoryBuilderUtil.build("influx-batch-options"))
                         .exceptionHandler((batch, exception) -> log.error("influx db batch insert fail", exception));
-        influxDB.enableBatch(batchOptions);
+            }
+            influxDB.enableBatch(defaultBatchOptions);
+        }
     }
 
     public void close() {

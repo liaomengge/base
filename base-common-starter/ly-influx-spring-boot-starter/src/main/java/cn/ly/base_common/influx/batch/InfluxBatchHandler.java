@@ -1,23 +1,23 @@
 package cn.ly.base_common.influx.batch;
 
+import cn.ly.base_common.helper.buffer.BatchBuffer;
+import cn.ly.base_common.helper.buffer.BatchBuffer.QueueStrategy;
 import cn.ly.base_common.influx.InfluxDBConnection;
 import cn.ly.base_common.influx.InfluxDBProperties;
 import cn.ly.base_common.influx.consts.InfluxConst;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
-import com.google.common.collect.Queues;
+import lombok.Getter;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 import org.slf4j.Logger;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.PreDestroy;
+import java.time.Duration;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,9 +27,12 @@ public class InfluxBatchHandler {
 
     private static final Logger log = LyLogger.getInstance(InfluxBatchHandler.class);
 
-    private ExecutorService threadPoolExecutor;
-    private LinkedBlockingQueue<Point> linkedBlockingQueue;
+    private volatile boolean inUse = true;
 
+    private ExecutorService threadPoolExecutor;
+    private BatchBuffer<Point> batchBuffer;
+
+    @Getter
     private final InfluxDBConnection influxDBConnection;
     private final InfluxDBProperties influxDBProperties;
 
@@ -39,42 +42,34 @@ public class InfluxBatchHandler {
     }
 
     public void produce(Point point) {
-        boolean status;
-        try {
-            status = linkedBlockingQueue.offer(point);
-        } catch (Exception e) {
-            status = false;
-        }
-        if (!status) {
+        batchBuffer.produce(point, val -> {
             try {
-                influxDBConnection.getInfluxDB().write(point);
+                influxDBConnection.getInfluxDB().write(val);
             } catch (Exception e) {
                 log.error("write influx fail", e);
             }
-        }
+        });
     }
 
     public void consume() {
-        List<Point> pointList = new ArrayList<>();
-        Queues.drainUninterruptibly(linkedBlockingQueue, pointList, InfluxConst.DEFAULT_TAKE_BATCH_SIZE,
-                InfluxConst.DEFAULT_TAKE_BATCH_TIMEOUT, TimeUnit.MILLISECONDS);
-        if (!CollectionUtils.isEmpty(pointList)) {
-            influxDBConnection.getInfluxDB().write(BatchPoints.database(influxDBProperties.getDb())
-                    .points(pointList.stream().toArray(Point[]::new)).build());
-        }
+        InfluxDBProperties.AdditionalConfig additionalConfig = influxDBProperties.getAdditionalConfig();
+        batchBuffer.consume(points -> influxDBConnection.getInfluxDB()
+                        .write(BatchPoints.database(influxDBProperties.getDb()).points(points).build()),
+                additionalConfig.getBatchSize(),
+                new QueueStrategy(Duration.ofMillis(additionalConfig.getBatchTimeout())));
     }
 
     @PostConstruct
     public void init() {
-        linkedBlockingQueue = new LinkedBlockingQueue<>(influxDBProperties.getAdditionalConfig().getQueueCapacity());
+        this.batchBuffer = new BatchBuffer<>(influxDBProperties.getAdditionalConfig().getQueueCapacity());
         int numThreads = influxDBProperties.getAdditionalConfig().getNumThreads();
         if (Objects.isNull(threadPoolExecutor)) {
             threadPoolExecutor = Executors.newFixedThreadPool(numThreads,
-                    LyThreadFactoryBuilderUtil.build("influx-metrics"));
+                    LyThreadFactoryBuilderUtil.build("influx-consume"));
         }
         for (int i = 0; i < numThreads; i++) {
             threadPoolExecutor.execute(() -> {
-                while (true) {
+                while (inUse) {
                     try {
                         consume();
                     } catch (Exception e) {
@@ -86,8 +81,14 @@ public class InfluxBatchHandler {
                         }
                     }
                 }
+                consume();
             });
 
         }
+    }
+
+    @PreDestroy
+    public void destroy() {
+        inUse = false;
     }
 }
