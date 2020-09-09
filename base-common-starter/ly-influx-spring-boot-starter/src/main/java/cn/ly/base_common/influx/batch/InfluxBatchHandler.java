@@ -13,7 +13,6 @@ import org.influxdb.dto.Point;
 import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.time.Duration;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -26,8 +25,6 @@ import java.util.concurrent.TimeUnit;
 public class InfluxBatchHandler {
 
     private static final Logger log = LyLogger.getInstance(InfluxBatchHandler.class);
-
-    private volatile boolean inUse = true;
 
     private ExecutorService threadPoolExecutor;
     private BatchBuffer<Point> batchBuffer;
@@ -69,7 +66,7 @@ public class InfluxBatchHandler {
         }
         for (int i = 0; i < numThreads; i++) {
             threadPoolExecutor.execute(() -> {
-                while (inUse) {
+                while (true) {
                     try {
                         consume();
                     } catch (Exception e) {
@@ -81,14 +78,8 @@ public class InfluxBatchHandler {
                         }
                     }
                 }
-                consume();
             });
 
         }
-    }
-
-    @PreDestroy
-    public void destroy() {
-        inUse = false;
     }
 }

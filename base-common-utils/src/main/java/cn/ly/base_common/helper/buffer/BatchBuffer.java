@@ -80,7 +80,7 @@ public class BatchBuffer<T> {
         } else {
             bufferSize = Queues.drainUninterruptibly(this.blockingQueue, buffer, batchSize, waitTime);
         }
-        if (bufferSize == 0) {
+        if (bufferSize == 0 && buffer.size() == 0) {
             buffer.add(Uninterruptibles.takeUninterruptibly(this.blockingQueue));
         }
         consumer.accept(buffer);
