@@ -2,8 +2,8 @@ package cn.ly.base_common.helper.delay;
 
 import cn.ly.base_common.helper.delay.domain.DelayPojo;
 import cn.ly.base_common.utils.date.LyDateUtil;
-import cn.ly.base_common.utils.json.LyJsonUtil;
-import com.alibaba.fastjson.TypeReference;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
@@ -43,7 +43,7 @@ public abstract class AbstractDelayDeqWorker extends AbstractDelayWorker impleme
             return;
         }
 
-        DelayPojo<T> delayPojo = LyJsonUtil.fromJson(jsonValue, new TypeReference<DelayPojo<T>>() {
+        DelayPojo<T> delayPojo = LyJacksonUtil.fromJson(jsonValue, new TypeReference<DelayPojo<T>>() {
         });
         long delayExecTimeSecond = delayPojo.getDelayExecTimeSecond();
         long currentTimeSecond = LyDateUtil.getSecondTime();

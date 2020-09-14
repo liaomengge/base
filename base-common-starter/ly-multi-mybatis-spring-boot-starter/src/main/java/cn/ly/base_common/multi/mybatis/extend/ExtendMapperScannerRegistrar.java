@@ -79,8 +79,8 @@ public class ExtendMapperScannerRegistrar implements ImportBeanDefinitionRegistr
                 basePackages.addAll(this.parsePlaceHolder(pkg));
             }
         }
-        for (Class<?> clazz : annoAttrs.getClassArray("basePackageClasses")) {
-            basePackages.add(ClassUtils.getPackageName(clazz));
+        for (Class<?> clz : annoAttrs.getClassArray("basePackageClasses")) {
+            basePackages.add(ClassUtils.getPackageName(clz));
         }
         //优先级 mapperHelperRef > properties > springboot
         String mapperHelperRef = annoAttrs.getString("mapperHelperRef");

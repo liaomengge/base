@@ -19,7 +19,8 @@ public class OnFilterCondition implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        Map<String, Class<?>> classMap = ExtServiceLoader.getInstance(ServiceFilter.class).getExtensionClasses();
+        Map<String, Class<ServiceFilter>> classMap =
+                ExtServiceLoader.getLoader(ServiceFilter.class).getExtensionClasses();
         return MapUtils.isNotEmpty(classMap);
     }
 }

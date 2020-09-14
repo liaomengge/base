@@ -17,12 +17,12 @@ public class BatchGeneralService extends AbstractGeneralService {
 
     private SqlSessionFactory sqlSessionFactory;
 
-    public <T> void batchInsertEntry(Class<? extends Mapper<T>> clazz, List<T> list) {
-        super.batchInsertEntry(sqlSessionFactory, clazz, list);
+    public <T> void batchInsertEntry(Class<? extends Mapper<T>> clz, List<T> list) {
+        super.batchInsertEntry(sqlSessionFactory, clz, list);
     }
 
-    public <T> void batchInsertEntry(Class<? extends Mapper<T>> clazz, List<T> list, int size) {
-        super.batchInsertEntry(sqlSessionFactory, clazz, list, size);
+    public <T> void batchInsertEntry(Class<? extends Mapper<T>> clz, List<T> list, int size) {
+        super.batchInsertEntry(sqlSessionFactory, clz, list, size);
     }
 
     public <T> void batchInsertEntry(String statement, List<T> list) {
@@ -33,12 +33,12 @@ public class BatchGeneralService extends AbstractGeneralService {
         super.batchInsertEntry(sqlSessionFactory, statement, list, size);
     }
 
-    public <T> void batchUpdateEntry(Class<? extends Mapper<T>> clazz, List<T> list) {
-        super.batchUpdateEntry(sqlSessionFactory, clazz, list);
+    public <T> void batchUpdateEntry(Class<? extends Mapper<T>> clz, List<T> list) {
+        super.batchUpdateEntry(sqlSessionFactory, clz, list);
     }
 
-    public <T> void batchUpdateEntry(Class<? extends Mapper<T>> clazz, List<T> list, int size) {
-        super.batchUpdateEntry(sqlSessionFactory, clazz, list, size);
+    public <T> void batchUpdateEntry(Class<? extends Mapper<T>> clz, List<T> list, int size) {
+        super.batchUpdateEntry(sqlSessionFactory, clz, list, size);
     }
 
     public <T> void batchUpdateEntry(String statement, List<T> list) {
@@ -49,12 +49,12 @@ public class BatchGeneralService extends AbstractGeneralService {
         super.batchUpdateEntry(sqlSessionFactory, statement, list, size);
     }
 
-    public <T> void batchDelEntry(Class<? extends Mapper<T>> clazz, List<T> list) {
-        super.batchDelEntry(sqlSessionFactory, clazz, list);
+    public <T> void batchDelEntry(Class<? extends Mapper<T>> clz, List<T> list) {
+        super.batchDelEntry(sqlSessionFactory, clz, list);
     }
 
-    public <T> void batchDelEntry(Class<? extends Mapper<T>> clazz, List<T> list, int size) {
-        super.batchDelEntry(sqlSessionFactory, clazz, list, size);
+    public <T> void batchDelEntry(Class<? extends Mapper<T>> clz, List<T> list, int size) {
+        super.batchDelEntry(sqlSessionFactory, clz, list, size);
     }
 
     public <T> void batchDelEntry(String statement, List<T> list) {

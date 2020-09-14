@@ -4,10 +4,10 @@ import cn.ly.base_common.dayu.consts.DayuConst;
 import cn.ly.base_common.dayu.guava.GuavaRateLimitProperties;
 import cn.ly.base_common.dayu.guava.callback.WebCallbackManager;
 import cn.ly.base_common.dayu.guava.domain.FlowRule;
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.csp.sentinel.adapter.servlet.util.FilterUtil;
-import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.util.concurrent.RateLimiter;
 import com.timgroup.statsd.StatsDClient;
 import lombok.AllArgsConstructor;
@@ -45,7 +45,7 @@ public class GuavaRateLimitHandlerInterceptor extends HandlerInterceptorAdapter 
         String uriTarget = StringUtils.defaultString(pattern, FilterUtil.filterTarget(request));
         List<FlowRule> flowRules = null;
         try {
-            flowRules = LyJsonUtil.fromJson(guavaRateLimitProperties.getRule().getFlows(),
+            flowRules = LyJacksonUtil.fromJson(guavaRateLimitProperties.getRule().getFlows(),
                     new TypeReference<List<FlowRule>>() {
                     });
         } catch (Exception e) {

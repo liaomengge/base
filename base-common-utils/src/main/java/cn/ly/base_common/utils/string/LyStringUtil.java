@@ -83,6 +83,11 @@ public class LyStringUtil {
      * 3. preserveAllTokens 取默认值false
      *
      * @return 如果为null返回null, 如果为""返回空数组
+     *
+     * @param str
+     * @param separatorChar
+     * @param expectParts
+     * @return
      */
     public List<String> split(String str, char separatorChar, int expectParts) {
         if (str == null) {
@@ -152,6 +157,10 @@ public class LyStringUtil {
      * 判断字符串是否以字母开头
      * <p>
      * 如果字符串为Null或空, 返回false
+     *
+     * @param s
+     * @param c
+     * @return
      */
     public boolean startWith(CharSequence s, char c) {
         if (StringUtils.isEmpty(s)) {

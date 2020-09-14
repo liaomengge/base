@@ -3,9 +3,9 @@ package cn.ly.base_common.mq.activemq;
 import cn.ly.base_common.mq.consts.MQConst;
 import cn.ly.base_common.mq.domain.MQMessage;
 import cn.ly.base_common.mq.domain.MessageHeader;
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
@@ -30,15 +30,15 @@ public abstract class AbstractMQMessageListener<T extends MQMessage> implements 
             return null;
         }
 
-        Class<T> clazz = this.getEntityClass();
-        if (Objects.nonNull(clazz)) {
-            return LyJsonUtil.fromJson(receiveMsg, clazz);
+        Class<T> clz = this.getEntityClass();
+        if (Objects.nonNull(clz)) {
+            return LyJacksonUtil.fromJson(receiveMsg, clz);
         }
         TypeReference<T> typeReference = this.getTypeReference();
         if (Objects.nonNull(typeReference)) {
-            return LyJsonUtil.fromJson(receiveMsg, typeReference);
+            return LyJacksonUtil.fromJson(receiveMsg, typeReference);
         }
-        return (T) LyJsonUtil.fromJson(receiveMsg);
+        return (T) LyJacksonUtil.fromJson(receiveMsg);
     }
 
     protected MessageHeader resolveMessageHeader(Message message) {

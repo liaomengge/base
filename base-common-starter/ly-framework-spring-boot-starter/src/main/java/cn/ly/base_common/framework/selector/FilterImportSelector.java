@@ -14,7 +14,8 @@ public class FilterImportSelector implements ImportSelector {
 
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        Map<String, Class<?>> classMap = ExtServiceLoader.getInstance(ServiceFilter.class).getExtensionClasses();
+        Map<String, Class<ServiceFilter>> classMap =
+                ExtServiceLoader.getLoader(ServiceFilter.class).getExtensionClasses();
         return classMap.keySet().stream().toArray(String[]::new);
     }
 }

@@ -21,20 +21,20 @@ public class LyLogger implements Logger {
 
     private final static String WRAPPER = "";
 
-    private final Class<?> clazz;
+    private final Class<?> clz;
 
-    public LyLogger(Class clazz) {
-        this.clazz = clazz;
-        log = LoggerFactory.getLogger(clazz);
+    public LyLogger(Class clz) {
+        this.clz = clz;
+        log = LoggerFactory.getLogger(clz);
     }
 
-    public static LyLogger getInstance(Class clazz) {
-        return new LyLogger(clazz);
+    public static LyLogger getInstance(Class clz) {
+        return new LyLogger(clz);
     }
 
     @Override
     public String getName() {
-        return clazz.getName();
+        return clz.getName();
     }
 
     @Override

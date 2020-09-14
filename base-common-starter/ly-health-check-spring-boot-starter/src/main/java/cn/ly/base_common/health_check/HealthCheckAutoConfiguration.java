@@ -5,7 +5,7 @@ import cn.ly.base_common.health_check.health.DataSourceHealthCheck;
 import cn.ly.base_common.health_check.health.HealthCheck;
 import cn.ly.base_common.health_check.health.RabbitMQHealthCheck;
 import cn.ly.base_common.health_check.health.domain.HealthInfo;
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -61,7 +61,7 @@ public class HealthCheckAutoConfiguration implements ApplicationContextAware {
         healthCheckMap.values().forEach(healthCheck -> {
             HealthInfo healthInfo = healthCheck.health();
             if (HealthInfo.Status.DOWN == healthInfo.getStatus()) {
-                throw new RuntimeException(LyJsonUtil.toJson(healthInfo.getDetails()));
+                throw new RuntimeException(LyJacksonUtil.toJson(healthInfo.getDetails()));
             }
         });
     }

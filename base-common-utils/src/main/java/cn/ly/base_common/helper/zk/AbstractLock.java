@@ -1,6 +1,6 @@
 package cn.ly.base_common.helper.zk;
 
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.net.LyNetworkUtil;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
@@ -259,7 +259,7 @@ public abstract class AbstractLock {
             heartBeat.setHostIp(LyNetworkUtil.getHostAddress());
             heartBeat.setHostName(LyNetworkUtil.getHostName());
             heartBeat.setLastTime(new Date());
-            zk.writeData(selfNodeFullName, LyJsonUtil.toJson(heartBeat));
+            zk.writeData(selfNodeFullName, LyJacksonUtil.toJson(heartBeat));
         }, 0, 15, TimeUnit.SECONDS);
     }
 }

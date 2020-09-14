@@ -1,6 +1,6 @@
 package cn.ly.service.base_framework.common.filter;
 
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogData;
 import cn.ly.base_common.utils.number.LyMoreNumberUtil;
 import cn.ly.service.base_framework.base.DataResult;
@@ -34,7 +34,7 @@ public class RateLimitFilter extends AbstractFilter {
         String methodName = invocation.getMethodName();
         Map<String, Object> rateConfigMap;
         try {
-            rateConfigMap = LyJsonUtil.fromJson(rateLimitConfig, Map.class);
+            rateConfigMap = LyJacksonUtil.fromJson(rateLimitConfig, Map.class);
         } catch (Exception e) {
             log.warn("限流配置[{}]格式错误,不合法", rateLimitConfig);
             return invoker.invoke(invocation);

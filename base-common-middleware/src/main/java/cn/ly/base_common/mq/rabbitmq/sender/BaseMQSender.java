@@ -3,7 +3,6 @@ package cn.ly.base_common.mq.rabbitmq.sender;
 import cn.ly.base_common.helper.metric.rabbitmq.RabbitMQMonitor;
 import cn.ly.base_common.mq.consts.MQConst.RabbitMQ;
 import cn.ly.base_common.mq.rabbitmq.AbstractMQSender;
-import cn.ly.base_common.mq.rabbitmq.convert.FastJsonMessageConverter;
 import cn.ly.base_common.mq.rabbitmq.processor.TraceMessagePostProcessor;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
@@ -11,6 +10,7 @@ import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.retry.support.RetryTemplate;
@@ -38,7 +38,7 @@ public abstract class BaseMQSender extends AbstractMQSender implements Initializ
                         RabbitTemplate.ConfirmCallback confirmCallback,
                         RabbitTemplate.ReturnCallback returnCallback, boolean mandatory,
                         RabbitMQMonitor rabbitMQMonitor) {
-        this(cachingConnectionFactory, rabbitAdmin, new FastJsonMessageConverter(),
+        this(cachingConnectionFactory, rabbitAdmin, new Jackson2JsonMessageConverter(),
                 Lists.newArrayList(new TraceMessagePostProcessor()),
                 retryTemplate, confirmCallback, returnCallback, mandatory, rabbitMQMonitor);
     }

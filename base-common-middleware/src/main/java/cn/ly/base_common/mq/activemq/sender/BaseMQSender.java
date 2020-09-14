@@ -2,10 +2,10 @@ package cn.ly.base_common.mq.activemq.sender;
 
 import cn.ly.base_common.helper.metric.activemq.ActiveMQMonitor;
 import cn.ly.base_common.mq.activemq.AbstractMQSender;
-import cn.ly.base_common.mq.activemq.convert.FastJsonMessageConverter;
 import lombok.Setter;
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 
 import javax.jms.DeliveryMode;
@@ -26,7 +26,7 @@ public abstract class BaseMQSender extends AbstractMQSender {
     protected boolean autoBackup = false;//是否自动将消息备份到_B的队列, 方便调试
 
     public BaseMQSender(PooledConnectionFactory connectionFactory, ActiveMQMonitor activeMQMonitor) {
-        this(connectionFactory, new FastJsonMessageConverter(), activeMQMonitor);
+        this(connectionFactory, new MappingJackson2MessageConverter(), activeMQMonitor);
     }
 
     public BaseMQSender(PooledConnectionFactory connectionFactory, MessageConverter messageConverter,

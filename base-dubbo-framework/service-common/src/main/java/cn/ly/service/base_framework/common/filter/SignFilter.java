@@ -1,6 +1,6 @@
 package cn.ly.service.base_framework.common.filter;
 
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogData;
 import cn.ly.base_common.utils.sign.LySignUtil;
 import cn.ly.service.base_framework.base.BaseRequest;
@@ -83,7 +83,7 @@ public class SignFilter extends AbstractFilter {
         String signConfig = filterConfig.getSignConfig();
         Map<String, Object> signConfigMap;
         try {
-            signConfigMap = LyJsonUtil.fromJson(signConfig, Map.class);
+            signConfigMap = LyJacksonUtil.fromJson(signConfig, Map.class);
         } catch (Exception e) {
             return false;
         }

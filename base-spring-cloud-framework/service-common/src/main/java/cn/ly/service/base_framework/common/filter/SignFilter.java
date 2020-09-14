@@ -1,13 +1,13 @@
 package cn.ly.service.base_framework.common.filter;
 
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.sign.LySignUtil;
 import cn.ly.service.base_framework.base.BaseRequest;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
 import cn.ly.service.base_framework.common.config.FilterConfig;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
-import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.MapUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -64,7 +64,7 @@ public class SignFilter extends AbstractFilter {
         String signConfig = filterConfig.getSign().getConfig();
         Map<String, Object> signConfigMap;
         try {
-            signConfigMap = LyJsonUtil.fromJson(signConfig, new TypeReference<Map<String, Object>>() {
+            signConfigMap = LyJacksonUtil.fromJson(signConfig, new TypeReference<Map<String, Object>>() {
             });
         } catch (Exception e) {
             return false;

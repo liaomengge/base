@@ -39,11 +39,11 @@ public class LyFileUtil {
     /**
      * 取得jar文件的执行路径
      *
-     * @param clazz jar包里的main-class
+     * @param clz jar包里的main-class
      * @return
      */
-    public String getJarExecPath(Class clazz) {
-        String path = clazz.getProtectionDomain().getCodeSource().getLocation().getPath();
+    public String getJarExecPath(Class clz) {
+        String path = clz.getProtectionDomain().getCodeSource().getLocation().getPath();
         if (LyOSUtil.getOSname().equals(OSTypeEnum.Windows)) {
             return path.substring(1);
         }

@@ -1,9 +1,9 @@
 package cn.ly.base_common.helper.retrofit;
 
-import cn.ly.base_common.utils.error.LyExceptionUtil;
-import cn.ly.base_common.utils.json.LyJsonUtil;
-import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.support.exception.CommunicationException;
+import cn.ly.base_common.utils.error.LyExceptionUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
+import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.csp.sentinel.slots.block.AbstractRule;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.AllArgsConstructor;
@@ -87,8 +87,8 @@ public class RetrofitHelper {
         return response.errorBody().string();
     }
 
-    private <T> T extract2(Response<ResponseBody> response, Class<T> clazz) throws IOException {
-        return LyJsonUtil.fromJson(extract2(response), clazz);
+    private <T> T extract2(Response<ResponseBody> response, Class<T> clz) throws IOException {
+        return LyJacksonUtil.fromJson(extract2(response), clz);
     }
 
     /********************************华丽的分割线****************************/

@@ -114,7 +114,8 @@ public class LyIOUtil {
      * Close closable object and wrap {@link IOException} with {@link
      * RuntimeException}
      *
-     * @param closeable closeable object
+     * @param closeable
+     * @throws IOException
      */
     public void close(Closeable closeable) throws IOException {
         if (closeable != null) {

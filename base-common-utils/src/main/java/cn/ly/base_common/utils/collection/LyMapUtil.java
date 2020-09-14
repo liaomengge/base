@@ -1,11 +1,10 @@
 package cn.ly.base_common.utils.collection;
 
 import cn.ly.base_common.utils.json.LyJacksonUtil;
-import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.string.LyStringUtil;
-import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
@@ -120,7 +119,7 @@ public class LyMapUtil {
         if (null == obj) {
             return Maps.newHashMap();
         }
-        return LyJsonUtil.fromJson(LyJsonUtil.toJson(obj), new TypeReference<Map<String, Object>>() {
+        return LyJacksonUtil.fromJson(LyJacksonUtil.toJson(obj), new TypeReference<Map<String, Object>>() {
         });
     }
 
@@ -249,7 +248,7 @@ public class LyMapUtil {
             return null;
         }
 
-        return LyJacksonUtil.bean2Map(obj, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {
+        return LyJacksonUtil.obj2Bean(obj, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {
         });
     }
 
@@ -257,16 +256,16 @@ public class LyMapUtil {
      * Map 2 Bean 依据指定类型转换
      *
      * @param map
-     * @param clazz
+     * @param clz
      * @param <T>
      * @return
      */
-    public <T> T map2Bean(Map<String, Object> map, Class<T> clazz) {
+    public <T> T map2Bean(Map<String, Object> map, Class<T> clz) {
         if (null == map) {
             return null;
         }
 
-        return LyJacksonUtil.map2Bean(map, clazz);
+        return LyJacksonUtil.obj2Bean(map, clz);
     }
 
     /**
@@ -282,7 +281,7 @@ public class LyMapUtil {
             return null;
         }
 
-        return LyJacksonUtil.map2Bean(map, typeReference);
+        return LyJacksonUtil.obj2Bean(map, typeReference);
     }
 
     /**

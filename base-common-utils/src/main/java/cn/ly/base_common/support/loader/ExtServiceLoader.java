@@ -44,8 +44,16 @@ public class ExtServiceLoader<T> {
         this.singletonInstances = new ConcurrentHashMap<>();
     }
 
+    public T getInstance(Class<T> clz) {
+        return getInstance(clz, true);
+    }
+
     public T getInstance(Class<T> clz, boolean single) {
         return getInstance(clz.getName(), single);
+    }
+
+    public T getInstance(String serviceName) {
+        return getInstance(serviceName, true);
     }
 
     public T getInstance(String serviceName, boolean single) {

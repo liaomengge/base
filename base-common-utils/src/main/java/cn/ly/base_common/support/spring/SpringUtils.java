@@ -17,11 +17,11 @@ public class SpringUtils implements ApplicationContextAware {
         SpringUtils.context = context;
     }
 
-    public static <T> T getBean(Class<T> clazz) {
+    public static <T> T getBean(Class<T> clz) {
         if (context == null) {
             return null;
         }
-        return context.getBean(clazz);
+        return context.getBean(clz);
     }
 
     public static <T> T getBean(String beanName) {
@@ -31,11 +31,11 @@ public class SpringUtils implements ApplicationContextAware {
         return (T) context.getBean(beanName);
     }
 
-    public static <T> T getBean(String beanName, Class<T> clazz) {
+    public static <T> T getBean(String beanName, Class<T> clz) {
         if (context == null) {
             return null;
         }
-        return context.getBean(beanName, clazz);
+        return context.getBean(beanName, clz);
     }
 
     public static ApplicationContext getContext() {

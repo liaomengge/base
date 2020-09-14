@@ -1,8 +1,8 @@
 package cn.ly.base_common.helper.cache;
 
 import cn.ly.base_common.helper.redis.IRedisHelper;
-import cn.ly.base_common.utils.json.LyJsonUtil;
-import com.alibaba.fastjson.TypeReference;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -116,26 +116,26 @@ public class RedisDbCacheHelper {
                 if (StringUtils.isBlank(value)) {
                     T t = supplier.get();
                     if (Objects.nonNull(t)) {
-                        iRedisHelper.set(key, LyJsonUtil.toJson(t));
+                        iRedisHelper.set(key, LyJacksonUtil.toJson(t));
                     }
                     return t;
                 }
             }
         }
 
-        return LyJsonUtil.fromJson(value, typeReference);
+        return LyJacksonUtil.fromJson(value, typeReference);
     }
 
     /**
      * Redis缓存(L2) + 泛型化(Generic) + synchronized
      *
      * @param key
-     * @param clazz
+     * @param clz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGenericSync2(String key, Class<T> clazz, Supplier<T> supplier) {
+    public <T> T invokeGenericSync2(String key, Class<T> clz, Supplier<T> supplier) {
         String value = iRedisHelper.get(key);
         if (StringUtils.isBlank(value)) {
             synchronized (getSynchronizedKey(key)) {
@@ -143,14 +143,14 @@ public class RedisDbCacheHelper {
                 if (StringUtils.isBlank(value)) {
                     T t = supplier.get();
                     if (Objects.nonNull(t)) {
-                        iRedisHelper.set(key, LyJsonUtil.toJson(t));
+                        iRedisHelper.set(key, LyJacksonUtil.toJson(t));
                     }
                     return t;
                 }
             }
         }
 
-        return LyJsonUtil.fromJson(value, clazz);
+        return LyJacksonUtil.fromJson(value, clz);
     }
 
     /**
@@ -172,14 +172,14 @@ public class RedisDbCacheHelper {
                 if (StringUtils.isBlank(value)) {
                     T t = supplier.get();
                     if (Objects.nonNull(t) && redisExpiresInSeconds > 0) {
-                        iRedisHelper.set(key, LyJsonUtil.toJson(t), redisExpiresInSeconds);
+                        iRedisHelper.set(key, LyJacksonUtil.toJson(t), redisExpiresInSeconds);
                     }
                     return t;
                 }
             }
         }
 
-        return LyJsonUtil.fromJson(value, typeReference);
+        return LyJacksonUtil.fromJson(value, typeReference);
     }
 
     /**
@@ -205,14 +205,14 @@ public class RedisDbCacheHelper {
                         t = defaultNullValue;
                     }
                     if (Objects.nonNull(t) && redisExpiresInSeconds > 0) {
-                        iRedisHelper.set(key, LyJsonUtil.toJson(t), redisExpiresInSeconds);
+                        iRedisHelper.set(key, LyJacksonUtil.toJson(t), redisExpiresInSeconds);
                     }
                     return t;
                 }
             }
         }
 
-        return LyJsonUtil.fromJson(value, typeReference);
+        return LyJacksonUtil.fromJson(value, typeReference);
     }
 
     /**
@@ -220,12 +220,12 @@ public class RedisDbCacheHelper {
      *
      * @param key
      * @param redisExpiresInSeconds
-     * @param clazz
+     * @param clz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGeneric2(String key, int redisExpiresInSeconds, Class<T> clazz, Supplier<T> supplier) {
+    public <T> T invokeGeneric2(String key, int redisExpiresInSeconds, Class<T> clz, Supplier<T> supplier) {
         String value = iRedisHelper.get(key);
         if (StringUtils.isBlank(value)) {
             synchronized (getSynchronizedKey(key)) {
@@ -233,14 +233,14 @@ public class RedisDbCacheHelper {
                 if (StringUtils.isBlank(value)) {
                     T t = supplier.get();
                     if (Objects.nonNull(t) && redisExpiresInSeconds > 0) {
-                        iRedisHelper.set(key, LyJsonUtil.toJson(t), redisExpiresInSeconds);
+                        iRedisHelper.set(key, LyJacksonUtil.toJson(t), redisExpiresInSeconds);
                     }
                     return t;
                 }
             }
         }
 
-        return LyJsonUtil.fromJson(value, clazz);
+        return LyJacksonUtil.fromJson(value, clz);
     }
 
     /**
@@ -249,12 +249,12 @@ public class RedisDbCacheHelper {
      *
      * @param key
      * @param redisExpiresInSeconds
-     * @param clazz
+     * @param clz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGeneric2(String key, int redisExpiresInSeconds, T defaultNullValue, Class<T> clazz,
+    public <T> T invokeGeneric2(String key, int redisExpiresInSeconds, T defaultNullValue, Class<T> clz,
                                 Supplier<T> supplier) {
         String value = iRedisHelper.get(key);
         if (StringUtils.isBlank(value)) {
@@ -266,14 +266,14 @@ public class RedisDbCacheHelper {
                         t = defaultNullValue;
                     }
                     if (Objects.nonNull(t) && redisExpiresInSeconds > 0) {
-                        iRedisHelper.set(key, LyJsonUtil.toJson(t), redisExpiresInSeconds);
+                        iRedisHelper.set(key, LyJacksonUtil.toJson(t), redisExpiresInSeconds);
                     }
                     return t;
                 }
             }
         }
 
-        return LyJsonUtil.fromJson(value, clazz);
+        return LyJacksonUtil.fromJson(value, clz);
     }
 
     private String getSynchronizedKey(String key) {

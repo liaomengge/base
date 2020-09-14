@@ -3,9 +3,9 @@ package cn.ly.base_common.dayu.guava.reload;
 import cn.ly.base_common.dayu.guava.consts.GuavaRateLimitConst;
 import cn.ly.base_common.dayu.guava.domain.FlowRule;
 import cn.ly.base_common.dayu.guava.interceptor.GuavaRateLimitHandlerInterceptor;
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.util.concurrent.RateLimiter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,7 +37,6 @@ public class GuavaRateLimitReloadListener implements EnvironmentAware, Applicati
 
     @PostConstruct
     public void init() {
-
     }
 
     @Override
@@ -52,7 +51,7 @@ public class GuavaRateLimitReloadListener implements EnvironmentAware, Applicati
         if (StringUtils.isNotBlank(flowRules)) {
             List<FlowRule> flowRuleList = null;
             try {
-                flowRuleList = LyJsonUtil.fromJson(flowRules, new TypeReference<List<FlowRule>>() {
+                flowRuleList = LyJacksonUtil.fromJson(flowRules, new TypeReference<List<FlowRule>>() {
                 });
             } catch (Exception e) {
                 log.warn("[Guava RateLimit], [flow] rule parse exception", e);

@@ -2,11 +2,11 @@ package cn.ly.base_common.helper.mybatis.plugins;
 
 import cn.ly.base_common.utils.date.LyDateUtil;
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.properties.LyPropertiesUtil;
 import cn.ly.base_common.utils.string.LyStringUtil;
-import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.apache.commons.collections4.CollectionUtils;
@@ -141,7 +141,7 @@ public class FlowInterceptor implements Interceptor {
         String config = LyPropertiesUtil.getStringProperty(properties, "flowConfigs");
         if (StringUtils.isNotBlank(config)) {
             try {
-                flowConfigs = LyJsonUtil.fromJson(config, new TypeReference<List<FlowConfig>>() {
+                flowConfigs = LyJacksonUtil.fromJson(config, new TypeReference<List<FlowConfig>>() {
                 });
             } catch (Exception e) {
                 log.error("parse sql flow control config error", e);

@@ -10,6 +10,7 @@ import com.alibaba.fastjson.serializer.ValueFilter;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.Date;
@@ -24,12 +25,15 @@ public class LyJsonUtil {
     /**
      * 是否是json字符串
      *
-     * @param str
+     * @param jsonStr
      * @return
      */
-    public boolean isJson(String str) {
+    public boolean isJson(String jsonStr) {
+        if (StringUtils.isBlank(jsonStr)) {
+            return false;
+        }
         try {
-            fromJson(str);
+            JSON.parse(jsonStr);
             return true;
         } catch (Exception e) {
             return false;
@@ -47,6 +51,9 @@ public class LyJsonUtil {
     public String toJson(Object object) {
         if (null == object) {
             return null;
+        }
+        if (object instanceof String) {
+            return (String) object;
         }
         return JSON.toJSONString(object);
     }
@@ -81,6 +88,9 @@ public class LyJsonUtil {
     public String toJson(Object object, SerializerFeature... features) {
         if (null == object) {
             return null;
+        }
+        if (object instanceof String) {
+            return (String) object;
         }
         return JSON.toJSONString(object, features);
     }
@@ -182,15 +192,30 @@ public class LyJsonUtil {
         return JSON.toJSONString(object, nameFilter);
     }
 
-    public Object fromJson(String jsonString) {
-        return JSON.parse(jsonString);
+    public Object fromJson(String jsonStr) {
+        if (StringUtils.isBlank(jsonStr)) {
+            return null;
+        }
+        return JSON.parse(jsonStr);
     }
 
-    public <T> T fromJson(String jsonString, Class<T> clz) {
-        return JSON.parseObject(jsonString, clz);
+    public <T> T fromJson(String jsonStr, Class<T> clz) {
+        if (StringUtils.isBlank(jsonStr)) {
+            return null;
+        }
+        if (clz == String.class) {
+            return (T) jsonStr;
+        }
+        return JSON.parseObject(jsonStr, clz);
     }
 
-    public <T> T fromJson(String jsonString, TypeReference<T> typeReference) {
-        return JSON.parseObject(jsonString, typeReference);
+    public <T> T fromJson(String jsonStr, TypeReference<T> typeReference) {
+        if (StringUtils.isBlank(jsonStr)) {
+            return null;
+        }
+        if (String.class.equals(typeReference.getType())) {
+            return (T) jsonStr;
+        }
+        return JSON.parseObject(jsonStr, typeReference);
     }
 }

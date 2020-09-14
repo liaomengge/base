@@ -2,7 +2,7 @@ package cn.ly.base_common.utils.web;
 
 import cn.ly.base_common.support.misc.Charsets;
 import cn.ly.base_common.utils.io.LyIOUtil;
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
@@ -147,9 +147,9 @@ public class LyWebUtil {
         response.setCharacterEncoding(Charsets.UTF_8.name());
         response.setContentType(contentType);
         try (PrintWriter writer = response.getWriter()) {
-            writer.write(LyJsonUtil.toJson(result));
+            writer.write(LyJacksonUtil.toJson(result));
             writer.flush();
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("write response stream exception", e);
         }
     }

@@ -2,13 +2,14 @@ package cn.ly.base_common.utils.http;
 
 import cn.ly.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import cn.ly.base_common.support.exception.CommunicationException;
-import cn.ly.base_common.utils.json.LyJsonUtil;
+import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log.LyAlarmLogUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.properties.LyConfigUtil;
 import cn.ly.base_common.utils.properties.LyPropertiesUtil;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
-import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.collect.Maps;
 import lombok.Data;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -71,8 +72,13 @@ public class LyHttpClientUtil3 {
             defaultMaxPerRoute = httpClientProperties.getDefaultMaxPerRoute();
             String urls = httpClientProperties.getUrls();
             if (StringUtils.isNotBlank(urls)) {
-                urlPerRouteMap = LyJsonUtil.fromJson(urls, new TypeReference<Map<String, Integer>>() {
-                });
+                try {
+                    urlPerRouteMap = LyJacksonUtil.fromJson(urls, new TypeReference<Map<String, Integer>>() {
+                    });
+                } catch (Exception e) {
+                    urlPerRouteMap = Maps.newHashMap();
+                }
+
             }
         }
         poolConnManager = new PoolingHttpClientConnectionManager();
