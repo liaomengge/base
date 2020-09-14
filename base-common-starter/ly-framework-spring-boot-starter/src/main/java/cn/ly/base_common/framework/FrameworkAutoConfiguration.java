@@ -1,6 +1,7 @@
 package cn.ly.base_common.framework;
 
 import cn.ly.base_common.framework.configuration.FrameworkCorsConfiguration;
+import cn.ly.base_common.framework.configuration.FrameworkMicrometerConfiguration;
 import cn.ly.base_common.framework.configurer.FrameworkWebMvcConfigurer;
 import cn.ly.base_common.framework.error.FrameworkErrorConfiguration;
 import cn.ly.base_common.framework.registry.FrameworkBeanRegistryConfiguration;
@@ -32,7 +33,8 @@ import java.util.stream.Collectors;
 @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)
 @EnableConfigurationProperties(FrameworkProperties.class)
 @Import({FrameworkBeanRegistryConfiguration.class, FrameworkErrorConfiguration.class,
-        FrameworkWebMvcConfigurer.class, FilterConfiguration.class, FrameworkCorsConfiguration.class})
+        FrameworkWebMvcConfigurer.class, FilterConfiguration.class,
+        FrameworkCorsConfiguration.class, FrameworkMicrometerConfiguration.class})
 public class FrameworkAutoConfiguration {
 
     @Autowired
