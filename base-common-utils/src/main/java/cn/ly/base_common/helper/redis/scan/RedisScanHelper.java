@@ -48,9 +48,7 @@ public class RedisScanHelper {
         }
     }
 
-    /***************************************
-     * 华丽的分割线(Jdk8)
-     *****************************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public void hscan(String key, Consumer<List<Map<String, String>>> consumer) {
         ScanParams params = new ScanParams();

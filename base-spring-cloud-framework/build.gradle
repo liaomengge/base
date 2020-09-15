@@ -128,7 +128,7 @@ subprojects {
 
         api "cn.ly:base-common-utils:${baseCommonUtilsVersion}"
 
-        /********************************华丽的分割线****************************/
+        /************************************************华丽的分割线***************************************************/
 
         api "org.springframework:spring-webmvc"
         api "org.springframework.boot:spring-boot-starter"

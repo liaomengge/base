@@ -57,7 +57,7 @@ public class BaseResponse<T> implements Serializable {
         this(resultCode.getCode(), msg);
     }
 
-    /****************************************华丽分分割线****************************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public static <T> BaseResponse<T> success() {
         return new BaseResponse<>();

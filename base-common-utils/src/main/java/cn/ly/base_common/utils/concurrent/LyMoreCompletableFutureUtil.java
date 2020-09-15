@@ -63,7 +63,7 @@ public class LyMoreCompletableFutureUtil {
         return asyncExec(future, future2, combineExecutor);
     }
 
-    /************************************************华丽的分割线(Tuple3)**************************************************/
+    /************************************************华丽的分割线(Tuple3)***********************************************/
 
     public <A, B, C> Tuple3<A, B, C> asyncExec(Supplier<A> supplier, Supplier<B> supplier2, Supplier<C> supplier3) {
         CompletableFuture future = CompletableFuture.supplyAsync(supplier);
@@ -124,7 +124,7 @@ public class LyMoreCompletableFutureUtil {
                 .thenApplyAsync(val -> Tuple3.of((A) val.get(0), (B) val.get(1), (C) val.get(2)), combineExecutor).join();
     }
 
-    /************************************************华丽的分割线(Tuple4)**************************************************/
+    /************************************************华丽的分割线(Tuple4)***********************************************/
 
     public <A, B, C, D> Tuple4<A, B, C, D> asyncExec(Supplier<A> supplier, Supplier<B> supplier2,
                                                      Supplier<C> supplier3, Supplier<D> supplier4) {
@@ -203,7 +203,7 @@ public class LyMoreCompletableFutureUtil {
                         combineExecutor).join();
     }
 
-    /************************************************华丽的分割线(Tuple5)**************************************************/
+    /************************************************华丽的分割线(Tuple5)***********************************************/
 
     public <A, B, C, D, E> Tuple5<A, B, C, D, E> asyncExec(Supplier<A> supplier, Supplier<B> supplier2,
                                                            Supplier<C> supplier3, Supplier<D> supplier4,
@@ -298,7 +298,7 @@ public class LyMoreCompletableFutureUtil {
                         (E) val.get(4)), combineExecutor).join();
     }
 
-    /************************************************华丽的分割线(结果集转换)*********************************************/
+    /************************************************华丽的分割线(结果集转换)********************************************/
 
     /**
      * 无参结果
@@ -341,7 +341,7 @@ public class LyMoreCompletableFutureUtil {
         return thenCombineAsync(future, future2, combineExecutor).join();
     }
 
-    /************************************************华丽的分割线**************************************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public <A, B> CompletableFuture<Tuple2<A, B>> thenCombineAsync(CompletableFuture<A> future,
                                                                    CompletableFuture<B> future2) {
@@ -354,7 +354,7 @@ public class LyMoreCompletableFutureUtil {
         return future.thenCombineAsync(future2, (t, r) -> Tuple2.of(t, r), combineExecutor);
     }
 
-    /************************************************华丽的分割线**************************************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public interface Function3<A, B, C, D> {
         D apply(A a, B b, C c);

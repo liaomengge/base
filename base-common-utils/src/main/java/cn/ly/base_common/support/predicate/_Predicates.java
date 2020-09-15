@@ -39,7 +39,7 @@ public class _Predicates {
         return new OrPredicate<>(Lists.newArrayList(components));
     }
 
-    /**********************************************华丽的分割线**********************************************/
+    /************************************************华丽的分割线*******************************************************/
 
     @AllArgsConstructor
     private static class OrPredicate<T> implements Predicate<T>, Serializable {

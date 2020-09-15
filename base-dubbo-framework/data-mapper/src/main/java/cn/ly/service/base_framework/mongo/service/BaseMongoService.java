@@ -94,7 +94,7 @@ public abstract class BaseMongoService<T extends BaseMongoDoc> {
         return baseMongoDao.count(query);
     }
 
-    /*****************************************华丽的分割线***************************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public Optional<T> findByObjectIdToOptional(String objectId) {
         return Optional.ofNullable(baseMongoDao.findByObjId(objectId));

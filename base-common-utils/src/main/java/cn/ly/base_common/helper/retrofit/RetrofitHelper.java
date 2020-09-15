@@ -48,7 +48,7 @@ public class RetrofitHelper {
         throw new CommunicationException(response.message());
     }
 
-    /********************************华丽的分割线****************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public String execute2(Call<ResponseBody> call) {
         return execute2(call, true);
@@ -91,7 +91,7 @@ public class RetrofitHelper {
         return LyJacksonUtil.fromJson(extract2(response), clz);
     }
 
-    /********************************华丽的分割线****************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public <T> void enqueue(Call<T> call, Callback<T> callback) {
         call.enqueue(callback);

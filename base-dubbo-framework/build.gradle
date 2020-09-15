@@ -128,15 +128,7 @@ subprojects {
 
         api "cn.ly:base-common-utils:${baseCommonUtilsVersion}"
 
-        /********************************华丽的分割线****************************/
-
-        api("com.baidu.disconf:disconf-client") {
-            exclude(module: 'log4j')
-            exclude(module: 'logback-core')
-            exclude(module: 'logback-classic')
-            exclude(module: 'slf4j-log4j12')
-            exclude(group: 'org.springframework')
-        }
+        /************************************************华丽的分割线***************************************************/
 
         api("com.alibaba:dubbo") {
             exclude(module: 'log4j')

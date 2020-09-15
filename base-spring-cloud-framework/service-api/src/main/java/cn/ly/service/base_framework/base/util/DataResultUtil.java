@@ -37,7 +37,7 @@ public class DataResultUtil {
         return Optional.ofNullable(result).filter(DataResult::isSuccess).map(DataResult::getData).map(function);
     }
 
-    /************************************************华丽分分割线*******************************************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public <T, R extends BaseResponse<T>> boolean isResponseSuccess(DataResult<R> result) {
         return Optional.ofNullable(result).filter(DataResult::isSuccess).map(DataResult::getData)

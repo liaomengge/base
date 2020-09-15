@@ -81,7 +81,7 @@ public class DataResult<T> implements Serializable {
         this.sysException = sysException;
     }
 
-    /****************************************华丽分分割线****************************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public static <T> DataResult<T> success() {
         DataResult<T> dataResult = new DataResult<>(true);
@@ -118,7 +118,7 @@ public class DataResult<T> implements Serializable {
         return dataResult;
     }
 
-    /****************************************华丽分分割线****************************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public static <T> DataResult<T> of(T data) {
         return new DataResult<>(data);

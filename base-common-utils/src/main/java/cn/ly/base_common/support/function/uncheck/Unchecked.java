@@ -84,7 +84,7 @@ public class Unchecked {
         };
     }
 
-    /********************************华丽的分割线********************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public <T, R> Function<T, R> apply(CheckedFunction<T, R> mapper, Function<Throwable, R> handler) {
         Objects.requireNonNull(mapper);

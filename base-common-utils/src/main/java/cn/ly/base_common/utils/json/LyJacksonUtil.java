@@ -64,7 +64,7 @@ public class LyJacksonUtil {
         return objectMapper.convertValue(obj, typeReference);
     }
 
-    /*****************************************************华丽分分割线*************************************************/
+    /************************************************华丽的分割线*******************************************************/
 
     public boolean isJson(String jsonStr) {
         if (StringUtils.isBlank(jsonStr)) {
