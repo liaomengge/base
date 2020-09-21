@@ -4,7 +4,6 @@ import cn.ly.base_common.metric.druid.MetricDruidProperties;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadUtil;
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.pool.DruidDataSourceStatValue;
 import com.alibaba.druid.stat.DruidDataSourceStatManager;
 import com.timgroup.statsd.StatsDClient;
 import lombok.AllArgsConstructor;
@@ -57,17 +56,16 @@ public class MetricDruidScheduledTask {
                         Set<DruidDataSource> druidDataSources =
                                 DruidDataSourceStatManager.getDruidDataSourceInstances();
                         Optional.ofNullable(druidDataSources).ifPresent(val -> val.forEach(druidDataSource -> {
-                            DruidDataSourceStatValue statValue = druidDataSource.getStatValueAndReset();
                             long maxWaitMillis = druidDataSource.getMaxWait();//最大等待时间
-                            long waitThreadCount = statValue.getWaitThreadCount();//当前等待获取连接的线程数
-                            long notEmptyWaitMillis = statValue.getNotEmptyWaitMillis();//获取连接时累计等待多长时间
-                            long notEmptyWaitCount = statValue.getNotEmptyWaitCount();//获取连接时累计等待多少次'
+                            long waitThreadCount = druidDataSource.getWaitThreadCount();//当前等待获取连接的线程数
+                            long notEmptyWaitMillis = druidDataSource.getNotEmptyWaitMillis();//获取连接时累计等待多长时间
+                            long notEmptyWaitCount = druidDataSource.getNotEmptyWaitCount();//获取连接时累计等待多少次'
 
                             int maxActive = druidDataSource.getMaxActive();//最大活跃数
-                            int poolingCount = statValue.getPoolingCount();//当前连接池数
-                            int poolingPeak = statValue.getPoolingPeak();//连接池峰值
-                            int activeCount = statValue.getActiveCount();//当前活跃连接数
-                            int activePeak = statValue.getActivePeak();//活跃数峰值
+                            int poolingCount = druidDataSource.getPoolingCount();//当前连接池数
+                            int poolingPeak = druidDataSource.getPoolingPeak();//连接池峰值
+                            int activeCount = druidDataSource.getActiveCount();//当前活跃连接数
+                            int activePeak = druidDataSource.getActivePeak();//活跃数峰值
 
                             if (Objects.nonNull(statsDClient)) {
                                 URI jdbcUri = parseJdbcUrl(druidDataSource.getUrl());

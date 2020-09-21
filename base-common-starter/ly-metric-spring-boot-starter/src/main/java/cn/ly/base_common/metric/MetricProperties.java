@@ -10,15 +10,40 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("ly.metric")
 public class MetricProperties {
 
-    private boolean enabled;
-    private long initialDelay = 120L;
-    private long period = 60L;
-    private StatsdProperties statsd = new StatsdProperties();
+    private WebProperties web;
+    private HttpProperties http;
 
     @Data
-    public static class StatsdProperties {
-        private String prefix;
-        private String hostname;
-        private int port;
+    public class WebProperties {
+        private TomcatProperties tomcat;
+        private UndertowProperties undertow;
+
+        @Data
+        public class TomcatProperties {
+            private boolean enabled = true;
+        }
+
+        @Data
+        public class UndertowProperties {
+            private boolean enabled = true;
+        }
+    }
+
+    @Data
+    public class HttpProperties {
+
+        private HttpClientProperties httpclient;
+        private Okhttp3Properties okhttp3;
+
+        @Data
+        public class HttpClientProperties {
+            private boolean enabled = true;
+            private int maxHttpRoueCount = 5;//统计多少httpRoute
+        }
+
+        @Data
+        public class Okhttp3Properties {
+            private boolean enabled = true;
+        }
     }
 }

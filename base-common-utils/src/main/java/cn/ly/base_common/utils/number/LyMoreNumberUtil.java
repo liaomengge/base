@@ -84,10 +84,24 @@ public class LyMoreNumberUtil {
     }
 
     /**
+     * 将10进制的String安全的转化为float, 当str为空或非数字字符串时, 返回0
+     */
+    public double toFloat(String str) {
+        return NumberUtils.toFloat(str, 0.0F);
+    }
+
+    /**
+     * 将10进制的String安全的转化为float, 当str为空或非数字字符串时, 返回default值
+     */
+    public double toFloat(String str, float defaultValue) {
+        return NumberUtils.toFloat(str, defaultValue);
+    }
+
+    /**
      * 将10进制的String安全的转化为double, 当str为空或非数字字符串时, 返回0
      */
     public double toDouble(String str) {
-        return NumberUtils.toDouble(str, 0L);
+        return NumberUtils.toDouble(str, 0.0D);
     }
 
     /**
