@@ -1,7 +1,5 @@
 package cn.ly.base_common.metric.threadpool;
 
-import cn.ly.base_common.helper.concurrent.LyThreadPoolExecutor;
-import cn.ly.base_common.helper.concurrent.LyThreadPoolTaskExecutor;
 import cn.ly.base_common.helper.concurrent.LyThreadPoolTaskWrappedExecutor;
 import cn.ly.base_common.helper.concurrent.LyThreadPoolWrappedExecutor;
 import cn.ly.base_common.utils.log4j2.LyLogger;
@@ -99,31 +97,19 @@ public class ThreadPoolMetricsBinder implements MeterBinder, ApplicationContextA
             return;
         }
         if (executor instanceof ThreadPoolTaskExecutor) {
-            if (executor instanceof LyThreadPoolTaskExecutor) {
-                executorName = ((LyThreadPoolTaskExecutor) executor).getThreadName();
-            }
-            registerMetrics(registry, executorName, ThreadPoolUtil.unwrap((LyThreadPoolTaskExecutor) executor));
+            ThreadPoolTaskExecutor taskExecutor = (ThreadPoolTaskExecutor) executor;
+            registerMetrics(registry, executorName, ThreadPoolUtil.unwrap(taskExecutor));
         } else if (executor instanceof LyThreadPoolTaskWrappedExecutor) {
             LyThreadPoolTaskWrappedExecutor taskWrappedExecutor = (LyThreadPoolTaskWrappedExecutor) executor;
-            if (taskWrappedExecutor.getThreadPoolTaskExecutor() instanceof LyThreadPoolTaskExecutor) {
-                executorName =
-                        ((LyThreadPoolTaskExecutor) taskWrappedExecutor.getThreadPoolTaskExecutor()).getThreadName();
-            }
             registerMetrics(registry, executorName, ThreadPoolUtil.unwrap(taskWrappedExecutor));
         }
     }
 
     private void bindToJdkExecutor(String executorName, Executor executor, MeterRegistry registry) {
         if (executor instanceof ThreadPoolExecutor) {
-            if (executor instanceof LyThreadPoolExecutor) {
-                executorName = ((LyThreadPoolExecutor) executor).getThreadName();
-                registerMetrics(registry, executorName, (ThreadPoolExecutor) executor);
-            }
+            registerMetrics(registry, executorName, (ThreadPoolExecutor) executor);
         } else if (executor instanceof LyThreadPoolWrappedExecutor) {
             LyThreadPoolWrappedExecutor wrappedExecutor = (LyThreadPoolWrappedExecutor) executor;
-            if (wrappedExecutor.getThreadPoolExecutor() instanceof LyThreadPoolExecutor) {
-                executorName = ((LyThreadPoolExecutor) wrappedExecutor.getThreadPoolExecutor()).getThreadName();
-            }
             registerMetrics(registry, executorName, ThreadPoolUtil.unwrap(wrappedExecutor));
         } else if (executor instanceof ForkJoinPool) {
             registerMetrics(registry, executorName, (ForkJoinPool) executor);
@@ -181,12 +167,12 @@ public class ThreadPoolMetricsBinder implements MeterBinder, ApplicationContextA
                               ForkJoinPool forkJoinPool,
                               ToDoubleFunction<ForkJoinPool> function) {
         FunctionCounter.builder(name, forkJoinPool, function)
-                .tags(Tags.concat(tags, "thread-pool-name", executorName)).register(registry);
+                .tags(Tags.concat(tags, "thread.pool.name", executorName)).register(registry);
     }
 
     private void bindGauge(MeterRegistry registry, String executorName, String name, ForkJoinPool forkJoinPool,
                            ToDoubleFunction<ForkJoinPool> function) {
         Gauge.builder(name, forkJoinPool, function)
-                .tags(Tags.concat(tags, "thread-pool-name", executorName)).register(registry);
+                .tags(Tags.concat(tags, "thread.pool.name", executorName)).register(registry);
     }
 }

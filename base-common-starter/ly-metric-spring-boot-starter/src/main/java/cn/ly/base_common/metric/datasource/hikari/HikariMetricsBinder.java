@@ -81,12 +81,12 @@ public class HikariMetricsBinder implements MeterBinder {
     private void bindGauge(MeterRegistry registry, String poolName, String name, HikariPoolMXBean hikariPoolMXBean,
                            ToDoubleFunction<HikariPoolMXBean> function) {
         Gauge.builder(name, hikariPoolMXBean, function)
-                .tags(Tags.concat(tags, "pool-name", poolName)).register(registry);
+                .tags(Tags.concat(tags, "pool.name", poolName)).register(registry);
     }
 
     private void bindGauge(MeterRegistry registry, String poolName, String name, HikariConfigMXBean hikariConfigMXBean,
                            ToDoubleFunction<HikariConfigMXBean> function) {
         Gauge.builder(name, hikariConfigMXBean, function)
-                .tags(Tags.concat(tags, "pool-name", poolName)).register(registry);
+                .tags(Tags.concat(tags, "pool.name", poolName)).register(registry);
     }
 }

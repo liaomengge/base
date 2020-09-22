@@ -3,10 +3,10 @@ version = '0.0.6-SNAPSHOT'
 
 def versions = [
         baseProcessor           : '0.0.1-SNAPSHOT',
-        baseCommonUtils         : '1.1.4-SNAPSHOT',
-        baseCommonMiddleware    : '1.1.4-SNAPSHOT',
-        baseCommonDayu          : '1.1.4-SNAPSHOT',
-        baseCommonCache         : '1.1.4-SNAPSHOT',
+        baseCommonUtils         : '1.1.5-SNAPSHOT',
+        baseCommonMiddleware    : '1.1.5-SNAPSHOT',
+        baseCommonDayu          : '1.1.5-SNAPSHOT',
+        baseCommonCache         : '1.1.5-SNAPSHOT',
         baseDubboFramework      : '1.1.0-SNAPSHOT',
         baseSpringBootStarter   : '2.x.0-SNAPSHOT',
         baseSpringCloudFramework: '2.x.0-SNAPSHOT'

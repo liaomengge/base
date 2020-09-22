@@ -5,18 +5,19 @@ import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by liaomengge on 2020/9/17.
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
-@ConditionalOnBean(MeterRegistry.class)
+@ConditionalOnClass({MeterRegistry.class, OkHttpClient.class})
+@ConditionalOnProperty(prefix = "ly.metric.http.okhttp3", name = "enabled", matchIfMissing = true)
 public class Okhttp3MetricsConfiguration {
 
     private final OkHttpClient okHttpClient;
@@ -27,7 +28,6 @@ public class Okhttp3MetricsConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnClass(OkHttpClient.class)
     public Okhttp3MetricsBinder okhttp3MetricsBinder() {
         return new Okhttp3MetricsBinder(okHttpClient);
     }

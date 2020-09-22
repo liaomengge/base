@@ -10,21 +10,24 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("ly.metric")
 public class MetricProperties {
 
-    private WebProperties web;
+    private DatasourceProperties datasource;
     private HttpProperties http;
+    private ThreadPoolProperties threadpool;
+    private WebProperties web;
 
     @Data
-    public class WebProperties {
-        private TomcatProperties tomcat;
-        private UndertowProperties undertow;
+    public class DatasourceProperties {
+
+        private DruidProperties druid;
+        private HikariProperties hikari;
 
         @Data
-        public class TomcatProperties {
+        public class DruidProperties {
             private boolean enabled = true;
         }
 
         @Data
-        public class UndertowProperties {
+        public class HikariProperties {
             private boolean enabled = true;
         }
     }
@@ -43,6 +46,28 @@ public class MetricProperties {
 
         @Data
         public class Okhttp3Properties {
+            private boolean enabled = true;
+        }
+    }
+
+    @Data
+    public class ThreadPoolProperties {
+        private boolean enabled = true;
+    }
+
+    @Data
+    public class WebProperties {
+        
+        private TomcatProperties tomcat;
+        private UndertowProperties undertow;
+
+        @Data
+        public class TomcatProperties {
+            private boolean enabled = true;
+        }
+
+        @Data
+        public class UndertowProperties {
             private boolean enabled = true;
         }
     }

@@ -96,18 +96,18 @@ public class DruidMetricsBinder implements MeterBinder {
     private void bindGauge(MeterRegistry registry, String name, DruidDataSource druidDataSource,
                            ToDoubleFunction<DruidDataSource> function) {
         Gauge.builder(name, druidDataSource, function)
-                .tags(Tags.concat(tags, "pool-name", druidDataSource.getName())).register(registry);
+                .tags(Tags.concat(tags, "pool.name", druidDataSource.getName())).register(registry);
     }
 
     private void bindTimeGauge(MeterRegistry registry, String name, DruidDataSource druidDataSource,
                                ToDoubleFunction<DruidDataSource> function) {
         TimeGauge.builder(name, druidDataSource, TimeUnit.MILLISECONDS, function)
-                .tags(Tags.concat(tags, "pool-name", druidDataSource.getName())).register(registry);
+                .tags(Tags.concat(tags, "pool.name", druidDataSource.getName())).register(registry);
     }
 
     private void bindCounter(MeterRegistry registry, String name, DruidDataSource druidDataSource,
                              ToDoubleFunction<DruidDataSource> function) {
         FunctionCounter.builder(name, druidDataSource, function)
-                .tags(Tags.concat(tags, "pool-name", druidDataSource.getName())).register(registry);
+                .tags(Tags.concat(tags, "pool.name", druidDataSource.getName())).register(registry);
     }
 }

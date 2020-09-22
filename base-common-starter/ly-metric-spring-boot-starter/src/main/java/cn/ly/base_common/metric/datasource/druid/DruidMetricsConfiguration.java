@@ -5,9 +5,9 @@ import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,9 +17,10 @@ import java.util.List;
 /**
  * Created by liaomengge on 2020/9/17.
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
-@ConditionalOnBean(MeterRegistry.class)
+@ConditionalOnClass({MeterRegistry.class, DruidDataSource.class})
+@ConditionalOnProperty(prefix = "ly.metric.datasource.druid", name = "enabled", matchIfMissing = true)
 public class DruidMetricsConfiguration {
 
     private final List<DataSource> dataSources;
@@ -30,7 +31,6 @@ public class DruidMetricsConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnClass(DruidDataSource.class)
     public DruidMetricsBinder druidMetricsBinder() {
         return new DruidMetricsBinder(dataSources);
     }

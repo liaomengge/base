@@ -9,6 +9,7 @@ import io.undertow.server.handlers.MetricsHandler;
 import org.slf4j.Logger;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.xnio.Version;
 
 import javax.annotation.PostConstruct;
 import javax.management.MBeanServer;
@@ -32,6 +33,7 @@ public class UndertowMeterBinder implements ApplicationListener<ApplicationReady
 
     private static final Logger log = LyLogger.getInstance(UndertowMeterBinder.class);
 
+    //可以查看NioXnio.register(XnioWorkerMXBean)
     private static final String JMX_NAME_BASE = "org.xnio:type=Xnio,provider=\"nio\",worker=\"XNIO-1\"";
 
     private final Iterable<Tag> tags;
@@ -97,11 +99,12 @@ public class UndertowMeterBinder implements ApplicationListener<ApplicationReady
         if (Objects.nonNull(this.mBeanServer)) {
             try {
                 ObjectName objectName = new ObjectName(JMX_NAME_BASE);
-                double busyWorkerThreadCount = this.getDoubleAttribute(objectName, "BusyWorkerThreadCount");
+
+                double ioThreadCount = this.getDoubleAttribute(objectName, "IoThreadCount");
                 double workerQueueSize = this.getDoubleAttribute(objectName, "WorkerQueueSize");
                 double coreWorkerPoolSize = this.getDoubleAttribute(objectName, "CoreWorkerPoolSize");
                 double maxWorkerPoolSize = this.getDoubleAttribute(objectName, "MaxWorkerPoolSize");
-                bindGauge(registry, UNDERTOW_PREFIX + "busy.worker.thread.count", () -> busyWorkerThreadCount,
+                bindGauge(registry, UNDERTOW_PREFIX + "io.thread.count", () -> ioThreadCount,
                         BaseUnits.THREADS);
                 bindGauge(registry, UNDERTOW_PREFIX + "worker.queue.size", () -> workerQueueSize,
                         BaseUnits.TASKS);
@@ -109,6 +112,11 @@ public class UndertowMeterBinder implements ApplicationListener<ApplicationReady
                         BaseUnits.THREADS);
                 bindGauge(registry, UNDERTOW_PREFIX + "max.worker.pool.size", () -> maxWorkerPoolSize,
                         BaseUnits.THREADS);
+                if (Version.VERSION.compareTo("3.5.0.Final") >= 0) {
+                    double busyWorkerThreadCount = this.getDoubleAttribute(objectName, "BusyWorkerThreadCount");
+                    bindGauge(registry, UNDERTOW_PREFIX + "busy.worker.thread.count", () -> busyWorkerThreadCount,
+                            BaseUnits.THREADS);
+                }
             } catch (Exception e) {
                 throw new RuntimeException("Error registering Undertow JMX based metrics");
             }

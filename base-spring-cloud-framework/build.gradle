@@ -97,8 +97,8 @@ subprojects {
     }
 
     ext {
-        baseCommonMiddlewareVersion = '1.1.4-SNAPSHOT'
-        baseCommonUtilsVersion = '1.1.4-SNAPSHOT'
+        baseCommonMiddlewareVersion = '1.1.5-SNAPSHOT'
+        baseCommonUtilsVersion = '1.1.5-SNAPSHOT'
         nexusUrl = version.endsWith("-SNAPSHOT") ?
                 "http://127.0.0.1:8089/repository/fly-snapshots/" :
                 "http://127.0.0.1:8089/repository/fly-releases/"
