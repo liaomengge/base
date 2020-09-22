@@ -19,6 +19,6 @@ public class FrameworkMicrometerConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public MeterRegistryCustomizer<MeterRegistry> configurer() {
-        return registry -> registry.config().commonTags("application", applicationName);
+        return registry -> registry.config().commonTags("application.name", applicationName);
     }
 }

@@ -20,7 +20,7 @@ public class ThreadPoolMetricsConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ThreadPoolMetricsBinder executorServiceMetricsBinder() {
+    public ThreadPoolMetricsBinder threadPoolMetricsBinder() {
         return new ThreadPoolMetricsBinder();
     }
 }

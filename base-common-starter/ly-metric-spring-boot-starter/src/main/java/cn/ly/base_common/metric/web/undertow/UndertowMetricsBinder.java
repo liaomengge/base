@@ -3,11 +3,14 @@ package cn.ly.base_common.metric.web.undertow;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.number.LyMoreNumberUtil;
 import cn.ly.base_common.utils.string.LyStringUtil;
+import com.google.common.collect.Maps;
 import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.binder.BaseUnits;
 import io.undertow.server.handlers.MetricsHandler;
+import io.undertow.servlet.api.MetricsCollector;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
 import org.xnio.Version;
 
@@ -16,9 +19,7 @@ import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
@@ -28,78 +29,95 @@ import static cn.ly.base_common.metric.consts.MetricsConst.UNDERTOW_PREFIX;
 
 /**
  * Created by liaomengge on 2020/9/16.
+ * <p>
+ * link: https://github.com/micrometer-metrics/micrometer/pull/1575/files
  */
-public class UndertowMeterBinder implements ApplicationListener<ApplicationReadyEvent> {
+public class UndertowMetricsBinder implements MetricsCollector, ApplicationListener<ApplicationStartedEvent> {
 
-    private static final Logger log = LyLogger.getInstance(UndertowMeterBinder.class);
+    private static final Logger log = LyLogger.getInstance(UndertowMetricsBinder.class);
 
-    //可以查看NioXnio.register(XnioWorkerMXBean)
+    //可以查看NioXnio.register(XnioWorkerMXBean) - "org.xnio:type=Xnio,provider=\"nio\",worker=\"XNIO-1\""
+    private static final String JMX_NAME = "org.xnio:type=Xnio,provider=\"nio\",worker=*";
     private static final String JMX_NAME_BASE = "org.xnio:type=Xnio,provider=\"nio\",worker=\"XNIO-1\"";
 
     private final Iterable<Tag> tags;
     private final MeterRegistry meterRegistry;
-    private final UndertowMetricsHandlerWrapper undertowMetricsHandlerWrapper;
 
     private MBeanServer mBeanServer;
+    private Map<String, MetricsHandler> metricsHandlers;
 
-    public UndertowMeterBinder(MeterRegistry meterRegistry,
-                               UndertowMetricsHandlerWrapper undertowMetricsHandlerWrapper) {
-        this(Collections.emptyList(), meterRegistry, undertowMetricsHandlerWrapper);
+    public UndertowMetricsBinder(MeterRegistry meterRegistry) {
+        this(Collections.emptyList(), meterRegistry);
     }
 
-    public UndertowMeterBinder(Iterable<Tag> tags, MeterRegistry meterRegistry,
-                               UndertowMetricsHandlerWrapper undertowMetricsHandlerWrapper) {
+    public UndertowMetricsBinder(Iterable<Tag> tags, MeterRegistry meterRegistry) {
         this.tags = tags;
         this.meterRegistry = meterRegistry;
-        this.undertowMetricsHandlerWrapper = undertowMetricsHandlerWrapper;
         this.mBeanServer = this.getMBeanServer();
+        this.metricsHandlers = Maps.newHashMap();
     }
 
     @Override
-    public void onApplicationEvent(ApplicationReadyEvent event) {
+    public void registerMetric(String servletName, MetricsHandler handler) {
+        if (!"default".equalsIgnoreCase(servletName)) {
+            this.metricsHandlers.put(servletName, handler);
+        }
+    }
+
+    @Override
+    public void onApplicationEvent(ApplicationStartedEvent event) {
         try {
-            bind(meterRegistry, undertowMetricsHandlerWrapper.getMetricsHandler());
+            bind(meterRegistry);
         } catch (Exception e) {
             log.error("metric tomcat error", e);
         }
     }
 
-    private void bind(MeterRegistry registry, MetricsHandler metricsHandler) {
-        registerGlobalRequestMetrics(registry, metricsHandler);
+    private void bind(MeterRegistry registry) {
+        this.metricsHandlers.forEach((servletName, handler) -> registerGlobalRequestMetrics(registry, servletName,
+                handler));
         registerThreadPoolMetrics(registry);
     }
 
-    private void registerGlobalRequestMetrics(MeterRegistry registry, MetricsHandler metricsHandler) {
-        bindTimer(registry, UNDERTOW_PREFIX + "requests", metricsHandler,
+    private void registerGlobalRequestMetrics(MeterRegistry registry, String servletName,
+                                              MetricsHandler metricsHandler) {
+        bindTimer(registry, servletName, UNDERTOW_PREFIX + "requests", metricsHandler,
                 val -> val.getMetrics().getTotalRequests(), val2 -> val2.getMetrics().getMinRequestTime());
-        bindTimeGauge(registry, UNDERTOW_PREFIX + "request.time.max", metricsHandler,
+        bindTimeGauge(registry, servletName, UNDERTOW_PREFIX + "request.time.max", metricsHandler,
                 val -> val.getMetrics().getMaxRequestTime());
-        bindTimeGauge(registry, UNDERTOW_PREFIX + "request.time.min", metricsHandler,
+        bindTimeGauge(registry, servletName, UNDERTOW_PREFIX + "request.time.min", metricsHandler,
                 val -> val.getMetrics().getMinRequestTime());
-        bindCounter(registry, UNDERTOW_PREFIX + "request.errors", metricsHandler,
+        bindCounter(registry, servletName, UNDERTOW_PREFIX + "request.errors", metricsHandler,
                 val -> val.getMetrics().getTotalErrors());
     }
 
-    private void bindTimer(MeterRegistry registry, String name, MetricsHandler metricsHandler,
+    private void bindTimer(MeterRegistry registry, String servletName, String name, MetricsHandler metricsHandler,
                            ToLongFunction<MetricsHandler> countFunc, ToDoubleFunction<MetricsHandler> function) {
-        FunctionTimer.builder(name, metricsHandler, countFunc, function, TimeUnit.MILLISECONDS).tags(tags).register(registry);
+        FunctionTimer.builder(name, metricsHandler, countFunc, function, TimeUnit.MILLISECONDS)
+                .tags(Tags.concat(tags, "servlet.name", servletName)).register(registry);
     }
 
-    private void bindTimeGauge(MeterRegistry registry, String name, MetricsHandler metricsHandler,
+    private void bindTimeGauge(MeterRegistry registry, String servletName, String name, MetricsHandler metricsHandler,
                                ToDoubleFunction<MetricsHandler> function) {
-        TimeGauge.builder(name, metricsHandler, TimeUnit.MILLISECONDS, function).tags(tags).register(registry);
+        TimeGauge.builder(name, metricsHandler, TimeUnit.MILLISECONDS, function)
+                .tags(Tags.concat(tags, "servlet.name", servletName)).register(registry);
     }
 
-    private void bindCounter(MeterRegistry registry, String name, MetricsHandler metricsHandler,
+    private void bindCounter(MeterRegistry registry, String servletName, String name, MetricsHandler metricsHandler,
                              ToDoubleFunction<MetricsHandler> function) {
-        FunctionCounter.builder(name, metricsHandler, function).tags(tags).register(registry);
+        FunctionCounter.builder(name, metricsHandler, function)
+                .tags(Tags.concat(tags, "servlet.name", servletName)).register(registry);
     }
 
     private void registerThreadPoolMetrics(MeterRegistry registry) {
         if (Objects.nonNull(this.mBeanServer)) {
             try {
-                ObjectName objectName = new ObjectName(JMX_NAME_BASE);
-
+                ObjectName objectName = new ObjectName(JMX_NAME);
+                Set<ObjectName> objectNames = this.mBeanServer.queryNames(objectName, null);
+                if (CollectionUtils.isNotEmpty(objectNames)) {
+                    objectName =
+                            objectNames.stream().sorted(Comparator.reverseOrder()).findFirst().orElse(new ObjectName(JMX_NAME_BASE));
+                }
                 double ioThreadCount = this.getDoubleAttribute(objectName, "IoThreadCount");
                 double workerQueueSize = this.getDoubleAttribute(objectName, "WorkerQueueSize");
                 double coreWorkerPoolSize = this.getDoubleAttribute(objectName, "CoreWorkerPoolSize");
