@@ -2,6 +2,7 @@ package cn.ly.base_common.cache.caffeine;
 
 import cn.ly.base_common.cache.Level1Cache;
 import com.github.benmanes.caffeine.cache.stats.CacheStats;
+import lombok.Getter;
 
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ import java.util.Objects;
 public class CaffeineCache implements Level1Cache {
 
     private final boolean allowNullValues;
+    @Getter
     private final com.github.benmanes.caffeine.cache.Cache<String, String> cache;
 
     public CaffeineCache(com.github.benmanes.caffeine.cache.Cache<String, String> cache) {

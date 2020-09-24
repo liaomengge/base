@@ -1,14 +1,12 @@
 package cn.ly.base_common.metric.web.undertow;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import cn.ly.base_common.utils.number.LyMoreNumberUtil;
-import cn.ly.base_common.utils.string.LyStringUtil;
 import com.google.common.collect.Maps;
 import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.binder.BaseUnits;
 import io.undertow.server.handlers.MetricsHandler;
 import io.undertow.servlet.api.MetricsCollector;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
@@ -20,8 +18,8 @@ import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToLongFunction;
 
@@ -38,7 +36,6 @@ public class UndertowMetricsBinder implements MetricsCollector, ApplicationListe
 
     //可以查看NioXnio.register(XnioWorkerMXBean) - "org.xnio:type=Xnio,provider=\"nio\",worker=\"XNIO-1\""
     private static final String JMX_NAME = "org.xnio:type=Xnio,provider=\"nio\",worker=*";
-    private static final String JMX_NAME_BASE = "org.xnio:type=Xnio,provider=\"nio\",worker=\"XNIO-1\"";
 
     private final Iterable<Tag> tags;
     private final MeterRegistry meterRegistry;
@@ -53,7 +50,6 @@ public class UndertowMetricsBinder implements MetricsCollector, ApplicationListe
     public UndertowMetricsBinder(Iterable<Tag> tags, MeterRegistry meterRegistry) {
         this.tags = tags;
         this.meterRegistry = meterRegistry;
-        this.mBeanServer = this.getMBeanServer();
         this.metricsHandlers = Maps.newHashMap();
     }
 
@@ -73,7 +69,7 @@ public class UndertowMetricsBinder implements MetricsCollector, ApplicationListe
         }
     }
 
-    private void bind(MeterRegistry registry) {
+    public void bind(MeterRegistry registry) {
         this.metricsHandlers.forEach((servletName, handler) -> registerGlobalRequestMetrics(registry, servletName,
                 handler));
         registerThreadPoolMetrics(registry);
@@ -115,25 +111,20 @@ public class UndertowMetricsBinder implements MetricsCollector, ApplicationListe
                 ObjectName objectName = new ObjectName(JMX_NAME);
                 Set<ObjectName> objectNames = this.mBeanServer.queryNames(objectName, null);
                 if (CollectionUtils.isNotEmpty(objectNames)) {
-                    objectName =
-                            objectNames.stream().sorted(Comparator.reverseOrder()).findFirst().orElse(new ObjectName(JMX_NAME_BASE));
-                }
-                double ioThreadCount = this.getDoubleAttribute(objectName, "IoThreadCount");
-                double workerQueueSize = this.getDoubleAttribute(objectName, "WorkerQueueSize");
-                double coreWorkerPoolSize = this.getDoubleAttribute(objectName, "CoreWorkerPoolSize");
-                double maxWorkerPoolSize = this.getDoubleAttribute(objectName, "MaxWorkerPoolSize");
-                bindGauge(registry, UNDERTOW_PREFIX + "io.thread.count", () -> ioThreadCount,
-                        BaseUnits.THREADS);
-                bindGauge(registry, UNDERTOW_PREFIX + "worker.queue.size", () -> workerQueueSize,
-                        BaseUnits.TASKS);
-                bindGauge(registry, UNDERTOW_PREFIX + "core.worker.pool.size", () -> coreWorkerPoolSize,
-                        BaseUnits.THREADS);
-                bindGauge(registry, UNDERTOW_PREFIX + "max.worker.pool.size", () -> maxWorkerPoolSize,
-                        BaseUnits.THREADS);
-                if (Version.VERSION.compareTo("3.5.0.Final") >= 0) {
-                    double busyWorkerThreadCount = this.getDoubleAttribute(objectName, "BusyWorkerThreadCount");
-                    bindGauge(registry, UNDERTOW_PREFIX + "busy.worker.thread.count", () -> busyWorkerThreadCount,
-                            BaseUnits.THREADS);
+                    objectNames.stream().sorted(Comparator.reverseOrder()).findFirst().ifPresent(val -> {
+                        bindGauge(registry, UNDERTOW_PREFIX + "io.thread.count", BaseUnits.THREADS,
+                                mBeanServer, toDoubleFunction(mBeanServer, val, "IoThreadCount"));
+                        bindGauge(registry, UNDERTOW_PREFIX + "worker.queue.size", BaseUnits.THREADS,
+                                mBeanServer, toDoubleFunction(mBeanServer, val, "WorkerQueueSize"));
+                        bindGauge(registry, UNDERTOW_PREFIX + "core.worker.pool.size", BaseUnits.THREADS,
+                                mBeanServer, toDoubleFunction(mBeanServer, val, "CoreWorkerPoolSize"));
+                        bindGauge(registry, UNDERTOW_PREFIX + "max.worker.pool.size", BaseUnits.THREADS,
+                                mBeanServer, toDoubleFunction(mBeanServer, val, "MaxWorkerPoolSize"));
+                        if (Version.VERSION.compareTo("3.5.0.Final") >= 0) {
+                            bindGauge(registry, UNDERTOW_PREFIX + "busy.worker.thread.count", BaseUnits.THREADS,
+                                    mBeanServer, toDoubleFunction(mBeanServer, val, "BusyWorkerThreadCount"));
+                        }
+                    });
                 }
             } catch (Exception e) {
                 throw new RuntimeException("Error registering Undertow JMX based metrics");
@@ -141,12 +132,22 @@ public class UndertowMetricsBinder implements MetricsCollector, ApplicationListe
         }
     }
 
-    private void bindGauge(MeterRegistry registry, String name, Supplier<Number> supplier, String unit) {
-        Gauge.builder(name, supplier).baseUnit(unit).tags(tags).register(registry);
+    private ToDoubleFunction<MBeanServer> toDoubleFunction(MBeanServer mBeanServer, ObjectName objectName,
+                                                           String attribute) {
+        return val -> safeDouble(() -> mBeanServer.getAttribute(objectName, attribute));
     }
 
-    private double getDoubleAttribute(ObjectName objectName, String attribute) throws Exception {
-        return LyMoreNumberUtil.toDouble(LyStringUtil.getValue(this.mBeanServer.getAttribute(objectName, attribute)));
+    private double safeDouble(Callable<Object> callable) {
+        try {
+            return Double.parseDouble(callable.call().toString());
+        } catch (Exception e) {
+            return Double.NaN;
+        }
+    }
+
+    private void bindGauge(MeterRegistry registry, String name, String unit, MBeanServer mBeanServer,
+                           ToDoubleFunction<MBeanServer> function) {
+        Gauge.builder(name, mBeanServer, function).tags(tags).baseUnit(unit).register(registry);
     }
 
     @PostConstruct

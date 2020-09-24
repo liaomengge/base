@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class CaffeineCacheManager {
 
+    @Getter
     private final ConcurrentMap<String, CaffeineCache> caffeineCacheMap = new ConcurrentHashMap<>(16);
 
     private Caffeine<Object, Object> caffeineBuilder =

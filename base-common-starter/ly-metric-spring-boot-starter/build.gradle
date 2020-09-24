@@ -2,4 +2,5 @@ dependencies {
     api "com.zaxxer:HikariCP"
     api "org.apache.tomcat.embed:tomcat-embed-core"
     api "org.springframework.boot:spring-boot-starter-undertow"
+    api(project(":ly-cache-spring-boot-starter"))
 }

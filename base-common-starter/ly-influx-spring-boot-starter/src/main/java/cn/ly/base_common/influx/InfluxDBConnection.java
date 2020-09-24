@@ -97,12 +97,7 @@ public class InfluxDBConnection {
             influxDB.close();
         }
     }
-
-    /**
-     * 创建数据库
-     *
-     * @param database
-     */
+    
     private void createDatabase(String database) {
         influxDB.query(new Query("CREATE DATABASE " + database, ""));
     }

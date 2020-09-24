@@ -1,6 +1,7 @@
 package cn.ly.base_common.metric.http.okhttp3;
 
 import io.micrometer.core.instrument.MeterRegistry;
+import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
@@ -20,15 +21,15 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(prefix = "ly.metric.http.okhttp3", name = "enabled", matchIfMissing = true)
 public class Okhttp3MetricsConfiguration {
 
-    private final OkHttpClient okHttpClient;
+    private final ConnectionPool connectionPool;
 
-    public Okhttp3MetricsConfiguration(ObjectProvider<OkHttpClient> provider) {
-        this.okHttpClient = provider.getIfAvailable();
+    public Okhttp3MetricsConfiguration(ObjectProvider<ConnectionPool> provider) {
+        this.connectionPool = provider.getIfAvailable();
     }
 
     @Bean
     @ConditionalOnMissingBean
     public Okhttp3MetricsBinder okhttp3MetricsBinder() {
-        return new Okhttp3MetricsBinder(okHttpClient);
+        return new Okhttp3MetricsBinder(connectionPool);
     }
 }

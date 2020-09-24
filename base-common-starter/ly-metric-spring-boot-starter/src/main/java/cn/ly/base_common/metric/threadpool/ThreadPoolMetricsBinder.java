@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.Collections;
@@ -48,16 +49,24 @@ public class ThreadPoolMetricsBinder implements MeterBinder, ApplicationContextA
         this.applicationContext = applicationContext;
     }
 
+    public static ExecutorService monitor(MeterRegistry registry, String executorName,
+                                          ExecutorService executorService) {
+        return monitor(registry, Collections.emptyList(), executorName, executorService);
+    }
+
     public static ExecutorService monitor(MeterRegistry registry, Iterable<Tag> tags, String executorName,
                                           ExecutorService executorService) {
-        new ThreadPoolMetricsBinder().bindToExecutorService(executorName, executorService, registry);
+        new ThreadPoolMetricsBinder(tags).bindToExecutorService(executorName, executorService, registry);
         return new TimedExecutorService(registry, executorService, executorName, tags);
     }
 
-    public static ExecutorService monitor(MeterRegistry registry, String executorName,
-                                          ExecutorService executorService) {
-        new ThreadPoolMetricsBinder().bindToExecutorService(executorName, executorService, registry);
-        return new TimedExecutorService(registry, executorService, executorName, Collections.emptyList());
+    public static void monitor(MeterRegistry registry, String executorName, AsyncTaskExecutor executor) {
+        monitor(registry, Collections.emptyList(), executorName, executor);
+    }
+
+    public static void monitor(MeterRegistry registry, Iterable<Tag> tags, String executorName,
+                               AsyncTaskExecutor executor) {
+        new ThreadPoolMetricsBinder(tags).bindToSpringExecutor(executorName, executor, registry);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package cn.ly.base_common.metric;
 
+import cn.ly.base_common.metric.cache.local.LocalCacheMetricsConfiguration;
+import cn.ly.base_common.metric.cache.redis.RedisCacheMetricsConfiguration;
 import cn.ly.base_common.metric.datasource.druid.DruidMetricsConfiguration;
 import cn.ly.base_common.metric.datasource.hikari.HikariMetricsConfiguration;
 import cn.ly.base_common.metric.http.httpclient.HttpClientMetricsConfiguration;
@@ -17,7 +19,8 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @EnableConfigurationProperties(MetricProperties.class)
-@Import({DruidMetricsConfiguration.class, HikariMetricsConfiguration.class,
+@Import({LocalCacheMetricsConfiguration.class, RedisCacheMetricsConfiguration.class,
+        DruidMetricsConfiguration.class, HikariMetricsConfiguration.class,
         HttpClientMetricsConfiguration.class, Okhttp3MetricsConfiguration.class,
         ThreadPoolMetricsConfiguration.class})
 @ImportAutoConfiguration({TomcatMetricsConfiguration.class, UndertowMetricsConfiguration.class})

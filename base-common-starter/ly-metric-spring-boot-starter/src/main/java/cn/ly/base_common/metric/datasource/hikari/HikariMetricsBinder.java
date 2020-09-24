@@ -40,6 +40,14 @@ public class HikariMetricsBinder implements MeterBinder {
         this.dataSources = dataSources;
     }
 
+    public static void monitor(MeterRegistry registry, List<DataSource> dataSources) {
+        monitor(registry, Collections.emptyList(), dataSources);
+    }
+
+    public static void monitor(MeterRegistry registry, Iterable<Tag> tags, List<DataSource> dataSources) {
+        new HikariMetricsBinder(tags, dataSources).bindTo(registry);
+    }
+
     @Override
     public void bindTo(MeterRegistry registry) {
         try {

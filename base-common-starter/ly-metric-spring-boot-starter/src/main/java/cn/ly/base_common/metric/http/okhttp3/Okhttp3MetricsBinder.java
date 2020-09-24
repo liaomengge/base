@@ -23,15 +23,27 @@ public class Okhttp3MetricsBinder implements MeterBinder {
     private static final Logger log = LyLogger.getInstance(Okhttp3MetricsBinder.class);
 
     private final Iterable<Tag> tags;
-    private final OkHttpClient okHttpClient;
+    private final ConnectionPool connectionPool;
 
-    public Okhttp3MetricsBinder(OkHttpClient okHttpClient) {
-        this(Collections.emptyList(), okHttpClient);
+    public Okhttp3MetricsBinder(ConnectionPool connectionPool) {
+        this(Collections.emptyList(), connectionPool);
     }
 
-    public Okhttp3MetricsBinder(Iterable<Tag> tags, OkHttpClient okHttpClient) {
+    public Okhttp3MetricsBinder(Iterable<Tag> tags, ConnectionPool connectionPool) {
         this.tags = tags;
-        this.okHttpClient = okHttpClient;
+        this.connectionPool = connectionPool;
+    }
+
+    public static void monitor(MeterRegistry registry, OkHttpClient okHttpClient) {
+        monitor(registry, Collections.emptyList(), okHttpClient.connectionPool());
+    }
+
+    public static void monitor(MeterRegistry registry, ConnectionPool connectionPool) {
+        monitor(registry, Collections.emptyList(), connectionPool);
+    }
+
+    public static void monitor(MeterRegistry registry, Iterable<Tag> tags, ConnectionPool connectionPool) {
+        new Okhttp3MetricsBinder(tags, connectionPool).bindTo(registry);
     }
 
     @Override
@@ -44,14 +56,11 @@ public class Okhttp3MetricsBinder implements MeterBinder {
     }
 
     private void registerMetrics(MeterRegistry registry) {
-        if (Objects.nonNull(okHttpClient)) {
-            ConnectionPool connectionPool = okHttpClient.connectionPool();
-            if (Objects.nonNull(connectionPool)) {
-                bindGauge(registry, OKHTTP3_PREFIX + "connection.count", connectionPool,
-                        ConnectionPool::connectionCount);
-                bindGauge(registry, OKHTTP3_PREFIX + "idle.connection.count", connectionPool,
-                        ConnectionPool::idleConnectionCount);
-            }
+        if (Objects.nonNull(connectionPool)) {
+            bindGauge(registry, OKHTTP3_PREFIX + "connection.count", connectionPool,
+                    ConnectionPool::connectionCount);
+            bindGauge(registry, OKHTTP3_PREFIX + "idle.connection.count", connectionPool,
+                    ConnectionPool::idleConnectionCount);
         }
     }
 

@@ -10,6 +10,7 @@ import io.micrometer.core.instrument.binder.MeterBinder;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.conn.routing.HttpRoute;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.pool.PoolStats;
 import org.slf4j.Logger;
@@ -30,9 +31,17 @@ public class HttpClientMetricsBinder implements MeterBinder {
     private final MetricProperties metricProperties;
     private final PoolingHttpClientConnectionManager poolConnManager;
 
+    public HttpClientMetricsBinder(PoolingHttpClientConnectionManager poolConnManager) {
+        this(new MetricProperties(), poolConnManager);
+    }
+
     public HttpClientMetricsBinder(MetricProperties metricProperties,
                                    PoolingHttpClientConnectionManager poolConnManager) {
         this(Collections.emptyList(), metricProperties, poolConnManager);
+    }
+
+    public HttpClientMetricsBinder(Iterable<Tag> tags, PoolingHttpClientConnectionManager poolConnManager) {
+        this(tags, new MetricProperties(), poolConnManager);
     }
 
     public HttpClientMetricsBinder(Iterable<Tag> tags, MetricProperties metricProperties,
@@ -40,6 +49,20 @@ public class HttpClientMetricsBinder implements MeterBinder {
         this.tags = tags;
         this.metricProperties = metricProperties;
         this.poolConnManager = poolConnManager;
+    }
+
+    public static void monitor(MeterRegistry registry, CloseableHttpClient httpClient) {
+        monitor(registry, Collections.emptyList(),
+                (PoolingHttpClientConnectionManager) httpClient.getConnectionManager());
+    }
+
+    public static void monitor(MeterRegistry registry, PoolingHttpClientConnectionManager poolConnManager) {
+        monitor(registry, Collections.emptyList(), poolConnManager);
+    }
+
+    public static void monitor(MeterRegistry registry, Iterable<Tag> tags,
+                               PoolingHttpClientConnectionManager poolConnManager) {
+        new HttpClientMetricsBinder(tags, poolConnManager).bindTo(registry);
     }
 
     @Override
