@@ -17,7 +17,7 @@ dependencyUpdates {
 }
 
 wrapper {
-     gradleVersion = '6.5'
+     gradleVersion = '5.6.4'
 }
 
 subprojects {

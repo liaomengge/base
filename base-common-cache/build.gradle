@@ -32,23 +32,23 @@ dependencyReport {
     outputFile = file("$buildDir/reports/dependencies.txt")
 }
 
-jar {
-    manifest {
-        attributes(
-                "Created-By": "liaomengge",
-                "Implementation-Version": project.version
-        )
-    }
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveClassifier.set('sources')
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives sourcesJar
-}
+//jar {
+//    manifest {
+//        attributes(
+//                "Created-By": "liaomengge",
+//                "Implementation-Version": project.version
+//        )
+//    }
+//}
+//
+//task sourcesJar(type: Jar, dependsOn: classes) {
+//    archiveClassifier.set('sources')
+//    from sourceSets.main.allSource
+//}
+//
+//artifacts {
+//    archives sourcesJar
+//}
 
 sourceSets {
     main {
