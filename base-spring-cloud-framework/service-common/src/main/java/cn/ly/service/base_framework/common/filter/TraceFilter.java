@@ -5,6 +5,8 @@ import static cn.ly.base_common.utils.trace.LyTraceLogUtil.*;
 import cn.ly.base_common.utils.trace.LyTraceLogUtil;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,10 +25,12 @@ public class TraceFilter extends AbstractFilter {
     public Object doFilter(ProceedingJoinPoint joinPoint, FilterChain chain) throws Throwable {
         ServletRequestAttributes servletRequestAttributes =
                 (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = servletRequestAttributes.getRequest();
-        String traceId = StringUtils.defaultIfBlank(request.getHeader(TRACE_ID),
-                generateRandomSed(generateDefaultTraceLogIdPrefix()));
-        LyTraceLogUtil.put(traceId);
+        if (Objects.nonNull(servletRequestAttributes)) {
+            HttpServletRequest request = servletRequestAttributes.getRequest();
+            String traceId = StringUtils.defaultIfBlank(request.getHeader(TRACE_ID),
+                    generateRandomSed(generateDefaultTraceLogIdPrefix()));
+            LyTraceLogUtil.put(traceId);
+        }
         return chain.doFilter(joinPoint, chain);
     }
 }

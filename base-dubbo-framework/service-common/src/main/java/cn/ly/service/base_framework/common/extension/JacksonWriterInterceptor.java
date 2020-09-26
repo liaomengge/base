@@ -46,18 +46,17 @@ public class JacksonWriterInterceptor implements WriterInterceptor {
     }
 
     private void writeTo(OutputStream outputStream, Object obj) throws IOException {
-        JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(outputStream);
-        jsonGenerator.disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
-
+        JsonGenerator jsonGenerator = null;
         try {
+            jsonGenerator = objectMapper.getFactory().createGenerator(outputStream);
+            jsonGenerator.disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
             objectMapper.writeValue(outputStream, obj);
         } finally {
             if (jsonGenerator != null) {
                 jsonGenerator.flush();
-            }
-
-            if (!jsonGenerator.isClosed()) {
-                jsonGenerator.close();
+                if (!jsonGenerator.isClosed()) {
+                    jsonGenerator.close();
+                }
             }
         }
     }

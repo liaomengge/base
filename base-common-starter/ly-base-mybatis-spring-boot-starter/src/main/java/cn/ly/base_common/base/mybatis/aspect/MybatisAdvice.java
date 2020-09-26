@@ -9,6 +9,7 @@ import cn.ly.base_common.support.datasource.enums.DbType;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,9 @@ import org.aopalliance.intercept.MethodInvocation;
 /**
  * Created by liaomengge on 2019/7/5.
  */
-public class MybatisAdvice implements MethodInterceptor {
+public class MybatisAdvice implements MethodInterceptor, Serializable {
+
+    private static final long serialVersionUID = 4912498910040052222L;
 
     private static final List<String> writeMethod = Lists.newArrayList("update", "modify", "edit", "set",
             "cancel", "create", "add", "insert", "save", "del", "delete");

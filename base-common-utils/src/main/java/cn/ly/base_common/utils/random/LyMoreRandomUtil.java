@@ -2,13 +2,11 @@ package cn.ly.base_common.utils.random;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.number.LyNumberUtil;
+import lombok.experimental.UtilityClass;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-
-import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2019/11/20.
@@ -18,10 +16,11 @@ public class LyMoreRandomUtil {
 
     private Logger log = LyLogger.getInstance(LyMoreRandomUtil.class);
 
-    private final double PI = 3.14d;
+    private final double DOUBLE = 3.14d;
 
     private final Map<Integer, Long> PRIME_NUMBER_MAP = new HashMap<Integer, Long>(24) {
-        private final long serialVersionUID = -5052666567518642484L;
+
+        private static final long serialVersionUID = 2761764002048315558L;
 
         {
             put(1, Long.valueOf("7"));
@@ -64,7 +63,7 @@ public class LyMoreRandomUtil {
         if (num >= maxNumPrime) {
             log.warn("num[{}]>={}, over max limit, maybe generator repeated random number", num, maxNumPrime);
         }
-        long seed = Math.round(maxNumPrime / PI);
+        long seed = Math.round(maxNumPrime / DOUBLE);
         return (seed * (num + seed)) % maxNumPrime;
     }
 }

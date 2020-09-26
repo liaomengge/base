@@ -144,12 +144,10 @@ public class ServiceAspect {
         buildArgsLog(args, sBuilder);
         ServletRequestAttributes servletRequestAttributes =
                 (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = servletRequestAttributes.getRequest();
-        Optional.ofNullable(request).ifPresent(val -> {
+        Optional.ofNullable(servletRequestAttributes).map(ServletRequestAttributes::getRequest).ifPresent(val -> {
             LyMDCUtil.put(LyMDCUtil.MDC_WEB_REMOTE_IP, LyNetworkUtil.getIpAddress(val));
             LyMDCUtil.put(LyMDCUtil.MDC_WEB_URI, val.getRequestURI());
         });
-
         return sBuilder;
     }
 
