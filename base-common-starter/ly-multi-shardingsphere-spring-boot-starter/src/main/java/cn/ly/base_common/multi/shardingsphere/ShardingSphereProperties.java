@@ -1,18 +1,20 @@
 package cn.ly.base_common.multi.shardingsphere;
 
-import lombok.Data;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
+
+import javax.validation.constraints.NotNull;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2018/10/23.

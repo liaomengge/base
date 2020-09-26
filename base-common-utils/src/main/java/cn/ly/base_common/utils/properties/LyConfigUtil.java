@@ -1,9 +1,6 @@
 package cn.ly.base_common.utils.properties;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,6 +12,11 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2019/12/18.

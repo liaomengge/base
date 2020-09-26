@@ -1,7 +1,14 @@
 package cn.ly.base_common.helper.redis;
 
 import cn.ly.base_common.utils.collection.LyArrayUtil;
+
 import com.google.common.collect.Sets;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +16,6 @@ import lombok.Setter;
 import redis.clients.jedis.*;
 import redis.clients.jedis.params.SetParams;
 import redis.clients.jedis.util.SafeEncoder;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by liaomengge on 17/11/7.

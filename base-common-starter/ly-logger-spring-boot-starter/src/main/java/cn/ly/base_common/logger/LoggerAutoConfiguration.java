@@ -1,7 +1,7 @@
 package cn.ly.base_common.logger;
 
 import cn.ly.base_common.logger.servlet.LoggerServlet;
-import lombok.AllArgsConstructor;
+
 import org.springframework.boot.actuate.autoconfigure.endpoint.EndpointAutoConfiguration;
 import org.springframework.boot.actuate.logging.LoggersEndpoint;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -11,6 +11,8 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/1/21.

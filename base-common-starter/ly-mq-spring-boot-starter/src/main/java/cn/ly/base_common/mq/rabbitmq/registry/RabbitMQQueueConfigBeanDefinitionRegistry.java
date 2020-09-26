@@ -4,6 +4,9 @@ import cn.ly.base_common.mq.rabbitmq.RabbitMQProperties;
 import cn.ly.base_common.mq.rabbitmq.domain.QueueConfig;
 import cn.ly.base_common.utils.binder.LyBinderUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -19,8 +22,6 @@ import org.springframework.context.annotation.ScopeMetadata;
 import org.springframework.context.annotation.ScopeMetadataResolver;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
-
-import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/5/23.

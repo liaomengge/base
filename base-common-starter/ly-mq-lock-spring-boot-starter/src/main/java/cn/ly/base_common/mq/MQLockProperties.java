@@ -1,11 +1,13 @@
 package cn.ly.base_common.mq;
 
-import lombok.Data;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2019/8/29.

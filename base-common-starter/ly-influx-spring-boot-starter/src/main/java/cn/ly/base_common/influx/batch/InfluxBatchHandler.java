@@ -7,17 +7,20 @@ import cn.ly.base_common.influx.InfluxDBProperties;
 import cn.ly.base_common.influx.consts.InfluxConst;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
-import lombok.Getter;
-import org.influxdb.dto.BatchPoints;
-import org.influxdb.dto.Point;
-import org.slf4j.Logger;
 
-import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
+
+import org.influxdb.dto.BatchPoints;
+import org.influxdb.dto.Point;
+import org.slf4j.Logger;
+
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 2020/7/21.

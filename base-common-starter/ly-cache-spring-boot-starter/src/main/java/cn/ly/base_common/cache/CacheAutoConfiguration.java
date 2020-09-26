@@ -9,8 +9,15 @@ import cn.ly.base_common.cache.servlet.CacheServlet;
 import cn.ly.base_common.cache.task.CacheScheduledTask;
 import cn.ly.base_common.helper.redis.RedissonHelper;
 import cn.ly.base_common.redis.RedisAutoConfiguration;
+
 import com.github.benmanes.caffeine.cache.CaffeineSpec;
 import com.timgroup.statsd.StatsDClient;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,11 +29,6 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Created by liaomengge on 2019/3/20.

@@ -1,7 +1,14 @@
 package cn.ly.base_common.mq.rabbitmq.receiver;
 
+import static cn.ly.base_common.mq.consts.MQConst.DEFAULT_RECEIVE_TIMEOUT;
+
 import cn.ly.base_common.mq.rabbitmq.AbstractMQReceiver;
 import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
+
+import java.util.Arrays;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+
 import org.aopalliance.aop.Advice;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.amqp.core.AcknowledgeMode;
@@ -9,12 +16,6 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 import org.springframework.beans.factory.InitializingBean;
-
-import java.util.Arrays;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-
-import static cn.ly.base_common.mq.consts.MQConst.DEFAULT_RECEIVE_TIMEOUT;
 
 /**
  * Created by liaomengge on 2018/12/6.

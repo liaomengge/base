@@ -1,9 +1,10 @@
 package cn.ly.base_common.cache.channel;
 
 import cn.ly.base_common.cache.redis.RedissonClientManager;
-import lombok.AllArgsConstructor;
 
 import java.util.function.Consumer;
+
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/3/20.

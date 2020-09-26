@@ -1,7 +1,7 @@
 package cn.ly.base_common.quartz.lock;
 
 import cn.ly.base_common.quartz.lock.initializer.QuartzLockInitializer;
-import lombok.AllArgsConstructor;
+
 import org.I0Itec.zkclient.ZkClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -10,6 +10,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/5/21.

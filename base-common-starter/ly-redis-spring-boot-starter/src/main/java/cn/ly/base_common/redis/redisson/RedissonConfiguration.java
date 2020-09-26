@@ -5,6 +5,10 @@ import cn.ly.base_common.helper.lock.distributed.redis.RedissonConfigManager;
 import cn.ly.base_common.helper.redis.RedissonHelper;
 import cn.ly.base_common.redis.RedissonProperties;
 import cn.ly.base_common.utils.io.LyIOUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -19,9 +23,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by liaomengge on 2018/11/16.

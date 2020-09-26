@@ -2,16 +2,18 @@ package cn.ly.base_common.helper.concurrent;
 
 import cn.ly.base_common.utils.error.LyThrowableUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.core.task.AsyncListenableTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 2019/1/7.

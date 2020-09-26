@@ -1,9 +1,13 @@
 package cn.ly.base_common.metric.undertow;
 
 import cn.ly.base_common.metric.undertow.task.MetricUndertowScheduledTask;
+
 import com.timgroup.statsd.StatsDClient;
+
 import io.undertow.Undertow;
-import lombok.AllArgsConstructor;
+
+import javax.servlet.Servlet;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -12,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.xnio.SslClientAuthMode;
 
-import javax.servlet.Servlet;
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/9/2.

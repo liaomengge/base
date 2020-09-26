@@ -1,7 +1,8 @@
 package cn.ly.base_common.utils.log;
 
-import lombok.experimental.UtilityClass;
 import org.slf4j.MDC;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2018/9/5.

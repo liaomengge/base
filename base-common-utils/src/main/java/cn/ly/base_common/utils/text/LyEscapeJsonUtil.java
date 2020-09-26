@@ -1,15 +1,17 @@
 package cn.ly.base_common.utils.text;
 
 import cn.ly.base_common.utils.string.LyStringUtil;
-import lombok.experimental.UtilityClass;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.text.translate.AggregateTranslator;
 import org.apache.commons.text.translate.CharSequenceTranslator;
 import org.apache.commons.text.translate.EntityArrays;
 import org.apache.commons.text.translate.LookupTranslator;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/8.

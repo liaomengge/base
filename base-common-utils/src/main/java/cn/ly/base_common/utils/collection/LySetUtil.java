@@ -1,9 +1,10 @@
 package cn.ly.base_common.utils.collection;
 
 import com.google.common.collect.Sets;
-import lombok.experimental.UtilityClass;
 
 import java.util.Set;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/23.

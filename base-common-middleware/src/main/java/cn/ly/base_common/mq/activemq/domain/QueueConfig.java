@@ -1,6 +1,7 @@
 package cn.ly.base_common.mq.activemq.domain;
 
 import cn.ly.base_common.mq.domain.AbstractQueueConfig;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

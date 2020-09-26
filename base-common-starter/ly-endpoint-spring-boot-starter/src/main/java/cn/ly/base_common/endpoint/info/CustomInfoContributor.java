@@ -2,13 +2,15 @@ package cn.ly.base_common.endpoint.info;
 
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.net.LyNetworkUtil;
+
 import com.google.common.collect.Maps;
+
+import java.util.LinkedHashMap;
+
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
-
-import java.util.LinkedHashMap;
 
 /**
  * Created by liaomengge on 2019/7/4.

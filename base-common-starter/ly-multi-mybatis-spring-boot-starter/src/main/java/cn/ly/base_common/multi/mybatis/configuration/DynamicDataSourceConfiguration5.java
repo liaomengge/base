@@ -10,8 +10,15 @@ import cn.ly.base_common.multi.mybatis.extend.ExtendSpringBootVFS;
 import cn.ly.base_common.multi.mybatis.hikari.HikariConfiguration5;
 import cn.ly.base_common.support.datasource.DynamicDataSource;
 import cn.ly.base_common.support.datasource.enums.DbType;
+
 import com.github.pagehelper.PageInterceptor;
 import com.google.common.collect.Maps;
+
+import java.util.Map;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -26,10 +33,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
-
-import javax.sql.DataSource;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * Created by liaomengge on 2018/12/19.

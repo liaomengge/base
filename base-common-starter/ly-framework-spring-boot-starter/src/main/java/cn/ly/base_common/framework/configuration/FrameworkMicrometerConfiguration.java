@@ -1,6 +1,7 @@
 package cn.ly.base_common.framework.configuration;
 
 import io.micrometer.core.instrument.MeterRegistry;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

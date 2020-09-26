@@ -2,6 +2,9 @@ package cn.ly.base_common.async;
 
 import cn.ly.base_common.utils.error.LyThrowableUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
+import java.util.concurrent.Executor;
+
 import org.slf4j.Logger;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -9,8 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
-
-import java.util.concurrent.Executor;
 
 /**
  * Created by liaomengge on 2019/2/21.

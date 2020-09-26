@@ -1,6 +1,7 @@
 package cn.ly.base_common.framework.registry;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;

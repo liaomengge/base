@@ -1,12 +1,13 @@
 package cn.ly.base_common.health_check.health;
 
 import cn.ly.base_common.health_check.health.domain.HealthInfo;
-import org.apache.commons.collections4.MapUtils;
-import org.springframework.amqp.rabbit.connection.Connection;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 
 import java.util.Map;
 import java.util.Objects;
+
+import org.apache.commons.collections4.MapUtils;
+import org.springframework.amqp.rabbit.connection.Connection;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 
 /**
  * Created by liaomengge on 2019/7/12.

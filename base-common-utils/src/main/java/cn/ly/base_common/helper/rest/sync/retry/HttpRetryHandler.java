@@ -1,9 +1,13 @@
 package cn.ly.base_common.helper.rest.sync.retry;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLException;
+
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpRequest;
 import org.apache.http.NoHttpResponseException;
@@ -12,10 +16,9 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.protocol.HttpContext;
 import org.slf4j.Logger;
 
-import javax.net.ssl.SSLException;
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.net.UnknownHostException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/4/29.

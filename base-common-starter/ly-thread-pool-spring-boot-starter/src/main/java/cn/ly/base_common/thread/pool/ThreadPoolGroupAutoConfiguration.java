@@ -2,6 +2,7 @@ package cn.ly.base_common.thread.pool;
 
 import cn.ly.base_common.thread.pool.listener.ThreadPoolApolloListener;
 import cn.ly.base_common.thread.pool.registry.ThreadPoolBeanRegistryConfiguration;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

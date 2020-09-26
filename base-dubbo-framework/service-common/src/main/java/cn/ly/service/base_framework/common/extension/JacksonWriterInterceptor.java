@@ -4,14 +4,16 @@ import cn.ly.base_common.utils.string.LyStringUtil;
 import cn.ly.service.base_framework.base.BaseResponse;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.ServiceConst.ResponseStatus.ErrorCodeEnum;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.ext.WriterInterceptor;
 import javax.ws.rs.ext.WriterInterceptorContext;
-import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * Created by liaomengge on 16/12/3.

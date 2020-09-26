@@ -2,17 +2,20 @@ package cn.ly.base_common.multi.shardingsphere.configuration;
 
 import cn.ly.base_common.multi.shardingsphere.util.DataSourceUtil;
 import cn.ly.base_common.multi.shardingsphere.util.PropertyUtil;
+
 import com.google.common.base.Preconditions;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import org.apache.shardingsphere.core.util.InlineExpressionParser;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.jndi.JndiObjectFactoryBean;
-
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by liaomengge on 2019/9/12.

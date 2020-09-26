@@ -3,22 +3,26 @@ package cn.ly.base_common.metric.hikari.task;
 import cn.ly.base_common.metric.hikari.MetricHikariProperties;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadUtil;
+
 import com.timgroup.statsd.StatsDClient;
 import com.zaxxer.hikari.HikariConfigMXBean;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.HikariPoolMXBean;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 
-import javax.annotation.PostConstruct;
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2019/7/24.

@@ -9,21 +9,25 @@ import cn.ly.base_common.redis.JedisClusterProperties;
 import cn.ly.base_common.redis.SpringDataProperties;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadUtil;
+
 import com.google.common.collect.Lists;
 import com.timgroup.statsd.StatsDClient;
-import lombok.Builder;
-import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 
-import javax.annotation.PostConstruct;
-import javax.management.*;
 import java.lang.management.ManagementFactory;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
+import javax.management.*;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+
+import lombok.Builder;
+import lombok.Data;
 
 public class MetricRedisScheduledTask {
 

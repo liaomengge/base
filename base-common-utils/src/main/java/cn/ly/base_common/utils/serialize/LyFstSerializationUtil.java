@@ -1,10 +1,11 @@
 package cn.ly.base_common.utils.serialize;
 
-import lombok.experimental.UtilityClass;
+import java.io.Serializable;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.nustaq.serialization.FSTConfiguration;
 
-import java.io.Serializable;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/7.

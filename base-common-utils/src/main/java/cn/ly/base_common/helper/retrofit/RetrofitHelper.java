@@ -4,18 +4,21 @@ import cn.ly.base_common.support.exception.CommunicationException;
 import cn.ly.base_common.utils.error.LyExceptionUtil;
 import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.alibaba.csp.sentinel.slots.block.AbstractRule;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import lombok.AllArgsConstructor;
-import okhttp3.ResponseBody;
-import org.slf4j.Logger;
-import org.springframework.retry.support.RetryTemplate;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.springframework.retry.support.RetryTemplate;
+
+import lombok.AllArgsConstructor;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by liaomengge on 2019/3/6.

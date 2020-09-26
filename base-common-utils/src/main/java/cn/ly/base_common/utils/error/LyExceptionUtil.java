@@ -1,9 +1,9 @@
 package cn.ly.base_common.utils.error;
 
-import lombok.experimental.UtilityClass;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2019/10/17.

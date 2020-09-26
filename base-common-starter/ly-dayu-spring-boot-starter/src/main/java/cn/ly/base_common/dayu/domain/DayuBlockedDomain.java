@@ -1,9 +1,9 @@
 package cn.ly.base_common.dayu.domain;
 
+import java.io.Serializable;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 /**
  * Created by liaomengge on 2019/10/31.

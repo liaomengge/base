@@ -8,8 +8,17 @@ import cn.ly.base_common.metric.httpclient.MetricHttpClientProperties;
 import cn.ly.base_common.utils.collection.LyCollectionUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadUtil;
+
 import com.timgroup.statsd.StatsDClient;
-import lombok.AllArgsConstructor;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.conn.routing.HttpRoute;
@@ -17,12 +26,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.pool.PoolStats;
 import org.slf4j.Logger;
 
-import javax.annotation.PostConstruct;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class MetricHttpClientScheduledTask {

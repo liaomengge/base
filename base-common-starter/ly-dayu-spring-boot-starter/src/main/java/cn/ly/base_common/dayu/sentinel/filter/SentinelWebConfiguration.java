@@ -2,8 +2,12 @@ package cn.ly.base_common.dayu.sentinel.filter;
 
 import cn.ly.base_common.dayu.sentinel.SentinelProperties;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.google.common.collect.ImmutableMap;
 import com.timgroup.statsd.StatsDClient;
+
+import java.util.List;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -12,8 +16,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 /**
  * Created by liaomengge on 2019/11/7.

@@ -1,10 +1,11 @@
 package cn.ly.base_common.swagger.annotation;
 
 import cn.ly.base_common.swagger.security.ExtendSecurityConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 /**
  * Created by liaomengge on 2019/7/12.

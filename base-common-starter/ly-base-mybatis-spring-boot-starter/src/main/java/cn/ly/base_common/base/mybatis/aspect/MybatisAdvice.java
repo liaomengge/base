@@ -1,18 +1,20 @@
 package cn.ly.base_common.base.mybatis.aspect;
 
+import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
+
 import cn.ly.base_common.support.datasource.StringDBContext;
 import cn.ly.base_common.support.datasource.annotation.*;
 import cn.ly.base_common.support.datasource.enums.DbType;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
-import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * Created by liaomengge on 2019/7/5.

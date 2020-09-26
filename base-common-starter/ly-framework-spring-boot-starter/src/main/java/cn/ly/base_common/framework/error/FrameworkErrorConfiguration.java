@@ -2,7 +2,11 @@ package cn.ly.base_common.framework.error;
 
 import cn.ly.service.base_framework.common.controller.GlobalErrorAttributes;
 import cn.ly.service.base_framework.common.controller.GlobalErrorController;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.servlet.Servlet;
+
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -14,8 +18,6 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.DispatcherServlet;
-
-import javax.servlet.Servlet;
 
 /**
  * Created by liaomengge on 2019/11/29.

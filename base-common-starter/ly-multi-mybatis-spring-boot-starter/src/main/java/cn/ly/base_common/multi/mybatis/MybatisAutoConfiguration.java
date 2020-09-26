@@ -1,9 +1,9 @@
 package cn.ly.base_common.multi.mybatis;
 
-import cn.ly.base_common.multi.mybatis.configuration.*;
 import cn.ly.base_common.helper.aspect.MasterSlaveAspect;
 import cn.ly.base_common.helper.mybatis.transaction.callback.TransactionCallbackHelper;
 import cn.ly.base_common.multi.mybatis.configuration.*;
+
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

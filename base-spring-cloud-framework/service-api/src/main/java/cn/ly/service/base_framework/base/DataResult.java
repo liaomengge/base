@@ -3,10 +3,11 @@ package cn.ly.service.base_framework.base;
 import cn.ly.base_common.utils.string.LyToStringUtil;
 import cn.ly.service.base_framework.base.code.IResultCode;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 17/9/29.

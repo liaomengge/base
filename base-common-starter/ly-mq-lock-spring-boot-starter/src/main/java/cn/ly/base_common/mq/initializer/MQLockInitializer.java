@@ -6,6 +6,11 @@ import cn.ly.base_common.mq.MQLockProperties;
 import cn.ly.base_common.mq.MQLockProperties.PrototypeProperties;
 import cn.ly.base_common.mq.rabbitmq.receiver.BaseMQReceiver;
 import cn.ly.base_common.utils.net.LyNetworkUtil;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.I0Itec.zkclient.ZkClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,10 +21,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/5/21.

@@ -3,15 +3,18 @@ package cn.ly.base_common.mq.activemq.receiver;
 import cn.ly.base_common.mq.activemq.AbstractMQReceiver;
 import cn.ly.base_common.mq.activemq.exception.DefaultErrorHandler;
 import cn.ly.base_common.mq.activemq.exception.DefaultExceptionListener;
+
 import com.google.common.collect.Lists;
-import org.apache.activemq.pool.PooledConnectionFactory;
-import org.springframework.jms.listener.SimpleMessageListenerContainer;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.jms.MessageListener;
 import javax.jms.Session;
-import java.util.Arrays;
-import java.util.List;
+
+import org.apache.activemq.pool.PooledConnectionFactory;
+import org.springframework.jms.listener.SimpleMessageListenerContainer;
 
 /**
  * Created by liaomengge on 2018/12/7.

@@ -2,10 +2,11 @@ package cn.ly.base_common.helper.lock.distributed.redis;
 
 import cn.ly.base_common.helper.lock.distributed.AcquiredLockWorker;
 import cn.ly.base_common.helper.lock.distributed.DistributedLocker;
-import org.redisson.api.RLock;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
+import org.redisson.api.RLock;
 
 /**
  * Created by liaomengge on 17/12/19.

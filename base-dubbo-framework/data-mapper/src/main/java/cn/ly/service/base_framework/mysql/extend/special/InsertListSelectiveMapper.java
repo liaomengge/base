@@ -1,10 +1,11 @@
 package cn.ly.service.base_framework.mysql.extend.special;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Options;
-import tk.mybatis.mapper.annotation.RegisterMapper;
 
-import java.util.List;
+import tk.mybatis.mapper.annotation.RegisterMapper;
 
 /**
  * Created by liaomengge on 2019/11/19.

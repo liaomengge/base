@@ -3,14 +3,16 @@ package cn.ly.base_common.helper.rest.async;
 import cn.ly.base_common.helper.rest.data.BaseRequest;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.string.LyStringUtil;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.client.HttpStatusCodeException;
 
-import java.io.IOException;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by liaomengge on 17/3/9.

@@ -1,7 +1,8 @@
 package cn.ly.base_common.quartz.listener.util;
 
-import lombok.experimental.UtilityClass;
 import org.quartz.impl.triggers.CronTriggerImpl;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2019/7/19.

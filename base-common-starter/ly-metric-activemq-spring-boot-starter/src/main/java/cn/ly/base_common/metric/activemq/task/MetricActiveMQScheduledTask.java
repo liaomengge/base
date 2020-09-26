@@ -9,14 +9,17 @@ import cn.ly.base_common.mq.activemq.pool.MonitorPooledConnectionFactory;
 import cn.ly.base_common.mq.activemq.pool.MonitorPooledConnectionFactory.PoolMonitor;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadUtil;
-import com.timgroup.statsd.StatsDClient;
-import org.apache.activemq.pool.PooledConnectionFactory;
-import org.slf4j.Logger;
 
-import javax.annotation.PostConstruct;
+import com.timgroup.statsd.StatsDClient;
+
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
+
+import org.apache.activemq.pool.PooledConnectionFactory;
+import org.slf4j.Logger;
 
 public class MetricActiveMQScheduledTask {
 

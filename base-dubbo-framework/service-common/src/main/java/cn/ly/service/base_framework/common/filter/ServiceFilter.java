@@ -13,11 +13,21 @@ import cn.ly.base_common.utils.trace.LyTraceLogUtil;
 import cn.ly.base_common.utils.web.LyWebUtil;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.ServiceConst;
+
 import com.alibaba.dubbo.rpc.*;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-import lombok.Setter;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.MediaType;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -25,13 +35,7 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInputImpl;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.MediaType;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 16/11/9.

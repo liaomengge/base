@@ -1,8 +1,13 @@
 package cn.ly.base_common.base.mybatis.registry;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 import cn.ly.base_common.base.mybatis.MybatisProperties;
 import cn.ly.base_common.base.mybatis.aspect.MybatisPointcutAdvisor;
 import cn.ly.base_common.utils.binder.LyBinderUtil;
+
+import java.util.Optional;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -14,10 +19,6 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
-
-import java.util.Optional;
-
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
 /**
  * Created by liaomengge on 2019/7/5.

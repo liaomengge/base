@@ -1,6 +1,9 @@
 package cn.ly.base_common.mybatis.hikari;
 
 import com.zaxxer.hikari.HikariDataSource;
+
+import javax.sql.DataSource;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -9,8 +12,6 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-
-import javax.sql.DataSource;
 
 /**
  * Created by liaomengge on 2018/12/12.

@@ -1,8 +1,8 @@
 package cn.ly.base_common.support.objects;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.Objects;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2019/11/27.

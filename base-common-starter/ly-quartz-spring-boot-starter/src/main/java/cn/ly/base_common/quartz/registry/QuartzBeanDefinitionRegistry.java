@@ -1,10 +1,19 @@
 package cn.ly.base_common.quartz.registry;
 
+import static com.google.common.base.CaseFormat.LOWER_CAMEL;
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 import cn.ly.base_common.quartz.domain.AbstractBaseJob;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -19,13 +28,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
 import org.springframework.util.StringUtils;
-
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
-import static com.google.common.base.CaseFormat.LOWER_CAMEL;
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
 /**
  * Created by liaomengge on 2019/1/29.

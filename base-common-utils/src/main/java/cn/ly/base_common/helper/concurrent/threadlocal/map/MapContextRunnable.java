@@ -2,9 +2,10 @@ package cn.ly.base_common.helper.concurrent.threadlocal.map;
 
 import cn.ly.base_common.helper.concurrent.threadlocal.ThreadLocalRunnable;
 import cn.ly.base_common.support.threadlocal.ThreadLocalContextMap;
-import org.slf4j.MDC;
 
 import java.util.Map;
+
+import org.slf4j.MDC;
 
 /**
  * Created by liaomengge on 2020/5/20.

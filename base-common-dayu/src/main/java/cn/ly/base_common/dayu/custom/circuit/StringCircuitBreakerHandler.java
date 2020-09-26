@@ -1,8 +1,9 @@
 package cn.ly.base_common.dayu.custom.circuit;
 
+import cn.ly.base_common.dayu.custom.breaker.StringCircuitBreaker;
 import cn.ly.base_common.dayu.custom.domain.CircuitBreakerDomain;
 import cn.ly.base_common.dayu.custom.helper.CircuitBreakerRedisHelper;
-import cn.ly.base_common.dayu.custom.breaker.StringCircuitBreaker;
+
 import com.timgroup.statsd.StatsDClient;
 
 import java.util.function.Supplier;

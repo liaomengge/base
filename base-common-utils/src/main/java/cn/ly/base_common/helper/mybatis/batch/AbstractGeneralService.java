@@ -2,15 +2,17 @@ package cn.ly.base_common.helper.mybatis.batch;
 
 import cn.ly.base_common.helper.mybatis.extension.MapResultHandler;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
-import tk.mybatis.mapper.common.Mapper;
 
-import java.util.List;
-import java.util.Map;
+import tk.mybatis.mapper.common.Mapper;
 
 /**
  * Created by liaomengge on 16/6/23.

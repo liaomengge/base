@@ -1,10 +1,12 @@
 package cn.ly.service.base_framework.mysql.extend.special;
 
 import cn.ly.base_common.support.datasource.annotation.Master;
-import org.apache.ibatis.annotations.SelectProvider;
-import tk.mybatis.mapper.annotation.RegisterMapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.SelectProvider;
+
+import tk.mybatis.mapper.annotation.RegisterMapper;
 
 /**
  * Created by liaomengge on 2019/11/20.

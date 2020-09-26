@@ -2,8 +2,10 @@ package cn.ly.base_common.cache.redis;
 
 import cn.ly.base_common.cache.Level2Cache;
 import cn.ly.base_common.helper.redis.RedissonHelper;
-import lombok.AllArgsConstructor;
+
 import org.apache.commons.lang3.StringUtils;
+
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/3/18.

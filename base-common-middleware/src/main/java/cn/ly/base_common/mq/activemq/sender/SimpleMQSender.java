@@ -5,12 +5,14 @@ import cn.ly.base_common.mq.activemq.domain.QueueConfig;
 import cn.ly.base_common.mq.activemq.processor.TraceMessagePostProcessor;
 import cn.ly.base_common.mq.consts.MQConst;
 import cn.ly.base_common.mq.consts.MetricsConst;
-import lombok.NonNull;
-import lombok.Setter;
+
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jms.core.MessagePostProcessor;
 import org.springframework.jms.support.converter.MessageConverter;
+
+import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 17/1/4.

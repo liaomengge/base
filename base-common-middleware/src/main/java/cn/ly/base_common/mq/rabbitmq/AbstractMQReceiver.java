@@ -2,12 +2,14 @@ package cn.ly.base_common.mq.rabbitmq;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.shutdown.LyShutdownUtil;
-import lombok.Setter;
+
+import java.util.concurrent.Executor;
+
 import org.slf4j.Logger;
 import org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer;
 import org.springframework.beans.factory.DisposableBean;
 
-import java.util.concurrent.Executor;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 17/9/15.

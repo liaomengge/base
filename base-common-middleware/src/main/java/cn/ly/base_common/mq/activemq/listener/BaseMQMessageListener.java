@@ -10,9 +10,10 @@ import cn.ly.base_common.mq.domain.MessageHeader;
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.trace.LyTraceLogUtil;
-import lombok.Getter;
 
 import javax.jms.Message;
+
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 17/1/3.

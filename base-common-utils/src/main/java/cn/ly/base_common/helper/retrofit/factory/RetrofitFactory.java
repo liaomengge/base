@@ -1,19 +1,22 @@
 package cn.ly.base_common.helper.retrofit.factory;
 
 import cn.ly.base_common.helper.retrofit.api.RetrofitApi;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import lombok.Setter;
-import okhttp3.OkHttpClient;
+
+import java.util.Map;
+
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import lombok.Setter;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.fastjson.FastJsonConverterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-
-import java.util.Map;
 
 /**
  * Created by liaomengge on 2019/3/1.

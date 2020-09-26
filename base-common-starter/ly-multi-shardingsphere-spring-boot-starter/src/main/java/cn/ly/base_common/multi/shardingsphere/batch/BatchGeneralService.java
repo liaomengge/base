@@ -2,12 +2,14 @@ package cn.ly.base_common.multi.shardingsphere.batch;
 
 import cn.ly.base_common.helper.mybatis.batch.AbstractGeneralService;
 import cn.ly.base_common.helper.mybatis.extension.MapResultHandler;
-import lombok.AllArgsConstructor;
-import org.apache.ibatis.session.SqlSessionFactory;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import lombok.AllArgsConstructor;
+import tk.mybatis.mapper.common.Mapper;
 
 /**
  * Created by liaomengge on 2019/4/23.

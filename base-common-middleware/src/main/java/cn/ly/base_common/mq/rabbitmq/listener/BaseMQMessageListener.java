@@ -9,9 +9,12 @@ import cn.ly.base_common.mq.rabbitmq.domain.QueueConfig;
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.trace.LyTraceLogUtil;
+
 import com.rabbitmq.client.Channel;
-import lombok.Getter;
+
 import org.springframework.amqp.core.Message;
+
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 16/12/22.

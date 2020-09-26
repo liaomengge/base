@@ -1,12 +1,14 @@
 package cn.ly.base_common.helper.retrofit.client.interceptor;
 
 import cn.ly.base_common.utils.trace.LyTraceLogUtil;
+
+import java.io.IOException;
+
+import org.apache.commons.lang3.StringUtils;
+
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.IOException;
 
 /**
  * Created by liaomengge on 2019/11/21.

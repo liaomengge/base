@@ -10,10 +10,17 @@ import cn.ly.base_common.retrofit.RetrofitProperties.HttpClientProperties;
 import cn.ly.base_common.retrofit.RetrofitProperties.SentinelProperties;
 import cn.ly.base_common.retrofit.RetrofitProperties.UrlHttpClientProperties;
 import cn.ly.base_common.utils.number.LyNumberUtil;
+
 import com.google.common.collect.ImmutableMap;
 import com.timgroup.statsd.StatsDClient;
-import okhttp3.ConnectionPool;
-import okhttp3.OkHttpClient;
+
+import java.net.SocketTimeoutException;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +34,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
-import retrofit2.Retrofit;
 
-import java.net.SocketTimeoutException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import okhttp3.ConnectionPool;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
 
 /**
  * Created by liaomengge on 2019/3/1.

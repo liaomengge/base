@@ -1,8 +1,8 @@
 package cn.ly.base_common.utils.shutdown;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.function.Consumer;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2018/12/20.

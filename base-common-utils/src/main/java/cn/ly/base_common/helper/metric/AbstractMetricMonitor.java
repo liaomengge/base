@@ -1,9 +1,12 @@
 package cn.ly.base_common.helper.metric;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.timgroup.statsd.StatsDClient;
-import lombok.Setter;
+
 import org.slf4j.Logger;
+
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 16/11/10.

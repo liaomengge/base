@@ -1,13 +1,15 @@
 package cn.ly.base_common.redis;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
-import redis.clients.jedis.JedisPoolConfig;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Created by liaomengge on 2018/11/16.

@@ -1,10 +1,11 @@
 package cn.ly.base_common.utils.thread;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import lombok.experimental.UtilityClass;
 
 import java.text.MessageFormat;
 import java.util.concurrent.ThreadFactory;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/30.

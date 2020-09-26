@@ -1,10 +1,11 @@
 package cn.ly.base_common.helper.concurrent.threadlocal.request;
 
 import cn.ly.base_common.helper.concurrent.threadlocal.ThreadLocalCallable;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.concurrent.Callable;
+
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 /**
  * Created by liaomengge on 2020/5/26.

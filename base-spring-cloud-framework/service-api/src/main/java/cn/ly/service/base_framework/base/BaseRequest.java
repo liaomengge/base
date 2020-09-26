@@ -1,11 +1,13 @@
 package cn.ly.service.base_framework.base;
 
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
-import lombok.Data;
+
+import java.io.Serializable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+
+import lombok.Data;
 
 /**
  * Created by liaomengge on 17/9/29.

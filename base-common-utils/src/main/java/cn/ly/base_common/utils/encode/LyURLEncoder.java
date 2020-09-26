@@ -1,11 +1,12 @@
 package cn.ly.base_common.utils.encode;
 
 import cn.ly.base_common.support.misc.Encodings;
-import lombok.experimental.UtilityClass;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 16/11/29.

@@ -2,9 +2,6 @@ package cn.ly.base_common.utils.collection;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import lombok.experimental.UtilityClass;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.MapUtils;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -12,6 +9,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2020/6/3.

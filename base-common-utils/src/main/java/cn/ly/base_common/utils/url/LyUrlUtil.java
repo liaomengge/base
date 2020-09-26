@@ -1,11 +1,12 @@
 package cn.ly.base_common.utils.url;
 
-import lombok.experimental.UtilityClass;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 
-import java.util.List;
-import java.util.Map;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 16/11/29.

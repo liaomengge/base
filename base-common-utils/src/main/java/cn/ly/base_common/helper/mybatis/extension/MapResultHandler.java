@@ -1,9 +1,9 @@
 package cn.ly.base_common.helper.mybatis.extension;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.ResultContext;
 import org.apache.ibatis.session.ResultHandler;
-
-import java.util.Map;
 
 public class MapResultHandler<T extends Map<?, ?>, K, V> implements ResultHandler<T> {
 

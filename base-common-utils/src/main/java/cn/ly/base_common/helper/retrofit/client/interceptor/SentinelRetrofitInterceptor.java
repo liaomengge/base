@@ -4,21 +4,24 @@ import cn.ly.base_common.helper.retrofit.consts.RetrofitMetricsConst;
 import cn.ly.base_common.utils.error.LyExceptionUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.url.LyMoreUrlUtil;
+
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.timgroup.statsd.StatsDClient;
+
+import java.io.IOException;
+import java.util.Optional;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+
 import lombok.AllArgsConstructor;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-
-import java.io.IOException;
-import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/11/5.

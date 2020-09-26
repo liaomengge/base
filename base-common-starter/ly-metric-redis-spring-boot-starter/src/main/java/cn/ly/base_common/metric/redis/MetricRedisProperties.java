@@ -1,7 +1,8 @@
 package cn.ly.base_common.metric.redis;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2019/8/29.

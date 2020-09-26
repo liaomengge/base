@@ -2,7 +2,7 @@ package cn.ly.base_common.multi.shardingsphere;
 
 import cn.ly.base_common.multi.shardingsphere.aspect.HintMasterAspect;
 import cn.ly.base_common.multi.shardingsphere.configuration.*;
-import cn.ly.base_common.multi.shardingsphere.configuration.*;
+
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;

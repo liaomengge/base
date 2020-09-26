@@ -1,15 +1,18 @@
 package cn.ly.base_common.quartz;
 
+import static org.quartz.CalendarIntervalTrigger.MISFIRE_INSTRUCTION_DO_NOTHING;
+
 import com.google.common.collect.Lists;
-import lombok.Data;
+
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
-import java.util.List;
-
-import static org.quartz.CalendarIntervalTrigger.MISFIRE_INSTRUCTION_DO_NOTHING;
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2019/1/29.

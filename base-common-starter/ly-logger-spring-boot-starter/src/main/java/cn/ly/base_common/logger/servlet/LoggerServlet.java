@@ -2,19 +2,22 @@ package cn.ly.base_common.logger.servlet;
 
 import cn.ly.base_common.logger.LoggerProperties;
 import cn.ly.base_common.utils.web.LyWebUtil;
-import lombok.Data;
+
+import java.io.IOException;
+import java.util.Locale;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.logging.LoggersEndpoint;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Locale;
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2019/1/22.

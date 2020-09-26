@@ -2,11 +2,13 @@ package cn.ly.base_common.utils.trace;
 
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.misc.LyIdGeneratorUtil;
+
 import com.alibaba.ttl.TransmittableThreadLocal;
-import lombok.experimental.UtilityClass;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/5/25.

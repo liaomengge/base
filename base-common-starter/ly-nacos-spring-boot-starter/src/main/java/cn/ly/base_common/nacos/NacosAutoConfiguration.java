@@ -3,6 +3,7 @@ package cn.ly.base_common.nacos;
 import cn.ly.base_common.nacos.endpoint.NacosPullInEndpoint;
 import cn.ly.base_common.nacos.endpoint.NacosPullOutEndpoint;
 import cn.ly.base_common.nacos.endpoint.process.NacosEndpointBeanPostProcess;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

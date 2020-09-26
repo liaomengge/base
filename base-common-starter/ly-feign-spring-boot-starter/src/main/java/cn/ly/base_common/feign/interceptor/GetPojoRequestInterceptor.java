@@ -1,18 +1,21 @@
 package cn.ly.base_common.feign.interceptor;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
-import feign.Util;
-import lombok.AllArgsConstructor;
+
+import java.io.IOException;
+import java.util.*;
+
 import org.slf4j.Logger;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
-import java.util.*;
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
+import feign.Util;
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2020/8/25.

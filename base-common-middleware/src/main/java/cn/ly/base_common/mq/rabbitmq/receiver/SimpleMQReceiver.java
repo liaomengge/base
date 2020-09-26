@@ -1,11 +1,13 @@
 package cn.ly.base_common.mq.rabbitmq.receiver;
 
 import cn.ly.base_common.mq.rabbitmq.listener.BaseMQMessageListener;
-import lombok.NonNull;
-import lombok.Setter;
+
 import org.aopalliance.aop.Advice;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
+
+import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 2018/6/29.

@@ -1,12 +1,23 @@
 package cn.ly.base_common.multi.shardingsphere.configuration;
 
+import cn.ly.base_common.helper.mybatis.plugins.FlowInterceptor;
+import cn.ly.base_common.helper.mybatis.plugins.SqlInterceptor;
 import cn.ly.base_common.multi.shardingsphere.ShardingSphereProperties;
 import cn.ly.base_common.multi.shardingsphere.batch.BatchGeneralService;
 import cn.ly.base_common.multi.shardingsphere.extend.ExtendMapperScan;
 import cn.ly.base_common.multi.shardingsphere.extend.ExtendSpringBootVFS;
-import cn.ly.base_common.helper.mybatis.plugins.FlowInterceptor;
-import cn.ly.base_common.helper.mybatis.plugins.SqlInterceptor;
+
 import com.github.pagehelper.PageInterceptor;
+
+import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -24,14 +35,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
-
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * Created by liaomengge on 2019/9/12.

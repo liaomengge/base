@@ -1,9 +1,10 @@
 package cn.ly.base_common.cache;
 
-import lombok.Data;
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.List;
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2019/3/20.

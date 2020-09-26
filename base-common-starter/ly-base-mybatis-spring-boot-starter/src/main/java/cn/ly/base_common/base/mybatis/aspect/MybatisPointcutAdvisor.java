@@ -1,11 +1,11 @@
 package cn.ly.base_common.base.mybatis.aspect;
 
+import javax.annotation.PostConstruct;
+
 import org.aopalliance.aop.Advice;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.AbstractPointcutAdvisor;
-
-import javax.annotation.PostConstruct;
 
 /**
  * Created by liaomengge on 2019/7/5.

@@ -1,16 +1,24 @@
 package cn.ly.base_common.swagger;
 
+import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
+
 import cn.ly.base_common.swagger.SwaggerProperties.ApiInfoWrapper;
 import cn.ly.base_common.swagger.annotation.EnableExtendSwaggerBootstrapUI;
+
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import lombok.AllArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import lombok.AllArgsConstructor;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -21,11 +29,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
 
 /**
  * Created by liaomengge on 2019/1/23.

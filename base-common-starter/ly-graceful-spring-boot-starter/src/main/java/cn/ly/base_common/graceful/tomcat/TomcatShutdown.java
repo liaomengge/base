@@ -3,17 +3,18 @@ package cn.ly.base_common.graceful.tomcat;
 import cn.ly.base_common.graceful.GracefulProperties;
 import cn.ly.base_common.graceful.consts.GracefulConst;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import org.apache.catalina.connector.Connector;
-import org.slf4j.Logger;
-import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextClosedEvent;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.catalina.connector.Connector;
+import org.slf4j.Logger;
+import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextClosedEvent;
 
 /**
  * Created by liaomengge on 2018/12/18.

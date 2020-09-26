@@ -1,11 +1,11 @@
 package cn.ly.base_common.utils.callback;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2019/12/20.

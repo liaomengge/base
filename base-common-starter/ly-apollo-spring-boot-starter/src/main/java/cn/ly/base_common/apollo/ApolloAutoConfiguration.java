@@ -1,11 +1,15 @@
 package cn.ly.base_common.apollo;
 
+import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
+
 import cn.ly.base_common.apollo.listener.ApolloRefreshListener;
 import cn.ly.base_common.apollo.refresh.ApolloRefresher;
+
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigChangeListener;
 import com.ctrip.framework.apollo.ConfigService;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -13,8 +17,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
 
 /**
  * Created by liaomengge on 2020/8/1.

@@ -3,7 +3,9 @@ package cn.ly.base_common.metric.cache.redis;
 import cn.ly.base_common.redis.JedisClusterProperties;
 import cn.ly.base_common.redis.RedisAutoConfiguration;
 import cn.ly.base_common.redis.SpringDataProperties;
+
 import io.micrometer.core.instrument.MeterRegistry;
+
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -11,6 +13,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import redis.clients.jedis.JedisPoolConfig;
 
 /**

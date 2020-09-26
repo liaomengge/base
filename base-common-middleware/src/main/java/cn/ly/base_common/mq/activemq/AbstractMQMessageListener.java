@@ -5,15 +5,18 @@ import cn.ly.base_common.mq.domain.MQMessage;
 import cn.ly.base_common.mq.domain.MessageHeader;
 import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.fasterxml.jackson.core.type.TypeReference;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
+
+import java.util.Objects;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
-import java.util.Objects;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 
 /**
  * Created by liaomengge on 16/12/22.

@@ -1,12 +1,13 @@
 package cn.ly.base_common.utils.thread;
 
 import cn.ly.base_common.helper.concurrent.LyTtlThreadPoolExecutor;
-import lombok.experimental.UtilityClass;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 18/1/2.

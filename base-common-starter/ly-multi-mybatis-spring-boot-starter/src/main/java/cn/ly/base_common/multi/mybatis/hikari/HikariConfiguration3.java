@@ -1,6 +1,7 @@
 package cn.ly.base_common.multi.mybatis.hikari;
 
 import com.zaxxer.hikari.HikariDataSource;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;

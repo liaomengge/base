@@ -4,13 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.google.common.base.Charsets;
-import lombok.NonNull;
-import org.springframework.http.HttpInputMessage;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+
+import org.springframework.http.HttpInputMessage;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+
+import lombok.NonNull;
 
 /**
  * Created by liaomengge on 2018/12/10.

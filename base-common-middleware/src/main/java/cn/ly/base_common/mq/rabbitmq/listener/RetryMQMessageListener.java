@@ -9,19 +9,22 @@ import cn.ly.base_common.mq.rabbitmq.enums.DeadLetterReasonEnum;
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.trace.LyTraceLogUtil;
+
 import com.alibaba.fastjson.JSONException;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ShutdownSignalException;
-import lombok.Setter;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.support.ConsumerCancelledException;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 16/12/22.

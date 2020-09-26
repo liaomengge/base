@@ -1,11 +1,13 @@
 package cn.ly.base_common.mq.activemq.receiver;
 
 import cn.ly.base_common.mq.activemq.listener.BaseMQMessageListener;
-import lombok.NonNull;
-import lombok.Setter;
-import org.apache.activemq.pool.PooledConnectionFactory;
 
 import javax.jms.MessageListener;
+
+import org.apache.activemq.pool.PooledConnectionFactory;
+
+import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 17/9/15.

@@ -1,9 +1,10 @@
 package cn.ly.base_common.support.exception;
 
+import org.apache.commons.lang3.StringUtils;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by liaomengge on 17/11/17.

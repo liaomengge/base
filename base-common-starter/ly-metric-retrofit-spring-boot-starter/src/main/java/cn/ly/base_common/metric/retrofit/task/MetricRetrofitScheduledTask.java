@@ -7,15 +7,19 @@ package cn.ly.base_common.metric.retrofit.task;
 import cn.ly.base_common.metric.retrofit.MetricRetrofitProperties;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadUtil;
+
 import com.timgroup.statsd.StatsDClient;
+
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+
 import lombok.AllArgsConstructor;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
-import org.slf4j.Logger;
-
-import javax.annotation.PostConstruct;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 @AllArgsConstructor
 public class MetricRetrofitScheduledTask {

@@ -1,11 +1,12 @@
 package cn.ly.base_common.utils.random;
 
-import lombok.experimental.UtilityClass;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.Validate;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/26.

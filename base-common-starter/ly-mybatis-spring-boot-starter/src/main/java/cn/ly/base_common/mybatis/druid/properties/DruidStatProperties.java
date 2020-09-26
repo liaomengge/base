@@ -15,8 +15,9 @@
  */
 package cn.ly.base_common.mybatis.druid.properties;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import lombok.Data;
 
 /**
  * @author lihengming [89921218@qq.com]

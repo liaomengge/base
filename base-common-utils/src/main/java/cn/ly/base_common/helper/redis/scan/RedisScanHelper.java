@@ -1,15 +1,17 @@
 package cn.ly.base_common.helper.redis.scan;
 
 import cn.ly.base_common.helper.redis.IRedisHelper;
+
 import com.google.common.collect.Maps;
-import redis.clients.jedis.ScanParams;
-import redis.clients.jedis.ScanResult;
-import redis.clients.jedis.util.SafeEncoder;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
+import redis.clients.jedis.util.SafeEncoder;
 
 /**
  * Created by liaomengge on 16/10/15.

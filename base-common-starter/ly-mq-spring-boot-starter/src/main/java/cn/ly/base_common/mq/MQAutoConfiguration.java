@@ -2,6 +2,7 @@ package cn.ly.base_common.mq;
 
 import cn.ly.base_common.mq.activemq.ActiveMQAutoConfiguration;
 import cn.ly.base_common.mq.rabbitmq.RabbitMQAutoConfiguration;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

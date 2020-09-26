@@ -1,10 +1,11 @@
 package cn.ly.base_common.multi.shardingsphere.extend;
 
+import java.lang.annotation.*;
+
 import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.context.annotation.Import;
-import tk.mybatis.spring.mapper.MapperFactoryBean;
 
-import java.lang.annotation.*;
+import tk.mybatis.spring.mapper.MapperFactoryBean;
 
 /**
  * Created by liaomengge on 2018/10/26.

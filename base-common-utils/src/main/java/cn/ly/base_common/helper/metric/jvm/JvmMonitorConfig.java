@@ -1,6 +1,7 @@
 package cn.ly.base_common.helper.metric.jvm;
 
 import cn.ly.base_common.helper.metric.AbstractMonitorConfig;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

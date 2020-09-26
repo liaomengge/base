@@ -1,8 +1,8 @@
 package cn.ly.base_common.utils.log4j2;
 
-import lombok.Data;
-
 import java.util.List;
+
+import lombok.Data;
 
 /**
  * Created by liaomengge on 17/11/8.

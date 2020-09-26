@@ -1,6 +1,7 @@
 package cn.ly.service.base_framework.mysql.extend;
 
 import cn.ly.service.base_framework.mysql.extend.special.*;
+
 import tk.mybatis.mapper.annotation.RegisterMapper;
 
 /**

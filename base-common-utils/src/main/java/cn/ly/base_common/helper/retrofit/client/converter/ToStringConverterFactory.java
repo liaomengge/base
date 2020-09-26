@@ -1,13 +1,13 @@
 package cn.ly.base_common.helper.retrofit.client.converter;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
 
 /**
  * Created by liaomengge on 2019/3/1.

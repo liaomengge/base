@@ -1,10 +1,11 @@
 package cn.ly.base_common.thread.pool.enums;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import java.util.Arrays;
+
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Arrays;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 2020/8/31.

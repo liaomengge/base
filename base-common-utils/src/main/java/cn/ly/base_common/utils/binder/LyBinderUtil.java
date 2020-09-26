@@ -1,15 +1,16 @@
 package cn.ly.base_common.utils.binder;
 
-import lombok.experimental.UtilityClass;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.env.Environment;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2020/7/4.

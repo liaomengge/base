@@ -1,11 +1,12 @@
 package cn.ly.base_common.support.threadlocal;
 
-import lombok.experimental.UtilityClass;
-import org.springframework.core.NamedThreadLocal;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import org.springframework.core.NamedThreadLocal;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2020/5/29.

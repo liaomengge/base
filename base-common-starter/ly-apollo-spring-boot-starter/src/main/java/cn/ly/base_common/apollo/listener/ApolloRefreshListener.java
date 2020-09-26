@@ -2,13 +2,15 @@ package cn.ly.base_common.apollo.listener;
 
 import cn.ly.base_common.apollo.refresh.ApolloRefresher;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.ctrip.framework.apollo.ConfigChangeListener;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.slf4j.Logger;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by liaomengge on 2020/8/1.

@@ -1,9 +1,11 @@
 package cn.ly.base_common.quartz.domain;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
+import org.slf4j.Logger;
+
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
 
 /**
  * Created by liaomengge on 19/1/30.

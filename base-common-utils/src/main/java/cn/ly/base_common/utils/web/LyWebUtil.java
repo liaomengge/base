@@ -1,19 +1,14 @@
 package cn.ly.base_common.utils.web;
 
+import static cn.ly.base_common.support.misc.consts.ToolConst.JOINER;
+
 import cn.ly.base_common.support.misc.Charsets;
 import cn.ly.base_common.utils.io.LyIOUtil;
 import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import com.google.common.collect.Lists;
-import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.springframework.http.MediaType;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
+import com.google.common.collect.Lists;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -21,7 +16,16 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static cn.ly.base_common.support.misc.consts.ToolConst.JOINER;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.springframework.http.MediaType;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/7.

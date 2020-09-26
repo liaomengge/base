@@ -1,16 +1,17 @@
 package cn.ly.service.base_framework.common.filter;
 
+import static cn.ly.base_common.utils.trace.LyTraceLogUtil.*;
+
 import cn.ly.base_common.utils.trace.LyTraceLogUtil;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-
-import static cn.ly.base_common.utils.trace.LyTraceLogUtil.*;
 
 /**
  * Created by liaomengge on 2018/11/22.

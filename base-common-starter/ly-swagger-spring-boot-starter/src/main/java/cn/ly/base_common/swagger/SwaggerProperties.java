@@ -1,15 +1,18 @@
 package cn.ly.base_common.swagger;
 
-import com.google.common.collect.Lists;
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
-import springfox.documentation.service.VendorExtension;
+import static springfox.documentation.spring.web.plugins.Docket.DEFAULT_GROUP_NAME;
 
-import javax.validation.constraints.NotNull;
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
-import static springfox.documentation.spring.web.plugins.Docket.DEFAULT_GROUP_NAME;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
+
+import lombok.Data;
+import springfox.documentation.service.VendorExtension;
 
 /**
  * Created by liaomengge on 2019/1/23.

@@ -1,11 +1,21 @@
 package cn.ly.base_common.quartz;
 
 
+import static cn.ly.base_common.quartz.registry.QuartzBeanDefinitionRegistry.getApplicationContext;
+import static cn.ly.base_common.quartz.registry.QuartzBeanDefinitionRegistry.getJobBeanMap;
+
 import cn.ly.base_common.helper.concurrent.LyThreadPoolTaskWrappedExecutor;
 import cn.ly.base_common.quartz.listener.QuartzListener;
 import cn.ly.base_common.quartz.registry.QuartzBeanRegistryConfiguration;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.google.common.collect.Lists;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
@@ -21,14 +31,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import static cn.ly.base_common.quartz.registry.QuartzBeanDefinitionRegistry.getApplicationContext;
-import static cn.ly.base_common.quartz.registry.QuartzBeanDefinitionRegistry.getJobBeanMap;
 
 /**
  * Created by liaomengge on 2019/1/29.

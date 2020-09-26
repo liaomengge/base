@@ -1,16 +1,18 @@
 package cn.ly.base_common.mq.rabbitmq.convert;
 
+import static cn.ly.base_common.mq.consts.MQConst.DEFAULT_CHARSET;
+
 import cn.ly.base_common.utils.json.LyJsonUtil;
+
 import com.alibaba.fastjson.TypeReference;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.support.converter.AbstractMessageConverter;
-import org.springframework.amqp.support.converter.MessageConversionException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
-import static cn.ly.base_common.mq.consts.MQConst.DEFAULT_CHARSET;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.support.converter.AbstractMessageConverter;
+import org.springframework.amqp.support.converter.MessageConversionException;
 
 /**
  * Created by liaomengge on 16/12/20.

@@ -1,9 +1,10 @@
 package cn.ly.base_common.utils.codec;
 
 import cn.ly.base_common.support.misc.Encodings;
-import lombok.experimental.UtilityClass;
 
 import java.io.UnsupportedEncodingException;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 16/10/17.

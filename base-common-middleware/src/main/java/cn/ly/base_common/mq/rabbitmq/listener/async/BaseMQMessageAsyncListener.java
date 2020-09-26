@@ -10,15 +10,18 @@ import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
 import cn.ly.base_common.utils.trace.LyTraceLogUtil;
+
 import com.rabbitmq.client.Channel;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.amqp.core.Message;
-import org.springframework.beans.factory.InitializingBean;
 
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import org.springframework.amqp.core.Message;
+import org.springframework.beans.factory.InitializingBean;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 16/12/22.

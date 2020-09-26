@@ -1,8 +1,6 @@
 package cn.ly.base_common.support.loader;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import lombok.Getter;
-import org.slf4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +13,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import org.slf4j.Logger;
+
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 2019/10/16.

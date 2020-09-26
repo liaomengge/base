@@ -1,10 +1,10 @@
 package cn.ly.base_common.mq.domain;
 
+import static cn.ly.base_common.mq.consts.MQConst.DEFAULT_QUEUE_COUNT;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
-import static cn.ly.base_common.mq.consts.MQConst.DEFAULT_QUEUE_COUNT;
 
 /**
  * Created by liaomengge on 2018/7/20.

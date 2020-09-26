@@ -1,8 +1,8 @@
 package cn.ly.base_common.utils.thread;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.concurrent.TimeUnit;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2019/6/3.

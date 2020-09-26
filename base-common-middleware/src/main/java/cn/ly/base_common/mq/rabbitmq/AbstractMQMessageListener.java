@@ -5,15 +5,17 @@ import cn.ly.base_common.mq.domain.MQMessage;
 import cn.ly.base_common.mq.domain.MessageHeader;
 import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.fasterxml.jackson.core.type.TypeReference;
+
+import java.util.Objects;
+
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
-
-import java.util.Objects;
 
 /**
  * Created by liaomengge on 16/12/22.

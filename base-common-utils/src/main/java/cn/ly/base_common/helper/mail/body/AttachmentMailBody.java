@@ -1,10 +1,10 @@
 package cn.ly.base_common.helper.mail.body;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import java.io.File;
 import java.util.List;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Created by liaomengge on 2019/8/28.

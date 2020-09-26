@@ -4,8 +4,11 @@ import cn.ly.base_common.helper.metric.activemq.ActiveMQMonitor;
 import cn.ly.base_common.mq.activemq.ActiveMQProperties.Pool;
 import cn.ly.base_common.mq.activemq.pool.MonitorPooledConnectionFactory;
 import cn.ly.base_common.mq.activemq.registry.ActiveMQQueueConfigBeanRegistryConfiguration;
+
 import com.timgroup.statsd.StatsDClient;
-import lombok.AllArgsConstructor;
+
+import javax.jms.ConnectionFactory;
+
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -18,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
-import javax.jms.ConnectionFactory;
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/5/5.

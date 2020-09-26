@@ -2,7 +2,10 @@ package cn.ly.base_common.redis.spring;
 
 import cn.ly.base_common.helper.redis.RedisTemplateHelper;
 import cn.ly.base_common.redis.SpringDataProperties;
-import lombok.NonNull;
+
+import java.time.Duration;
+import java.util.Objects;
+
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +24,10 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
+
+import lombok.NonNull;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPoolConfig;
-
-import java.time.Duration;
-import java.util.Objects;
 
 /**
  * Created by liaomengge on 2018/11/16.

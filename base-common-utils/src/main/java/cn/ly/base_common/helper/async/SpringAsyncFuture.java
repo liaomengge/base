@@ -2,10 +2,12 @@ package cn.ly.base_common.helper.async;
 
 import cn.ly.base_common.helper.async.callback.BaseFutureCallback;
 import cn.ly.base_common.helper.async.task.SingleTask;
-import lombok.AllArgsConstructor;
+
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
+
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/6/10.

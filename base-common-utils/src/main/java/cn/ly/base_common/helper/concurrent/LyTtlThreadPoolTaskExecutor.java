@@ -2,10 +2,11 @@ package cn.ly.base_common.helper.concurrent;
 
 import com.alibaba.ttl.TtlCallable;
 import com.alibaba.ttl.TtlRunnable;
-import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+
+import org.springframework.util.concurrent.ListenableFuture;
 
 /**
  * Created by liaomengge on 2019/10/9.

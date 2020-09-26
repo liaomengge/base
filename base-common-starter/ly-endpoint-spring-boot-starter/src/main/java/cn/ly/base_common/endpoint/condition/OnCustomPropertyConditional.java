@@ -1,12 +1,12 @@
 package cn.ly.base_common.endpoint.condition;
 
+import java.util.Objects;
+
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
-
-import java.util.Objects;
 
 /**
  * Created by liaomengge on 2019/7/4.

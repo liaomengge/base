@@ -1,10 +1,11 @@
 package cn.ly.service.base_framework.base;
 
 import cn.ly.base_common.utils.string.LyToStringUtil;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter

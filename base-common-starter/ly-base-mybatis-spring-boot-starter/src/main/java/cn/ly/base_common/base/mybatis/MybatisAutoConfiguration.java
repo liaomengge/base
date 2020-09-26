@@ -10,8 +10,11 @@ import cn.ly.base_common.base.mybatis.registry.MybatisPointcutBeanRegistryConfig
 import cn.ly.base_common.helper.mybatis.plugins.FlowInterceptor;
 import cn.ly.base_common.helper.mybatis.plugins.SqlInterceptor;
 import cn.ly.base_common.helper.mybatis.transaction.callback.TransactionCallbackHelper;
+
 import com.github.pagehelper.PageInterceptor;
-import lombok.AllArgsConstructor;
+
+import java.util.Properties;
+
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -31,7 +34,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.util.Properties;
+import lombok.AllArgsConstructor;
 
 
 /**

@@ -1,12 +1,14 @@
 package cn.ly.base_common.feign.interceptor;
 
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
+import java.util.Enumeration;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
 
 /**
  * Created by liaomengge on 2020/8/25.

@@ -2,10 +2,12 @@ package cn.ly.base_common.mq.rabbitmq.domain;
 
 import cn.ly.base_common.mq.consts.MQConst.RabbitMQ;
 import cn.ly.base_common.mq.domain.AbstractQueueConfig;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Created by liaomengge on 2018/6/29.

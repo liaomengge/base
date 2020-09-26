@@ -1,11 +1,13 @@
 package cn.ly.base_common.utils.codec;
 
-import lombok.experimental.UtilityClass;
-import org.apache.commons.codec.binary.Base64;
+import java.security.Key;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
+
+import org.apache.commons.codec.binary.Base64;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/2/23.

@@ -17,9 +17,10 @@ package cn.ly.base_common.mybatis.druid.wrapper;
 
 import com.alibaba.druid.filter.Filter;
 import com.alibaba.druid.pool.DruidDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author lihengming [89921218@qq.com]

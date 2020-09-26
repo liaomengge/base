@@ -1,11 +1,11 @@
 package cn.ly.base_common.helper.retrofit.api;
 
+import java.util.Map;
+
 import lombok.NonNull;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
-
-import java.util.Map;
 
 /**
  * Created by liaomengge on 2019/3/25.

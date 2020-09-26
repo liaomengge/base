@@ -1,10 +1,10 @@
 package cn.ly.service.base_framework.mongo.page;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 17/3/2.

@@ -1,9 +1,10 @@
 package cn.ly.service.base_framework.util;
 
-import lombok.experimental.UtilityClass;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2020/1/7.

@@ -1,17 +1,19 @@
 package cn.ly.base_common.utils.ftp;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
+import java.io.File;
+import java.io.InputStream;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+
 import it.sauronsoftware.ftp4j.FTPClient;
 import it.sauronsoftware.ftp4j.FTPConnector;
 import it.sauronsoftware.ftp4j.FTPDataTransferListener;
 import it.sauronsoftware.ftp4j.FTPFile;
 import it.sauronsoftware.ftp4j.connectors.DirectConnector;
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-
-import java.io.File;
-import java.io.InputStream;
 
 /**
  * Created by liaomengge on 17/10/11.

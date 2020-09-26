@@ -3,12 +3,14 @@ package cn.ly.base_common.helper.rest.async;
 import cn.ly.base_common.helper.rest.Template;
 import cn.ly.base_common.helper.rest.data.BaseRequest;
 import cn.ly.base_common.utils.json.LyJsonUtil;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.client.AsyncRestTemplate;
+
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 17/3/9.

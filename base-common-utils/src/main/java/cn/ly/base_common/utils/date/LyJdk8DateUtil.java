@@ -1,13 +1,13 @@
 package cn.ly.base_common.utils.date;
 
-import lombok.experimental.UtilityClass;
-
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2018/6/2.
@@ -978,7 +978,7 @@ public class LyJdk8DateUtil {
         return Date.from(instant);
     }
 
-    public Date localDatseTime2Date(LocalDateTime localDateTime) {
+    public Date localDateTime2Date(LocalDateTime localDateTime) {
         return instant2Date(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
@@ -986,7 +986,7 @@ public class LyJdk8DateUtil {
         return date.toInstant();
     }
 
-    public Instant LocalDateTime2instant(LocalDateTime localDateTime) {
+    public Instant localDateTime2Instant(LocalDateTime localDateTime) {
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant();
     }
 }

@@ -1,11 +1,17 @@
 package cn.ly.base_common.dayu.guava;
 
+import static cn.ly.base_common.dayu.guava.consts.GuavaRateLimitConst.GUAVA_RATE_LIMIT_PREFIX;
+
 import cn.ly.base_common.dayu.guava.callback.UrlRateLimitHandler;
 import cn.ly.base_common.dayu.guava.callback.WebCallbackManager;
 import cn.ly.base_common.dayu.guava.interceptor.GuavaRateLimitHandlerInterceptor;
 import cn.ly.base_common.dayu.guava.interceptor.GuavaRateLimitWebMvcConfigurer;
 import cn.ly.base_common.dayu.guava.reload.GuavaRateLimitReloadListener;
+
 import com.timgroup.statsd.StatsDClient;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -13,10 +19,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
-import javax.annotation.PostConstruct;
-
-import static cn.ly.base_common.dayu.guava.consts.GuavaRateLimitConst.GUAVA_RATE_LIMIT_PREFIX;
 
 /**
  * Created by liaomengge on 2019/8/12.

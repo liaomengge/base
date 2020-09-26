@@ -2,11 +2,13 @@ package cn.ly.base_common.utils.misc;
 
 import cn.ly.base_common.support.misc.micro.Snowflake;
 import cn.ly.base_common.utils.number.LyNumberUtil;
-import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+
+import org.apache.commons.lang3.StringUtils;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/25.

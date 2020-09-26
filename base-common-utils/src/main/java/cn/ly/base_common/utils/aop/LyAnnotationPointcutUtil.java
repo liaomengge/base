@@ -1,11 +1,12 @@
 package cn.ly.base_common.utils.aop;
 
-import lombok.experimental.UtilityClass;
+import java.lang.annotation.Annotation;
+
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.support.ComposablePointcut;
 import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
 
-import java.lang.annotation.Annotation;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2019/12/20.

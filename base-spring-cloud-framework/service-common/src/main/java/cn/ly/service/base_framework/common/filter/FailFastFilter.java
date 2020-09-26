@@ -1,16 +1,19 @@
 package cn.ly.service.base_framework.common.filter;
 
+import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
+
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
 import cn.ly.service.base_framework.common.config.FilterConfig;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
+
 import com.google.common.collect.Iterables;
-import lombok.AllArgsConstructor;
+
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.core.annotation.Order;
 
-import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2018/11/29.

@@ -1,13 +1,14 @@
 package cn.ly.base_common.support.predicate;
 
 import com.google.common.collect.Lists;
-import lombok.AllArgsConstructor;
-import lombok.experimental.UtilityClass;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+
+import lombok.AllArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2020/6/3.

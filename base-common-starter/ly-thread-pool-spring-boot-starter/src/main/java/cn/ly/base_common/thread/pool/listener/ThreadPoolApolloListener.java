@@ -1,14 +1,26 @@
 package cn.ly.base_common.thread.pool.listener;
 
+import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
+
 import cn.ly.base_common.helper.concurrent.LyThreadPoolTaskWrappedExecutor;
 import cn.ly.base_common.thread.pool.ThreadPoolGroupProperties;
 import cn.ly.base_common.thread.pool.queue.ResizableCapacityLinkedBlockIngQueue;
 import cn.ly.base_common.utils.binder.LyBinderUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigChangeListener;
 import com.ctrip.framework.apollo.ConfigService;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
+
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
@@ -18,15 +30,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-
-import javax.annotation.PostConstruct;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.RejectedExecutionHandler;
-
-import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
 
 /**
  * Created by liaomengge on 2020/8/29.

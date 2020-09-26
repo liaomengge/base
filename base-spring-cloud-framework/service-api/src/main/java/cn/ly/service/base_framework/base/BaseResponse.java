@@ -3,11 +3,13 @@ package cn.ly.service.base_framework.base;
 import cn.ly.base_common.utils.string.LyToStringUtil;
 import cn.ly.service.base_framework.base.code.IResultCode;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
-import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.Optional;
+
+import org.apache.commons.lang3.StringUtils;
+
+import lombok.Data;
 
 /**
  * Created by liaomengge on 16/4/12.

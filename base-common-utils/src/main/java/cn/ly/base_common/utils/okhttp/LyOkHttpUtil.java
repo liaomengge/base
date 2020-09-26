@@ -2,12 +2,14 @@ package cn.ly.base_common.utils.okhttp;
 
 import cn.ly.base_common.support.exception.CommunicationException;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import okhttp3.*;
-import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+
+import okhttp3.*;
 
 /**
  * Created by liaomengge on 2020/8/6.

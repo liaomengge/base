@@ -4,7 +4,9 @@ import cn.ly.base_common.metric.redis.task.MetricRedisScheduledTask;
 import cn.ly.base_common.redis.JedisClusterProperties;
 import cn.ly.base_common.redis.RedisAutoConfiguration;
 import cn.ly.base_common.redis.SpringDataProperties;
+
 import com.timgroup.statsd.StatsDClient;
+
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

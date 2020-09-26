@@ -4,7 +4,9 @@ import cn.ly.base_common.helper.metric.rabbitmq.RabbitMQMonitor;
 import cn.ly.base_common.mq.consts.MetricsConst;
 import cn.ly.base_common.mq.domain.MQMessage;
 import cn.ly.base_common.mq.rabbitmq.domain.QueueConfig;
+
 import com.rabbitmq.client.Channel;
+
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.core.Message;
 

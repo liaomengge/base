@@ -1,7 +1,9 @@
 package cn.ly.base_common.metric.httpclient;
 
 import cn.ly.base_common.metric.httpclient.task.MetricHttpClientScheduledTask;
+
 import com.timgroup.statsd.StatsDClient;
+
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;

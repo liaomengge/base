@@ -5,6 +5,10 @@ import cn.ly.base_common.helper.zk.AbstractLock;
 import cn.ly.base_common.quartz.lock.QuartzLockProperties;
 import cn.ly.base_common.utils.net.LyNetworkUtil;
 import cn.ly.base_common.utils.shutdown.LyShutdownUtil;
+
+import java.util.Objects;
+import java.util.Optional;
+
 import org.I0Itec.zkclient.ZkClient;
 import org.quartz.SchedulerException;
 import org.springframework.beans.BeansException;
@@ -15,9 +19,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/5/21.

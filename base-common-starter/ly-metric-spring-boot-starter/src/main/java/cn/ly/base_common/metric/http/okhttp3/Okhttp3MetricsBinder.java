@@ -1,19 +1,22 @@
 package cn.ly.base_common.metric.http.okhttp3;
 
+import static cn.ly.base_common.metric.consts.MetricsConst.OKHTTP3_PREFIX;
+
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.binder.MeterBinder;
-import okhttp3.ConnectionPool;
-import okhttp3.OkHttpClient;
-import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.Objects;
 import java.util.function.ToDoubleFunction;
 
-import static cn.ly.base_common.metric.consts.MetricsConst.OKHTTP3_PREFIX;
+import org.slf4j.Logger;
+
+import okhttp3.ConnectionPool;
+import okhttp3.OkHttpClient;
 
 /**
  * Created by liaomengge on 2020/9/17.

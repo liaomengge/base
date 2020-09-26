@@ -1,10 +1,11 @@
 package cn.ly.base_common.utils.concurrent;
 
+import static java.util.stream.Collectors.toList;
+
 import cn.ly.base_common.support.tuple.Tuple2;
 import cn.ly.base_common.support.tuple.Tuple3;
 import cn.ly.base_common.support.tuple.Tuple4;
 import cn.ly.base_common.support.tuple.Tuple5;
-import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.concurrent.Executor;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import static java.util.stream.Collectors.toList;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2020/6/5.

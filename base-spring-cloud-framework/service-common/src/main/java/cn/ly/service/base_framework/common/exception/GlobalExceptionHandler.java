@@ -1,5 +1,9 @@
 package cn.ly.service.base_framework.common.exception;
 
+import static cn.ly.base_common.utils.log.LyAlarmLogUtil.MiddlewareEnum.*;
+import static cn.ly.base_common.utils.log.LyAlarmLogUtil.ServerProjEnum.BASE_PREFIX_BIZ;
+import static cn.ly.base_common.utils.log.LyAlarmLogUtil.ServerProjEnum.BASE_PREFIX_UNKNOWN;
+
 import cn.ly.base_common.support.exception.AbstractAppException;
 import cn.ly.base_common.support.exception.AbstractAppRuntimeException;
 import cn.ly.base_common.support.exception.BusinessException;
@@ -7,6 +11,11 @@ import cn.ly.base_common.utils.error.LyThrowableUtil;
 import cn.ly.base_common.utils.number.LyMoreNumberUtil;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
+
+import java.sql.SQLException;
+import java.util.Objects;
+import java.util.Optional;
+
 import org.redisson.client.RedisException;
 import org.springframework.amqp.AmqpException;
 import org.springframework.dao.DataAccessException;
@@ -20,15 +29,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import redis.clients.jedis.exceptions.JedisException;
-
-import java.sql.SQLException;
-import java.util.Objects;
-import java.util.Optional;
-
-import static cn.ly.base_common.utils.log.LyAlarmLogUtil.MiddlewareEnum.*;
-import static cn.ly.base_common.utils.log.LyAlarmLogUtil.ServerProjEnum.BASE_PREFIX_BIZ;
-import static cn.ly.base_common.utils.log.LyAlarmLogUtil.ServerProjEnum.BASE_PREFIX_UNKNOWN;
 
 /**
  * Created by liaomengge on 2018/10/23.

@@ -1,10 +1,10 @@
 package cn.ly.base_common.utils.concurrent;
 
+import static java.util.stream.Collectors.toList;
+
 import com.google.common.util.concurrent.JdkFutureAdapters;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.Uninterruptibles;
-import lombok.experimental.UtilityClass;
-import net.javacrumbs.futureconverter.java8guava.FutureConverter;
 
 import java.util.List;
 import java.util.concurrent.*;
@@ -13,7 +13,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import static java.util.stream.Collectors.toList;
+import lombok.experimental.UtilityClass;
+import net.javacrumbs.futureconverter.java8guava.FutureConverter;
 
 /**
  * CompletableFuture异步执行主线程(tomcat线程)不参与执行

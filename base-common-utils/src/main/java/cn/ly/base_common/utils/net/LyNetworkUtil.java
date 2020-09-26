@@ -1,10 +1,11 @@
 package cn.ly.base_common.utils.net;
 
-import lombok.experimental.UtilityClass;
-
-import javax.servlet.http.HttpServletRequest;
 import java.net.*;
 import java.util.Enumeration;
+
+import javax.servlet.http.HttpServletRequest;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/10/10.

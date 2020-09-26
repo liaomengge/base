@@ -6,6 +6,9 @@ import cn.ly.base_common.helper.concurrent.LyTtlThreadPoolTaskExecutor;
 import cn.ly.base_common.thread.pool.ThreadPoolGroupProperties;
 import cn.ly.base_common.thread.pool.ThreadPoolGroupProperties.ThreadPoolProperties;
 import cn.ly.base_common.utils.binder.LyBinderUtil;
+
+import java.util.Optional;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -20,8 +23,6 @@ import org.springframework.context.annotation.ScopeMetadata;
 import org.springframework.context.annotation.ScopeMetadataResolver;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
-
-import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/5/17.

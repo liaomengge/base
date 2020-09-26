@@ -3,23 +3,27 @@ package cn.ly.base_common.metric.cache.redis;
 import cn.ly.base_common.redis.JedisClusterProperties;
 import cn.ly.base_common.redis.SpringDataProperties;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import io.micrometer.core.instrument.FunctionCounter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.binder.MeterBinder;
-import org.apache.commons.collections4.CollectionUtils;
-import org.slf4j.Logger;
-import redis.clients.jedis.JedisPoolConfig;
+
+import java.lang.management.ManagementFactory;
+import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.function.ToDoubleFunction;
 
 import javax.annotation.PostConstruct;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
-import java.lang.management.ManagementFactory;
-import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.function.ToDoubleFunction;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Created by liaomengge on 2020/9/22.

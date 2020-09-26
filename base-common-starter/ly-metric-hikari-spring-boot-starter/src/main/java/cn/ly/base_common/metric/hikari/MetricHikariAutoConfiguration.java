@@ -1,8 +1,12 @@
 package cn.ly.base_common.metric.hikari;
 
 import cn.ly.base_common.metric.hikari.task.MetricHikariScheduledTask;
+
 import com.timgroup.statsd.StatsDClient;
 import com.zaxxer.hikari.HikariDataSource;
+
+import java.util.List;
+
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -10,8 +14,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 /**
  * Created by liaomengge on 2019/7/24.

@@ -1,16 +1,18 @@
 package cn.ly.base_common.utils.spring;
 
-import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.support.datasource.DBContext;
 import cn.ly.base_common.support.datasource.enums.DbType;
+import cn.ly.base_common.utils.log4j2.LyLogger;
+
+import java.io.File;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-
-import javax.sql.DataSource;
-import java.io.File;
-import java.sql.SQLException;
 
 /**
  * {type your description }

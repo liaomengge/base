@@ -1,9 +1,9 @@
 package cn.ly.base_common.utils.generic;
 
-import lombok.experimental.UtilityClass;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class LyGenericUtil {

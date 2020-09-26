@@ -6,13 +6,14 @@ import com.thoughtworks.xstream.io.HierarchicalStreamDriver;
 import com.thoughtworks.xstream.io.xml.CompactWriter;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.thoughtworks.xstream.io.xml.Xpp3DomDriver;
-import lombok.experimental.UtilityClass;
 
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/7.

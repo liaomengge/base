@@ -1,14 +1,16 @@
 package cn.ly.base_common.utils.aop;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import lombok.experimental.UtilityClass;
+
+import java.lang.reflect.Field;
+
 import org.slf4j.Logger;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.aop.framework.AopProxy;
 import org.springframework.aop.support.AopUtils;
 
-import java.lang.reflect.Field;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 6/6/16.

@@ -4,12 +4,14 @@ import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
-import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 16/9/6.

@@ -1,9 +1,10 @@
 package cn.ly.base_common.helper.lock.distributed;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import org.slf4j.Logger;
 
 import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
 
 /**
  * Created by liaomengge on 17/12/19.

@@ -1,6 +1,7 @@
 package cn.ly.base_common.mq.rabbitmq;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import org.slf4j.Logger;
 
 /**

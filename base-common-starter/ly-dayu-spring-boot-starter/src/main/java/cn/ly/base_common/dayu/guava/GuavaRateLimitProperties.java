@@ -1,11 +1,13 @@
 package cn.ly.base_common.dayu.guava;
 
 import cn.ly.base_common.dayu.guava.consts.GuavaRateLimitConst;
-import lombok.Data;
+
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.Ordered;
 
-import java.util.List;
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2019/8/12.

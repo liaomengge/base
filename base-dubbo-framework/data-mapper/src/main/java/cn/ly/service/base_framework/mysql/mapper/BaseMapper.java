@@ -1,10 +1,11 @@
 package cn.ly.service.base_framework.mysql.mapper;
 
 import cn.ly.service.base_framework.mysql.extend.ExtendMapper;
-import tk.mybatis.mapper.common.Mapper;
-import tk.mybatis.mapper.common.MySqlMapper;
 
 import java.util.List;
+
+import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.common.MySqlMapper;
 
 /**
  * 由于数据库中一些奇葩的字段,用通用的Mapper查询时,会出现sql异常,故覆写其中的查询方法

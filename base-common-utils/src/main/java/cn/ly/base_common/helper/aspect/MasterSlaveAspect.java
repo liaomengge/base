@@ -3,16 +3,18 @@ package cn.ly.base_common.helper.aspect;
 import cn.ly.base_common.support.datasource.DBContext;
 import cn.ly.base_common.support.datasource.annotation.*;
 import cn.ly.base_common.support.datasource.enums.DbType;
+
 import com.google.common.collect.Lists;
+
+import java.lang.reflect.Method;
+import java.util.List;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-
-import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * Created by liaomengge on 16/8/29.

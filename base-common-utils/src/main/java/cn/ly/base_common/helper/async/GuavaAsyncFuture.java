@@ -3,16 +3,19 @@ package cn.ly.base_common.helper.async;
 import cn.ly.base_common.helper.async.callback.BaseFutureCallback;
 import cn.ly.base_common.helper.async.task.SingleTask;
 import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
+
 import com.google.common.util.concurrent.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.springframework.beans.factory.InitializingBean;
 
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.springframework.beans.factory.InitializingBean;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by liaomengge on 17/7/21.

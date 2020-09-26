@@ -2,19 +2,13 @@ package cn.ly.base_common.utils.collection;
 
 import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.string.LyStringUtil;
+
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
-import lombok.experimental.UtilityClass;
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.collections4.IterableUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.cglib.beans.BeanMap;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -26,6 +20,15 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.cglib.beans.BeanMap;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 16/5/10.

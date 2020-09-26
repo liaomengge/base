@@ -6,9 +6,19 @@ import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.properties.LyPropertiesUtil;
 import cn.ly.base_common.utils.string.LyStringUtil;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
-import lombok.Data;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Properties;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -23,14 +33,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2019/9/20.

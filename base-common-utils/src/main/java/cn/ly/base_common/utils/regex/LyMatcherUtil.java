@@ -1,9 +1,9 @@
 package cn.ly.base_common.utils.regex;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/10/11.

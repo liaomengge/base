@@ -3,6 +3,11 @@ package cn.ly.base_common.redis.jedis;
 import cn.ly.base_common.helper.redis.JedisClusterHelper;
 import cn.ly.base_common.redis.JedisClusterProperties;
 import cn.ly.base_common.utils.number.LyMoreNumberUtil;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -12,12 +17,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by liaomengge on 2018/11/16.

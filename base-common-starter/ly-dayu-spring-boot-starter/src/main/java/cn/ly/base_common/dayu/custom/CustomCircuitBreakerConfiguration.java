@@ -1,5 +1,7 @@
 package cn.ly.base_common.dayu.custom;
 
+import static cn.ly.base_common.dayu.custom.consts.CustomCircuitBreakerConst.CUSTOM_CIRCUIT_BREAKER_PREFIX;
+
 import cn.ly.base_common.dayu.custom.CustomCircuitBreakerProperties.RuleProperties;
 import cn.ly.base_common.dayu.custom.aspect.CircuitBreakerResourceAspect;
 import cn.ly.base_common.dayu.custom.circuit.CircuitBreakerHandler;
@@ -8,8 +10,9 @@ import cn.ly.base_common.dayu.custom.helper.CircuitBreakerRedisHelper;
 import cn.ly.base_common.helper.redis.IRedisHelper;
 import cn.ly.base_common.redis.RedisAutoConfiguration;
 import cn.ly.base_common.utils.number.LyNumberUtil;
+
 import com.timgroup.statsd.StatsDClient;
-import lombok.AllArgsConstructor;
+
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -20,7 +23,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static cn.ly.base_common.dayu.custom.consts.CustomCircuitBreakerConst.CUSTOM_CIRCUIT_BREAKER_PREFIX;
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/6/26.

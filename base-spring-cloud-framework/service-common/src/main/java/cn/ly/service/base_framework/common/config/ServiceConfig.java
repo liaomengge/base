@@ -1,6 +1,7 @@
 package cn.ly.service.base_framework.common.config;
 
 import cn.ly.service.base_framework.common.consts.MetricsConst;
+
 import lombok.Data;
 
 /**

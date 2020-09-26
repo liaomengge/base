@@ -1,13 +1,14 @@
 package cn.ly.base_common.dayu.guava.interceptor;
 
 import cn.ly.base_common.dayu.guava.GuavaRateLimitProperties;
+
+import java.util.List;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 /**
  * Created by liaomengge on 2019/8/12.

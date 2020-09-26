@@ -1,7 +1,8 @@
 package cn.ly.base_common.nacos;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2020/8/17.

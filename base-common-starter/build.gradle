@@ -14,6 +14,8 @@ buildscript {
 plugins {
     id 'se.patrikerdes.use-latest-versions' version '0.2.14'
     id 'com.github.ben-manes.versions' version '0.28.0'
+    id 'com.github.spotbugs' version '4.5.0'
+    id 'com.diffplug.spotless' version '5.6.1'
     id "io.spring.dependency-management" version '1.0.9.RELEASE'
 }
 
@@ -45,6 +47,8 @@ subprojects {
     apply plugin: "idea"
     apply plugin: 'signing'
     apply plugin: 'maven-publish'
+    apply plugin: 'com.github.spotbugs'
+    apply plugin: 'com.diffplug.spotless'
     apply plugin: "io.spring.dependency-management"
 
     group = 'com.github.liaomengge'
@@ -52,6 +56,8 @@ subprojects {
 
     apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
     apply from: "${rootProject.projectDir}/gradle/publish-jar.gradle"
+
+    apply from: "${rootProject.projectDir}/gradle/spotless.gradle"
 
     targetCompatibility = 1.8
     sourceCompatibility = 1.8

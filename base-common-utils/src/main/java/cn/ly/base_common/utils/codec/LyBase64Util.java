@@ -1,10 +1,12 @@
 package cn.ly.base_common.utils.codec;
 
 import cn.ly.base_common.support.misc.Encodings;
-import lombok.experimental.UtilityClass;
-import org.apache.commons.codec.binary.Base64;
 
 import java.io.UnsupportedEncodingException;
+
+import org.apache.commons.codec.binary.Base64;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 16/9/6.

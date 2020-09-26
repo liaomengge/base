@@ -1,10 +1,12 @@
 package cn.ly.base_common.cache.caffeine;
 
 import cn.ly.base_common.cache.Level1Cache;
+
 import com.github.benmanes.caffeine.cache.stats.CacheStats;
-import lombok.Getter;
 
 import java.util.Objects;
+
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 2019/3/18.

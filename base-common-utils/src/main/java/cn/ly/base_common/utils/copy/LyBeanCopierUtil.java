@@ -1,14 +1,16 @@
 package cn.ly.base_common.utils.copy;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import lombok.experimental.UtilityClass;
-import org.slf4j.Logger;
-import org.springframework.beans.BeanUtils;
-import org.springframework.cglib.beans.BeanCopier;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
+
+import org.slf4j.Logger;
+import org.springframework.beans.BeanUtils;
+import org.springframework.cglib.beans.BeanCopier;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 16/7/28.

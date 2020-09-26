@@ -1,10 +1,10 @@
 package cn.ly.base_common.support.proxy;
 
 
+import java.util.Objects;
+
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
-
-import java.util.Objects;
 
 /**
  * Created by liaomengge on 2020/5/20.

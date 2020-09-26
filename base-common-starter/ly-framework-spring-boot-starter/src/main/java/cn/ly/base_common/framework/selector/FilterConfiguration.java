@@ -1,6 +1,7 @@
 package cn.ly.base_common.framework.selector;
 
 import cn.ly.base_common.framework.selector.condition.ConditionOnFilter;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

@@ -1,21 +1,16 @@
 package cn.ly.base_common.metric.web.undertow;
 
+import static cn.ly.base_common.metric.consts.MetricsConst.UNDERTOW_PREFIX;
+
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.google.common.collect.Maps;
+
 import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.binder.BaseUnits;
 import io.undertow.server.handlers.MetricsHandler;
 import io.undertow.servlet.api.MetricsCollector;
-import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.context.ApplicationListener;
-import org.xnio.Version;
 
-import javax.annotation.PostConstruct;
-import javax.management.MBeanServer;
-import javax.management.MBeanServerFactory;
-import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -23,7 +18,16 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToLongFunction;
 
-import static cn.ly.base_common.metric.consts.MetricsConst.UNDERTOW_PREFIX;
+import javax.annotation.PostConstruct;
+import javax.management.MBeanServer;
+import javax.management.MBeanServerFactory;
+import javax.management.ObjectName;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationListener;
+import org.xnio.Version;
 
 /**
  * Created by liaomengge on 2020/9/16.

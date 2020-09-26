@@ -5,6 +5,14 @@ import cn.ly.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import cn.ly.base_common.support.exception.CommunicationException;
 import cn.ly.base_common.utils.log.LyAlarmLogUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InterruptedIOException;
+import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Objects;
+
 import org.apache.http.Consts;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -22,13 +30,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InterruptedIOException;
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * 高并发调用时, 不建议使用

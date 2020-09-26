@@ -1,5 +1,7 @@
 package cn.ly.service.base_framework.common.filter;
 
+import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
+
 import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.sign.LySignUtil;
 import cn.ly.service.base_framework.base.BaseRequest;
@@ -7,18 +9,19 @@ import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.base.code.SystemResultCode;
 import cn.ly.service.base_framework.common.config.FilterConfig;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
+
 import com.fasterxml.jackson.core.type.TypeReference;
-import lombok.AllArgsConstructor;
-import org.apache.commons.collections4.MapUtils;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.core.annotation.Order;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
+import org.apache.commons.collections4.MapUtils;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
+
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2018/11/22.

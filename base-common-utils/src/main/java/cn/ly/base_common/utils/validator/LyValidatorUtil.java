@@ -1,9 +1,10 @@
 package cn.ly.base_common.utils.validator;
 
-import lombok.experimental.UtilityClass;
+import java.util.regex.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.regex.Pattern;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/7/27.

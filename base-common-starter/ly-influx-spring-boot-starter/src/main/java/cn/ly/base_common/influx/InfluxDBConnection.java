@@ -3,9 +3,12 @@ package cn.ly.base_common.influx;
 import cn.ly.base_common.influx.consts.InfluxConst;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
-import lombok.Getter;
-import okhttp3.ConnectionPool;
-import okhttp3.OkHttpClient;
+
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
+
 import org.influxdb.BatchOptions;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDB.ConsistencyLevel;
@@ -14,9 +17,9 @@ import org.influxdb.dto.Query;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+import lombok.Getter;
+import okhttp3.ConnectionPool;
+import okhttp3.OkHttpClient;
 
 /**
  * Created by liaomengge on 2020/7/21.

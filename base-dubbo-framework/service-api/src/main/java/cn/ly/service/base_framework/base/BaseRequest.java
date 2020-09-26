@@ -1,9 +1,10 @@
 package cn.ly.service.base_framework.base;
 
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
-import lombok.Data;
 
 import java.io.Serializable;
+
+import lombok.Data;
 
 /**
  * Created by liaomengge on 16/9/29.

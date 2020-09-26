@@ -2,9 +2,10 @@ package cn.ly.base_common.utils.number;
 
 import com.google.common.math.IntMath;
 import com.google.common.math.LongMath;
-import lombok.experimental.UtilityClass;
 
 import java.math.RoundingMode;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/25.

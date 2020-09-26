@@ -1,9 +1,11 @@
 package cn.ly.base_common.utils.string;
 
 import com.google.common.base.MoreObjects;
-import lombok.experimental.UtilityClass;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/9.

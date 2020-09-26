@@ -3,15 +3,7 @@ package cn.ly.base_common.influx.helper;
 import cn.ly.base_common.influx.batch.InfluxBatchHandler;
 import cn.ly.base_common.influx.consts.InfluxConst;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import org.apache.commons.lang3.StringUtils;
-import org.influxdb.dto.BatchPoints;
-import org.influxdb.dto.Point;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,6 +11,16 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.lang3.StringUtils;
+import org.influxdb.dto.BatchPoints;
+import org.influxdb.dto.Point;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.util.CollectionUtils;
 
 /**
  * Created by liaomengge on 2020/7/21.

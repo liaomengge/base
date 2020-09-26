@@ -1,7 +1,6 @@
 package cn.ly.base_common.utils.validator;
 
 import com.google.common.collect.Lists;
-import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,6 +8,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import lombok.*;
 
 /**
  * Created by liaomengge on 2018/8/10.
@@ -124,7 +125,9 @@ public final class LyMoreParamValidatorUtil {
 
     @Data
     @AllArgsConstructor
-    public static class ValidatorError {
+    public static class ValidatorError implements Serializable {
+        private static final long serialVersionUID = -2271847138189151371L;
+
         private String errorCode = "";
         private String errorMsg;
         private String field;

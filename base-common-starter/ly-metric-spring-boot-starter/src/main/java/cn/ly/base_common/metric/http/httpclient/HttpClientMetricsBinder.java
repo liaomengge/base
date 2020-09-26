@@ -1,12 +1,19 @@
 package cn.ly.base_common.metric.http.httpclient;
 
+import static cn.ly.base_common.metric.consts.MetricsConst.HTTP_CLIENT_PREFIX;
+
 import cn.ly.base_common.metric.MetricProperties;
 import cn.ly.base_common.utils.collection.LyCollectionUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.binder.MeterBinder;
+
+import java.util.*;
+import java.util.function.ToDoubleFunction;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.conn.routing.HttpRoute;
@@ -14,11 +21,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.pool.PoolStats;
 import org.slf4j.Logger;
-
-import java.util.*;
-import java.util.function.ToDoubleFunction;
-
-import static cn.ly.base_common.metric.consts.MetricsConst.HTTP_CLIENT_PREFIX;
 
 /**
  * Created by liaomengge on 2020/9/17.

@@ -1,10 +1,11 @@
 package cn.ly.base_common.mail;
 
-import lombok.Data;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
+import lombok.Data;
 
 /**
  * Created by liaomengge on 2018/10/27.

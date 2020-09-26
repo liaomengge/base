@@ -1,11 +1,13 @@
 package cn.ly.base_common.health_check.health.domain;
 
 import cn.ly.base_common.utils.error.LyThrowableUtil;
-import lombok.Data;
-import lombok.experimental.Accessors;
-import org.apache.curator.shaded.com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import org.apache.curator.shaded.com.google.common.collect.ImmutableMap;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * Created by liaomengge on 2019/7/11.

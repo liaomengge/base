@@ -2,7 +2,7 @@ package cn.ly.base_common.mq;
 
 import cn.ly.base_common.mq.MQLockProperties.ZkProperties;
 import cn.ly.base_common.mq.initializer.MQLockInitializer;
-import lombok.AllArgsConstructor;
+
 import org.I0Itec.zkclient.ZkClient;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/8/29.

@@ -1,8 +1,8 @@
 package cn.ly.base_common.framework.selector.condition;
 
-import org.springframework.context.annotation.Conditional;
-
 import java.lang.annotation.*;
+
+import org.springframework.context.annotation.Conditional;
 
 /**
  * Created by liaomengge on 2019/10/16.

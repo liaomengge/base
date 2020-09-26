@@ -5,9 +5,12 @@ import cn.ly.base_common.helper.metric.rabbitmq.RabbitMQMonitor;
 import cn.ly.base_common.mq.rabbitmq.callback.MQConfirmCallback;
 import cn.ly.base_common.mq.rabbitmq.callback.MQReturnCallback;
 import cn.ly.base_common.mq.rabbitmq.registry.RabbitMQQueueConfigBeanRegistryConfiguration;
+
 import com.rabbitmq.client.Channel;
 import com.timgroup.statsd.StatsDClient;
-import lombok.AllArgsConstructor;
+
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -25,7 +28,7 @@ import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
-import java.util.Objects;
+import lombok.AllArgsConstructor;
 
 /**
  * Created by liaomengge on 2019/5/5.

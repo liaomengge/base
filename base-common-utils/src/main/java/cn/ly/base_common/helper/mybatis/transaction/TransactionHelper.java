@@ -1,16 +1,18 @@
 package cn.ly.base_common.helper.mybatis.transaction;
 
-import lombok.Data;
-import lombok.Getter;
+import static org.springframework.transaction.TransactionDefinition.*;
+
+import java.util.Optional;
+import java.util.function.Supplier;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.annotation.PostConstruct;
-import java.util.Optional;
-import java.util.function.Supplier;
-
-import static org.springframework.transaction.TransactionDefinition.*;
+import lombok.Data;
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 2019/10/25.

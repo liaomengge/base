@@ -6,6 +6,11 @@ import cn.ly.base_common.health_check.health.HealthCheck;
 import cn.ly.base_common.health_check.health.RabbitMQHealthCheck;
 import cn.ly.base_common.health_check.health.domain.HealthInfo;
 import cn.ly.base_common.utils.json.LyJacksonUtil;
+
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -16,9 +21,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-
-import javax.annotation.PostConstruct;
-import java.util.Map;
 
 /**
  * Created by liaomengge on 2019/7/11.

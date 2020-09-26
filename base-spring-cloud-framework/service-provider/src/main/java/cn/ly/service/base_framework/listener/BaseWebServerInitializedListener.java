@@ -1,5 +1,11 @@
 package cn.ly.service.base_framework.listener;
 
+import static cn.ly.base_common.support.misc.consts.ToolConst.JOINER;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties;
@@ -10,12 +16,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Arrays;
-
-import static cn.ly.base_common.support.misc.consts.ToolConst.JOINER;
 
 /**
  * Created by liaomengge on 2019/11/29.

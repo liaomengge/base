@@ -1,9 +1,10 @@
 package cn.ly.base_common.helper.zk;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import lombok.Data;
 
 import java.util.Date;
+
+import lombok.Data;
 
 /**
  * Created by liaomengge on 5/27/16.

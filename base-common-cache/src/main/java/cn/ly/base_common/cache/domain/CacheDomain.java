@@ -1,6 +1,7 @@
 package cn.ly.base_common.cache.domain;
 
 import cn.ly.base_common.cache.enums.NotifyTypeEnum;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

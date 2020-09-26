@@ -3,15 +3,17 @@ package cn.ly.base_common.mq.activemq;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.shutdown.LyShutdownUtil;
 import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
-import lombok.Getter;
-import lombok.Setter;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.jms.listener.SimpleMessageListenerContainer;
 
 import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import org.slf4j.Logger;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.jms.listener.SimpleMessageListenerContainer;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 17/9/15.

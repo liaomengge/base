@@ -1,11 +1,11 @@
 package cn.ly.base_common.support.collections;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.Collection;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2020/1/7.

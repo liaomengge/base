@@ -1,6 +1,8 @@
 package cn.ly.base_common.utils.aop;
 
-import lombok.experimental.UtilityClass;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
 import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -9,8 +11,7 @@ import org.springframework.core.BridgeMethodResolver;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.util.ClassUtils;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2020/8/20.

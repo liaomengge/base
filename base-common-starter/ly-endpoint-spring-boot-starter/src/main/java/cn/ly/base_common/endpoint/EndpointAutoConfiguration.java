@@ -1,6 +1,7 @@
 package cn.ly.base_common.endpoint;
 
 import cn.ly.base_common.endpoint.info.CustomInfoConfiguration;
+
 import org.springframework.boot.actuate.autoconfigure.info.InfoContributorAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;

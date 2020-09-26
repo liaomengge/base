@@ -2,15 +2,18 @@ package cn.ly.base_common.mq.activemq.sender;
 
 import cn.ly.base_common.helper.metric.activemq.ActiveMQMonitor;
 import cn.ly.base_common.mq.activemq.AbstractMQSender;
-import lombok.Setter;
+
+import java.util.Objects;
+
+import javax.jms.DeliveryMode;
+import javax.jms.Session;
+
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 
-import javax.jms.DeliveryMode;
-import javax.jms.Session;
-import java.util.Objects;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 2018/12/7.

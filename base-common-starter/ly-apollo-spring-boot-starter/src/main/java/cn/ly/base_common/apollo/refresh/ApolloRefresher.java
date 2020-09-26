@@ -1,8 +1,14 @@
 package cn.ly.base_common.apollo.refresh;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.ctrip.framework.apollo.model.ConfigChange;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.Set;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -11,10 +17,6 @@ import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * Created by liaomengge on 2020/8/1.

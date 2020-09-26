@@ -1,7 +1,8 @@
 package cn.ly.base_common.utils.codec;
 
-import lombok.experimental.UtilityClass;
 import org.apache.commons.codec.digest.DigestUtils;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 16/9/12.

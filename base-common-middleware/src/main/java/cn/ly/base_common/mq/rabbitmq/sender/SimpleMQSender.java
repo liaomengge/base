@@ -3,9 +3,12 @@ package cn.ly.base_common.mq.rabbitmq.sender;
 import cn.ly.base_common.helper.metric.rabbitmq.RabbitMQMonitor;
 import cn.ly.base_common.mq.consts.MetricsConst;
 import cn.ly.base_common.mq.rabbitmq.domain.QueueConfig;
+
 import com.google.common.collect.ImmutableMap;
-import lombok.NonNull;
-import lombok.Setter;
+
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.core.*;
@@ -15,8 +18,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.retry.support.RetryTemplate;
 
-import java.util.List;
-import java.util.Map;
+import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 17/1/5.

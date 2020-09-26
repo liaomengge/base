@@ -1,8 +1,8 @@
 package cn.ly.service.base_framework.mysql.page;
 
-import lombok.Getter;
-
 import java.io.Serializable;
+
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 2019/9/20.

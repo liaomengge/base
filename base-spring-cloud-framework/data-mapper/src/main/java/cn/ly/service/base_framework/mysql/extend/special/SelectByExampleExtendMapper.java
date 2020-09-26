@@ -1,6 +1,7 @@
 package cn.ly.service.base_framework.mysql.extend.special;
 
 import org.apache.ibatis.annotations.SelectProvider;
+
 import tk.mybatis.mapper.annotation.RegisterMapper;
 
 /**

@@ -1,10 +1,11 @@
 package cn.ly.base_common.helper.concurrent.threadlocal.mdc;
 
 import cn.ly.base_common.helper.concurrent.threadlocal.ThreadLocalConsumer;
-import org.slf4j.MDC;
 
 import java.util.Map;
 import java.util.function.Consumer;
+
+import org.slf4j.MDC;
 
 /**
  * Created by liaomengge on 2020/5/20.

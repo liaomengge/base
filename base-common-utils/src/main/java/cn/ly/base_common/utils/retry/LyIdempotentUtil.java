@@ -1,8 +1,10 @@
 package cn.ly.base_common.utils.retry;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import lombok.experimental.UtilityClass;
+
 import org.slf4j.Logger;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 16/10/31.

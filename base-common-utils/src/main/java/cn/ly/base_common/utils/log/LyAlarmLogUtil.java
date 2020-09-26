@@ -1,10 +1,12 @@
 package cn.ly.base_common.utils.log;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
+import org.slf4j.Logger;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
-import org.slf4j.Logger;
 
 /**
  * Created by liaomengge on 18/4/20.

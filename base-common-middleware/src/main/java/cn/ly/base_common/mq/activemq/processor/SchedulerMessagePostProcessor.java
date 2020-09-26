@@ -1,12 +1,13 @@
 package cn.ly.base_common.mq.activemq.processor;
 
-import lombok.Data;
+import javax.jms.JMSException;
+import javax.jms.Message;
+
 import org.apache.activemq.ScheduledMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jms.core.MessagePostProcessor;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
+import lombok.Data;
 
 /**
  * MQ延时投递处理器（注：ActiveMQ的配置文件中, 要配置schedulerSupport="true", 否则不起作用）

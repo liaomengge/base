@@ -2,11 +2,13 @@ package cn.ly.service.base_framework.mongo.util;
 
 import cn.ly.base_common.utils.collection.LyMapUtil;
 import cn.ly.service.base_framework.mongo.domain.BaseMongoDoc;
-import lombok.experimental.UtilityClass;
+
+import java.util.Map;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.data.mongodb.core.query.Update;
 
-import java.util.Map;
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/3/2.

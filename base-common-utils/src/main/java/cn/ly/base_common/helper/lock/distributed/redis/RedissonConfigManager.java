@@ -1,13 +1,14 @@
 package cn.ly.base_common.helper.lock.distributed.redis;
 
-import lombok.Getter;
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.springframework.beans.factory.InitializingBean;
 
-import java.util.Objects;
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 17/12/20.

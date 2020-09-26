@@ -1,15 +1,23 @@
 package cn.ly.base_common.helper.mail;
 
+import cn.ly.base_common.helper.mail.body.AttachmentMailBody;
+import cn.ly.base_common.helper.mail.body.AttachmentMailBody.AttachmentMailFile;
+import cn.ly.base_common.helper.mail.body.HtmlMailBody;
 import cn.ly.base_common.helper.mail.body.InlineMailBody;
+import cn.ly.base_common.helper.mail.body.TextMailBody;
+import cn.ly.base_common.support.misc.Symbols;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.number.LyNumberUtil;
 import cn.ly.base_common.utils.properties.LyPropertiesUtil;
 import cn.ly.base_common.utils.thread.LyThreadPoolExecutorUtil;
-import cn.ly.base_common.helper.mail.body.AttachmentMailBody;
-import cn.ly.base_common.helper.mail.body.AttachmentMailBody.AttachmentMailFile;
-import cn.ly.base_common.helper.mail.body.HtmlMailBody;
-import cn.ly.base_common.helper.mail.body.TextMailBody;
-import cn.ly.base_common.support.misc.Symbols;
+
+import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+
+import javax.mail.internet.MimeMessage;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -17,12 +25,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-
-import javax.mail.internet.MimeMessage;
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 邮件发送工具类

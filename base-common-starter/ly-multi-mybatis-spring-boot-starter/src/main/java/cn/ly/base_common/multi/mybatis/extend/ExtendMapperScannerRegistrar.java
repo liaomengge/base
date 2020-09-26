@@ -1,7 +1,16 @@
 package cn.ly.base_common.multi.mybatis.extend;
 
+import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
+import static com.google.common.base.CaseFormat.LOWER_CAMEL;
+
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableList;
+
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanNameGenerator;
@@ -15,16 +24,9 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
+
 import tk.mybatis.spring.mapper.ClassPathMapperScanner;
 import tk.mybatis.spring.mapper.MapperFactoryBean;
-
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
-import static com.google.common.base.CaseFormat.LOWER_CAMEL;
 
 /**
  * Created by liaomengge on 2018/10/26.

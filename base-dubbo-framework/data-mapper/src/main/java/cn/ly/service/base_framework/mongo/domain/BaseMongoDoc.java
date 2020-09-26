@@ -1,10 +1,11 @@
 package cn.ly.service.base_framework.mongo.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by liaomengge on 17/3/2.

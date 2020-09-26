@@ -1,12 +1,13 @@
 package cn.ly.base_common.helper.lock.distributed.zk;
 
-import lombok.Getter;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.utils.CloseableUtils;
 import org.springframework.beans.factory.DisposableBean;
+
+import lombok.Getter;
 
 /**
  * Created by liaomengge on 17/12/19.

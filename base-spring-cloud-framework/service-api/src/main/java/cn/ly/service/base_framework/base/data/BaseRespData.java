@@ -1,8 +1,8 @@
 package cn.ly.service.base_framework.base.data;
 
-import lombok.Data;
-
 import java.io.Serializable;
+
+import lombok.Data;
 
 /**
  * Created by liaomengge on 17/4/6.

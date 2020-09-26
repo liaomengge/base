@@ -2,12 +2,14 @@ package cn.ly.base_common.mq.rabbitmq.callback;
 
 import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.google.common.collect.Maps;
+
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-
-import java.util.Map;
 
 /**
  * Created by liaomengge on 16/12/19.

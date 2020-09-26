@@ -1,13 +1,16 @@
 package cn.ly.base_common.utils.io;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.google.common.io.CharStreams;
-import lombok.experimental.UtilityClass;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+
+import org.slf4j.Logger;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2018/7/27.

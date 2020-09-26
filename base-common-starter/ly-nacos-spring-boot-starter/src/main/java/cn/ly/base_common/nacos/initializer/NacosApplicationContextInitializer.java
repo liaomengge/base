@@ -4,8 +4,12 @@ import cn.ly.base_common.nacos.NacosProperties;
 import cn.ly.base_common.nacos.consts.NacosConst;
 import cn.ly.base_common.nacos.decorator.NacosServiceRegistryDecorator;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.registry.NacosServiceRegistry;
+
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -13,8 +17,6 @@ import org.springframework.boot.SpringBootVersion;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
-
-import java.util.Map;
 
 /**
  * Created by liaomengge on 2020/8/17.
