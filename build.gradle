@@ -18,6 +18,9 @@ subprojects {
     apply plugin: 'project-report'
     apply plugin: "io.spring.dependency-management"
 
+    group = 'com.github.liaomengge'
+    version = '1.1.4-x-SNAPSHOT'
+
     apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
     apply from: "${rootProject.projectDir}/gradle/publish-jar.gradle"
 
@@ -37,13 +40,13 @@ subprojects {
     }
 
     def versions = [
-            platformBom: '1.0.2-SNAPSHOT'
+            platformBom: '1.0.2-x-SNAPSHOT'
     ]
 
     dependencyManagement {
         dependencies {
             imports {
-                mavenBom "cn.ly:base-platform-bom:${versions.platformBom}"
+                mavenBom "com.github.liaomengge:base-platform-bom:${versions.platformBom}"
             }
         }
         resolutionStrategy {

@@ -17,7 +17,7 @@ dependencyUpdates {
 }
 
 wrapper {
-     gradleVersion = '5.6.4'
+    gradleVersion = '5.6.4'
 }
 
 subprojects {
@@ -25,11 +25,13 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'maven'
     apply plugin: "idea"
+    apply plugin: 'signing'
+    apply plugin: 'maven-publish'
     apply plugin: 'project-report'
     apply plugin: "io.spring.dependency-management"
 
-    group = 'cn.ly'
-    version = '1.1.0-SNAPSHOT'
+    group = 'com.github.liaomengge'
+    version = '1.1.0-x-SNAPSHOT'
 
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
@@ -53,24 +55,6 @@ subprojects {
         }
         mavenCentral()
         jcenter()
-    }
-
-    jar {
-        manifest {
-            attributes(
-                    "Created-By": "liaomengge",
-                    "Implementation-Version": project.version
-            )
-        }
-    }
-
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        archiveClassifier.set('sources')
-        from sourceSets.main.allSource
-    }
-
-    artifacts {
-        archives sourcesJar
     }
 
     sourceSets {
@@ -97,21 +81,18 @@ subprojects {
     }
 
     ext {
-        baseCommonMiddlewareVersion = '1.1.5-SNAPSHOT'
-        baseCommonUtilsVersion = '1.1.5-SNAPSHOT'
-        nexusUrl = version.endsWith("-SNAPSHOT") ?
-                "http://127.0.0.1:8089/repository/fly-snapshots/" :
-                "http://127.0.0.1:8089/repository/fly-releases/"
+        baseCommonMiddlewareVersion = '1.1.4-x-SNAPSHOT'
+        baseCommonUtilsVersion = '1.1.4-x-SNAPSHOT'
     }
 
     def versions = [
-            platformBom: '1.0.2-SNAPSHOT'
+            platformBom: '1.0.2-x-SNAPSHOT'
     ]
 
     dependencyManagement {
         dependencies {
             imports {
-                mavenBom "cn.ly:base-platform-bom:${versions.platformBom}"
+                mavenBom "com.github.liaomengge:base-platform-bom:${versions.platformBom}"
             }
         }
         resolutionStrategy {
@@ -122,11 +103,11 @@ subprojects {
 
     dependencies {
         api "com.javadeep:functional-lang"
-        api("cn.ly:base-common-middleware:${baseCommonMiddlewareVersion}") {
+        api("com.github.liaomengge:base-common-middleware:${baseCommonMiddlewareVersion}") {
             exclude(module: 'base-common-utils')
         }
 
-        api "cn.ly:base-common-utils:${baseCommonUtilsVersion}"
+        api "com.github.liaomengge:base-common-utils:${baseCommonUtilsVersion}"
 
         /************************************************华丽的分割线***************************************************/
 

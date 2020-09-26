@@ -15,9 +15,6 @@ dependencyUpdates {
     }
 }
 
-group = 'cn.ly'
-version = '1.1.4-SNAPSHOT'
-
 targetCompatibility = 1.8
 sourceCompatibility = 1.8
 
@@ -37,43 +34,6 @@ htmlDependencyReport {
     reports.html.setDestination(file("/Users/liaomengge/Desktop/doc/jar"))
 }
 
-//jar {
-//    manifest {
-//        attributes(
-//                "Created-By": "liaomengge",
-//                "Implementation-Title": project.name,
-//                "Implementation-Version": project.version
-//        )
-//        writeTo(file("src/main/resources/META-INF/$project.group/$project.name/version.properties"))
-//    }
-//}
-//
-//task sourcesJar(type: Jar, dependsOn: classes) {
-//    archiveClassifier.set('sources')
-//    from sourceSets.main.allSource
-//}
-//
-//javadoc {
-//    options {
-//        encoding "UTF-8"
-//        charSet 'UTF-8'
-//        author true
-//        version true
-//        failOnError false
-//        links "http://docs.oracle.com/javase/8/docs/api"
-//    }
-//}
-//
-//task javadocJar(type: Jar, dependsOn: javadoc) {
-//    archiveClassifier.set('javadoc')
-//    from javadoc.destinationDir
-//}
-//
-//artifacts {
-//    archives sourcesJar
-//    archives javadocJar
-//}
-
 sourceSets {
     main {
         java {
@@ -91,12 +51,6 @@ sourceSets {
             srcDirs = ['src/test/resources']
         }
     }
-}
-
-ext {
-    nexusUrl = version.endsWith("-SNAPSHOT") ?
-            "http://127.0.0.1:8089/repository/fly-snapshots/" :
-            "http://127.0.0.1:8089/repository/fly-releases/"
 }
 
 dependencies {
@@ -221,16 +175,4 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
 
     testImplementation "junit:junit"
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: nexusUrl) {
-                authentication(userName: "fly", password: "fly123")
-            }
-            pom.version = "$project.version"
-            pom.groupId = "$project.group"
-        }
-    }
 }

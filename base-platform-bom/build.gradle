@@ -6,9 +6,11 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: "idea"
+    apply plugin: 'signing'
+    apply plugin: 'maven-publish'
     apply plugin: "io.spring.dependency-management"
 
-    group = 'cn.ly'
+    group = 'com.github.liaomengge'
 
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
@@ -32,11 +34,13 @@ allprojects {
 }
 
 wrapper {
-     gradleVersion = '5.6.4'
+    gradleVersion = '5.6.4'
 }
 
-def artifactId = "base-platform-bom"
-version = '1.0.2-SNAPSHOT'
+version = '1.0.2-x-SNAPSHOT'
+
+apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
+apply from: "${rootProject.projectDir}/gradle/publish-bom.gradle"
 
 def versions = [
         alibaba    : '2.2.1.RELEASE',
@@ -162,24 +166,5 @@ dependencyManagement {
         dependency "com.xuxueli:xxl-job-core:2.2.0"
         dependency "com.javadeep:functional-lang:1.0.0"
         dependency "com.ctrip.framework.apollo:apollo-client:1.6.2"
-    }
-}
-
-ext {
-    nexusUrl = version.endsWith("-SNAPSHOT") ?
-            "http://127.0.0.1:8089/repository/fly-snapshots/" :
-            "http://127.0.0.1:8089/repository/fly-releases/"
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: nexusUrl) {
-                authentication(userName: "fly", password: "fly123")
-            }
-            pom.version = "$project.version"
-            pom.artifactId = "$artifactId"
-            pom.groupId = "$project.group"
-        }
     }
 }

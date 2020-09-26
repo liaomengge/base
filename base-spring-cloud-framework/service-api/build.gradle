@@ -1,19 +1,9 @@
-def artifactId = "base-spring-cloud-framework-api"
+ext.'artifactId' = "base-spring-cloud-framework-api"
+
+apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
+apply from: "${rootProject.projectDir}/gradle/publish-jar.gradle"
 
 dependencies {
     api "javax.validation:validation-api"
     api "org.hibernate.validator:hibernate-validator"
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: nexusUrl) {
-                authentication(userName: "fly", password: "fly123")
-            }
-            pom.version = "$project.version"
-            pom.artifactId = "$artifactId"
-            pom.groupId = "$project.group"
-        }
-    }
 }
