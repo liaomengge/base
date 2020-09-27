@@ -1,15 +1,14 @@
 package cn.ly.base_common.metric;
 
-import cn.ly.base_common.metric.cache.local.LocalCacheMetricsConfiguration;
-import cn.ly.base_common.metric.cache.redis.RedisCacheMetricsConfiguration;
-import cn.ly.base_common.metric.datasource.druid.DruidMetricsConfiguration;
-import cn.ly.base_common.metric.datasource.hikari.HikariMetricsConfiguration;
-import cn.ly.base_common.metric.http.httpclient.HttpClientMetricsConfiguration;
-import cn.ly.base_common.metric.http.okhttp3.Okhttp3MetricsConfiguration;
+import cn.ly.base_common.metric.cache.local.LocalCacheMeterConfiguration;
+import cn.ly.base_common.metric.cache.redis.RedisCacheMeterConfiguration;
+import cn.ly.base_common.metric.datasource.druid.DruidMeterConfiguration;
+import cn.ly.base_common.metric.datasource.hikari.HikariMeterConfiguration;
+import cn.ly.base_common.metric.http.httpclient.HttpClientMeterConfiguration;
+import cn.ly.base_common.metric.http.okhttp3.Okhttp3MeterConfiguration;
 import cn.ly.base_common.metric.threadpool.ThreadPoolMetricsConfiguration;
-import cn.ly.base_common.metric.web.tomcat.TomcatMetricsConfiguration;
-import cn.ly.base_common.metric.web.undertow.UndertowMetricsConfiguration;
-
+import cn.ly.base_common.metric.web.tomcat.TomcatMeterConfiguration;
+import cn.ly.base_common.metric.web.undertow.UndertowMeterConfiguration;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +19,10 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @EnableConfigurationProperties(MetricProperties.class)
-@Import({LocalCacheMetricsConfiguration.class, RedisCacheMetricsConfiguration.class,
-        DruidMetricsConfiguration.class, HikariMetricsConfiguration.class,
-        HttpClientMetricsConfiguration.class, Okhttp3MetricsConfiguration.class,
+@Import({LocalCacheMeterConfiguration.class, RedisCacheMeterConfiguration.class,
+        DruidMeterConfiguration.class, HikariMeterConfiguration.class,
+        HttpClientMeterConfiguration.class, Okhttp3MeterConfiguration.class,
         ThreadPoolMetricsConfiguration.class})
-@ImportAutoConfiguration({TomcatMetricsConfiguration.class, UndertowMetricsConfiguration.class})
+@ImportAutoConfiguration({TomcatMeterConfiguration.class, UndertowMeterConfiguration.class})
 public class MetricAutoConfiguration {
 }

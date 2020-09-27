@@ -2,7 +2,6 @@ package cn.ly.base_common.metric.web.tomcat;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.binder.tomcat.TomcatMetrics;
-
 import org.apache.catalina.Manager;
 import org.springframework.boot.actuate.autoconfigure.metrics.web.tomcat.TomcatMetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -21,12 +20,12 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnProperty(prefix = "ly.metric.web.tomcat", name = "enabled", matchIfMissing = true)
 @AutoConfigureBefore(TomcatMetricsAutoConfiguration.class)
-public class TomcatMetricsConfiguration {
+public class TomcatMeterConfiguration {
 
     @Bean
     @ConditionalOnClass(MeterRegistry.class)
-    @ConditionalOnMissingBean({TomcatMetrics.class, TomcatMetricsBinder.class})
-    public TomcatMetricsBinder tomcatMetricsBinder(MeterRegistry meterRegistry) {
-        return new TomcatMetricsBinder(meterRegistry);
+    @ConditionalOnMissingBean({TomcatMetrics.class, TomcatMeterBinder.class})
+    public TomcatMeterBinder tomcatMeterBinder(MeterRegistry meterRegistry) {
+        return new TomcatMeterBinder(meterRegistry);
     }
 }

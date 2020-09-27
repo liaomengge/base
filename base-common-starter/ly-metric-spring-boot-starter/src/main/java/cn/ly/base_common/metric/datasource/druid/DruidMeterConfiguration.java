@@ -1,13 +1,7 @@
 package cn.ly.base_common.metric.datasource.druid;
 
 import com.alibaba.druid.pool.DruidDataSource;
-
 import io.micrometer.core.instrument.MeterRegistry;
-
-import java.util.List;
-
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -17,6 +11,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.sql.DataSource;
+import java.util.List;
+
 /**
  * Created by liaomengge on 2020/9/17.
  */
@@ -24,17 +21,17 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
 @ConditionalOnClass({MeterRegistry.class, DruidDataSource.class})
 @ConditionalOnProperty(prefix = "ly.metric.datasource.druid", name = "enabled", matchIfMissing = true)
-public class DruidMetricsConfiguration {
+public class DruidMeterConfiguration {
 
     private final List<DataSource> dataSources;
 
-    public DruidMetricsConfiguration(ObjectProvider<List<DataSource>> objectProvider) {
+    public DruidMeterConfiguration(ObjectProvider<List<DataSource>> objectProvider) {
         this.dataSources = objectProvider.getIfAvailable();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public DruidMetricsBinder druidMetricsBinder() {
-        return new DruidMetricsBinder(dataSources);
+    public DruidMeterBinder druidMeterBinder() {
+        return new DruidMeterBinder(dataSources);
     }
 }

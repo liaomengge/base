@@ -1,38 +1,35 @@
 package cn.ly.base_common.metric.http.okhttp3;
 
-import static cn.ly.base_common.metric.consts.MetricsConst.OKHTTP3_PREFIX;
-
 import cn.ly.base_common.utils.log4j2.LyLogger;
-
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.binder.MeterBinder;
+import okhttp3.ConnectionPool;
+import okhttp3.OkHttpClient;
+import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.Objects;
 import java.util.function.ToDoubleFunction;
 
-import org.slf4j.Logger;
-
-import okhttp3.ConnectionPool;
-import okhttp3.OkHttpClient;
+import static cn.ly.base_common.metric.consts.MetricsConst.OKHTTP3_PREFIX;
 
 /**
  * Created by liaomengge on 2020/9/17.
  */
-public class Okhttp3MetricsBinder implements MeterBinder {
+public class Okhttp3MeterBinder implements MeterBinder {
 
-    private static final Logger log = LyLogger.getInstance(Okhttp3MetricsBinder.class);
+    private static final Logger log = LyLogger.getInstance(Okhttp3MeterBinder.class);
 
     private final Iterable<Tag> tags;
     private final ConnectionPool connectionPool;
 
-    public Okhttp3MetricsBinder(ConnectionPool connectionPool) {
+    public Okhttp3MeterBinder(ConnectionPool connectionPool) {
         this(Collections.emptyList(), connectionPool);
     }
 
-    public Okhttp3MetricsBinder(Iterable<Tag> tags, ConnectionPool connectionPool) {
+    public Okhttp3MeterBinder(Iterable<Tag> tags, ConnectionPool connectionPool) {
         this.tags = tags;
         this.connectionPool = connectionPool;
     }
@@ -46,7 +43,7 @@ public class Okhttp3MetricsBinder implements MeterBinder {
     }
 
     public static void monitor(MeterRegistry registry, Iterable<Tag> tags, ConnectionPool connectionPool) {
-        new Okhttp3MetricsBinder(tags, connectionPool).bindTo(registry);
+        new Okhttp3MeterBinder(tags, connectionPool).bindTo(registry);
     }
 
     @Override

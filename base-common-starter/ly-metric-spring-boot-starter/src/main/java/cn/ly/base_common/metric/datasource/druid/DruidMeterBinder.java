@@ -1,14 +1,13 @@
 package cn.ly.base_common.metric.datasource.druid;
 
-import static cn.ly.base_common.metric.consts.MetricsConst.DRUID_PREFIX;
-
 import cn.ly.base_common.utils.log4j2.LyLogger;
-
 import com.alibaba.druid.pool.DruidDataSource;
-
 import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.binder.MeterBinder;
+import org.slf4j.Logger;
+import org.springframework.boot.jdbc.DataSourceUnwrapper;
 
+import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -16,26 +15,23 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
-import javax.sql.DataSource;
-
-import org.slf4j.Logger;
-import org.springframework.boot.jdbc.DataSourceUnwrapper;
+import static cn.ly.base_common.metric.consts.MetricsConst.DRUID_PREFIX;
 
 /**
  * Created by liaomengge on 2020/9/17.
  */
-public class DruidMetricsBinder implements MeterBinder {
+public class DruidMeterBinder implements MeterBinder {
 
-    private static final Logger log = LyLogger.getInstance(DruidMetricsBinder.class);
+    private static final Logger log = LyLogger.getInstance(DruidMeterBinder.class);
 
     private final Iterable<Tag> tags;
     private final List<DataSource> dataSources;
 
-    public DruidMetricsBinder(List<DataSource> dataSources) {
+    public DruidMeterBinder(List<DataSource> dataSources) {
         this(Collections.emptyList(), dataSources);
     }
 
-    public DruidMetricsBinder(Iterable<Tag> tags, List<DataSource> dataSources) {
+    public DruidMeterBinder(Iterable<Tag> tags, List<DataSource> dataSources) {
         this.tags = tags;
         this.dataSources = dataSources;
     }
@@ -45,7 +41,7 @@ public class DruidMetricsBinder implements MeterBinder {
     }
 
     public static void monitor(MeterRegistry registry, Iterable<Tag> tags, List<DataSource> dataSources) {
-        new DruidMetricsBinder(tags, dataSources).bindTo(registry);
+        new DruidMeterBinder(tags, dataSources).bindTo(registry);
     }
 
     @Override

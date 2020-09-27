@@ -3,34 +3,32 @@ package cn.ly.base_common.metric.cache.redis;
 import cn.ly.base_common.redis.JedisClusterProperties;
 import cn.ly.base_common.redis.SpringDataProperties;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-
 import io.micrometer.core.instrument.FunctionCounter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.binder.MeterBinder;
-
-import java.lang.management.ManagementFactory;
-import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.function.ToDoubleFunction;
+import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import redis.clients.jedis.JedisPoolConfig;
 
 import javax.annotation.PostConstruct;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
+import java.lang.management.ManagementFactory;
+import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.function.ToDoubleFunction;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.slf4j.Logger;
-
-import redis.clients.jedis.JedisPoolConfig;
+import static cn.ly.base_common.metric.consts.MetricsConst.REDIS_PREFIX;
 
 /**
  * Created by liaomengge on 2020/9/22.
  */
-public class RedisCacheMetricsBinder implements MeterBinder {
+public class RedisCacheMeterBinder implements MeterBinder {
 
-    private static final Logger log = LyLogger.getInstance(RedisCacheMetricsBinder.class);
+    private static final Logger log = LyLogger.getInstance(RedisCacheMeterBinder.class);
 
     private static final String JMX_NAME = "org.apache.commons.pool2:type=GenericObjectPool,name=";
 
@@ -41,23 +39,23 @@ public class RedisCacheMetricsBinder implements MeterBinder {
 
     private MBeanServer mBeanServer;
 
-    public RedisCacheMetricsBinder(JedisClusterProperties jedisClusterProperties,
-                                   SpringDataProperties springDataProperties) {
+    public RedisCacheMeterBinder(JedisClusterProperties jedisClusterProperties,
+                                 SpringDataProperties springDataProperties) {
         this(Collections.emptyList(), jedisClusterProperties, springDataProperties);
     }
 
-    public RedisCacheMetricsBinder(Iterable<Tag> tags, JedisClusterProperties jedisClusterProperties,
-                                   SpringDataProperties springDataProperties) {
+    public RedisCacheMeterBinder(Iterable<Tag> tags, JedisClusterProperties jedisClusterProperties,
+                                 SpringDataProperties springDataProperties) {
         this.tags = tags;
         this.jedisClusterProperties = jedisClusterProperties;
         this.springDataProperties = springDataProperties;
     }
 
-    public RedisCacheMetricsBinder(JedisPoolConfig jedisPoolConfig) {
+    public RedisCacheMeterBinder(JedisPoolConfig jedisPoolConfig) {
         this(Collections.emptyList(), jedisPoolConfig);
     }
 
-    public RedisCacheMetricsBinder(Iterable<Tag> tags, JedisPoolConfig jedisPoolConfig) {
+    public RedisCacheMeterBinder(Iterable<Tag> tags, JedisPoolConfig jedisPoolConfig) {
         this.tags = tags;
         this.jedisPoolConfig = jedisPoolConfig;
     }
@@ -67,7 +65,7 @@ public class RedisCacheMetricsBinder implements MeterBinder {
     }
 
     public static void monitor(MeterRegistry registry, Iterable<Tag> tags, JedisPoolConfig jedisPoolConfig) {
-        new RedisCacheMetricsBinder(tags, jedisPoolConfig).bindTo(registry);
+        new RedisCacheMeterBinder(tags, jedisPoolConfig).bindTo(registry);
     }
 
     @Override
@@ -111,24 +109,24 @@ public class RedisCacheMetricsBinder implements MeterBinder {
     }
 
     private void statsPool(MeterRegistry registry, MBeanServer mBeanServer, ObjectName objectName) {
-        bindCounter(registry, "redis.max.idle", mBeanServer, objectName,
+        bindCounter(registry, REDIS_PREFIX + "max.idle", mBeanServer, objectName,
                 toDoubleFunction(mBeanServer, objectName, "MaxIdle"));
-        bindCounter(registry, "redis.min.idle", mBeanServer, objectName,
+        bindCounter(registry, REDIS_PREFIX + "min.idle", mBeanServer, objectName,
                 toDoubleFunction(mBeanServer, objectName, "MinIdle"));
-        bindCounter(registry, "redis.num.active", mBeanServer, objectName,
+        bindCounter(registry, REDIS_PREFIX + "num.active", mBeanServer, objectName,
                 toDoubleFunction(mBeanServer, objectName, "NumActive"));
-        bindCounter(registry, "redis.num.idle", mBeanServer, objectName,
+        bindCounter(registry, REDIS_PREFIX + "num.idle", mBeanServer, objectName,
                 toDoubleFunction(mBeanServer, objectName, "NumIdle"));
-        bindCounter(registry, "redis.max.total", mBeanServer, objectName,
+        bindCounter(registry, REDIS_PREFIX + "max.total", mBeanServer, objectName,
                 toDoubleFunction(mBeanServer, objectName, "MaxTotal"));
-        bindCounter(registry, "redis.num.waiters", mBeanServer, objectName,
+        bindCounter(registry, REDIS_PREFIX + "num.waiters", mBeanServer, objectName,
                 toDoubleFunction(mBeanServer, objectName, "NumWaiters"));
     }
 
     public void bindCounter(MeterRegistry registry, String name, MBeanServer mBeanServer, ObjectName objectName,
                             ToDoubleFunction<MBeanServer> function) {
         FunctionCounter.builder(name, mBeanServer, function)
-                .tags(Tags.concat(tags, "redis.jmx.name", objectName.getKeyProperty("name"))).register(registry);
+                .tags(Tags.concat(tags, REDIS_PREFIX + "jmx.name", objectName.getKeyProperty("name"))).register(registry);
     }
 
     private ToDoubleFunction<MBeanServer> toDoubleFunction(MBeanServer mBeanServer, ObjectName objectName,

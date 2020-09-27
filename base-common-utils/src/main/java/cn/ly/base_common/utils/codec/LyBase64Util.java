@@ -1,12 +1,10 @@
 package cn.ly.base_common.utils.codec;
 
 import cn.ly.base_common.support.misc.Encodings;
-
-import java.io.UnsupportedEncodingException;
-
+import lombok.experimental.UtilityClass;
 import org.apache.commons.codec.binary.Base64;
 
-import lombok.experimental.UtilityClass;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by liaomengge on 16/9/6.
@@ -32,7 +30,7 @@ public class LyBase64Util {
 
     public String decode(String base64String, String charsetName) {
         try {
-            return new String(Base64.decodeBase64(base64String.getBytes()), charsetName);
+            return new String(Base64.decodeBase64(base64String.getBytes(charsetName)), charsetName);
         } catch (UnsupportedEncodingException e) {
             return null;
         }

@@ -1,16 +1,21 @@
 package cn.ly.base_common.metric.web.undertow;
 
-import static cn.ly.base_common.metric.consts.MetricsConst.UNDERTOW_PREFIX;
-
 import cn.ly.base_common.utils.log4j2.LyLogger;
-
 import com.google.common.collect.Maps;
-
 import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.binder.BaseUnits;
 import io.undertow.server.handlers.MetricsHandler;
 import io.undertow.servlet.api.MetricsCollector;
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationListener;
+import org.xnio.Version;
 
+import javax.annotation.PostConstruct;
+import javax.management.MBeanServer;
+import javax.management.MBeanServerFactory;
+import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -18,25 +23,16 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToLongFunction;
 
-import javax.annotation.PostConstruct;
-import javax.management.MBeanServer;
-import javax.management.MBeanServerFactory;
-import javax.management.ObjectName;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.context.ApplicationListener;
-import org.xnio.Version;
+import static cn.ly.base_common.metric.consts.MetricsConst.UNDERTOW_PREFIX;
 
 /**
  * Created by liaomengge on 2020/9/16.
  * <p>
  * link: https://github.com/micrometer-metrics/micrometer/pull/1575/files
  */
-public class UndertowMetricsBinder implements MetricsCollector, ApplicationListener<ApplicationStartedEvent> {
+public class UndertowMeterBinder implements MetricsCollector, ApplicationListener<ApplicationStartedEvent> {
 
-    private static final Logger log = LyLogger.getInstance(UndertowMetricsBinder.class);
+    private static final Logger log = LyLogger.getInstance(UndertowMeterBinder.class);
 
     //可以查看NioXnio.register(XnioWorkerMXBean) - "org.xnio:type=Xnio,provider=\"nio\",worker=\"XNIO-1\""
     private static final String JMX_NAME = "org.xnio:type=Xnio,provider=\"nio\",worker=*";
@@ -47,11 +43,11 @@ public class UndertowMetricsBinder implements MetricsCollector, ApplicationListe
     private MBeanServer mBeanServer;
     private Map<String, MetricsHandler> metricsHandlers;
 
-    public UndertowMetricsBinder(MeterRegistry meterRegistry) {
+    public UndertowMeterBinder(MeterRegistry meterRegistry) {
         this(Collections.emptyList(), meterRegistry);
     }
 
-    public UndertowMetricsBinder(Iterable<Tag> tags, MeterRegistry meterRegistry) {
+    public UndertowMeterBinder(Iterable<Tag> tags, MeterRegistry meterRegistry) {
         this.tags = tags;
         this.meterRegistry = meterRegistry;
         this.metricsHandlers = Maps.newHashMap();

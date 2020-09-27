@@ -2,37 +2,22 @@ package cn.ly.base_common.influx.helper;
 
 import cn.ly.base_common.influx.batch.InfluxBatchHandler;
 import cn.ly.base_common.influx.consts.InfluxConst;
-import cn.ly.base_common.utils.log4j2.LyLogger;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.lang3.StringUtils;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by liaomengge on 2020/7/21.
  */
 public class InfluxHelper {
-
-    private static final Logger log = LyLogger.getInstance(InfluxHelper.class);
-
-    private String appId;
-
-    @Autowired(required = false)
-    private Environment environment;
 
     private final InfluxBatchHandler influxBatchHandler;
 
@@ -44,8 +29,16 @@ public class InfluxHelper {
         write(new HashMap<>(), fields);
     }
 
+    public void write(String measurement, Map<String, Object> fields) {
+        write(measurement, new HashMap<>(), fields);
+    }
+
     public void write(Map<String, String> tags, Map<String, Object> fields) {
-        Point.Builder builder = Point.measurement(InfluxConst.DEFAULT_MEASUREMENT).tag("appId", appId);
+        write(InfluxConst.DEFAULT_MEASUREMENT, tags, fields);
+    }
+
+    public void write(String measurement, Map<String, String> tags, Map<String, Object> fields) {
+        Point.Builder builder = Point.measurement(measurement);
         if (!CollectionUtils.isEmpty(tags)) {
             builder.tag(tags);
         }
@@ -54,6 +47,15 @@ public class InfluxHelper {
         }
         builder.time(new NanoClock().nanos(), TimeUnit.NANOSECONDS);
         write(builder.build());
+    }
+
+    public <T> void write(T t, Function<T, Point> function) {
+        influxBatchHandler.produce(function.apply(t));
+    }
+
+    public <T> void write(List<T> list, Function<T, Point> function) {
+        List<Point> pointList = list.stream().map(function).collect(Collectors.toList());
+        write(BatchPoints.builder().points(pointList).build());
     }
 
     public void write(Point point) {
@@ -66,36 +68,6 @@ public class InfluxHelper {
 
     public void write(BatchPoints batchPoints) {
         influxBatchHandler.getInfluxDBConnection().getInfluxDB().write(batchPoints);
-    }
-
-    /**
-     * apollo app.id配置
-     */
-    @PostConstruct
-    public void init() {
-        if (Objects.nonNull(environment)) {
-            appId = environment.getProperty("app.id");
-        }
-        if (StringUtils.isBlank(appId)) {
-            Properties properties = new Properties();
-            InputStream in = null;
-            try {
-                in = Thread.currentThread().getContextClassLoader().getResourceAsStream("META-INF/app.properties");
-                if (Objects.nonNull(in)) {
-                    properties.load(new InputStreamReader(in, StandardCharsets.UTF_8));
-                    appId = properties.getProperty("app.id");
-                }
-            } catch (Exception e) {
-                log.warn("load app.properties fail", e);
-            } finally {
-                if (Objects.nonNull(in)) {
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                    }
-                }
-            }
-        }
     }
 
     private final class NanoClock implements Serializable {

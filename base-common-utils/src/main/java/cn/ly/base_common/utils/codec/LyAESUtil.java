@@ -1,13 +1,12 @@
 package cn.ly.base_common.utils.codec;
 
-import java.security.Key;
+import cn.ly.base_common.support.misc.Encodings;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
-
-import lombok.experimental.UtilityClass;
+import java.security.Key;
 
 /**
  * Created by liaomengge on 17/2/23.
@@ -43,8 +42,8 @@ public class LyAESUtil {
         Key k = toKey(base64.decode(key));
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM, "SunJCE");
         cipher.init(Cipher.ENCRYPT_MODE, k);
-        byte[] cipherText = cipher.doFinal(data.getBytes());
-        return new String(base64.encode(cipherText));
+        byte[] cipherText = cipher.doFinal(data.getBytes(Encodings.UTF_8));
+        return new String(base64.encode(cipherText), Encodings.UTF_8);
     }
 
     /**
@@ -59,8 +58,8 @@ public class LyAESUtil {
         Key k = toKey(base64.decode(key));
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM, "SunJCE");
         cipher.init(Cipher.DECRYPT_MODE, k);
-        byte[] decrypted = cipher.doFinal(base64.decode(data.getBytes()));
-        return new String(decrypted, "UTF-8");
+        byte[] decrypted = cipher.doFinal(base64.decode(data.getBytes(Encodings.UTF_8)));
+        return new String(decrypted, Encodings.UTF_8);
     }
 
     /**
@@ -71,11 +70,11 @@ public class LyAESUtil {
      * @return 加密后的数据
      */
     public String encrypt2(String key, String data) throws Exception {
-        Key k = toKey(key.getBytes());
+        Key k = toKey(key.getBytes(Encodings.UTF_8));
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM, "SunJCE");
         cipher.init(Cipher.ENCRYPT_MODE, k);
-        byte[] cipherText = cipher.doFinal(data.getBytes());
-        return new String(base64.encode(cipherText));
+        byte[] cipherText = cipher.doFinal(data.getBytes(Encodings.UTF_8));
+        return new String(base64.encode(cipherText), Encodings.UTF_8);
     }
 
     /**
@@ -87,11 +86,11 @@ public class LyAESUtil {
      * @throws Exception
      */
     public String decrypt2(String key, String data) throws Exception {
-        Key k = toKey(key.getBytes());
+        Key k = toKey(key.getBytes(Encodings.UTF_8));
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM, "SunJCE");
         cipher.init(Cipher.DECRYPT_MODE, k);
-        byte[] decrypted = cipher.doFinal(base64.decode(data.getBytes()));
-        return new String(decrypted, "UTF-8");
+        byte[] decrypted = cipher.doFinal(base64.decode(data.getBytes(Encodings.UTF_8)));
+        return new String(decrypted, Encodings.UTF_8);
     }
 
     /**

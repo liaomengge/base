@@ -4,6 +4,7 @@ import cn.ly.base_common.utils.random.LyRandomUtil;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
 
 /**
@@ -241,7 +242,7 @@ public final class Snowflake {
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
             byte[] addressByte = inetAddress.getAddress();
-            ipPiece = new String(addressByte).hashCode();
+            ipPiece = new String(addressByte, Charset.defaultCharset()).hashCode();
         } catch (Exception e) {
             ipPiece = LyRandomUtil.threadLocalRandom().nextInt();
         }

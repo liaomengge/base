@@ -1,9 +1,7 @@
 package cn.ly.base_common.metric.http.httpclient;
 
 import cn.ly.base_common.metric.MetricProperties;
-
 import io.micrometer.core.instrument.MeterRegistry;
-
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
@@ -21,20 +19,20 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
 @ConditionalOnClass({MeterRegistry.class, PoolingHttpClientConnectionManager.class})
 @ConditionalOnProperty(prefix = "ly.metric.http.httpclient", name = "enabled", matchIfMissing = true)
-public class HttpClientMetricsConfiguration {
+public class HttpClientMeterConfiguration {
 
     private final MetricProperties metricProperties;
     private final PoolingHttpClientConnectionManager poolConnManager;
 
-    public HttpClientMetricsConfiguration(MetricProperties metricProperties,
-                                          ObjectProvider<PoolingHttpClientConnectionManager> provider) {
+    public HttpClientMeterConfiguration(MetricProperties metricProperties,
+                                        ObjectProvider<PoolingHttpClientConnectionManager> provider) {
         this.metricProperties = metricProperties;
         this.poolConnManager = provider.getIfAvailable();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public HttpClientMetricsBinder httpClientMetricsBinder() {
-        return new HttpClientMetricsBinder(metricProperties, poolConnManager);
+    public HttpClientMeterBinder httpClientMeterBinder() {
+        return new HttpClientMeterBinder(metricProperties, poolConnManager);
     }
 }
