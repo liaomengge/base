@@ -92,11 +92,6 @@ subprojects {
         jcenter()
     }
 
-    configurations.all {
-        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
-    }
-
     ext {
         baseSpringCloudVersion = '2.x.0-x-SNAPSHOT'
         baseCommonMiddlewareVersion = '1.1.4-x-SNAPSHOT'
@@ -122,6 +117,11 @@ subprojects {
             cacheChangingModulesFor 0, 'seconds'
             cacheDynamicVersionsFor 0, 'seconds'
         }
+    }
+
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
     }
 
     dependencies {

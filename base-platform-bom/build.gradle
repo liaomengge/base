@@ -167,4 +167,8 @@ dependencyManagement {
         dependency "com.javadeep:functional-lang:1.0.0"
         dependency "com.ctrip.framework.apollo:apollo-client:1.6.2"
     }
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+        cacheDynamicVersionsFor 0, 'seconds'
+    }
 }

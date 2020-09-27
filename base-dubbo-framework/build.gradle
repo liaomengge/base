@@ -72,10 +72,6 @@ subprojects {
         jcenter()
     }
 
-    configurations.all {
-        resolutionStrategy.cacheChangingModulesFor 1, 'minutes'
-    }
-
     ext {
         baseCommonMiddlewareVersion = '1.1.4-x-SNAPSHOT'
         baseCommonUtilsVersion = '1.1.4-x-SNAPSHOT'
@@ -95,6 +91,11 @@ subprojects {
             cacheChangingModulesFor 0, 'seconds'
             cacheDynamicVersionsFor 0, 'seconds'
         }
+    }
+
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
     }
 
     dependencies {

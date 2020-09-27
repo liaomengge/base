@@ -6,7 +6,6 @@ import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 import org.springframework.util.CollectionUtils;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,8 +69,7 @@ public class InfluxHelper {
         influxBatchHandler.getInfluxDBConnection().getInfluxDB().write(batchPoints);
     }
 
-    private final class NanoClock implements Serializable {
-        private static final long serialVersionUID = -1928869833619757243L;
+    private final class NanoClock {
 
         private final long EPOCH_NANOS = System.currentTimeMillis() * 1_000_000;
         private final long NANO_START = System.nanoTime();

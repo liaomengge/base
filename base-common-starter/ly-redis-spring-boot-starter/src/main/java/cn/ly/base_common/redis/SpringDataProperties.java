@@ -1,22 +1,21 @@
 package cn.ly.base_common.redis;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.data.redis.connection.*;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+import redis.clients.jedis.JedisPoolConfig;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.data.redis.connection.*;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Created by liaomengge on 2018/11/14.
@@ -80,7 +79,7 @@ public class SpringDataProperties {
             try {
                 String[] parts = StringUtils.split(node, ":");
                 Assert.state(parts.length == 2, "Must be defined as 'host:port'");
-                nodes.add(new RedisNode(parts[0], Integer.valueOf(parts[1])));
+                nodes.add(new RedisNode(parts[0], Integer.parseInt(parts[1])));
             } catch (RuntimeException ex) {
                 throw new IllegalStateException(
                         "Invalid redis sentinel " + "property '" + node + "'", ex);
