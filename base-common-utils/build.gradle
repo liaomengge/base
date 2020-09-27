@@ -1,6 +1,6 @@
 plugins {
-    id 'se.patrikerdes.use-latest-versions' version '0.2.14'
-    id 'com.github.ben-manes.versions' version '0.28.0'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.15'
+    id 'com.github.ben-manes.versions' version '0.33.0'
 }
 
 def isNonStable = { String version ->
@@ -15,15 +15,6 @@ dependencyUpdates {
     }
 }
 
-targetCompatibility = 1.8
-sourceCompatibility = 1.8
-
-[compileJava, compileTestJava].each() {
-    //it.options.compilerArgs += ["-Xlint:unchecked", "-Xlint:deprecation", "-Xlint:-options"]
-    it.options.compilerArgs += ["-Xlint:deprecation"]
-    it.options.encoding = "UTF-8"
-}
-
 dependencyReport {
     projects = project.allprojects
     outputFile = file("$buildDir/reports/dependencies.txt")
@@ -31,26 +22,7 @@ dependencyReport {
 
 htmlDependencyReport {
     projects = project.allprojects
-    reports.html.setDestination(file("/Users/liaomengge/Desktop/doc/jar"))
-}
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main/java']
-        }
-        resources {
-            srcDirs = ['src/main/resources']
-        }
-    }
-    test {
-        java {
-            srcDirs = ['src/test/java']
-        }
-        resources {
-            srcDirs = ['src/test/resources']
-        }
-    }
+    reports.html.setDestination(file("$buildDir/reports/doc/jar"))
 }
 
 dependencies {

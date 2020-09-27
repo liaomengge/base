@@ -1,8 +1,5 @@
 ext.'artifactId' = "base-dubbo-framework-api"
 
-//apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
-//apply from: "${rootProject.projectDir}/gradle/publish-jar.gradle"
-
 dependencies {
     api "javax.validation:validation-api"
     api "org.hibernate.validator:hibernate-validator"

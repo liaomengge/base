@@ -3,6 +3,7 @@ package cn.ly.base_common.utils.reflect;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.ReflectionUtils;
@@ -49,7 +50,7 @@ public class LyReflectionUtil {
     }
 
     private String getMethodSuffix(String fieldName) {
-        byte[] items = fieldName.getBytes();
+        byte[] items = fieldName.getBytes(Charset.defaultCharset());
         items[0] = (byte) ((char) items[0] - 'a' + 'A');
         return new String(items);
     }

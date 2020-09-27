@@ -1,6 +1,6 @@
 plugins {
-    id 'se.patrikerdes.use-latest-versions' version '0.2.14'
-    id 'com.github.ben-manes.versions' version '0.28.0'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.15'
+    id 'com.github.ben-manes.versions' version '0.33.0'
     id 'com.github.spotbugs' version '4.5.0'
     id 'com.diffplug.spotless' version '5.6.1'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
@@ -43,9 +43,17 @@ subprojects {
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
 
+    tasks.withType(Javadoc).all {
+        enabled = false
+    }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+
     [compileJava, compileTestJava].each() {
         //it.options.compilerArgs += ["-Xlint:unchecked", "-Xlint:deprecation", "-Xlint:-options"]
-        it.options.compilerArgs += ["-Xlint:unchecked", "-Xlint:deprecation"]
+        it.options.compilerArgs += ["-Xlint:deprecation"]
         it.options.encoding = "UTF-8"
     }
 
@@ -62,25 +70,6 @@ subprojects {
         }
         mavenCentral()
         jcenter()
-    }
-
-    sourceSets {
-        main {
-            java {
-                srcDirs = ['src/main/java']
-            }
-            resources {
-                srcDirs = ['src/main/resources']
-            }
-        }
-        test {
-            java {
-                srcDirs = ['src/test/java']
-            }
-            resources {
-                srcDirs = ['src/test/resources']
-            }
-        }
     }
 
     configurations.all {

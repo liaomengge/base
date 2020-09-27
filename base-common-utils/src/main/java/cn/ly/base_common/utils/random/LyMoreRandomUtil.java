@@ -2,11 +2,13 @@ package cn.ly.base_common.utils.random;
 
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.number.LyNumberUtil;
-import lombok.experimental.UtilityClass;
-import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.slf4j.Logger;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2019/11/20.

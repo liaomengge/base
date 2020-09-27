@@ -395,7 +395,7 @@ public class LyNumberUtil {
         if (StringUtils.isBlank(str)) {
             return defaultValue;
         }
-        return Integer.valueOf(str).intValue();
+        return Integer.parseInt(str);
     }
 
     /**
@@ -421,7 +421,7 @@ public class LyNumberUtil {
         if (StringUtils.isBlank(str)) {
             return defaultValue;
         }
-        return Long.valueOf(str).longValue();
+        return Long.parseLong(str);
     }
 
     /**

@@ -31,6 +31,23 @@ subprojects {
     apply from: "${rootProject.projectDir}/gradle/spotless.gradle"
     apply from: "${rootProject.projectDir}/gradle/spotbug.gradle"
 
+    targetCompatibility = 1.8
+    sourceCompatibility = 1.8
+
+    tasks.withType(Javadoc).all {
+        enabled = false
+    }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+
+    [compileJava, compileTestJava].each() {
+        //it.options.compilerArgs += ["-Xlint:unchecked", "-Xlint:deprecation", "-Xlint:-options"]
+        it.options.compilerArgs += ["-Xlint:deprecation"]
+        it.options.encoding = "UTF-8"
+    }
+
     repositories {
         mavenLocal()
         maven {

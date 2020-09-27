@@ -1,8 +1,5 @@
 ext.'artifactId' = "base-spring-cloud-framework-common"
 
-apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
-apply from: "${rootProject.projectDir}/gradle/publish-jar.gradle"
-
 dependencies {
     api(project(":service-api"))
 }
