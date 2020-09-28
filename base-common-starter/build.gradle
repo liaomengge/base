@@ -1,10 +1,8 @@
 buildscript {
     repositories {
         mavenLocal()
+        maven { url 'https://maven.aliyun.com/repository/spring-plugin' }
         mavenCentral()
-        maven {
-            url 'https://repo.spring.io/plugins-release'
-        }
     }
     dependencies {
         classpath 'io.spring.gradle:propdeps-plugin:0.0.10.RELEASE'
@@ -70,17 +68,12 @@ subprojects {
 
     repositories {
         mavenLocal()
-        maven {
-            url 'http://127.0.0.1:8089/repository/fly-snapshots/'
-        }
-        maven {
-            url 'http://127.0.0.1:8089/repository/fly-releases/'
-        }
-        maven {
-            url 'http://maven.aliyun.com/nexus/content/groups/public/'
-        }
+        maven { url 'http://127.0.0.1:8089/repository/fly-snapshots/' }
+        maven { url 'http://127.0.0.1:8089/repository/fly-releases/' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/spring' }
+        maven { url 'https://maven.aliyun.com/repository/spring-plugin' }
         mavenCentral()
-        jcenter()
     }
 
     ext {
