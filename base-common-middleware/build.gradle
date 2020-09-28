@@ -3,7 +3,7 @@ dependencies {
 
     api "org.apache.activemq:activemq-client"
     api "org.apache.activemq:activemq-pool"
-    api 'org.apache.activemq:activemq-core'
+    api "org.apache.activemq:activemq-core"
     api "org.springframework:spring-jms"
 
     api "org.springframework.amqp:spring-amqp"

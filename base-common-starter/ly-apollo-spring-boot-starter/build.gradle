@@ -1,3 +1,3 @@
 dependencies {
-    api 'com.ctrip.framework.apollo:apollo-client'
+    api "com.ctrip.framework.apollo:apollo-client"
 }
