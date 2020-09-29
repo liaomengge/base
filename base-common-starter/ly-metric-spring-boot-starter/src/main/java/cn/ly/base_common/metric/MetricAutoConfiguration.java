@@ -6,6 +6,7 @@ import cn.ly.base_common.metric.datasource.druid.DruidMeterConfiguration;
 import cn.ly.base_common.metric.datasource.hikari.HikariMeterConfiguration;
 import cn.ly.base_common.metric.http.httpclient.HttpClientMeterConfiguration;
 import cn.ly.base_common.metric.http.okhttp3.Okhttp3MeterConfiguration;
+import cn.ly.base_common.metric.mq.activemq.ActiveMQMeterConfiguration;
 import cn.ly.base_common.metric.threadpool.ThreadPoolMetricsConfiguration;
 import cn.ly.base_common.metric.web.tomcat.TomcatMeterConfiguration;
 import cn.ly.base_common.metric.web.undertow.UndertowMeterConfiguration;
@@ -22,7 +23,7 @@ import org.springframework.context.annotation.Import;
 @Import({LocalCacheMeterConfiguration.class, RedisCacheMeterConfiguration.class,
         DruidMeterConfiguration.class, HikariMeterConfiguration.class,
         HttpClientMeterConfiguration.class, Okhttp3MeterConfiguration.class,
-        ThreadPoolMetricsConfiguration.class})
+        ActiveMQMeterConfiguration.class, ThreadPoolMetricsConfiguration.class})
 @ImportAutoConfiguration({TomcatMeterConfiguration.class, UndertowMeterConfiguration.class})
 public class MetricAutoConfiguration {
 }

@@ -1,8 +1,7 @@
 package cn.ly.base_common.metric;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Created by liaomengge on 2018/12/19.
@@ -14,6 +13,7 @@ public class MetricProperties {
     private CacheProperties cache = new CacheProperties();
     private DatasourceProperties datasource = new DatasourceProperties();
     private HttpProperties http = new HttpProperties();
+    private MqProperties mq = new MqProperties();
     private ThreadPoolProperties threadpool = new ThreadPoolProperties();
     private WebProperties web = new WebProperties();
 
@@ -65,6 +65,17 @@ public class MetricProperties {
 
         @Data
         public class Okhttp3Properties {
+            private boolean enabled;
+        }
+    }
+
+    @Data
+    public class MqProperties {
+
+        private ActiveMQProperties activemq = new ActiveMQProperties();
+
+        @Data
+        public class ActiveMQProperties {
             private boolean enabled;
         }
     }

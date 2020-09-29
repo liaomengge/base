@@ -25,7 +25,7 @@ public class TomcatMeterConfiguration {
     @Bean
     @ConditionalOnClass(MeterRegistry.class)
     @ConditionalOnMissingBean({TomcatMetrics.class, TomcatMeterBinder.class})
-    public TomcatMeterBinder tomcatMeterBinder(MeterRegistry meterRegistry) {
-        return new TomcatMeterBinder(meterRegistry);
+    public TomcatMeterBinder tomcatMeterBinder(MeterRegistry registry) {
+        return new TomcatMeterBinder(registry);
     }
 }

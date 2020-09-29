@@ -13,6 +13,8 @@ public interface MetricsConst {
     String HTTP_CLIENT_PREFIX = "http.client.";
     String OKHTTP3_PREFIX = "okhttp3.";
 
+    String ACTIVEMQ_PREFIX = "activemq.";
+
     String UNDERTOW_PREFIX = "undertow.";
 
     String THREAD_POOL_PREFIX = "thread.pool.";

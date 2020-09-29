@@ -14,12 +14,12 @@ public class TomcatMeterBinder extends TomcatMetricsBinder {
 
     private static final Logger log = LyLogger.getInstance(TomcatMeterBinder.class);
 
-    public TomcatMeterBinder(MeterRegistry meterRegistry) {
-        super(meterRegistry);
+    public TomcatMeterBinder(MeterRegistry registry) {
+        super(registry);
     }
 
-    public TomcatMeterBinder(MeterRegistry meterRegistry, Iterable<Tag> tags) {
-        super(meterRegistry, tags);
+    public TomcatMeterBinder(MeterRegistry registry, Iterable<Tag> tags) {
+        super(registry, tags);
     }
 
     @Override

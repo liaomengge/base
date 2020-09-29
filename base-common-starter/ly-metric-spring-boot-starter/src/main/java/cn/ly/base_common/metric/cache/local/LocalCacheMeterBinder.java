@@ -47,10 +47,10 @@ public class LocalCacheMeterBinder implements ApplicationListener<ApplicationRea
     }
 
     private void registerMetrics(ConfigurableApplicationContext context) {
-        MeterRegistry meterRegistry = context.getBean(MeterRegistry.class);
+        MeterRegistry registry = context.getBean(MeterRegistry.class);
         CaffeineCacheManager caffeineCacheManager = context.getBean(CaffeineCacheManager.class);
         ConcurrentMap<String, CaffeineCache> caffeineCacheConcurrentMap = caffeineCacheManager.getCaffeineCacheMap();
-        caffeineCacheConcurrentMap.forEach((region, caffeineCache) -> CaffeineCacheMetrics.monitor(meterRegistry,
+        caffeineCacheConcurrentMap.forEach((region, caffeineCache) -> CaffeineCacheMetrics.monitor(registry,
                 caffeineCache.getCache(), region, this.tags));
     }
 }

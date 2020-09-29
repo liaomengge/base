@@ -26,8 +26,8 @@ public class UndertowMeterConfiguration {
     @Bean
     @ConditionalOnClass(MeterRegistry.class)
     @ConditionalOnMissingBean
-    public UndertowMeterBinder undertowMeterBinder(MeterRegistry meterRegistry) {
-        return new UndertowMeterBinder(meterRegistry);
+    public UndertowMeterBinder undertowMeterBinder(MeterRegistry registry) {
+        return new UndertowMeterBinder(registry);
     }
 
     @Bean

@@ -38,18 +38,18 @@ public class UndertowMeterBinder implements MetricsCollector, ApplicationListene
     private static final String JMX_NAME = "org.xnio:type=Xnio,provider=\"nio\",worker=*";
 
     private final Iterable<Tag> tags;
-    private final MeterRegistry meterRegistry;
+    private final MeterRegistry registry;
 
     private MBeanServer mBeanServer;
     private Map<String, MetricsHandler> metricsHandlers;
 
-    public UndertowMeterBinder(MeterRegistry meterRegistry) {
-        this(Collections.emptyList(), meterRegistry);
+    public UndertowMeterBinder(MeterRegistry registry) {
+        this(Collections.emptyList(), registry);
     }
 
-    public UndertowMeterBinder(Iterable<Tag> tags, MeterRegistry meterRegistry) {
+    public UndertowMeterBinder(Iterable<Tag> tags, MeterRegistry registry) {
         this.tags = tags;
-        this.meterRegistry = meterRegistry;
+        this.registry = registry;
         this.metricsHandlers = Maps.newHashMap();
     }
 
@@ -63,7 +63,7 @@ public class UndertowMeterBinder implements MetricsCollector, ApplicationListene
     @Override
     public void onApplicationEvent(ApplicationStartedEvent event) {
         try {
-            bind(meterRegistry);
+            bind(registry);
         } catch (Exception e) {
             log.error("metric tomcat error", e);
         }
