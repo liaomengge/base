@@ -3,6 +3,8 @@ package cn.ly.base_common.helper.buffer;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.Uninterruptibles;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.Duration;
 import java.util.List;
@@ -11,10 +13,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
+ * buffer queue, use batch handler event
+ * <p>
  * Created by liaomengge on 2020/9/8.
  */
 public class BatchBuffer<T> {

@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 /**
  * A functional Chained call validator
+ * 参照：https://github.com/javadeep/common-functional
  *
  * @param <T> Value type to be validated.
  * @author baojie

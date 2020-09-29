@@ -1,16 +1,12 @@
 package cn.ly.base_common.utils.file;
 
 import cn.ly.base_common.support.misc.enums.OSTypeEnum;
-import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.os.LyOSUtil;
 import cn.ly.base_common.utils.regex.LyMatcherUtil;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-
-import lombok.experimental.UtilityClass;
 
 
 /**
@@ -18,8 +14,6 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class LyFileUtil {
-
-    private Logger log = LyLogger.getInstance(LyFileUtil.class);
 
     /**
      * 判断文件是否存在
