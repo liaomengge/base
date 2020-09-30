@@ -1,35 +1,14 @@
-${AnsiColor.BRIGHT_YELLOW}
-                   ${AnsiColor.BRIGHT_RED}_ooOoo_${AnsiColor.BRIGHT_YELLOW}
-                  ${AnsiColor.BRIGHT_RED}o8888888o${AnsiColor.BRIGHT_YELLOW}
-                  ${AnsiColor.BRIGHT_RED}88${AnsiColor.BRIGHT_YELLOW}" . "${AnsiColor.BRIGHT_RED}88${AnsiColor.BRIGHT_YELLOW}
-                  (| -_- |)
-                  O\  =  /O
-               ____/`---'\____
-             .'  \\|     |//  `.
-            /  \\|||  :  |||//  \
-           /  _||||| -:- |||||-  \
-           |   | \\\  -  /// |   |
-           | \_|  ''\---/''  |   |
-           \  .-\__  `-`  ___/-. /
-         ___`. .'  /--.--\  `. . __
-      ."" '<  `.___\_<|>_/___.'  >'"".
-     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-     \  \ `-.   \_ __\ /__ _/   .-` /  /
-======`-.____`-.___\_____/___.-`____.-'======
-                   `=---='
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-             ${AnsiColor.BRIGHT_RED}代码千万行 注释第一行
-             编码不规范 同事泪两行${AnsiColor.BRIGHT_YELLOW}
+            ${AnsiColor.BRIGHT_MAGENTA}
 
-         佛祖保佑   永不宕机   永无BUG${AnsiColor.BRIGHT_MAGENTA}
+      _                       __
+     (_)                     [  |
+     __    _ .--.    ______   | |    _   __
+    [  |  [ `.-. |  |______|  | |   [ \ [  ]
+     | |   | | | |            | |    \ '/ /
+    [___] [___||__]          [___] [\_:  /
+                                    \__.'
 
-                 _      ___  _
-                / \     \  \//
-                | |      \  /
-                | |_/\   / /
-                \____/  /_/
-
-             ${AnsiColor.RED}Ⓛⓘⓐⓞⓜⓔⓝⓖⓖⓔ
+            ${AnsiColor.RED}Ⓛⓘⓐⓞⓜⓔⓝⓖⓖⓔ
 ${AnsiColor.BRIGHT_BLUE}
 ＼(^O^)／ Spring-Boot ${spring-boot.version} ＼(^O^)／
 ${AnsiColor.BRIGHT_BLUE}${AnsiColor.DEFAULT}

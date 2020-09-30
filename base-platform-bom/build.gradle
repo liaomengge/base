@@ -117,7 +117,7 @@ dependencyManagement {
 
         dependency "org.apache.activemq:activemq-core:5.7.0"
 
-        dependency "org.redisson:redisson:3.13.4"
+        dependency "org.redisson:redisson:3.13.5"
 
         dependency "com.101tec:zkclient:0.11"
         dependency("org.apache.curator:curator-client:4.0.1") {
