@@ -66,7 +66,7 @@ subprojects {
     }
 
     def versions = [
-            platformBom: '1.0.3-SNAPSHOT'
+            platformBom: '1.0.4-SNAPSHOT'
     ]
 
     dependencyManagement {

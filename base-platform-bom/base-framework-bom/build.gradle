@@ -10,8 +10,8 @@ def versions = [
         baseCommonDayu          : '1.1.5-SNAPSHOT',
         baseCommonCache         : '1.1.5-SNAPSHOT',
         baseDubboFramework      : '1.2.0-SNAPSHOT',
-        baseSpringBootStarter   : '2.0.1-SNAPSHOT',
-        baseSpringCloudFramework: '2.0.1-SNAPSHOT'
+        baseSpringBootStarter   : '2.0.2-SNAPSHOT',
+        baseSpringCloudFramework: '2.0.2-SNAPSHOT'
 ]
 
 dependencyManagement {

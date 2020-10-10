@@ -31,15 +31,15 @@ wrapper {
     gradleVersion = '5.6.4'
 }
 
-version = '1.0.3-SNAPSHOT'
+version = '1.0.4-SNAPSHOT'
 
 apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
 apply from: "${rootProject.projectDir}/gradle/publish-bom.gradle"
 
 def versions = [
-        alibaba    : '2.2.1.RELEASE',
-        springBoot : '2.2.5.RELEASE',
-        springCloud: 'Hoxton.SR3'
+        alibaba    : '2.2.3.RELEASE',
+        springBoot : '2.3.2.RELEASE',
+        springCloud: 'Hoxton.SR8'
 ]
 
 dependencyManagement {

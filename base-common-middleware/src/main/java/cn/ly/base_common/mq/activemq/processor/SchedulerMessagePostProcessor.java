@@ -11,7 +11,6 @@ import lombok.Data;
 
 /**
  * MQ延时投递处理器（注：ActiveMQ的配置文件中, 要配置schedulerSupport="true", 否则不起作用）
- * by: 杨俊明 2016-06-16
  */
 @Data
 public class SchedulerMessagePostProcessor implements MessagePostProcessor {

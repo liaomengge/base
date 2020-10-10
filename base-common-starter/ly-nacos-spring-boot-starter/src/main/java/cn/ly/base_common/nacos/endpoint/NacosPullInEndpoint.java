@@ -2,19 +2,19 @@ package cn.ly.base_common.nacos.endpoint;
 
 import cn.ly.base_common.nacos.consts.NacosConst;
 import cn.ly.base_common.utils.error.LyThrowableUtil;
-
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.cloud.nacos.NacosServiceManager;
 import com.alibaba.cloud.nacos.registry.NacosRegistration;
+import com.alibaba.nacos.api.naming.NamingMaintainService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.google.common.collect.Maps;
-
-import java.util.Map;
-
 import org.springframework.beans.BeansException;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+
+import java.util.Map;
 
 /**
  * Created by liaomengge on 2020/8/15.
@@ -37,7 +37,10 @@ public class NacosPullInEndpoint extends AbstractPullEndpoint implements Applica
                     applicationContext.getBean(NacosDiscoveryProperties.class);
             NacosRegistration nacosRegistration = applicationContext.getBean(NacosRegistration.class);
             Instance instance = getNacosInstance(nacosRegistration, true);
-            nacosDiscoveryProperties.namingMaintainServiceInstance().updateInstance(nacosDiscoveryProperties.getService(), instance);
+            NacosServiceManager nacosServiceManager = applicationContext.getBean(NacosServiceManager.class);
+            NamingMaintainService namingMaintainService =
+                    nacosServiceManager.getNamingMaintainService(nacosDiscoveryProperties.getNacosProperties());
+            namingMaintainService.updateInstance(nacosDiscoveryProperties.getService(), instance);
 
             log.info("set service => {}, instance => {}, status => Enabled", nacosDiscoveryProperties.getService(),
                     nacosDiscoveryProperties.getIp());

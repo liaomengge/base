@@ -69,7 +69,7 @@ public class SentinelConfiguration {
     @PostConstruct
     private void init() {
         if (StringUtils.hasText(projectName)) {
-            System.setProperty(AppNameUtil.APP_NAME, projectName);
+            System.setProperty(AppNameUtil.getAppName(), projectName);
         }
         if (StringUtils.hasText(sentinelProperties.getServlet().getBlockPage())) {
             WebServletConfig.setBlockPage(sentinelProperties.getServlet().getBlockPage());

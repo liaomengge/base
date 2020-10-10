@@ -3,23 +3,20 @@ package cn.ly.base_common.cache.caffeine;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.CaffeineSpec;
 import com.google.common.collect.Maps;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.util.Assert;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.util.Assert;
-
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by liaomengge on 2019/3/19.
  */
 public class CaffeineCacheManager {
 
-    @Getter
     private final ConcurrentMap<String, CaffeineCache> caffeineCacheMap = new ConcurrentHashMap<>(16);
 
     private Caffeine<Object, Object> caffeineBuilder =

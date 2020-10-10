@@ -59,7 +59,7 @@ public class ThreadPoolMetricsBinder implements MeterBinder, ApplicationContextA
     public static ExecutorService monitor(MeterRegistry registry, Iterable<Tag> tags, String executorName,
                                           ExecutorService executorService) {
         new ThreadPoolMetricsBinder(tags).bindToExecutorService(executorName, executorService, registry);
-        return new TimedExecutorService(registry, executorService, executorName, tags);
+        return new TimedExecutorService(registry, executorService, executorName,"", tags);
     }
 
     public static void monitor(MeterRegistry registry, String executorName, AsyncTaskExecutor executor) {

@@ -1,7 +1,7 @@
 package cn.ly.base_common.metric.cache.local;
 
+import cn.ly.base_common.cache.CachePoolHelper;
 import cn.ly.base_common.cache.caffeine.CaffeineCache;
-import cn.ly.base_common.cache.caffeine.CaffeineCacheManager;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.github.benmanes.caffeine.cache.Cache;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.Collections;
-import java.util.concurrent.ConcurrentMap;
+import java.util.Map;
 
 /**
  * Created by liaomengge on 2020/9/22.
@@ -48,8 +48,8 @@ public class LocalCacheMeterBinder implements ApplicationListener<ApplicationRea
 
     private void registerMetrics(ConfigurableApplicationContext context) {
         MeterRegistry registry = context.getBean(MeterRegistry.class);
-        CaffeineCacheManager caffeineCacheManager = context.getBean(CaffeineCacheManager.class);
-        ConcurrentMap<String, CaffeineCache> caffeineCacheConcurrentMap = caffeineCacheManager.getCaffeineCacheMap();
+        CachePoolHelper cachePoolHelper = context.getBean(CachePoolHelper.class);
+        Map<String, CaffeineCache> caffeineCacheConcurrentMap = cachePoolHelper.getLevel1CacheMap();
         caffeineCacheConcurrentMap.forEach((region, caffeineCache) -> CaffeineCacheMetrics.monitor(registry,
                 caffeineCache.getCache(), region, this.tags));
     }
