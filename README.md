@@ -6,7 +6,7 @@ Base Framework
 [![jdk version](https://img.shields.io/badge/jdk-1.8+-blue.svg)](https://docs.oracle.com/javase/8/docs/api/)
 [![maven center](https://img.shields.io/maven-central/v/com.github.liaomengge/base-framework-bom.svg?color=blue)](https://search.maven.org/search?q=g:com.github.liaomengge%20AND%20a:base-framework-bom)
 [![sonatype nexus snapshots](https://img.shields.io/nexus/s/com.github.liaomengge/base-framework-bom?label=sonatype-nexus-snapshots&server=https%3A%2F%2Foss.sonatype.org%2F)](https://oss.sonatype.org/content/repositories/snapshots/com/github/liaomengge/base-framework-bom/)
-[![github license](https://img.shields.io/github/license/liaomengge/base.svg)](https://github.com/liaomengge/base/blob/master/LICENSE)
+[![github license](https://img.shields.io/github/license/liaomengge/base.svg?branch=master)](https://github.com/liaomengge/base/blob/master/LICENSE)
 
 [![spring boot version](https://img.shields.io/badge/spring--boot-2.3.2.RELEASE-blue.svg)](https://docs.spring.io/spring-boot/docs/2.3.2.RELEASE/reference/html/)
 [![spring cloud version](https://img.shields.io/badge/spring--cloud-Hoxton.SR8-blue.svg)](https://docs.spring.io/spring-cloud/docs/Hoxton.SR8/reference/html/)
