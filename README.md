@@ -9,7 +9,7 @@ Base Framework
 [![github license](https://img.shields.io/github/license/liaomengge/base.svg)](https://github.com/liaomengge/base/blob/master/LICENSE)
 
 [![spring boot version](https://img.shields.io/badge/spring--boot-2.3.2.RELEASE-blue.svg)](https://docs.spring.io/spring-boot/docs/2.3.2.RELEASE/reference/html/)
-[![spring cloud version](https://img.shields.io/badge/spring--boot-2.3.2.RELEASE-blue.svg)](https://docs.spring.io/spring-cloud/docs/Hoxton.SR8/reference/html/)
+[![spring cloud version](https://img.shields.io/badge/spring--cloud-Hoxton.SR8-blue.svg)](https://docs.spring.io/spring-cloud/docs/Hoxton.SR8/reference/html/)
 [![spring cloud alibaba version](https://img.shields.io/badge/spring--cloud--alibaba-2.2.3.RELEASE-blue.svg)](https://github.com/alibaba/spring-cloud-alibaba/blob/master/README.md)
 
 
