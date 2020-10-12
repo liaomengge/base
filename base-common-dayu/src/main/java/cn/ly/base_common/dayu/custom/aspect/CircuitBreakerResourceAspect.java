@@ -6,13 +6,8 @@ import cn.ly.base_common.dayu.custom.helper.CircuitBreakerRedisHelper;
 import cn.ly.base_common.support.exception.CircuitBreakerException;
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.error.LyThrowableUtil;
-
-import com.timgroup.statsd.StatsDClient;
-
-import java.lang.reflect.Method;
-import java.util.Objects;
-import java.util.Optional;
-
+import io.micrometer.core.instrument.MeterRegistry;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -22,7 +17,9 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
-import lombok.AllArgsConstructor;
+import java.lang.reflect.Method;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/10/30.
@@ -32,7 +29,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CircuitBreakerResourceAspect extends AbstractAspectSupport {
 
-    private StatsDClient statsDClient;
+    private MeterRegistry meterRegistry;
     private CircuitBreakerRedisHelper circuitBreakerRedisHelper;
 
     @Pointcut("@annotation(cn.ly.base_common.dayu.custom.annotation.CircuitBreakerResource)")
@@ -62,7 +59,7 @@ public class CircuitBreakerResourceAspect extends AbstractAspectSupport {
                 if ((LyJdk8DateUtil.getMilliSecondsTime() - latestFailureTime) <= circuitBreakerRedisHelper.getCircuitBreakerConfig().getResetMilliSeconds()) {
                     //open status
                     log.warn("Resource[{}], Custom Circuit Open...", resource);
-                    Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(CircuitBreakerConst.Metric.CIRCUIT_BREAKER_PREFIX + resource));
+                    Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(CircuitBreakerConst.Metric.CIRCUIT_BREAKER_PREFIX + resource).increment());
                     return super.handleFallback(joinPoint, circuitBreakerResource);
                 }
                 //half open status

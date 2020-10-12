@@ -3,10 +3,8 @@ package cn.ly.service.base_framework.common.filter;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.service.base_framework.common.config.FilterConfig;
 import cn.ly.service.base_framework.common.config.ServiceConfig;
-
 import com.alibaba.dubbo.rpc.Filter;
-import com.timgroup.statsd.StatsDClient;
-
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Setter;
 
 /**
@@ -18,6 +16,8 @@ public abstract class AbstractFilter implements Filter {
 
     protected static final String SKIP_METHOD = "ping";
 
+    protected static final String PROTOCOL_TAG = "protocol";
+
     //坑1:不要用@Autowired注入,拿不到对象,改用setter
     @Setter
     protected ServiceConfig serviceConfig;
@@ -26,7 +26,7 @@ public abstract class AbstractFilter implements Filter {
     protected FilterConfig filterConfig = new FilterConfig();
 
     @Setter
-    protected StatsDClient statsDClient;
+    protected MeterRegistry meterRegistry;
 
     protected String getMetricsPrefixName() {
         return serviceConfig.getServiceName();

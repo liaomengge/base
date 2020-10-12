@@ -198,7 +198,7 @@ public final class FunctionalValidator<T> {
      */
     public final FunctionalValidatorResult<T> doValidate() {
 
-        long start = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         ValidationResult result = ValidationResult.build();
 
         try {
@@ -213,7 +213,7 @@ public final class FunctionalValidator<T> {
                 validators.forEach(v -> result.addErrors(v.apply(element)));
             }
             return FunctionalValidatorResult.of(element,
-                    Try.of(() -> result.timeElapsed(System.currentTimeMillis() - start)));
+                    Try.of(() -> result.timeElapsed(System.currentTimeMillis() - startTime)));
         } catch (Throwable e) {
             return FunctionalValidatorResult.of(element, Try.failure(e));
         }

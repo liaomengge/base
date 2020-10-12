@@ -1,11 +1,10 @@
 package cn.ly.base_common.quartz.domain;
 
+import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-
-import org.slf4j.Logger;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
 
 /**
  * Created by liaomengge on 19/1/30.
@@ -28,7 +27,7 @@ public abstract class AbstractBaseJob {
     public void execute() {
         init();
 
-        long startTime = System.currentTimeMillis();
+        long startTime = LyJdk8DateUtil.getMilliSecondsTime();
 
         try {
             work();
@@ -36,7 +35,7 @@ public abstract class AbstractBaseJob {
             log.error("执行[" + getClass().getSimpleName() + "]异常", e);
         }
 
-        long endTime = System.currentTimeMillis();
+        long endTime = LyJdk8DateUtil.getMilliSecondsTime();
         log.info("执行完[{}]耗费: {}ms", getClass().getSimpleName(), (endTime - startTime));
 
         if (nextJob != null) {

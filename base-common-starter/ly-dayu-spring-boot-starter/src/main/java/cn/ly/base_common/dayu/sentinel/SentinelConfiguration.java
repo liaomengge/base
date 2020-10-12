@@ -1,13 +1,10 @@
 package cn.ly.base_common.dayu.sentinel;
 
-import static cn.ly.base_common.dayu.sentinel.consts.SentinelConst.SENTINEL_PREFIX;
-
 import cn.ly.base_common.dayu.domain.DayuBlockedDomain;
 import cn.ly.base_common.dayu.sentinel.circuit.SentinelCircuitHandler;
 import cn.ly.base_common.dayu.sentinel.datasource.SentinelDataSourceConfiguration;
 import cn.ly.base_common.dayu.sentinel.filter.SentinelWebConfiguration;
 import cn.ly.base_common.utils.web.LyWebUtil;
-
 import com.alibaba.csp.sentinel.adapter.servlet.callback.RequestOriginParser;
 import com.alibaba.csp.sentinel.adapter.servlet.callback.UrlBlockHandler;
 import com.alibaba.csp.sentinel.adapter.servlet.callback.UrlCleaner;
@@ -15,10 +12,7 @@ import com.alibaba.csp.sentinel.adapter.servlet.callback.WebCallbackManager;
 import com.alibaba.csp.sentinel.adapter.servlet.config.WebServletConfig;
 import com.alibaba.csp.sentinel.annotation.aspectj.SentinelResourceAspect;
 import com.alibaba.csp.sentinel.util.AppNameUtil;
-import com.timgroup.statsd.StatsDClient;
-
-import javax.annotation.PostConstruct;
-
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -29,6 +23,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.util.StringUtils;
+
+import javax.annotation.PostConstruct;
+
+import static cn.ly.base_common.dayu.sentinel.consts.SentinelConst.SENTINEL_PREFIX;
 
 /**
  * Created by liaomengge on 2019/8/9.
@@ -55,9 +53,9 @@ public class SentinelConfiguration {
     private SentinelProperties sentinelProperties;
 
     @Bean
-    @ConditionalOnClass(StatsDClient.class)
-    public SentinelCircuitHandler sentinelCircuitHandler(StatsDClient statsDClient) {
-        return new SentinelCircuitHandler(statsDClient);
+    @ConditionalOnClass(MeterRegistry.class)
+    public SentinelCircuitHandler sentinelCircuitHandler(MeterRegistry meterRegistry) {
+        return new SentinelCircuitHandler(meterRegistry);
     }
 
     @Bean

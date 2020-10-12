@@ -1,14 +1,11 @@
 package cn.ly.base_common.mq.activemq;
 
-import cn.ly.base_common.helper.metric.activemq.ActiveMQMonitor;
 import cn.ly.base_common.mq.activemq.ActiveMQProperties.Pool;
+import cn.ly.base_common.mq.activemq.monitor.DefaultMQMonitor;
 import cn.ly.base_common.mq.activemq.pool.MonitorPooledConnectionFactory;
 import cn.ly.base_common.mq.activemq.registry.ActiveMQQueueConfigBeanRegistryConfiguration;
-
-import com.timgroup.statsd.StatsDClient;
-
-import javax.jms.ConnectionFactory;
-
+import io.micrometer.core.instrument.MeterRegistry;
+import lombok.AllArgsConstructor;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -21,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
-import lombok.AllArgsConstructor;
+import javax.jms.ConnectionFactory;
 
 /**
  * Created by liaomengge on 2019/5/5.
@@ -57,12 +54,12 @@ public class ActiveMQAutoConfiguration {
         return pooledConnectionFactory;
     }
 
-    @Bean
-    @ConditionalOnBean(StatsDClient.class)
+    @Bean("cn.ly.base_common.mq.activemq.monitor.DefaultMQMonitor")
+    @ConditionalOnBean(MeterRegistry.class)
     @ConditionalOnMissingBean
-    public ActiveMQMonitor activeMQMonitor(StatsDClient statsDClient) {
-        ActiveMQMonitor activeMQMonitor = new ActiveMQMonitor();
-        activeMQMonitor.setStatsDClient(statsDClient);
-        return activeMQMonitor;
+    public DefaultMQMonitor activeMQMonitor(MeterRegistry meterRegistry) {
+        DefaultMQMonitor mqMonitor = new DefaultMQMonitor();
+        mqMonitor.setMeterRegistry(meterRegistry);
+        return mqMonitor;
     }
 }

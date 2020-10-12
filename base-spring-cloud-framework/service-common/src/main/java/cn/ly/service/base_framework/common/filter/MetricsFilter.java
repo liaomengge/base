@@ -1,16 +1,15 @@
 package cn.ly.service.base_framework.common.filter;
 
-import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.service.base_framework.common.consts.MetricsConst;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
 import cn.ly.service.base_framework.common.util.TimeThreadLocalUtil;
-
-import com.timgroup.statsd.StatsDClient;
-
+import io.micrometer.core.instrument.MeterRegistry;
+import lombok.AllArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.core.annotation.Order;
 
-import lombok.AllArgsConstructor;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 2018/11/22.
@@ -19,7 +18,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MetricsFilter extends AbstractFilter {
 
-    private final StatsDClient statsDClient;
+    private final MeterRegistry meterRegistry;
 
     @Override
     public Object doFilter(ProceedingJoinPoint joinPoint, FilterChain chain) throws Throwable {
@@ -31,15 +30,21 @@ public class MetricsFilter extends AbstractFilter {
             throw e;
         } finally {
             String prefix = super.getMethodName(joinPoint);
-            if (isSuccess) {
-                statsDClient.increment(prefix + MetricsConst.REQ_EXE_SUC);
-                statsDClient.increment(MetricsConst.REQ_ALL + MetricsConst.REQ_EXE_SUC);
-            } else {
-                statsDClient.increment(prefix + MetricsConst.REQ_EXE_FAIL);
-                statsDClient.increment(MetricsConst.REQ_ALL + MetricsConst.REQ_EXE_FAIL);
-            }
-            long elapsedMilliseconds = LyJdk8DateUtil.getMilliSecondsTime() - TimeThreadLocalUtil.get();
-            statsDClient.recordExecutionTime(prefix + MetricsConst.REQ_EXE_TIME, elapsedMilliseconds, 1);
+            this.statRestExec(prefix, isSuccess);
         }
+    }
+
+    private void statRestExec(String prefix, boolean isSuccess) {
+        Optional.ofNullable(meterRegistry).ifPresent(val -> {
+            if (isSuccess) {
+                val.counter(prefix + MetricsConst.REQ_EXE_SUC).increment();
+                val.counter(MetricsConst.REQ_ALL + MetricsConst.REQ_EXE_SUC).increment();
+            } else {
+                val.counter(prefix + MetricsConst.REQ_EXE_FAIL).increment();
+                val.counter(MetricsConst.REQ_ALL + MetricsConst.REQ_EXE_FAIL).increment();
+            }
+            long elapsedNanoTime = System.nanoTime() - TimeThreadLocalUtil.get();
+            val.timer(prefix + MetricsConst.REQ_EXE_TIME).record(elapsedNanoTime, TimeUnit.NANOSECONDS);
+        });
     }
 }

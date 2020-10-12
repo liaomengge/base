@@ -6,7 +6,6 @@ import cn.ly.base_common.helper.rest.sync.interceptor.HttpHeaderInterceptor;
 import cn.ly.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.thread.LyThreadFactoryBuilderUtil;
-
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
@@ -15,18 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.timgroup.statsd.NonBlockingStatsDClient;
-import com.timgroup.statsd.StatsDClient;
-
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
+import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.http.HttpHost;
@@ -55,6 +43,15 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by liaomengge on 2018/11/1.
  */
@@ -79,9 +76,9 @@ public class RestTemplateAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnClass(StatsDClient.class)
-    public SentinelHttpRequestInterceptor sentinelHttpRequestInterceptor(StatsDClient statsDClient) {
-        return new SentinelHttpRequestInterceptor(statsDClient);
+    @ConditionalOnClass(MeterRegistry.class)
+    public SentinelHttpRequestInterceptor sentinelHttpRequestInterceptor(MeterRegistry meterRegistry) {
+        return new SentinelHttpRequestInterceptor(meterRegistry);
     }
 
     @Bean
@@ -179,14 +176,6 @@ public class RestTemplateAutoConfiguration {
         return restTemplate;
     }
 
-    @Bean
-    @ConditionalOnMissingBean
-    public StatsDClient statsDClient() {
-        RestTemplateProperties.StatsdProperties statsdProperties = this.restTemplateProperties.getStatsd();
-        return new NonBlockingStatsDClient(this.trimPrefix(statsdProperties.getPrefix()),
-                statsdProperties.getHostname(), statsdProperties.getPort());
-    }
-
     private String trimPrefix(String prefix) {
         String trimmedPrefix = (StringUtils.hasText(prefix) ? prefix : null);
         while (trimmedPrefix != null && trimmedPrefix.endsWith(".")) {
@@ -198,12 +187,12 @@ public class RestTemplateAutoConfiguration {
 
     @RefreshScope
     @Bean
-    @ConditionalOnBean({RestTemplate.class, StatsDClient.class})
+    @ConditionalOnBean({RestTemplate.class, MeterRegistry.class})
     @ConditionalOnMissingBean
-    public SyncClientTemplate syncClientTemplate(RestTemplate restTemplate, StatsDClient statsDClient) {
+    public SyncClientTemplate syncClientTemplate(RestTemplate restTemplate, MeterRegistry meterRegistry) {
         SyncClientTemplate syncClientTemplate = new SyncClientTemplate(restTemplate);
         syncClientTemplate.setProjName(this.buildProjName());
-        syncClientTemplate.setStatsDClient(statsDClient);
+        syncClientTemplate.setMeterRegistry(meterRegistry);
         syncClientTemplate.setIgnoreLogMethodName(restTemplateProperties.getLog().getIgnoreMethodName());
         return syncClientTemplate;
     }

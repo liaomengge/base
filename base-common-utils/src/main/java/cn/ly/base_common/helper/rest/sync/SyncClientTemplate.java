@@ -7,15 +7,10 @@ import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.log.LyAlarmLogUtil;
 import cn.ly.base_common.utils.log.LyMDCUtil;
 import cn.ly.base_common.utils.url.LyUrlUtil;
-
 import com.alibaba.csp.sentinel.slots.block.AbstractRule;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-
-import java.io.InterruptedIOException;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,8 +20,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.io.InterruptedIOException;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by liaomengge on 17/3/9.
@@ -50,7 +47,7 @@ public class SyncClientTemplate extends Template.Sync {
 
     @Override
     public <T> ResponseEntity<T> getForEntity(BaseRequest<Map<String, String>> baseRequest, Class<T> responseType) {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         boolean isSuccess = true;
         String prefix = super.getMetricsPrefixName(baseRequest);
 
@@ -67,8 +64,8 @@ public class SyncClientTemplate extends Template.Sync {
             this.handleThrowable(baseRequest, e);
         } finally {
             try {
-                long endTime = System.currentTimeMillis();
-                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
+                long endTime = System.nanoTime();
+                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME, String.valueOf(endTime - startTime));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
                         log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
@@ -83,7 +80,7 @@ public class SyncClientTemplate extends Template.Sync {
                 }
                 super.statRestExec(prefix, isSuccess, (endTime - startTime));
             } finally {
-                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME);
             }
         }
         return responseEntity;
@@ -92,7 +89,7 @@ public class SyncClientTemplate extends Template.Sync {
     @Override
     public <T> ResponseEntity<T> postFormForEntity(BaseRequest<Map<String, String>> baseRequest,
                                                    Class<T> responseType) {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         boolean isSuccess = true;
         String prefix = super.getMetricsPrefixName(baseRequest);
         String url = baseRequest.getUrl();
@@ -112,8 +109,8 @@ public class SyncClientTemplate extends Template.Sync {
             this.handleThrowable(baseRequest, e);
         } finally {
             try {
-                long endTime = System.currentTimeMillis();
-                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
+                long endTime = System.nanoTime();
+                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME, String.valueOf(endTime - startTime));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
                         log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
@@ -128,7 +125,7 @@ public class SyncClientTemplate extends Template.Sync {
                 }
                 super.statRestExec(prefix, isSuccess, (endTime - startTime));
             } finally {
-                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME);
             }
         }
         return responseEntity;
@@ -136,7 +133,7 @@ public class SyncClientTemplate extends Template.Sync {
 
     @Override
     public <T> ResponseEntity<T> postForEntity(BaseRequest<?> baseRequest, Class<T> responseType) {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         boolean isSuccess = true;
         String prefix = super.getMetricsPrefixName(baseRequest);
 
@@ -150,8 +147,8 @@ public class SyncClientTemplate extends Template.Sync {
             this.handleThrowable(baseRequest, e);
         } finally {
             try {
-                long endTime = System.currentTimeMillis();
-                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(endTime - startTime));
+                long endTime = System.nanoTime();
+                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME, String.valueOf(endTime - startTime));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
                         log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
@@ -166,7 +163,7 @@ public class SyncClientTemplate extends Template.Sync {
                 }
                 super.statRestExec(prefix, isSuccess, (endTime - startTime));
             } finally {
-                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME);
             }
         }
         return responseEntity;

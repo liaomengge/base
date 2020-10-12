@@ -9,9 +9,6 @@ public interface CircuitBreakerConst {
         String CIRCUIT_BREAKER_PREFIX = "metric-circuit-breaker.";
     }
 
-    /**
-     * 缓存后缀
-     */
     interface CacheKeySuffix {
         String REDIS_LATEST_FAILURE_TIME = ":latest:failure:time";
     }

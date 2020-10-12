@@ -4,20 +4,19 @@ import cn.ly.base_common.helper.rest.consts.ReqMetricsConst;
 import cn.ly.base_common.helper.rest.data.BaseRequest;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.url.LyMoreUrlUtil;
-
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
-import com.timgroup.statsd.StatsDClient;
-
-import java.util.Map;
-
+import io.micrometer.core.instrument.MeterRegistry;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 17/3/9.
@@ -30,7 +29,7 @@ public interface Template {
     abstract class Sync implements Template {
 
         @Setter
-        private StatsDClient statsDClient;
+        private MeterRegistry meterRegistry;
 
         @Setter
         private String projName = "ly";
@@ -61,13 +60,15 @@ public interface Template {
             return projName + "." + urlMethod;
         }
 
-        protected void statRestExec(String prefix, boolean isSuccess, long diffTime) {
-            if (isSuccess) {
-                statsDClient.increment(prefix + ReqMetricsConst.REQ_EXE_SUC);
-            } else {
-                statsDClient.increment(prefix + ReqMetricsConst.REQ_EXE_FAIL);
-            }
-            statsDClient.recordExecutionTime(prefix + ReqMetricsConst.REQ_EXE_TIME, diffTime, 1);
+        protected void statRestExec(String prefix, boolean isSuccess, long elapsedNanoTime) {
+            Optional.ofNullable(meterRegistry).ifPresent(val -> {
+                if (isSuccess) {
+                    val.counter(prefix + ReqMetricsConst.REQ_EXE_SUC).increment();
+                } else {
+                    val.counter(prefix + ReqMetricsConst.REQ_EXE_FAIL).increment();
+                }
+                val.timer(prefix + ReqMetricsConst.REQ_EXE_TIME).record(elapsedNanoTime, TimeUnit.NANOSECONDS);
+            });
         }
     }
 

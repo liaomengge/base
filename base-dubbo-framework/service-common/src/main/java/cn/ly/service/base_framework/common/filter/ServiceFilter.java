@@ -13,21 +13,11 @@ import cn.ly.base_common.utils.trace.LyTraceLogUtil;
 import cn.ly.base_common.utils.web.LyWebUtil;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.ServiceConst;
-
 import com.alibaba.dubbo.rpc.*;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.MediaType;
-
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +25,13 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInputImpl;
 
-import lombok.Setter;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by liaomengge on 16/11/9.
@@ -51,7 +47,7 @@ public class ServiceFilter extends AbstractFilter {
             return invoker.invoke(invocation);
         }
 
-        long start = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         LyLogData logData = new LyLogData();
 
         try {
@@ -62,15 +58,15 @@ public class ServiceFilter extends AbstractFilter {
             //2. invoke
             Result result = invoker.invoke(invocation);
 
-            long end = System.currentTimeMillis();
-            long elapsedMilliseconds = end - start;
-            logData.setElapsedMilliseconds(elapsedMilliseconds);
-            LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
+            long endTime = System.nanoTime();
+            long elapsedNanoTime = endTime - startTime;
+            logData.setElapsedMilliseconds(elapsedNanoTime);
+            LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME, String.valueOf(elapsedNanoTime));
 
             boolean hasException = false;
             if (Objects.isNull(result.getValue())) { //无返回,通常是发生了异常,被dubbo捕获了
                 DataResult<String> nullResult = new DataResult<>(false);
-                nullResult.setElapsedMilliseconds(elapsedMilliseconds);
+                nullResult.setElapsedMilliseconds(elapsedNanoTime);
                 if (result instanceof RpcResult) {
                     RpcResult rpcResult = (RpcResult) result;
                     rpcResult.setValue(nullResult);
@@ -109,7 +105,7 @@ public class ServiceFilter extends AbstractFilter {
 
             if (result.getValue() instanceof DataResult) {
                 DataResult dt = (DataResult) result.getValue();
-                dt.setElapsedMilliseconds(elapsedMilliseconds);
+                dt.setElapsedMilliseconds(elapsedNanoTime);
                 if (!dt.isSuccess()) {
                     hasException = true;
                 }
@@ -131,12 +127,12 @@ public class ServiceFilter extends AbstractFilter {
             result.setAttachments(invocation.getAttachments());
             logData.setResult(result.toString());
 
-            long end = System.currentTimeMillis();
-            long elapsedMilliseconds = end - start;
-            LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
+            long endTime = System.nanoTime();
+            long elapsedNanoTime = endTime - startTime;
+            LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME, String.valueOf(elapsedNanoTime));
 
-            logData.setElapsedMilliseconds(elapsedMilliseconds);
-            dataResult.setElapsedMilliseconds(elapsedMilliseconds);
+            logData.setElapsedMilliseconds(elapsedNanoTime);
+            dataResult.setElapsedMilliseconds(elapsedNanoTime);
 
             log.error(logData);
 
@@ -149,7 +145,7 @@ public class ServiceFilter extends AbstractFilter {
             LyTraceLogUtil.clearTrace();
 
             //6. clean mdc
-            LyMDCUtil.remove(LyMDCUtil.MDC_WEB_ELAPSED_TIME);
+            LyMDCUtil.remove(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME);
         }
 
     }

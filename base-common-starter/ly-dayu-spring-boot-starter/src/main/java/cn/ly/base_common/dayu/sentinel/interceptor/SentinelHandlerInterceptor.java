@@ -11,7 +11,7 @@
 //import com.alibaba.csp.sentinel.context.ContextUtil;
 //import com.alibaba.csp.sentinel.slots.block.BlockException;
 //import com.alibaba.csp.sentinel.util.StringUtil;
-//import com.timgroup.statsd.StatsDClient;
+//import io.micrometer.core.instrument.MeterRegistry;
 //import lombok.AllArgsConstructor;
 //import org.apache.commons.lang3.StringUtils;
 //import org.slf4j.Logger;
@@ -33,11 +33,11 @@
 //
 //    private static final String WEB_INTERCEPTOR_CONTEXT_NAME = "sentinel_web_interceptor_context";
 //
-//    private StatsDClient statsDClient;
+//    private MeterRegistry meterRegistry;
 //
 //    @Override
 //    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws
-// Exception {
+//    Exception {
 //        String origin = "", uriTarget = "";
 //        try {
 //            origin = parseOrigin(request);
@@ -57,8 +57,8 @@
 //                    origin, uriTarget), ex);
 //            WebCallbackManager.getUrlBlockHandler().blocked(request, response, ex);
 //            String finalUriTarget = uriTarget;
-//            Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(DayuConst
-// .METRIC_SENTINEL_BLOCKED_PREFIX + finalUriTarget));
+//            Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(DayuConst
+//            .METRIC_SENTINEL_BLOCKED_PREFIX + finalUriTarget).increment());
 //            return false;
 //        }
 //    }

@@ -6,9 +6,14 @@ package cn.ly.service.base_framework.common.consts;
 public interface MetricsConst {
 
     /**
-     * 前缀(B端）
+     * 前缀
      */
-    String PREFIX_SERVICE_NAME = "base_dubbo_framework";
+    String PREFIX_SERVICE_NAME = "base-dubbo-framework";
+
+    /**
+     * 请求执行总数
+     */
+    String REQ_ALL = "req_all";
 
     /**
      * 请求执行正常次数

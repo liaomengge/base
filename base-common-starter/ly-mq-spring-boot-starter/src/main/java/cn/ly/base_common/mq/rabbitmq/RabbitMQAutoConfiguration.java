@@ -1,16 +1,13 @@
 package cn.ly.base_common.mq.rabbitmq;
 
 import cn.ly.base_common.helper.mail.MailHelper;
-import cn.ly.base_common.helper.metric.rabbitmq.RabbitMQMonitor;
 import cn.ly.base_common.mq.rabbitmq.callback.MQConfirmCallback;
 import cn.ly.base_common.mq.rabbitmq.callback.MQReturnCallback;
+import cn.ly.base_common.mq.rabbitmq.monitor.DefaultMQMonitor;
 import cn.ly.base_common.mq.rabbitmq.registry.RabbitMQQueueConfigBeanRegistryConfiguration;
-
 import com.rabbitmq.client.Channel;
-import com.timgroup.statsd.StatsDClient;
-
-import java.util.Objects;
-
+import io.micrometer.core.instrument.MeterRegistry;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -28,7 +25,7 @@ import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
-import lombok.AllArgsConstructor;
+import java.util.Objects;
 
 /**
  * Created by liaomengge on 2019/5/5.
@@ -90,13 +87,13 @@ public class RabbitMQAutoConfiguration {
         return new RabbitAdmin(cachingConnectionFactory);
     }
 
-    @Bean
-    @ConditionalOnBean(StatsDClient.class)
+    @Bean("cn.ly.base_common.mq.rabbitmq.monitor.DefaultMQMonitor")
+    @ConditionalOnBean(MeterRegistry.class)
     @ConditionalOnMissingBean
-    public RabbitMQMonitor rabbitMQMonitor(StatsDClient statsDClient) {
-        RabbitMQMonitor rabbitMQMonitor = new RabbitMQMonitor();
-        rabbitMQMonitor.setStatsDClient(statsDClient);
-        return rabbitMQMonitor;
+    public DefaultMQMonitor rabbitMQMonitor(MeterRegistry meterRegistry) {
+        DefaultMQMonitor mqMonitor = new DefaultMQMonitor();
+        mqMonitor.setMeterRegistry(meterRegistry);
+        return mqMonitor;
     }
 
     @Bean

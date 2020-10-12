@@ -7,7 +7,7 @@ import cn.ly.base_common.dayu.custom.helper.CircuitBreakerRedisHelper;
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.error.LyThrowableUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
-import com.timgroup.statsd.StatsDClient;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class CircuitBreakerHandler {
 
     private static final Logger log = LyLogger.getInstance(CircuitBreakerHandler.class);
 
-    private StatsDClient statsDClient;
+    private MeterRegistry meterRegistry;
     private CircuitBreakerRedisHelper circuitBreakerRedisHelper;
 
     public <R> R doHandle(String resource, CircuitBreaker<R> circuitBreaker) {
@@ -43,7 +43,7 @@ public class CircuitBreakerHandler {
                 if ((LyJdk8DateUtil.getMilliSecondsTime() - latestFailureTime) <= circuitBreakerRedisHelper.getCircuitBreakerConfig().getResetMilliSeconds()) {
                     //open status
                     log.warn("Resource[{}], Custom Circuit Open...", resource);
-                    Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(Metric.CIRCUIT_BREAKER_PREFIX + resource));
+                    Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(Metric.CIRCUIT_BREAKER_PREFIX + resource).increment());
                     return circuitBreaker.fallback();
                 }
                 //half open status

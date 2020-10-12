@@ -1,11 +1,10 @@
 package cn.ly.base_common.rest.template;
 
-import java.util.List;
-
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import lombok.Data;
+import java.util.List;
 
 /**
  * Created by liaomengge on 2018/11/1.
@@ -19,7 +18,6 @@ public class RestTemplateProperties {
     private String projName = "ly";
     private String messageConverter = "fastjson";
     private final HttpClientProperties http = new HttpClientProperties();
-    private final StatsdProperties statsd = new StatsdProperties();
     private final LogProperties log = new LogProperties();
     private final SentinelProperties sentinel = new SentinelProperties();
 
@@ -40,13 +38,6 @@ public class RestTemplateProperties {
         private String url;
         private Integer maxPerRoute;
         private Integer readTimeout;
-    }
-
-    @Data
-    public static class StatsdProperties {
-        private String prefix;
-        private String hostname;
-        private int port;
     }
 
     @Data

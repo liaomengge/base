@@ -10,17 +10,10 @@ import cn.ly.base_common.retrofit.RetrofitProperties.HttpClientProperties;
 import cn.ly.base_common.retrofit.RetrofitProperties.SentinelProperties;
 import cn.ly.base_common.retrofit.RetrofitProperties.UrlHttpClientProperties;
 import cn.ly.base_common.utils.number.LyNumberUtil;
-
 import com.google.common.collect.ImmutableMap;
-import com.timgroup.statsd.StatsDClient;
-
-import java.net.SocketTimeoutException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
+import io.micrometer.core.instrument.MeterRegistry;
+import okhttp3.ConnectionPool;
+import okhttp3.OkHttpClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +27,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
-
-import okhttp3.ConnectionPool;
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+
+import java.net.SocketTimeoutException;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * Created by liaomengge on 2019/3/1.
@@ -87,17 +84,17 @@ public class RetrofitAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnClass(StatsDClient.class)
-    public SentinelRetrofitInterceptor sentinelRetrofitInterceptor(StatsDClient statsDClient) {
-        return new SentinelRetrofitInterceptor(statsDClient);
+    @ConditionalOnClass(MeterRegistry.class)
+    public SentinelRetrofitInterceptor sentinelRetrofitInterceptor(MeterRegistry meterRegistry) {
+        return new SentinelRetrofitInterceptor(meterRegistry);
     }
 
     @RefreshScope
     @Bean
-    @ConditionalOnBean(StatsDClient.class)
-    public HttpLoggingInterceptor httpLoggingInterceptor(StatsDClient statsDClient) {
+    @ConditionalOnBean(MeterRegistry.class)
+    public HttpLoggingInterceptor httpLoggingInterceptor(MeterRegistry meterRegistry) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(this.buildProjName());
-        httpLoggingInterceptor.setStatsDClient(statsDClient);
+        httpLoggingInterceptor.setMeterRegistry(meterRegistry);
         httpLoggingInterceptor.setIgnoreLogMethodName(this.retrofitProperties.getLog().getIgnoreMethodName());
         return httpLoggingInterceptor;
     }

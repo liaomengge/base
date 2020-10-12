@@ -6,14 +6,6 @@ import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.number.LyMoreNumberUtil;
 import cn.ly.base_common.utils.properties.LyPropertiesUtil;
 import cn.ly.base_common.utils.string.LyStringUtil;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.cache.CacheKey;
@@ -29,6 +21,13 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.slf4j.Logger;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * 针对tk mybatis 3.2.0以上
@@ -57,15 +56,15 @@ public class SqlInterceptor implements Interceptor {
         BoundSql boundSql = mappedStatement.getBoundSql(parameter);
         Configuration configuration = mappedStatement.getConfiguration();
 
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         Object result = null;
         try {
             result = invocation.proceed();
         } finally {
-            long endTime = System.currentTimeMillis();
-            long sqlCostTime = endTime - startTime;
+            long endTime = System.nanoTime();
+            long sqlCostNanoTime = endTime - startTime;
             String sql = this.getSql(configuration, boundSql);
-            this.formatSqlLog(mappedStatement.getSqlCommandType(), sqlId, sql, sqlCostTime, result);
+            this.formatSqlLog(mappedStatement.getSqlCommandType(), sqlId, sql, sqlCostNanoTime, result);
         }
 
         return result;
@@ -163,10 +162,10 @@ public class SqlInterceptor implements Interceptor {
      * @param sqlCommandType
      * @param sqlId
      * @param sql
-     * @param costTime
+     * @param costNanoTime
      */
-    private void formatSqlLog(SqlCommandType sqlCommandType, String sqlId, String sql, long costTime, Object obj) {
-        String sqlLog = "Mapper Method ===> [" + sqlId + "], " + sql + ", " + "Spend Time ===> " + costTime + " ms";
+    private void formatSqlLog(SqlCommandType sqlCommandType, String sqlId, String sql, long costNanoTime, Object obj) {
+        String sqlLog = "Mapper Method ===> [" + sqlId + "], " + sql + ", " + "Spend Time ===> " + costNanoTime + " ns";
         if (sqlCommandType == SqlCommandType.UPDATE || sqlCommandType == SqlCommandType.INSERT
                 || sqlCommandType == SqlCommandType.DELETE) {
             sqlLog += ", Affect Count ===> " + LyMoreNumberUtil.toInt(LyStringUtil.getValue(obj));

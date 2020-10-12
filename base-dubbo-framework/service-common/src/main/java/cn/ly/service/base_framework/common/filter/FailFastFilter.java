@@ -12,6 +12,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -48,7 +49,7 @@ public class FailFastFilter extends AbstractFilter {
         URL url = invoker.getUrl();
         String protocol = url.getProtocol();
         String prefix = super.getMetricsPrefixName() + "." + methodName;
-        statsDClient.increment(prefix + "." + protocol + MetricsConst.FAIL_FAST_EXE_FAIL);
+        Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(prefix + "." + protocol + MetricsConst.FAIL_FAST_EXE_FAIL).increment());
 
         logData.setResult(result.getValue());
         logData.setRestUrl(url.getAbsolutePath());

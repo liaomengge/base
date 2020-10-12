@@ -1,9 +1,6 @@
 package cn.ly.service.base_framework.common.filter.aspect;
 
-import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
-
 import cn.ly.base_common.support.datasource.DBContext;
-import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.error.LyThrowableUtil;
 import cn.ly.base_common.utils.json.LyJsonUtil;
 import cn.ly.base_common.utils.log.LyMDCUtil;
@@ -16,21 +13,10 @@ import cn.ly.service.base_framework.common.config.FilterConfig;
 import cn.ly.service.base_framework.common.filter.*;
 import cn.ly.service.base_framework.common.filter.chain.FilterChain;
 import cn.ly.service.base_framework.common.util.TimeThreadLocalUtil;
-
 import com.google.common.collect.Iterables;
-import com.thoughtworks.xstream.InitializationException;
-import com.timgroup.statsd.StatsDClient;
-
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import io.micrometer.core.instrument.MeterRegistry;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -48,8 +34,16 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
+
+import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
 
 /**
  * Created by liaomengge on 2018/10/23.
@@ -69,15 +63,14 @@ public class ServiceAspect {
     @Setter
     private FilterConfig filterConfig = new FilterConfig();
 
-    @Autowired
-    private StatsDClient statsDClient;
+    @Autowired(required = false)
+    private MeterRegistry meterRegistry;
 
     @Around("target(cn.ly.service.base_framework.api.BaseFrameworkService) " +
             "&& execution(public * *(..)) " +
             "&& !@annotation(cn.ly.service.base_framework.common.annotation.IgnoreServiceAop)")
     public Object proceed(ProceedingJoinPoint joinPoint) throws Throwable {
-        long startTime = LyJdk8DateUtil.getMilliSecondsTime();
-        TimeThreadLocalUtil.set(startTime);
+        TimeThreadLocalUtil.set(System.nanoTime());
         StringBuilder reqArgsBuilder = buildArgs(joinPoint);
 
         FilterChain filterChain = null;
@@ -90,9 +83,7 @@ public class ServiceAspect {
             buildExceptionResultLog(e, reqArgsBuilder);
             throw e;
         } finally {
-            if (Objects.nonNull(filterChain)) {
-                filterChain.reset();
-            }
+            Optional.ofNullable(filterChain).ifPresent(FilterChain::reset);
 
             TimeThreadLocalUtil.remove();
 
@@ -102,7 +93,7 @@ public class ServiceAspect {
 
             LyMDCUtil.remove(LyMDCUtil.MDC_WEB_REMOTE_IP);
             LyMDCUtil.remove(LyMDCUtil.MDC_WEB_URI);
-            LyMDCUtil.remove(LyMDCUtil.MDC_WEB_ELAPSED_TIME);
+            LyMDCUtil.remove(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME);
         }
     }
 
@@ -172,11 +163,11 @@ public class ServiceAspect {
     }
 
     private void buildResultLog(ProceedingJoinPoint joinPoint, Object retObj, StringBuilder sBuilder) {
-        long elapsedMilliseconds = LyJdk8DateUtil.getMilliSecondsTime() - TimeThreadLocalUtil.get();
+        long elapsedNanoTime = System.nanoTime() - TimeThreadLocalUtil.get();
         if (!isIgnoreLogResultMethod(joinPoint)) {
             if (retObj instanceof DataResult) {
                 DataResult dataResult = (DataResult) retObj;
-                dataResult.setElapsedMilliseconds(elapsedMilliseconds);
+                dataResult.setElapsedNanoSeconds(elapsedNanoTime);
                 sBuilder.append(" result => " + LyJsonUtil.toJson4Log(dataResult));
             } else if (retObj instanceof String) {
                 sBuilder.append(" result => " + retObj);
@@ -184,22 +175,19 @@ public class ServiceAspect {
                 sBuilder.append(" result => " + LyJsonUtil.toJson4Log(retObj));
             }
         }
-        LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
+        LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME, String.valueOf(elapsedNanoTime));
         log.info("请求响应日志: {}", sBuilder.toString());
     }
 
     private void buildExceptionResultLog(Exception e, StringBuilder sBuilder) {
-        long elapsedMilliseconds = LyJdk8DateUtil.getMilliSecondsTime() - TimeThreadLocalUtil.get();
+        long elapsedNanoTime = System.nanoTime() - TimeThreadLocalUtil.get();
         sBuilder.append(" exception result => " + LyThrowableUtil.getStackTrace(e));
-        LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, String.valueOf(elapsedMilliseconds));
+        LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME, String.valueOf(elapsedNanoTime));
         log.error("请求响应日志: {}", sBuilder.toString());
     }
 
     @PostConstruct
     private void init() {
-        if (Objects.isNull(statsDClient)) {
-            throw new InitializationException("init Service Aspect exception[statsDClient is null]...");
-        }
         defaultFilterChain = new FilterChain();
         boolean enabledDefaultFilter = filterConfig.isEnabledDefaultFilter();
         if (enabledDefaultFilter) {
@@ -207,13 +195,13 @@ public class ServiceAspect {
                     .addFilter(new TraceFilter())
                     .addFilter(new SignFilter(filterConfig))
                     .addFilter(new ParamValidateFilter())
-                    .addFilter(new MetricsFilter(statsDClient));
+                    .addFilter(new MetricsFilter(meterRegistry));
         }
         if (Objects.nonNull(filterChain)) {
             defaultFilterChain.addFilter(filterChain.getFilters());
         }
         defaultFilterChain.sortFilters();
-        LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_TIME, NumberUtils.INTEGER_ZERO.toString());
+        LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME, NumberUtils.INTEGER_ZERO.toString());
         log.info("sort filter chain ===> {}", defaultFilterChain.printFilters());
     }
 }

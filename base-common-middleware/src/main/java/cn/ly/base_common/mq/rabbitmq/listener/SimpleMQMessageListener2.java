@@ -1,12 +1,10 @@
 package cn.ly.base_common.mq.rabbitmq.listener;
 
-import cn.ly.base_common.helper.metric.rabbitmq.RabbitMQMonitor;
 import cn.ly.base_common.mq.consts.MetricsConst;
 import cn.ly.base_common.mq.domain.MQMessage;
 import cn.ly.base_common.mq.rabbitmq.domain.QueueConfig;
-
+import cn.ly.base_common.mq.rabbitmq.monitor.DefaultMQMonitor;
 import com.rabbitmq.client.Channel;
-
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.core.Message;
 
@@ -15,8 +13,8 @@ import org.springframework.amqp.core.Message;
  */
 public abstract class SimpleMQMessageListener2<T extends MQMessage> extends BaseMQMessageListener<T> {
 
-    public SimpleMQMessageListener2(QueueConfig queueConfig, RabbitMQMonitor rabbitMQMonitor) {
-        super(queueConfig, rabbitMQMonitor);
+    public SimpleMQMessageListener2(QueueConfig queueConfig, DefaultMQMonitor mqMonitor) {
+        super(queueConfig, mqMonitor);
     }
 
     @Override
@@ -27,7 +25,7 @@ public abstract class SimpleMQMessageListener2<T extends MQMessage> extends Base
             try {
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             } catch (Exception e) {
-                rabbitMQMonitor.monitorCount(MetricsConst.EXEC_ACK_EXCEPTION + "." + queueConfig.getExchangeName());
+                mqMonitor.monitorCount(MetricsConst.EXEC_ACK_EXCEPTION + "." + queueConfig.getExchangeName());
                 log.error("Enq Message[" + message.toString() + "], Ack Exception ===> ", e);
                 throw new AmqpRejectAndDontRequeueException("Ack Exception", e);
             }

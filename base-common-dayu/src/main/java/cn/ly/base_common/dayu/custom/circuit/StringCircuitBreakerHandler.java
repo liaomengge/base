@@ -3,8 +3,7 @@ package cn.ly.base_common.dayu.custom.circuit;
 import cn.ly.base_common.dayu.custom.breaker.StringCircuitBreaker;
 import cn.ly.base_common.dayu.custom.domain.CircuitBreakerDomain;
 import cn.ly.base_common.dayu.custom.helper.CircuitBreakerRedisHelper;
-
-import com.timgroup.statsd.StatsDClient;
+import io.micrometer.core.instrument.MeterRegistry;
 
 import java.util.function.Supplier;
 
@@ -13,8 +12,8 @@ import java.util.function.Supplier;
  */
 public class StringCircuitBreakerHandler extends CircuitBreakerHandler {
 
-    public StringCircuitBreakerHandler(StatsDClient statsDClient, CircuitBreakerRedisHelper circuitBreakerRedisHelper) {
-        super(statsDClient, circuitBreakerRedisHelper);
+    public StringCircuitBreakerHandler(MeterRegistry meterRegistry, CircuitBreakerRedisHelper circuitBreakerRedisHelper) {
+        super(meterRegistry, circuitBreakerRedisHelper);
     }
 
     public String doHandle(String resource, Supplier<String> supplier) {

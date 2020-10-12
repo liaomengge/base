@@ -1,15 +1,10 @@
 package cn.ly.base_common.mq.rabbitmq.sender;
 
-import cn.ly.base_common.helper.metric.rabbitmq.RabbitMQMonitor;
 import cn.ly.base_common.mq.consts.MQConst.RabbitMQ;
 import cn.ly.base_common.mq.rabbitmq.AbstractMQSender;
+import cn.ly.base_common.mq.rabbitmq.monitor.DefaultMQMonitor;
 import cn.ly.base_common.mq.rabbitmq.processor.TraceMessagePostProcessor;
-
 import com.google.common.collect.Lists;
-
-import java.util.List;
-import java.util.Objects;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -19,6 +14,9 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.retry.support.RetryTemplate;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by liaomengge on 2018/12/6.
@@ -33,23 +31,23 @@ public abstract class BaseMQSender extends AbstractMQSender implements Initializ
     protected RabbitTemplate.ConfirmCallback confirmCallback;
     protected RabbitTemplate.ReturnCallback returnCallback;
     protected boolean mandatory;
-    protected RabbitMQMonitor rabbitMQMonitor;
+    protected DefaultMQMonitor mqMonitor;
 
     public BaseMQSender(CachingConnectionFactory cachingConnectionFactory, RabbitAdmin rabbitAdmin,
                         RetryTemplate retryTemplate,
                         RabbitTemplate.ConfirmCallback confirmCallback,
                         RabbitTemplate.ReturnCallback returnCallback, boolean mandatory,
-                        RabbitMQMonitor rabbitMQMonitor) {
+                        DefaultMQMonitor mqMonitor) {
         this(cachingConnectionFactory, rabbitAdmin, new Jackson2JsonMessageConverter(),
                 Lists.newArrayList(new TraceMessagePostProcessor()),
-                retryTemplate, confirmCallback, returnCallback, mandatory, rabbitMQMonitor);
+                retryTemplate, confirmCallback, returnCallback, mandatory, mqMonitor);
     }
 
     public BaseMQSender(CachingConnectionFactory cachingConnectionFactory, RabbitAdmin rabbitAdmin,
                         MessageConverter messageConverter, List<MessagePostProcessor> messagePostProcessors,
                         RetryTemplate retryTemplate, RabbitTemplate.ConfirmCallback confirmCallback,
                         RabbitTemplate.ReturnCallback returnCallback, boolean mandatory,
-                        RabbitMQMonitor rabbitMQMonitor) {
+                        DefaultMQMonitor mqMonitor) {
         this.cachingConnectionFactory = cachingConnectionFactory;
         this.rabbitAdmin = rabbitAdmin;
         this.messageConverter = messageConverter;
@@ -57,7 +55,7 @@ public abstract class BaseMQSender extends AbstractMQSender implements Initializ
         this.confirmCallback = confirmCallback;
         this.returnCallback = returnCallback;
         this.mandatory = mandatory;
-        this.rabbitMQMonitor = rabbitMQMonitor;
+        this.mqMonitor = mqMonitor;
         rabbitTemplate = new RabbitTemplate();
         rabbitTemplate.setConnectionFactory(this.cachingConnectionFactory);
         rabbitTemplate.setRetryTemplate(this.retryTemplate);

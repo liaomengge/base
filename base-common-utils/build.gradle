@@ -28,8 +28,7 @@ dependencies {
     api "org.apache.httpcomponents:httpcore"
 
     api "org.hibernate.validator:hibernate-validator"
-
-    api "com.timgroup:java-statsd-client"
+    
     api "io.micrometer:micrometer-core"
 
     api "redis.clients:jedis"

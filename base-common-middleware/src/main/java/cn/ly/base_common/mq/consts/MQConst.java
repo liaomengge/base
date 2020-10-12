@@ -13,10 +13,12 @@ public interface MQConst {
     String MQ_SEND_TIME = "MQ_SEND_TIME";
 
     interface RabbitMQ {
+        String MONITOR_PREFIX = "rabbitmq";
         String ROUTE_KEY_SUFFIX = "_key";
     }
 
     interface ActiveMQ {
+        String MONITOR_PREFIX = "activemq";
         String BACKUP_QUEUE_SUFFIX = "_Bak";
     }
 }

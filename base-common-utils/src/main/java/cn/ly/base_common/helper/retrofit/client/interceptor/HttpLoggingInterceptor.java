@@ -7,25 +7,23 @@ import cn.ly.base_common.utils.log.LyAlarmLogUtil;
 import cn.ly.base_common.utils.log.LyMDCUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.url.LyMoreUrlUtil;
-
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
-import com.timgroup.statsd.StatsDClient;
-
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.nio.charset.Charset;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Setter;
 import okhttp3.*;
 import okhttp3.internal.http.HttpHeaders;
 import okio.Buffer;
 import okio.BufferedSource;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.nio.charset.Charset;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 2019/3/1.
@@ -40,7 +38,7 @@ public class HttpLoggingInterceptor implements Interceptor {
     private String ignoreLogMethodName;//逗号分隔
 
     @Setter
-    private StatsDClient statsDClient;
+    private MeterRegistry meterRegistry;
 
     public HttpLoggingInterceptor(String projName) {
         this.projName = projName;
@@ -61,7 +59,7 @@ public class HttpLoggingInterceptor implements Interceptor {
                 LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
             }
             tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
-            LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(tookMs));
+            LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME, String.valueOf(tookMs));
             if (isIgnoreLogMethod(request)) {
                 log.warn("请求路径 ==> [{}], 请求异常 ===> [{}], 耗时[{}]ms",
                         buildReqUrl(request), LyThrowableUtil.getStackTrace(t), tookMs);
@@ -73,10 +71,10 @@ public class HttpLoggingInterceptor implements Interceptor {
         } finally {
             try {
                 tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
-                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_TIME, String.valueOf(tookMs));
+                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME, String.valueOf(tookMs));
                 doFinally(request, response, tookMs);
             } finally {
-                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME);
             }
         }
         return response;
@@ -161,14 +159,10 @@ public class HttpLoggingInterceptor implements Interceptor {
     }
 
     private void statIncrement(String metric) {
-        if (Objects.nonNull(statsDClient)) {
-            statsDClient.increment(metric);
-        }
+        Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(metric).increment());
     }
 
     private void statRecord(String metric, long execTime) {
-        if (Objects.nonNull(statsDClient)) {
-            statsDClient.recordExecutionTime(metric, execTime);
-        }
+        Optional.ofNullable(meterRegistry).ifPresent(val -> val.timer(metric).record(execTime, TimeUnit.NANOSECONDS));
     }
 }

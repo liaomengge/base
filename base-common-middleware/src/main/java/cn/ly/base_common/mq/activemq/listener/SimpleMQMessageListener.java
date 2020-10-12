@@ -1,8 +1,8 @@
 package cn.ly.base_common.mq.activemq.listener;
 
 
-import cn.ly.base_common.helper.metric.activemq.ActiveMQMonitor;
 import cn.ly.base_common.mq.activemq.domain.QueueConfig;
+import cn.ly.base_common.mq.activemq.monitor.DefaultMQMonitor;
 import cn.ly.base_common.mq.consts.MetricsConst;
 import cn.ly.base_common.mq.domain.MQMessage;
 
@@ -14,8 +14,8 @@ import javax.jms.Message;
  */
 public abstract class SimpleMQMessageListener<T extends MQMessage> extends BaseMQMessageListener<T> {
 
-    public SimpleMQMessageListener(QueueConfig queueConfig, ActiveMQMonitor activeMQMonitor) {
-        super(queueConfig, activeMQMonitor);
+    public SimpleMQMessageListener(QueueConfig queueConfig, DefaultMQMonitor mqMonitor) {
+        super(queueConfig, mqMonitor);
     }
 
     @Override
@@ -23,7 +23,7 @@ public abstract class SimpleMQMessageListener<T extends MQMessage> extends BaseM
         try {
             message.acknowledge();
         } catch (JMSException e) {
-            activeMQMonitor.monitorCount(MetricsConst.EXEC_ACK_EXCEPTION + "." + this.queueConfig.getBaseQueueName());
+            mqMonitor.monitorCount(MetricsConst.EXEC_ACK_EXCEPTION + "." + this.queueConfig.getBaseQueueName());
             log.error("Enq Message[" + message.toString() + "], Ack Exception ===> ", e);
         }
 

@@ -4,18 +4,13 @@ import cn.ly.base_common.helper.rest.consts.ReqMetricsConst;
 import cn.ly.base_common.utils.error.LyExceptionUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.url.LyMoreUrlUtil;
-
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.timgroup.statsd.StatsDClient;
-
-import java.io.IOException;
-import java.net.URI;
-import java.util.Optional;
-
+import io.micrometer.core.instrument.MeterRegistry;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.http.HttpRequest;
@@ -23,7 +18,9 @@ import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 
-import lombok.AllArgsConstructor;
+import java.io.IOException;
+import java.net.URI;
+import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/11/5.
@@ -33,7 +30,7 @@ public class SentinelHttpRequestInterceptor implements ClientHttpRequestIntercep
 
     private static final Logger log = LyLogger.getInstance(SentinelHttpRequestInterceptor.class);
 
-    private StatsDClient statsDClient;
+    private MeterRegistry meterRegistry;
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
@@ -52,7 +49,7 @@ public class SentinelHttpRequestInterceptor implements ClientHttpRequestIntercep
             if (StringUtils.isNotBlank(hostWithPathResource)) {
                 log.warn("Resource[{}], RestTemplate Block Exception...", hostWithPathResource);
                 String methodSuffix = LyMoreUrlUtil.getUrlSuffix(hostWithPathResource);
-                Optional.ofNullable(statsDClient).ifPresent(val -> statsDClient.increment(methodSuffix + ReqMetricsConst.REQ_EXE_BLOCKED));
+                Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(methodSuffix + ReqMetricsConst.REQ_EXE_BLOCKED).increment());
             }
             throw LyExceptionUtil.unchecked(e);
         } catch (Throwable t) {

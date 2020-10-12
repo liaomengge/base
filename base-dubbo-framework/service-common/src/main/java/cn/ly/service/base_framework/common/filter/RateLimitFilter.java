@@ -6,18 +6,17 @@ import cn.ly.base_common.utils.number.LyMoreNumberUtil;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.MetricsConst;
 import cn.ly.service.base_framework.common.consts.ServiceConst;
-
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.rpc.*;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.RateLimiter;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentMap;
-
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by liaomengge on 2016/9/20.
@@ -77,7 +76,8 @@ public class RateLimitFilter extends AbstractFilter {
         URL url = invoker.getUrl();
         String protocol = url.getProtocol();
         String prefix = super.getMetricsPrefixName() + "." + methodName;
-        statsDClient.increment(prefix + "." + protocol + MetricsConst.REQ_EXE_BUSY);
+        Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(prefix + MetricsConst.REQ_EXE_BUSY,
+                PROTOCOL_TAG, protocol).increment());
 
         logData.setResult(result.getValue());
         logData.setRestUrl(url.getAbsolutePath());

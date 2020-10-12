@@ -1,14 +1,11 @@
 package cn.ly.base_common.mq.rabbitmq.sender;
 
-import cn.ly.base_common.helper.metric.rabbitmq.RabbitMQMonitor;
 import cn.ly.base_common.mq.consts.MetricsConst;
 import cn.ly.base_common.mq.rabbitmq.domain.QueueConfig;
-
+import cn.ly.base_common.mq.rabbitmq.monitor.DefaultMQMonitor;
 import com.google.common.collect.ImmutableMap;
-
-import java.util.List;
-import java.util.Map;
-
+import lombok.NonNull;
+import lombok.Setter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.core.*;
@@ -18,8 +15,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.retry.support.RetryTemplate;
 
-import lombok.NonNull;
-import lombok.Setter;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by liaomengge on 17/1/5.
@@ -33,18 +30,18 @@ public class SimpleMQSender extends BaseMQSender {
     public SimpleMQSender(CachingConnectionFactory cachingConnectionFactory, RabbitAdmin rabbitAdmin,
                           RetryTemplate retryTemplate, RabbitTemplate.ConfirmCallback confirmCallback,
                           RabbitTemplate.ReturnCallback returnCallback, boolean mandatory,
-                          RabbitMQMonitor rabbitMQMonitor) {
+                          DefaultMQMonitor mqMonitor) {
         super(cachingConnectionFactory, rabbitAdmin, retryTemplate, confirmCallback, returnCallback, mandatory,
-                rabbitMQMonitor);
+                mqMonitor);
     }
 
     public SimpleMQSender(CachingConnectionFactory cachingConnectionFactory, RabbitAdmin rabbitAdmin,
                           MessageConverter messageConverter, List<MessagePostProcessor> messagePostProcessors,
                           RetryTemplate retryTemplate, RabbitTemplate.ConfirmCallback confirmCallback,
                           RabbitTemplate.ReturnCallback returnCallback, boolean mandatory,
-                          RabbitMQMonitor rabbitMQMonitor) {
+                          DefaultMQMonitor mqMonitor) {
         super(cachingConnectionFactory, rabbitAdmin, messageConverter, messagePostProcessors, retryTemplate,
-                confirmCallback, returnCallback, mandatory, rabbitMQMonitor);
+                confirmCallback, returnCallback, mandatory, mqMonitor);
     }
 
     @Override
@@ -78,7 +75,7 @@ public class SimpleMQSender extends BaseMQSender {
 
     @Override
     public void convertAndSend(String exchangeName, String routingKey, Object object) {
-        rabbitMQMonitor.monitorCount(MetricsConst.ENQUEUE_COUNT + "." + exchangeName);
+        mqMonitor.monitorCount(MetricsConst.ENQUEUE_COUNT + "." + exchangeName);
         rabbitTemplate.convertAndSend(exchangeName, routingKey, object);
     }
 

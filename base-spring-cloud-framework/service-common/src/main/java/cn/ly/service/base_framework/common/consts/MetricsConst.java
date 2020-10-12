@@ -6,9 +6,9 @@ package cn.ly.service.base_framework.common.consts;
 public interface MetricsConst {
 
     /**
-     * 前缀(B端）
+     * 前缀
      */
-    String PREFIX_SERVICE_NAME = "base_spring_cloud_framework";
+    String PREFIX_SERVICE_NAME = "base-spring-cloud-framework";
 
     /**
      * 请求执行总数
