@@ -27,7 +27,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
     group = 'com.github.liaomengge'
-    version = '1.1.5-SNAPSHOT'
+    version = '1.1.6-SNAPSHOT'
 
     apply from: "${rootProject.projectDir}/gradle/latest-version.gradle"
 

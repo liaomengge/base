@@ -1,0 +1,10 @@
+dependencies {
+    api(project(":base-redis-spring-boot-starter"))
+    api "com.github.liaomengge:base-common-dayu:${baseDayuVersion}"
+    api "org.springframework:spring-webmvc"
+    api "com.alibaba.csp:sentinel-core"
+    api "com.alibaba.csp:sentinel-web-servlet"
+    api "com.alibaba.csp:sentinel-annotation-aspectj"
+    api "com.alibaba.csp:sentinel-datasource-extension"
+    api "com.alibaba.csp:sentinel-parameter-flow-control"
+}

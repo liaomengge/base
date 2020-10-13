@@ -1,0 +1,26 @@
+package com.github.liaomengge.base_common.helper.retrofit.api;
+
+import java.util.Map;
+
+import lombok.NonNull;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.http.*;
+
+/**
+ * Created by liaomengge on 2019/3/25.
+ */
+public interface RetrofitApi {
+
+    @GET
+    Call<ResponseBody> doGet(@Url String url, @QueryMap @NonNull Map<String, String> param);
+
+    @Headers({"Content-Type:application/json"})
+    @POST
+    Call<ResponseBody> doPost(@Url String url, @Body @NonNull Object param);
+
+    @Headers({"Content-Type:application/x-www-form-urlencoded"})
+    @FormUrlEncoded
+    @POST
+    Call<ResponseBody> doFormPost(@Url String url, @FieldMap @NonNull Map<String, String> param);
+}

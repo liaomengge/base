@@ -4,14 +4,13 @@ apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
 apply from: "${rootProject.projectDir}/gradle/publish-bom.gradle"
 
 def versions = [
-        baseProcessor           : '0.0.1-SNAPSHOT',
-        baseCommonUtils         : '1.1.5-SNAPSHOT',
-        baseCommonMiddleware    : '1.1.5-SNAPSHOT',
-        baseCommonDayu          : '1.1.5-SNAPSHOT',
-        baseCommonCache         : '1.1.5-SNAPSHOT',
-        baseDubboFramework      : '1.2.0-SNAPSHOT',
-        baseSpringBootStarter   : '2.0.2-SNAPSHOT',
-        baseSpringCloudFramework: '2.0.2-SNAPSHOT'
+        baseCommonUtils         : '1.1.6-SNAPSHOT',
+        baseCommonMiddleware    : '1.1.6-SNAPSHOT',
+        baseCommonDayu          : '1.1.6-SNAPSHOT',
+        baseCommonCache         : '1.1.6-SNAPSHOT',
+        baseDubboFramework      : '2.0.3-SNAPSHOT',
+        baseSpringBootStarter   : '2.0.3-SNAPSHOT',
+        baseSpringCloudFramework: '2.0.3-SNAPSHOT'
 ]
 
 dependencyManagement {
@@ -19,38 +18,38 @@ dependencyManagement {
         mavenBom "com.github.liaomengge:base-platform-bom:${rootProject.version}"
     }
     dependencies {
-        dependency "com.github.liaomengge:ly-async-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-base-mybatis-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-cache-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-dayu-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-endpoint-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-framework-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-fastjson-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-health-check-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-graceful-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-logger-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-mail-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-metric-activemq-spring-boot-starter:1.5.x.58-test003-SNAPSHOT"
-        dependency "com.github.liaomengge:ly-metric-druid-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-metric-hikari-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-metric-httpclient-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-metric-redis-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-metric-retrofit-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-metric-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-metric-undertow-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-mongo-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-mq-lock-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-mq-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-mybatis-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-multi-shardingsphere-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-multi-mybatis-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-quartz-lock-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-quartz-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-redis-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-rest-template-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-retrofit-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-swagger-spring-boot-starter:${versions.baseSpringBootStarter}"
-        dependency "com.github.liaomengge:ly-thread-pool-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-async-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-base-mybatis-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-cache-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-dayu-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-endpoint-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-framework-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-fastjson-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-health-check-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-graceful-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-logger-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-mail-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-metric-activemq-spring-boot-starter:1.5.x.58-test003-SNAPSHOT"
+        dependency "com.github.liaomengge:base-metric-druid-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-metric-hikari-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-metric-httpclient-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-metric-redis-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-metric-retrofit-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-metric-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-metric-undertow-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-mongo-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-mq-lock-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-mq-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-mybatis-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-multi-shardingsphere-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-multi-mybatis-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-quartz-lock-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-quartz-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-redis-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-rest-template-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-retrofit-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-swagger-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-thread-pool-spring-boot-starter:${versions.baseSpringBootStarter}"
 
         dependency "com.github.liaomengge:base-dubbo-framework:${versions.baseDubboFramework}"
 
@@ -63,8 +62,6 @@ dependencyManagement {
         dependency "com.github.liaomengge:base-common-middleware:${versions.baseCommonMiddleware}"
 
         dependency "com.github.liaomengge:base-common-utils:${versions.baseCommonUtils}"
-
-        dependency "com.github.liaomengge:base-processor:${versions.baseProcessor}"
     }
     resolutionStrategy {
         cacheChangingModulesFor 0, 'seconds'

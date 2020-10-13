@@ -1,1 +1,1 @@
-org.springframework.context.ApplicationContextInitializer=cn.ly.service.base_framework.initializer.BaseApplicationContextInitializer
+org.springframework.context.ApplicationContextInitializer=com.github.liaomengge.service.base_framework.initializer.BaseApplicationContextInitializer

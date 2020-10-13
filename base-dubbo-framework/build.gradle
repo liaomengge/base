@@ -29,7 +29,7 @@ subprojects {
     apply from: "${rootProject.projectDir}/gradle/spotbug.gradle"
 
     group = 'com.github.liaomengge'
-    version = '1.2.0-SNAPSHOT'
+    version = '2.0.3-SNAPSHOT'
 
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
@@ -59,8 +59,8 @@ subprojects {
     }
 
     ext {
-        baseCommonMiddlewareVersion = '1.1.5-SNAPSHOT'
-        baseCommonUtilsVersion = '1.1.5-SNAPSHOT'
+        baseCommonMiddlewareVersion = '1.1.6-SNAPSHOT'
+        baseCommonUtilsVersion = '1.1.6-SNAPSHOT'
     }
 
     def versions = [

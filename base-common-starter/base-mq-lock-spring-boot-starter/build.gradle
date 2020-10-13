@@ -1,0 +1,3 @@
+dependencies {
+    api(project(":base-mq-spring-boot-starter"))
+}

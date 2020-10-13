@@ -1,0 +1,3 @@
+org.springframework.context.ApplicationContextInitializer=com.github.liaomengge.base_common.eureka.initializer.EurekaApplicationContextInitializer
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.liaomengge.base_common.eureka.EurekaAutoConfiguration

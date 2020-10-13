@@ -1,3 +1,0 @@
-org.springframework.context.ApplicationContextInitializer=cn.ly.base_common.eureka.initializer.EurekaApplicationContextInitializer
-
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.ly.base_common.eureka.EurekaAutoConfiguration

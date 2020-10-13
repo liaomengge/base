@@ -1,4 +1,0 @@
-dependencies {
-    api(project(":ly-redis-spring-boot-starter"))
-    api "com.github.liaomengge:base-common-cache:${baseCacheVersion}"
-}
