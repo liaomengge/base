@@ -4,8 +4,10 @@ import cn.ly.base_common.dayu.custom.annotation.CircuitBreakerResource;
 import cn.ly.base_common.dayu.custom.consts.CircuitBreakerConst;
 import cn.ly.base_common.dayu.custom.helper.CircuitBreakerRedisHelper;
 import cn.ly.base_common.support.exception.CircuitBreakerException;
+import cn.ly.base_common.support.meter._MeterRegistrys;
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.error.LyThrowableUtil;
+import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +21,6 @@ import org.springframework.core.annotation.Order;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/10/30.
@@ -59,7 +60,8 @@ public class CircuitBreakerResourceAspect extends AbstractAspectSupport {
                 if ((LyJdk8DateUtil.getMilliSecondsTime() - latestFailureTime) <= circuitBreakerRedisHelper.getCircuitBreakerConfig().getResetMilliSeconds()) {
                     //open status
                     log.warn("Resource[{}], Custom Circuit Open...", resource);
-                    Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(CircuitBreakerConst.Metric.CIRCUIT_BREAKER_PREFIX + resource).increment());
+                    _MeterRegistrys.counter(meterRegistry,
+                            CircuitBreakerConst.Metric.CIRCUIT_BREAKER_PREFIX + resource).ifPresent(Counter::increment);
                     return super.handleFallback(joinPoint, circuitBreakerResource);
                 }
                 //half open status

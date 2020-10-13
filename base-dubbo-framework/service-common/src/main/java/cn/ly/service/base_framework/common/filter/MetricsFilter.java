@@ -8,8 +8,8 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcException;
 
+import java.time.Duration;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 16/11/9.
@@ -53,8 +53,7 @@ public class MetricsFilter extends AbstractFilter {
                 val.counter(prefix + MetricsConst.REQ_EXE_FAIL, PROTOCOL_TAG, protocol).increment();
                 val.counter(MetricsConst.REQ_ALL + MetricsConst.REQ_EXE_FAIL).increment();
             }
-            val.timer(prefix + MetricsConst.REQ_EXE_TIME, PROTOCOL_TAG, protocol).record(elapsedNanoTime,
-                    TimeUnit.NANOSECONDS);
+            val.timer(prefix + MetricsConst.REQ_EXE_TIME, PROTOCOL_TAG, protocol).record(Duration.ofNanos(elapsedNanoTime));
         });
     }
 

@@ -1,6 +1,7 @@
 package cn.ly.base_common.dayu.sentinel.filter;
 
 import cn.ly.base_common.dayu.consts.DayuConst;
+import cn.ly.base_common.support.meter._MeterRegistrys;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.EntryType;
@@ -13,6 +14,7 @@ import com.alibaba.csp.sentinel.adapter.servlet.config.WebServletConfig;
 import com.alibaba.csp.sentinel.adapter.servlet.util.FilterUtil;
 import com.alibaba.csp.sentinel.context.ContextUtil;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
@@ -26,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import static cn.ly.base_common.support.misc.consts.ToolConst.SPLITTER;
 
@@ -90,7 +91,7 @@ public class SentinelFilter implements Filter, EnvironmentAware {
             log.warn("[Sentinel Filter] Block Exception when Origin: " + origin + " enter fall back uri: " + uriTarget, e);
             WebCallbackManager.getUrlBlockHandler().blocked(httpServletRequest, httpServletResponse, e);
             String finalUriTarget = uriTarget;
-            Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(DayuConst.METRIC_SENTINEL_BLOCKED_PREFIX + finalUriTarget).increment());
+            _MeterRegistrys.counter(meterRegistry, DayuConst.METRIC_SENTINEL_BLOCKED_PREFIX + finalUriTarget).ifPresent(Counter::increment);
         } catch (IOException | ServletException | RuntimeException e2) {
             Tracer.traceEntry(e2, urlEntry);
             throw e2;

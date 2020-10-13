@@ -4,11 +4,13 @@ import cn.ly.base_common.dayu.consts.DayuConst;
 import cn.ly.base_common.dayu.guava.GuavaRateLimitProperties;
 import cn.ly.base_common.dayu.guava.callback.WebCallbackManager;
 import cn.ly.base_common.dayu.guava.domain.FlowRule;
+import cn.ly.base_common.support.meter._MeterRegistrys;
 import cn.ly.base_common.utils.json.LyJacksonUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
 import com.alibaba.csp.sentinel.adapter.servlet.util.FilterUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.util.concurrent.RateLimiter;
+import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -61,7 +63,7 @@ public class GuavaRateLimitHandlerInterceptor extends HandlerInterceptorAdapter 
                 if (!rateLimiter.tryAcquire()) {
                     WebCallbackManager.getUrlRateLimitHandler().blocked(request, response);
                     String finalUriTarget = uriTarget;
-                    Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(DayuConst.METRIC_GUAVA_LIMITED_PREFIX + finalUriTarget).increment());
+                    _MeterRegistrys.counter(meterRegistry, DayuConst.METRIC_GUAVA_LIMITED_PREFIX + finalUriTarget).ifPresent(Counter::increment);
                     return false;
                 }
             }

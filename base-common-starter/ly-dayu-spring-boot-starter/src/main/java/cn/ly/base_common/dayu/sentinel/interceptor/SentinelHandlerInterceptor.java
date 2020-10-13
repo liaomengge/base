@@ -1,6 +1,7 @@
 //package cn.ly.base_common.dayu.sentinel.interceptor;
 //
 //import cn.ly.base_common.dayu.consts.DayuConst;
+//import cn.ly.base_common.support.meter._MeterRegistrys;
 //import cn.ly.base_common.utils.log4j2.LyLogger;
 //import com.alibaba.csp.sentinel.EntryType;
 //import com.alibaba.csp.sentinel.SphU;
@@ -11,6 +12,7 @@
 //import com.alibaba.csp.sentinel.context.ContextUtil;
 //import com.alibaba.csp.sentinel.slots.block.BlockException;
 //import com.alibaba.csp.sentinel.util.StringUtil;
+//import io.micrometer.core.instrument.Counter;
 //import io.micrometer.core.instrument.MeterRegistry;
 //import lombok.AllArgsConstructor;
 //import org.apache.commons.lang3.StringUtils;
@@ -21,7 +23,6 @@
 //
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
-//import java.util.Optional;
 //
 ///**
 // * Created by liaomengge on 2019/8/12.
@@ -37,7 +38,7 @@
 //
 //    @Override
 //    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws
-//    Exception {
+//            Exception {
 //        String origin = "", uriTarget = "";
 //        try {
 //            origin = parseOrigin(request);
@@ -57,8 +58,8 @@
 //                    origin, uriTarget), ex);
 //            WebCallbackManager.getUrlBlockHandler().blocked(request, response, ex);
 //            String finalUriTarget = uriTarget;
-//            Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(DayuConst
-//            .METRIC_SENTINEL_BLOCKED_PREFIX + finalUriTarget).increment());
+//            _MeterRegistrys.counter(meterRegistry, DayuConst.METRIC_SENTINEL_BLOCKED_PREFIX + finalUriTarget)
+//            .ifPresent(Counter::increment);
 //            return false;
 //        }
 //    }

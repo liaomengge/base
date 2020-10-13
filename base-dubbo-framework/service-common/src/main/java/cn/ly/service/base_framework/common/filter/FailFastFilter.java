@@ -1,20 +1,19 @@
 package cn.ly.service.base_framework.common.filter;
 
+import cn.ly.base_common.support.meter._MeterRegistrys;
 import cn.ly.base_common.utils.log4j2.LyLogData;
 import cn.ly.service.base_framework.base.DataResult;
 import cn.ly.service.base_framework.common.consts.MetricsConst;
 import cn.ly.service.base_framework.common.consts.ServiceConst.ResponseStatus.ErrorCodeEnum;
-
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.rpc.*;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
+import io.micrometer.core.instrument.Counter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
-import java.util.Optional;
-
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by liaomengge on 2016/9/19.
@@ -49,7 +48,7 @@ public class FailFastFilter extends AbstractFilter {
         URL url = invoker.getUrl();
         String protocol = url.getProtocol();
         String prefix = super.getMetricsPrefixName() + "." + methodName;
-        Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(prefix + "." + protocol + MetricsConst.FAIL_FAST_EXE_FAIL).increment());
+        _MeterRegistrys.counter(meterRegistry, prefix + MetricsConst.FAIL_FAST_EXE_FAIL, PROTOCOL_TAG, protocol).ifPresent(Counter::increment);
 
         logData.setResult(result.getValue());
         logData.setRestUrl(url.getAbsolutePath());

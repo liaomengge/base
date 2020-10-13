@@ -1,11 +1,12 @@
 package cn.ly.base_common.mq.rabbitmq.monitor;
 
 import cn.ly.base_common.mq.consts.MQConst;
+import cn.ly.base_common.support.meter._MeterRegistrys;
+import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Setter;
 
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 /**
  * Created by liaomengge on 17/2/13.
@@ -17,12 +18,12 @@ public class DefaultMQMonitor {
 
     public void monitorCount(String metricsRabbitmq) {
         final String metricsPrefix = MQConst.RabbitMQ.MONITOR_PREFIX;
-        Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(metricsPrefix + metricsRabbitmq).increment());
+        _MeterRegistrys.counter(meterRegistry, metricsPrefix + metricsRabbitmq).ifPresent(Counter::increment);
     }
 
     public void monitorTime(String metricsActiveMQ, long elapsedNanoTime) {
         final String metricsPrefix = MQConst.RabbitMQ.MONITOR_PREFIX;
-        Optional.ofNullable(meterRegistry).ifPresent(val -> val.timer(metricsPrefix + metricsActiveMQ).record(elapsedNanoTime, TimeUnit.NANOSECONDS));
+        _MeterRegistrys.timer(meterRegistry, metricsPrefix + metricsActiveMQ).ifPresent(val -> val.record(Duration.ofNanos(elapsedNanoTime)));
     }
 
 }

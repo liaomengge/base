@@ -4,15 +4,15 @@ import cn.ly.base_common.dayu.custom.breaker.CircuitBreaker;
 import cn.ly.base_common.dayu.custom.consts.CircuitBreakerConst.Metric;
 import cn.ly.base_common.dayu.custom.domain.CircuitBreakerDomain;
 import cn.ly.base_common.dayu.custom.helper.CircuitBreakerRedisHelper;
+import cn.ly.base_common.support.meter._MeterRegistrys;
 import cn.ly.base_common.utils.date.LyJdk8DateUtil;
 import cn.ly.base_common.utils.error.LyThrowableUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
+import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-
-import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/6/26.
@@ -43,7 +43,7 @@ public class CircuitBreakerHandler {
                 if ((LyJdk8DateUtil.getMilliSecondsTime() - latestFailureTime) <= circuitBreakerRedisHelper.getCircuitBreakerConfig().getResetMilliSeconds()) {
                     //open status
                     log.warn("Resource[{}], Custom Circuit Open...", resource);
-                    Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(Metric.CIRCUIT_BREAKER_PREFIX + resource).increment());
+                    _MeterRegistrys.counter(meterRegistry, Metric.CIRCUIT_BREAKER_PREFIX + resource).ifPresent(Counter::increment);
                     return circuitBreaker.fallback();
                 }
                 //half open status

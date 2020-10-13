@@ -14,9 +14,9 @@ import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 17/3/9.
@@ -67,7 +67,7 @@ public interface Template {
                 } else {
                     val.counter(prefix + ReqMetricsConst.REQ_EXE_FAIL).increment();
                 }
-                val.timer(prefix + ReqMetricsConst.REQ_EXE_TIME).record(elapsedNanoTime, TimeUnit.NANOSECONDS);
+                val.timer(prefix + ReqMetricsConst.REQ_EXE_TIME).record(Duration.ofNanos(elapsedNanoTime));
             });
         }
     }

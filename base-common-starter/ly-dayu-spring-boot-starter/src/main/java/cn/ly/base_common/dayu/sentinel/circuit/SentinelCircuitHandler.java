@@ -1,6 +1,7 @@
 package cn.ly.base_common.dayu.sentinel.circuit;
 
 import cn.ly.base_common.dayu.consts.DayuConst;
+import cn.ly.base_common.support.meter._MeterRegistrys;
 import cn.ly.base_common.utils.error.LyExceptionUtil;
 import cn.ly.base_common.utils.error.LyThrowableUtil;
 import cn.ly.base_common.utils.log4j2.LyLogger;
@@ -10,6 +11,7 @@ import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
+import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -51,10 +53,10 @@ public class SentinelCircuitHandler {
 
     private <R> R handleBlockException(String resource, SentinelCircuitBreaker<R> circuitBreaker, BlockException e) {
         if (e instanceof DegradeException || LyExceptionUtil.unwrap(e) instanceof DegradeException) {
-            Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(DayuConst.METRIC_SENTINEL_FALLBACK_PREFIX + resource).increment());
+            _MeterRegistrys.counter(meterRegistry, DayuConst.METRIC_SENTINEL_FALLBACK_PREFIX + resource).ifPresent(Counter::increment);
             return circuitBreaker.fallback();
         }
-        Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(DayuConst.METRIC_SENTINEL_BLOCKED_PREFIX + resource).increment());
+        _MeterRegistrys.counter(meterRegistry, DayuConst.METRIC_SENTINEL_BLOCKED_PREFIX + resource).ifPresent(Counter::increment);
         return circuitBreaker.block();
     }
 }

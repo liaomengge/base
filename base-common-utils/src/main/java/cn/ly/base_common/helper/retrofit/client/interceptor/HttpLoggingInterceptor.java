@@ -1,6 +1,7 @@
 package cn.ly.base_common.helper.retrofit.client.interceptor;
 
 import cn.ly.base_common.helper.retrofit.consts.RetrofitMetricsConst;
+import cn.ly.base_common.support.meter._MeterRegistrys;
 import cn.ly.base_common.support.misc.Charsets;
 import cn.ly.base_common.utils.error.LyThrowableUtil;
 import cn.ly.base_common.utils.log.LyAlarmLogUtil;
@@ -9,6 +10,7 @@ import cn.ly.base_common.utils.log4j2.LyLogger;
 import cn.ly.base_common.utils.url.LyMoreUrlUtil;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
+import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Setter;
 import okhttp3.*;
@@ -21,8 +23,8 @@ import org.slf4j.Logger;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.nio.charset.Charset;
+import java.time.Duration;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -159,10 +161,10 @@ public class HttpLoggingInterceptor implements Interceptor {
     }
 
     private void statIncrement(String metric) {
-        Optional.ofNullable(meterRegistry).ifPresent(val -> val.counter(metric).increment());
+        _MeterRegistrys.counter(meterRegistry, metric).ifPresent(Counter::increment);
     }
 
     private void statRecord(String metric, long execTime) {
-        Optional.ofNullable(meterRegistry).ifPresent(val -> val.timer(metric).record(execTime, TimeUnit.NANOSECONDS));
+        _MeterRegistrys.timer(meterRegistry, metric).ifPresent(val -> val.record(Duration.ofNanos(execTime)));
     }
 }

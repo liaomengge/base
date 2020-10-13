@@ -8,8 +8,8 @@ import lombok.AllArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.core.annotation.Order;
 
+import java.time.Duration;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 2018/11/22.
@@ -44,7 +44,7 @@ public class MetricsFilter extends AbstractFilter {
                 val.counter(MetricsConst.REQ_ALL + MetricsConst.REQ_EXE_FAIL).increment();
             }
             long elapsedNanoTime = System.nanoTime() - TimeThreadLocalUtil.get();
-            val.timer(prefix + MetricsConst.REQ_EXE_TIME).record(elapsedNanoTime, TimeUnit.NANOSECONDS);
+            val.timer(prefix + MetricsConst.REQ_EXE_TIME).record(Duration.ofNanos(elapsedNanoTime));
         });
     }
 }
