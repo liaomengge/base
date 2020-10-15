@@ -1,11 +1,9 @@
 package com.github.liaomengge.base_common.utils.log;
 
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
-
+import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import lombok.experimental.UtilityClass;
 
 /**
  * 记录指定格式的日志,非统一规范的格式
@@ -33,5 +31,43 @@ public class LyMetricLogUtil {
      */
     public void info(Object object) {
         log.info(LyJsonUtil.toJson4Log(object));
+    }
+
+    /**
+     * 字符串填充形式log
+     *
+     * @param format
+     * @param arguments
+     */
+    public void warn(String format, Object... arguments) {
+        log.warn(String.format(format, arguments));
+    }
+
+    /**
+     * 对象直接log
+     *
+     * @param object
+     */
+    public void warn(Object object) {
+        log.warn(LyJsonUtil.toJson4Log(object));
+    }
+
+    /**
+     * 字符串填充形式log
+     *
+     * @param format
+     * @param arguments
+     */
+    public void error(String format, Object... arguments) {
+        log.error(String.format(format, arguments));
+    }
+
+    /**
+     * 对象直接log
+     *
+     * @param object
+     */
+    public void error(Object object) {
+        log.error(LyJsonUtil.toJson4Log(object));
     }
 }

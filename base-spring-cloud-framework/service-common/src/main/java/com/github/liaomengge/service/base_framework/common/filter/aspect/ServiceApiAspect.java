@@ -12,25 +12,21 @@ import com.github.liaomengge.service.base_framework.base.DataResult;
 import com.github.liaomengge.service.base_framework.common.config.FilterConfig;
 import com.github.liaomengge.service.base_framework.common.filter.*;
 import com.github.liaomengge.service.base_framework.common.filter.chain.FilterChain;
+import com.github.liaomengge.service.base_framework.common.util.ServiceApiLogUtil;
 import com.github.liaomengge.service.base_framework.common.util.TimeThreadLocalUtil;
-import com.google.common.collect.Iterables;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,19 +36,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-
-import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.SPLITTER;
 
 /**
  * Created by liaomengge on 2018/10/23.
  */
 @Aspect
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class ServiceAspect {
+public class ServiceApiAspect {
 
-    private static final Logger log = LyLogger.getInstance(ServiceAspect.class);
+    private static final Logger log = LyLogger.getInstance(ServiceApiAspect.class);
 
     @Getter
     private FilterChain defaultFilterChain;
@@ -66,12 +61,11 @@ public class ServiceAspect {
     @Autowired(required = false)
     private MeterRegistry meterRegistry;
 
-    @Around("target(com.github.liaomengge.service.base_framework.api.BaseFrameworkService) " +
-            "&& execution(public * *(..)) " +
-            "&& !@annotation(com.github.liaomengge.service.base_framework.common.annotation.IgnoreServiceAop)")
+    @Around("target(com.github.liaomengge.service.base_framework.api.BaseFrameworkServiceApi) " +
+            "&& execution(public * *(..)) ")
     public Object proceed(ProceedingJoinPoint joinPoint) throws Throwable {
         TimeThreadLocalUtil.set(System.nanoTime());
-        StringBuilder reqArgsBuilder = buildArgs(joinPoint);
+        StringBuilder reqArgsBuilder = buildRequestLog(joinPoint);
 
         FilterChain filterChain = null;
         try {
@@ -97,49 +91,29 @@ public class ServiceAspect {
         }
     }
 
-    private String getMethodName(ProceedingJoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        return signature.getMethod().getName();
-    }
-
-    private boolean isIgnoreLogArgsMethod(ProceedingJoinPoint joinPoint) {
-        String ignoreArgsMethodName = filterConfig.getLog().getIgnoreArgsMethodName();
-        if (StringUtils.isNotBlank(ignoreArgsMethodName)) {
-            String methodName = getMethodName(joinPoint);
-            Iterable<String> iterable = SPLITTER.split(ignoreArgsMethodName);
-            return Iterables.contains(iterable, methodName);
-        }
-        return false;
-    }
-
-    private boolean isIgnoreLogResultMethod(ProceedingJoinPoint joinPoint) {
-        String ignoreResultMethodName = filterConfig.getLog().getIgnoreResultMethodName();
-        if (StringUtils.isNotBlank(ignoreResultMethodName)) {
-            String methodName = getMethodName(joinPoint);
-            Iterable<String> iterable = SPLITTER.split(ignoreResultMethodName);
-            return Iterables.contains(iterable, methodName);
-        }
-        return false;
-    }
-
-    private StringBuilder buildArgs(ProceedingJoinPoint joinPoint) {
+    private StringBuilder buildRequestLog(ProceedingJoinPoint joinPoint) {
         StringBuilder sBuilder = new StringBuilder();
-        if (isIgnoreLogArgsMethod(joinPoint)) {
+        buildHeaderLog(sBuilder);
+        if (ServiceApiLogUtil.isIgnoreLogArgsMethod(joinPoint, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogArgsMethod(joinPoint)) {
             return sBuilder;
         }
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        Object[] args = joinPoint.getArgs();
-        sBuilder.append("method => " + method.getName());
+        Method method = ServiceApiLogUtil.getMethod(joinPoint);
+        sBuilder.append(", method => " + method.getName());
         sBuilder.append(", args => ");
+        Object[] args = joinPoint.getArgs();
         buildArgsLog(args, sBuilder);
-        ServletRequestAttributes servletRequestAttributes =
-                (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        Optional.ofNullable(servletRequestAttributes).map(ServletRequestAttributes::getRequest).ifPresent(val -> {
+        LyWebUtil.getHttpServletRequest().ifPresent(val -> {
             LyMDCUtil.put(LyMDCUtil.MDC_WEB_REMOTE_IP, LyNetworkUtil.getIpAddress(val));
             LyMDCUtil.put(LyMDCUtil.MDC_WEB_URI, val.getRequestURI());
         });
         return sBuilder;
+    }
+
+    private void buildHeaderLog(StringBuilder sBuilder) {
+        LyWebUtil.getHttpServletRequest().ifPresent(val -> {
+            Map<String, String> headerMap = LyWebUtil.getRequestHeaders(val);
+            sBuilder.append("header => " + LyJsonUtil.toJson4Log(headerMap));
+        });
     }
 
     private void buildArgsLog(Object[] args, StringBuilder sBuilder) {
@@ -164,7 +138,7 @@ public class ServiceAspect {
 
     private void buildResultLog(ProceedingJoinPoint joinPoint, Object retObj, StringBuilder sBuilder) {
         long elapsedNanoTime = System.nanoTime() - TimeThreadLocalUtil.get();
-        if (!isIgnoreLogResultMethod(joinPoint)) {
+        if (!ServiceApiLogUtil.isIgnoreLogResultMethod(joinPoint, filterConfig) && !ServiceApiLogUtil.isIgnoreAopLogResultMethod(joinPoint)) {
             if (retObj instanceof DataResult) {
                 DataResult dataResult = (DataResult) retObj;
                 dataResult.setElapsedNanoSeconds(elapsedNanoTime);

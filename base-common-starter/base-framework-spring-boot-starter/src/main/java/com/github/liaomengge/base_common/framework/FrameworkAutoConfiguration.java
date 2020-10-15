@@ -8,9 +8,9 @@ import com.github.liaomengge.base_common.framework.registry.FrameworkBeanRegistr
 import com.github.liaomengge.base_common.framework.selector.FilterConfiguration;
 import com.github.liaomengge.base_common.support.spring.SpringUtils;
 import com.github.liaomengge.service.base_framework.common.config.FilterConfig;
-import com.github.liaomengge.service.base_framework.common.filter.aspect.ServiceAspect;
+import com.github.liaomengge.service.base_framework.common.filter.aspect.ServiceApiAspect;
 import com.github.liaomengge.service.base_framework.common.filter.chain.FilterChain;
-import com.github.liaomengge.service.base_framework.common.filter.chain.ServiceFilter;
+import com.github.liaomengge.service.base_framework.common.filter.chain.ServiceApiFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -57,15 +57,15 @@ public class FrameworkAutoConfiguration {
     @ConditionalOnMissingBean
     public FilterChain filterChain() {
         FilterChain filterChain = new FilterChain();
-        Map<String, ServiceFilter> serviceFilterMap = applicationContext.getBeansOfType(ServiceFilter.class);
+        Map<String, ServiceApiFilter> serviceFilterMap = applicationContext.getBeansOfType(ServiceApiFilter.class);
         Optional.ofNullable(serviceFilterMap).ifPresent(val -> filterChain.addFilter(val.values().parallelStream().collect(Collectors.toList())));
         return filterChain;
     }
 
-    @Bean("com.github.liaomengge.service.base_framework.common.filter.aspect.ServiceAspect")
+    @Bean("com.github.liaomengge.service.base_framework.common.filter.aspect.ServiceApiAspect")
     @ConditionalOnMissingBean
-    public ServiceAspect serviceAspect(FilterConfig filterConfig, FilterChain filterChain) {
-        ServiceAspect serviceAspect = new ServiceAspect();
+    public ServiceApiAspect serviceApiAspect(FilterConfig filterConfig, FilterChain filterChain) {
+        ServiceApiAspect serviceAspect = new ServiceApiAspect();
         serviceAspect.setFilterConfig(filterConfig);
         serviceAspect.setFilterChain(filterChain);
         return serviceAspect;

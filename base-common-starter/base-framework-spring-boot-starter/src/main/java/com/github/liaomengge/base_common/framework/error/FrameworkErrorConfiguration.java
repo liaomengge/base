@@ -34,13 +34,13 @@ public class FrameworkErrorConfiguration {
         this.serverProperties = serverProperties;
     }
 
-    @Bean
+    @Bean("com.github.liaomengge.service.base_framework.common.controller.GlobalErrorAttributes")
     @ConditionalOnMissingBean(value = ErrorAttributes.class, search = SearchStrategy.CURRENT)
     public GlobalErrorAttributes errorAttributes() {
         return new GlobalErrorAttributes();
     }
 
-    @Bean
+    @Bean("com.github.liaomengge.service.base_framework.common.controller.GlobalErrorController")
     @ConditionalOnMissingBean(value = ErrorController.class, search = SearchStrategy.CURRENT)
     public GlobalErrorController globalErrorController(ErrorAttributes errorAttributes) {
         return new GlobalErrorController(errorAttributes, serverProperties.getError(), objectMapper);

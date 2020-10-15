@@ -15,16 +15,16 @@ import java.util.stream.Collectors;
  * Created by liaomengge on 2018/11/21.
  */
 @Getter
-public class FilterChain implements ServiceFilter {
+public class FilterChain implements ServiceApiFilter {
 
-    public List<ServiceFilter> filters = Lists.newArrayList();
+    public List<ServiceApiFilter> filters = Lists.newArrayList();
     public int pos = 0;
 
     public FilterChain cloneChain() {
         return new FilterChain().addFilter(getFilters());
     }
 
-    public FilterChain addFilter(ServiceFilter filter) {
+    public FilterChain addFilter(ServiceApiFilter filter) {
         if (Objects.isNull(filters)) {
             filters = Lists.newArrayList();
         }
@@ -32,7 +32,7 @@ public class FilterChain implements ServiceFilter {
         return this;
     }
 
-    public FilterChain addFilter(List<ServiceFilter> filterList) {
+    public FilterChain addFilter(List<ServiceApiFilter> filterList) {
         if (Objects.isNull(filters)) {
             filters = Lists.newArrayList();
         }

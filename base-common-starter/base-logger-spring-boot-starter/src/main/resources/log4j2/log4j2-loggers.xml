@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Loggers>
+    <!-- Root Logger -->
+    <Root level="INFO">
+        <AppenderRef ref="STDOUT"/>
+        <AppenderRef ref="SERVICE_INFO_LOG"/>
+        <AppenderRef ref="SERVICE_WARN_LOG"/>
+        <AppenderRef ref="SERVICE_ERROR_LOG"/>
+    </Root>
+
+    <!--=================================================Project===================================================-->
+
+    <AsyncLogger name="com.github.liaomengge.service.base_framework.common.filter" level="INFO" includeLocation="true"
+                 additivity="false">
+        <AppenderRef ref="STDOUT"/>
+        <AppenderRef ref="SERVICE_API_INFO_LOG"/>
+        <AppenderRef ref="SERVICE_API_WARN_LOG"/>
+        <AppenderRef ref="SERVICE_API_ERROR_LOG"/>
+    </AsyncLogger>
+
+    <AsyncLogger name="com.github.liaomengge.base_common.helper.rest.sync" level="INFO" includeLocation="true"
+                 additivity="false">
+        <AppenderRef ref="STDOUT"/>
+        <AppenderRef ref="SERVICE_CLIENT_INFO_LOG"/>
+        <AppenderRef ref="SERVICE_CLIENT_WARN_LOG"/>
+        <AppenderRef ref="SERVICE_CLIENT_ERROR_LOG"/>
+    </AsyncLogger>
+
+    <AsyncLogger name="com.github.liaomengge.base_common.helper.retrofit.client.interceptor" level="INFO" includeLocation="true"
+                 additivity="false">
+        <AppenderRef ref="STDOUT"/>
+        <AppenderRef ref="SERVICE_CLIENT_INFO_LOG"/>
+        <AppenderRef ref="SERVICE_CLIENT_WARN_LOG"/>
+        <AppenderRef ref="SERVICE_CLIENT_ERROR_LOG"/>
+    </AsyncLogger>
+
+    <Logger name="com.github.liaomengge.base_common.utils.log.LyMetricLogUtil" level="INFO" additivity="false">
+        <AppenderRef ref="STDOUT"/>
+        <AppenderRef ref="CUSTOM_INFO_LOG"/>
+        <AppenderRef ref="CUSTOM_WARN_LOG"/>
+        <AppenderRef ref="CUSTOM_ERROR_LOG"/>
+    </Logger>
+</Loggers>

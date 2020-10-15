@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Appenders>
+    <Console name="STDOUT" target="SYSTEM_OUT">
+        <PatternLayout charset="UTF-8" pattern="%d{ABSOLUTE} &lt;%c&gt; %5p [%t]: %m%n"/>
+    </Console>
+
+    <!--============================================Service Appender=================================================-->
+
+    <RollingRandomAccessFile name="SERVICE_INFO_LOG" fileName="${SERVICE_INFO_LOG_NAME}"
+                             filePattern="${SERVICE_INFO_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8">
+            <pattern>${SERVICE_LOG_PATTERN_LAYOUT}</pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+    <RollingRandomAccessFile name="SERVICE_WARN_LOG" fileName="${SERVICE_WARN_LOG_NAME}"
+                             filePattern="${SERVICE_WARN_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8">
+            <pattern>${SERVICE_LOG_PATTERN_LAYOUT}</pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+    <RollingRandomAccessFile name="SERVICE_ERROR_LOG" fileName="${SERVICE_ERROR_LOG_NAME}"
+                             filePattern="${SERVICE_ERROR_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8">
+            <pattern>${SERVICE_LOG_PATTERN_LAYOUT}</pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+    <!--===========================================Service Api Appender==============================================-->
+
+    <RollingRandomAccessFile name="SERVICE_API_INFO_LOG" fileName="${SERVICE_API_INFO_LOG_NAME}"
+                             filePattern="${SERVICE_API_INFO_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8">
+            <pattern>${SERVICE_API_LOG_PATTERN_LAYOUT}</pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+
+    <RollingRandomAccessFile name="SERVICE_API_WARN_LOG" fileName="${SERVICE_API_WARN_LOG_NAME}"
+                             filePattern="${SERVICE_API_WARN_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8">
+            <pattern>${SERVICE_API_LOG_PATTERN_LAYOUT}</pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+    <RollingRandomAccessFile name="SERVICE_API_ERROR_LOG" fileName="${SERVICE_API_ERROR_LOG_NAME}"
+                             filePattern="${SERVICE_API_ERROR_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8">
+            <pattern>${SERVICE_API_LOG_PATTERN_LAYOUT}</pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+    <!--==========================================Service Client Appender============================================-->
+
+    <RollingRandomAccessFile name="SERVICE_CLIENT_INFO_LOG" fileName="${SERVICE_CLIENT_INFO_LOG_NAME}"
+                             filePattern="${SERVICE_CLIENT_INFO_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8">
+            <pattern>${SERVICE_CLIENT_LOG_PATTERN_LAYOUT}</pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+    <RollingRandomAccessFile name="SERVICE_CLIENT_WARN_LOG" fileName="${SERVICE_CLIENT_WARN_LOG_NAME}"
+                             filePattern="${SERVICE_CLIENT_WARN_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8">
+            <pattern>${SERVICE_CLIENT_LOG_PATTERN_LAYOUT}</pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+    <RollingRandomAccessFile name="SERVICE_CLIENT_ERROR_LOG" fileName="${SERVICE_CLIENT_ERROR_LOG_NAME}"
+                             filePattern="${SERVICE_CLIENT_ERROR_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8">
+            <pattern>${SERVICE_CLIENT_LOG_PATTERN_LAYOUT}</pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+    <!--==============================================Custom Appender================================================-->
+
+    <RollingRandomAccessFile name="CUSTOM_INFO_LOG" fileName="${CUSTOM_INFO_LOG_NAME}"
+                             filePattern="${CUSTOM_INFO_LOG_PATTERN}">
+
+        <PatternLayout charset="UTF-8" pattern="%m%n"/>
+
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+    <RollingRandomAccessFile name="CUSTOM_WARN_LOG" fileName="${CUSTOM_WARN_LOG_NAME}"
+                             filePattern="${CUSTOM_WARN_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8" pattern="%m%n"/>
+
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+
+    <RollingRandomAccessFile name="CUSTOM_ERROR_LOG" fileName="${CUSTOM_ERROR_LOG_NAME}"
+                             filePattern="${CUSTOM_ERROR_LOG_PATTERN}">
+        <PatternLayout charset="UTF-8" pattern="%m%n"/>
+
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="${BASE_FILE_SIZE}"/>
+        </Policies>
+        <DefaultRolloverStrategy max="${ROLLING_MAX}"/>
+
+        <Filters>
+            <ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </RollingRandomAccessFile>
+</Appenders>

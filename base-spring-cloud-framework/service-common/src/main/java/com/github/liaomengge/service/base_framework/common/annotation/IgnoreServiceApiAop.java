@@ -8,5 +8,9 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface IgnoreServiceAop {
+public @interface IgnoreServiceApiAop {
+
+    boolean ignoreArgs() default false;
+
+    boolean ignoreResult() default false;
 }

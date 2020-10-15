@@ -32,7 +32,7 @@ public interface Template {
         private MeterRegistry meterRegistry;
 
         @Setter
-        private String projName = "base-application";
+        private String projName = "restTemplate";
 
         public Sync(String projName) {
             this.projName = projName;

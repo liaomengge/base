@@ -5,26 +5,23 @@ import com.github.liaomengge.base_common.support.misc.consts.ToolConst;
 import com.github.liaomengge.base_common.utils.io.LyIOUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-
 import com.google.common.collect.Lists;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.TreeMap;
+import com.google.common.collect.Maps;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.springframework.http.MediaType;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.springframework.http.MediaType;
-
-import lombok.experimental.UtilityClass;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
 
 /**
  * Created by liaomengge on 17/11/7.
@@ -33,6 +30,33 @@ import lombok.experimental.UtilityClass;
 public class LyWebUtil {
 
     public final Logger log = LyLogger.getInstance(Charsets.class);
+
+    public Optional<ServletRequestAttributes> getRequestAttributes() {
+        ServletRequestAttributes requestAttributes =
+                (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return Optional.ofNullable(requestAttributes);
+    }
+
+    public Optional<HttpServletRequest> getHttpServletRequest() {
+        return getRequestAttributes().map(ServletRequestAttributes::getRequest);
+    }
+
+    public Optional<HttpServletResponse> getHttpServletResponse() {
+        return getRequestAttributes().map(ServletRequestAttributes::getResponse);
+    }
+
+    public Map<String, String> getRequestHeaders(HttpServletRequest servletRequest) {
+        Map<String, String> headerMap = Maps.newHashMap();
+        Enumeration<String> headerNames = servletRequest.getHeaderNames();
+        if (Objects.nonNull(headerNames)) {
+            while (headerNames.hasMoreElements()) {
+                String name = headerNames.nextElement();
+                String value = servletRequest.getHeader(name);
+                headerMap.put(name, value);
+            }
+        }
+        return headerMap;
+    }
 
     /**
      * 获取Get/Post请求参数(文件上传除外)

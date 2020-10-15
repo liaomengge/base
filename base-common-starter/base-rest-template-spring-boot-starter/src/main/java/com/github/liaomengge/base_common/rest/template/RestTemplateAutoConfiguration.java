@@ -40,7 +40,6 @@ import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -157,7 +156,8 @@ public class RestTemplateAutoConfiguration {
         messageConverters.add(new ByteArrayHttpMessageConverter());
 
         StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
-        stringHttpMessageConverter.setSupportedMediaTypes(ImmutableList.of(MediaType.valueOf("text/plain;charset=UTF-8")));
+        stringHttpMessageConverter.setSupportedMediaTypes(ImmutableList.of(MediaType.valueOf("text/plain;" +
+                "charset=UTF-8")));
         stringHttpMessageConverter.setWriteAcceptCharset(false);
         messageConverters.add(stringHttpMessageConverter);
 
@@ -174,15 +174,6 @@ public class RestTemplateAutoConfiguration {
             restTemplate.getInterceptors().add(0, sentinelHttpRequestInterceptor);
         }
         return restTemplate;
-    }
-
-    private String trimPrefix(String prefix) {
-        String trimmedPrefix = (StringUtils.hasText(prefix) ? prefix : null);
-        while (trimmedPrefix != null && trimmedPrefix.endsWith(".")) {
-            trimmedPrefix = trimmedPrefix.substring(0, trimmedPrefix.length() - 1);
-        }
-
-        return trimmedPrefix;
     }
 
     @RefreshScope

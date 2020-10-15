@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval = "3600" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+    <Properties>
+
+        <Property name="BASE_FILE_SIZE">200M</Property>
+        <Property name="ROLLING_MAX">20</Property>
+
+        <Property name="APPLICATION_NAME">${bundle:application:spring.application.name}</Property>
+        <Property name="LOG_FILE_PATH">${sys:user.dir:-/opt}/logs/${APPLICATION_NAME}</Property>
+
+        <!--==========================================Service Property==============================================-->
+
+        <Property name="SERVICE_LOG_PATTERN_LAYOUT">{"time":"%d", "level":"%-5p","thread":"%t","data":"%m"}%n</Property>
+
+        <Property name="SERVICE_INFO_LOG_NAME">${LOG_FILE_PATH}/service_info.log</Property>
+        <Property name="SERVICE_INFO_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_info_%d{yyyy-MM-dd}_%i.log.gz</Property>
+
+        <Property name="SERVICE_WARN_LOG_NAME">${LOG_FILE_PATH}/service_warn.log</Property>
+        <Property name="SERVICE_WARN_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_warn_%d{yyyy-MM-dd}_%i.log .gz</Property>
+
+        <Property name="SERVICE_ERROR_LOG_NAME">${LOG_FILE_PATH}/service_error.log</Property>
+        <Property name="SERVICE_ERROR_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_error_%d{yyyy-MM-dd}_%i.log .gz</Property>
+
+        <!--=========================================Service Api Property============================================-->
+
+        <Property name="SERVICE_API_LOG_PATTERN_LAYOUT">{"time":"%d", "level":"%-5p","thread":"%t","data":"%m","elapsedMilliseconds":%X{MDC_WEB_ELAPSED_TIME},"remoteIp":"%X{MDC_WEB_REMOTE_IP}","uri":"%X{MDC_WEB_URI}"}%n</Property>
+
+        <Property name="SERVICE_API_INFO_LOG_NAME">${LOG_FILE_PATH}/service_api_info.log</Property>
+        <Property name="SERVICE_API_INFO_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_api_info_%d{yyyy-MM-dd}_%i.log.gz</Property>
+
+        <Property name="SERVICE_API_WARN_LOG_NAME">${LOG_FILE_PATH}/service_api_warn.log</Property>
+        <Property name="SERVICE_API_WARN_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_api_warn_%d{yyyy-MM-dd}_%i.log.gz</Property>
+
+        <Property name="SERVICE_API_ERROR_LOG_NAME">${LOG_FILE_PATH}/service_api_error.log</Property>
+        <Property name="SERVICE_API_ERROR_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_api_error_%d{yyyy-MM-dd}_%i.log.gz</Property>
+
+        <!--=========================================Service Client Property=========================================-->
+
+        <Property name="SERVICE_CLIENT_LOG_PATTERN_LAYOUT">{"time":"%d", "level":"%-5p","thread":"%t","data":"%m","elapsedMilliseconds":%X{MDC_THIRD_ELAPSED_TIME}}%n</Property>
+
+        <Property name="SERVICE_CLIENT_INFO_LOG_NAME">${LOG_FILE_PATH}/service_client_info.log</Property>
+        <Property name="SERVICE_CLIENT_INFO_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_client_info_%d{yyyy-MM-dd}_%i.log.gz</Property>
+
+        <Property name="SERVICE_CLIENT_WARN_LOG_NAME">${LOG_FILE_PATH}/service_client_warn.log</Property>
+        <Property name="SERVICE_CLIENT_WARN_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_client_warn_%d{yyyy-MM-dd}_%i.log.gz</Property>
+
+        <Property name="SERVICE_CLIENT_ERROR_LOG_NAME">${LOG_FILE_PATH}/service_client_error.log</Property>
+        <Property name="SERVICE_CLIENT_ERROR_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_client_error_%d{yyyy-MM-dd}_%i.log.gz</Property>
+
+        <!--============================================Custom Property==============================================-->
+
+        <Property name="CUSTOM_INFO_LOG_NAME">${LOG_FILE_PATH}/custom_info.log</Property>
+        <Property name="CUSTOM_INFO_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/custom_info_%d{yyyy-MM-dd}_%i.log.gz</Property>
+
+        <Property name="CUSTOM_WARN_LOG_NAME">${LOG_FILE_PATH}/custom_warn.log</Property>
+        <Property name="CUSTOM_WARN_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/custom_warn_%d{yyyy-MM-dd}_%i.log.gz</Property>
+
+        <Property name="CUSTOM_ERROR_LOG_NAME">${LOG_FILE_PATH}/custom_error.log</Property>
+        <Property name="CUSTOM_ERROR_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/custom_error_%d{yyyy-MM-dd}_%i.log.gz</Property>
+    </Properties>
+
+    <xi:include href="log4j2/log4j2-appenders.xml"/>
+    <xi:include href="log4j2/log4j2-loggers.xml"/>
+
+</Configuration>
