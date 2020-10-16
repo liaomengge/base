@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 16/11/9.
@@ -60,13 +61,14 @@ public class ServiceFilter extends AbstractFilter {
 
             long endTime = System.nanoTime();
             long elapsedNanoTime = endTime - startTime;
-            logData.setElapsedMilliseconds(elapsedNanoTime);
-            LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME, String.valueOf(elapsedNanoTime));
+            logData.setElapsedMilliseconds(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime));
+            LyMDCUtil.put(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME,
+                    String.valueOf(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime)));
 
             boolean hasException = false;
             if (Objects.isNull(result.getValue())) { //无返回,通常是发生了异常,被dubbo捕获了
                 DataResult<String> nullResult = new DataResult<>(false);
-                nullResult.setElapsedMilliseconds(elapsedNanoTime);
+                nullResult.setElapsedMilliseconds(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime));
                 if (result instanceof RpcResult) {
                     RpcResult rpcResult = (RpcResult) result;
                     rpcResult.setValue(nullResult);
@@ -105,7 +107,7 @@ public class ServiceFilter extends AbstractFilter {
 
             if (result.getValue() instanceof DataResult) {
                 DataResult dt = (DataResult) result.getValue();
-                dt.setElapsedMilliseconds(elapsedNanoTime);
+                dt.setElapsedMilliseconds(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime));
                 if (!dt.isSuccess()) {
                     hasException = true;
                 }
@@ -129,10 +131,11 @@ public class ServiceFilter extends AbstractFilter {
 
             long endTime = System.nanoTime();
             long elapsedNanoTime = endTime - startTime;
-            LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME, String.valueOf(elapsedNanoTime));
+            LyMDCUtil.put(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME,
+                    String.valueOf(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime)));
 
-            logData.setElapsedMilliseconds(elapsedNanoTime);
-            dataResult.setElapsedMilliseconds(elapsedNanoTime);
+            logData.setElapsedMilliseconds(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime));
+            dataResult.setElapsedMilliseconds(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime));
 
             log.error(logData);
 
@@ -145,7 +148,7 @@ public class ServiceFilter extends AbstractFilter {
             LyTraceLogUtil.clearTrace();
 
             //6. clean mdc
-            LyMDCUtil.remove(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME);
+            LyMDCUtil.remove(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME);
         }
 
     }
@@ -207,7 +210,8 @@ public class ServiceFilter extends AbstractFilter {
         Class<?>[] parameterTypes = invocation.getParameterTypes();
         if (parameterTypes != null && parameterTypes.length > 0) {
             if (MultipartFormDataInput.class.isAssignableFrom(parameterTypes[0])) {
-                MultipartFormDataInputImpl multipartFormDataInput = (MultipartFormDataInputImpl) invocation.getArguments()[0];
+                MultipartFormDataInputImpl multipartFormDataInput =
+                        (MultipartFormDataInputImpl) invocation.getArguments()[0];
                 Map<String, List<InputPart>> inputPartMap = multipartFormDataInput.getFormDataMap();
                 inputPartMap.entrySet().stream().forEach(entry -> {
                     List<InputPart> inputPartList = entry.getValue();

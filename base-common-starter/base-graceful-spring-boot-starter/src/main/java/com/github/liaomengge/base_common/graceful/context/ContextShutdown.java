@@ -78,8 +78,7 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
                 for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
                     try {
                         if (taskExecutor.getThreadPoolExecutor().awaitTermination(Math.min(remaining,
-                                GracefulConst.CHECK_INTERVAL),
-                                TimeUnit.SECONDS)) {
+                                GracefulConst.CHECK_INTERVAL), TimeUnit.SECONDS)) {
                             break;
                         }
                     } catch (InterruptedException e) {
@@ -104,8 +103,7 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
                 for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
                     try {
                         if (taskScheduler.getScheduledThreadPoolExecutor().awaitTermination(Math.min(remaining,
-                                GracefulConst.CHECK_INTERVAL),
-                                TimeUnit.SECONDS)) {
+                                GracefulConst.CHECK_INTERVAL), TimeUnit.SECONDS)) {
                             break;
                         }
                     } catch (InterruptedException e) {

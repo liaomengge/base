@@ -28,6 +28,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 针对tk mybatis 3.2.0以上
@@ -35,8 +36,10 @@ import java.util.Properties;
  * Created by liaomengge on 17/10/15.
  */
 @Intercepts({
-        @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
-        @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class}),
+        @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class,
+                RowBounds.class, ResultHandler.class}),
+        @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class,
+                RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class}),
         @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})}
 )
 public class SqlInterceptor implements Interceptor {
@@ -165,7 +168,8 @@ public class SqlInterceptor implements Interceptor {
      * @param costNanoTime
      */
     private void formatSqlLog(SqlCommandType sqlCommandType, String sqlId, String sql, long costNanoTime, Object obj) {
-        String sqlLog = "Mapper Method ===> [" + sqlId + "], " + sql + ", " + "Spend Time ===> " + costNanoTime + " ns";
+        String sqlLog =
+                "Mapper Method ===> [" + sqlId + "], " + sql + ", " + "Spend Time ===> " + TimeUnit.NANOSECONDS.toMillis(costNanoTime) + "ms";
         if (sqlCommandType == SqlCommandType.UPDATE || sqlCommandType == SqlCommandType.INSERT
                 || sqlCommandType == SqlCommandType.DELETE) {
             sqlLog += ", Affect Count ===> " + LyMoreNumberUtil.toInt(LyStringUtil.getValue(obj));

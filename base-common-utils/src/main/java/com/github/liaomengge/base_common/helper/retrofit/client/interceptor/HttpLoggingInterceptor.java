@@ -61,7 +61,7 @@ public class HttpLoggingInterceptor implements Interceptor {
                 LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
             }
             tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
-            LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME, String.valueOf(tookMs));
+            LyMDCUtil.put(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME, String.valueOf(tookMs));
             if (isIgnoreLogMethod(request)) {
                 log.warn("请求路径 ==> [{}], 请求异常 ===> [{}], 耗时[{}]ms",
                         buildReqUrl(request), LyThrowableUtil.getStackTrace(t), tookMs);
@@ -73,16 +73,16 @@ public class HttpLoggingInterceptor implements Interceptor {
         } finally {
             try {
                 tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
-                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME, String.valueOf(tookMs));
-                doFinally(request, response, tookMs);
+                LyMDCUtil.put(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME, String.valueOf(tookMs));
+                doFinally(request, response, System.nanoTime() - startNs);
             } finally {
-                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME);
             }
         }
         return response;
     }
 
-    private void doFinally(Request request, Response response, long tookMs) throws IOException {
+    private void doFinally(Request request, Response response, long execTime) throws IOException {
         String reqUrl = buildReqUrl(request);
         String prefix = buildMetricsPrefixName(reqUrl);
 
@@ -103,25 +103,25 @@ public class HttpLoggingInterceptor implements Interceptor {
                 }
 
                 if (isIgnoreLogMethod(request)) {
-                    log.info("请求路径 ==> [{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl, respStr, tookMs);
+                    log.info("请求路径 ==> [{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl, respStr, execTime);
                 } else {
                     log.info("请求路径 ==> [{}], 请求参数 ==> [{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl, reqStr,
-                            respStr, tookMs);
+                            respStr, execTime);
                 }
                 statIncrement(prefix + RetrofitMetricsConst.REQ_EXE_SUC);
             } else {
                 if (isIgnoreLogMethod(request)) {
                     log.warn("请求路径 ==> [{}], 错误码[{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl,
-                            response.code(), response.message(), tookMs);
+                            response.code(), response.message(), execTime);
                 } else {
                     log.warn("请求路径 ==> [{}], 请求参数 ==> [{}], 错误码[{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl,
-                            reqStr, response.code(), response.message(), tookMs);
+                            reqStr, response.code(), response.message(), execTime);
                 }
                 statIncrement(prefix + RetrofitMetricsConst.REQ_EXE_FAIL);
             }
         }
 
-        statRecord(prefix + RetrofitMetricsConst.REQ_EXE_TIME, tookMs);
+        statRecord(prefix + RetrofitMetricsConst.REQ_EXE_TIME, execTime);
     }
 
     private String buildMetricsPrefixName(String url) {

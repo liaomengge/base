@@ -58,13 +58,13 @@ public class DataResult<T> implements Serializable {
         this.data = data;
     }
 
-    public DataResult(String sysCode, String sysMsg, long elapsedNanoSeconds) {
+    public DataResult(String sysCode, String sysMsg, long elapsedMilliSeconds) {
         this(sysCode, sysMsg);
-        this.elapsedNanoSeconds = elapsedNanoSeconds;
+        this.elapsedMilliSeconds = elapsedMilliSeconds;
     }
 
-    public DataResult(String sysCode, String sysMsg, long elapsedNanoSeconds, T data) {
-        this(sysCode, sysMsg, elapsedNanoSeconds);
+    public DataResult(String sysCode, String sysMsg, long elapsedMilliSeconds, T data) {
+        this(sysCode, sysMsg, elapsedMilliSeconds);
         this.data = data;
     }
 
@@ -150,9 +150,9 @@ public class DataResult<T> implements Serializable {
     private String sysException = "";
 
     /**
-     * 处理耗时(纳秒)
+     * 处理耗时(秒)
      */
-    private long elapsedNanoSeconds;
+    private long elapsedMilliSeconds;
 
     @Override
     public String toString() {

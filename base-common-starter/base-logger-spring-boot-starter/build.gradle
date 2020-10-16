@@ -1,2 +1,4 @@
 dependencies {
+    api 'org.springframework.boot:spring-boot-starter-log4j2'
+    api "org.apache.logging.log4j:log4j-spring-cloud-config-client"
 }

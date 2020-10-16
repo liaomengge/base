@@ -39,6 +39,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 2018/10/23.
@@ -85,9 +86,9 @@ public class ServiceApiAspect {
 
             LyTraceLogUtil.clearTrace();
 
-            LyMDCUtil.remove(LyMDCUtil.MDC_WEB_REMOTE_IP);
-            LyMDCUtil.remove(LyMDCUtil.MDC_WEB_URI);
-            LyMDCUtil.remove(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME);
+            LyMDCUtil.remove(LyMDCUtil.MDC_API_REMOTE_IP);
+            LyMDCUtil.remove(LyMDCUtil.MDC_API_URI);
+            LyMDCUtil.remove(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME);
         }
     }
 
@@ -103,8 +104,8 @@ public class ServiceApiAspect {
         Object[] args = joinPoint.getArgs();
         buildArgsLog(args, sBuilder);
         LyWebUtil.getHttpServletRequest().ifPresent(val -> {
-            LyMDCUtil.put(LyMDCUtil.MDC_WEB_REMOTE_IP, LyNetworkUtil.getIpAddress(val));
-            LyMDCUtil.put(LyMDCUtil.MDC_WEB_URI, val.getRequestURI());
+            LyMDCUtil.put(LyMDCUtil.MDC_API_REMOTE_IP, LyNetworkUtil.getIpAddress(val));
+            LyMDCUtil.put(LyMDCUtil.MDC_API_URI, val.getRequestURI());
         });
         return sBuilder;
     }
@@ -141,7 +142,7 @@ public class ServiceApiAspect {
         if (!ServiceApiLogUtil.isIgnoreLogResultMethod(joinPoint, filterConfig) && !ServiceApiLogUtil.isIgnoreAopLogResultMethod(joinPoint)) {
             if (retObj instanceof DataResult) {
                 DataResult dataResult = (DataResult) retObj;
-                dataResult.setElapsedNanoSeconds(elapsedNanoTime);
+                dataResult.setElapsedMilliSeconds(elapsedNanoTime);
                 sBuilder.append(" result => " + LyJsonUtil.toJson4Log(dataResult));
             } else if (retObj instanceof String) {
                 sBuilder.append(" result => " + retObj);
@@ -149,14 +150,16 @@ public class ServiceApiAspect {
                 sBuilder.append(" result => " + LyJsonUtil.toJson4Log(retObj));
             }
         }
-        LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME, String.valueOf(elapsedNanoTime));
+        LyMDCUtil.put(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME,
+                String.valueOf(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime)));
         log.info("请求响应日志: {}", sBuilder.toString());
     }
 
     private void buildExceptionResultLog(Exception e, StringBuilder sBuilder) {
         long elapsedNanoTime = System.nanoTime() - TimeThreadLocalUtil.get();
         sBuilder.append(" exception result => " + LyThrowableUtil.getStackTrace(e));
-        LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME, String.valueOf(elapsedNanoTime));
+        LyMDCUtil.put(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME,
+                String.valueOf(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime)));
         log.error("请求响应日志: {}", sBuilder.toString());
     }
 
@@ -175,7 +178,7 @@ public class ServiceApiAspect {
             defaultFilterChain.addFilter(filterChain.getFilters());
         }
         defaultFilterChain.sortFilters();
-        LyMDCUtil.put(LyMDCUtil.MDC_WEB_ELAPSED_NANO_TIME, NumberUtils.INTEGER_ZERO.toString());
+        LyMDCUtil.put(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME, NumberUtils.INTEGER_ZERO.toString());
         log.info("sort filter chain ===> {}", defaultFilterChain.printFilters());
     }
 }

@@ -3,6 +3,8 @@ package com.github.liaomengge.base_common.framework.configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -14,6 +16,7 @@ import org.springframework.web.filter.CorsFilter;
 public class FrameworkCorsConfiguration {
 
     @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     @ConditionalOnMissingBean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -26,7 +29,12 @@ public class FrameworkCorsConfiguration {
         //放行哪些原始域(头部信息)
         corsConfiguration.addAllowedHeader("*");
         //暴露哪些头部信息（因为跨域访问默认不能获取全部头部信息）
-        corsConfiguration.addExposedHeader("*");
+        corsConfiguration.addExposedHeader("Content-Type");
+        corsConfiguration.addExposedHeader("X-Requested-With");
+        corsConfiguration.addExposedHeader("Accept");
+        corsConfiguration.addExposedHeader("Origin");
+        corsConfiguration.addExposedHeader("Access-Control-Request-Method");
+        corsConfiguration.addExposedHeader("Access-Control-Request-Headers");
 
         UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
         configSource.registerCorsConfiguration("/**", corsConfiguration);

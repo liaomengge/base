@@ -9,11 +9,10 @@ import org.slf4j.MDC;
 @UtilityClass
 public class LyMDCUtil {
 
-    public final String MDC_WEB_REMOTE_IP = "MDC_WEB_REMOTE_IP";
-    public final String MDC_WEB_URI = "MDC_WEB_URI";
-
-    public final String MDC_WEB_ELAPSED_NANO_TIME = "MDC_WEB_ELAPSED_NANO_TIME";
-    public final String MDC_THIRD_ELAPSED_NANO_TIME = "MDC_THIRD_ELAPSED_NANO_TIME";
+    public final String MDC_API_URI = "MDC_API_URI";
+    public final String MDC_API_REMOTE_IP = "MDC_API_REMOTE_IP";
+    public final String MDC_API_ELAPSED_MILLI_TIME = "MDC_API_ELAPSED_MILLI_TIME";
+    public final String MDC_CLIENT_ELAPSED_MILLI_TIME = "MDC_CLIENT_ELAPSED_MILLI_TIME";
 
     public String get(String key) {
         return MDC.get(key);
@@ -24,7 +23,7 @@ public class LyMDCUtil {
     }
 
     public void put(String val) {
-        put(MDC_WEB_ELAPSED_NANO_TIME, val);
+        put(MDC_API_ELAPSED_MILLI_TIME, val);
     }
 
     public void remove(String key) {
@@ -32,7 +31,7 @@ public class LyMDCUtil {
     }
 
     public void remove() {
-        remove(MDC_WEB_ELAPSED_NANO_TIME);
+        remove(MDC_API_ELAPSED_MILLI_TIME);
     }
 
     public void clear() {

@@ -1,5 +1,7 @@
 package com.github.liaomengge.base_common.helper.rest.sync;
 
+import com.alibaba.csp.sentinel.slots.block.AbstractRule;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.github.liaomengge.base_common.helper.rest.Template;
 import com.github.liaomengge.base_common.helper.rest.data.BaseRequest;
 import com.github.liaomengge.base_common.utils.error.LyExceptionUtil;
@@ -7,8 +9,6 @@ import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import com.github.liaomengge.base_common.utils.log.LyAlarmLogUtil;
 import com.github.liaomengge.base_common.utils.log.LyMDCUtil;
 import com.github.liaomengge.base_common.utils.url.LyUrlUtil;
-import com.alibaba.csp.sentinel.slots.block.AbstractRule;
-import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.collections4.MapUtils;
@@ -24,6 +24,7 @@ import java.io.InterruptedIOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 17/3/9.
@@ -47,7 +48,7 @@ public class SyncClientTemplate extends Template.Sync {
 
     @Override
     public <T> ResponseEntity<T> getForEntity(BaseRequest<Map<String, String>> baseRequest, Class<T> responseType) {
-        long startTime = System.nanoTime();
+        long startTime = System.nanoTime(), tookMs;
         boolean isSuccess = true;
         String prefix = super.getMetricsPrefixName(baseRequest);
 
@@ -65,22 +66,23 @@ public class SyncClientTemplate extends Template.Sync {
         } finally {
             try {
                 long endTime = System.nanoTime();
-                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME, String.valueOf(endTime - startTime));
+                tookMs = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
+                LyMDCUtil.put(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME, String.valueOf(tookMs));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
-                                Objects.isNull(responseEntity) ? null :
-                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
+                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url,
+                                TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
+                                Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
                     } else {
                         log.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
-                                LyJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
-                                Objects.isNull(responseEntity) ? null :
-                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
+                                LyJsonUtil.toJson4Log(baseRequest.getData()), url,
+                                TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
+                                Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
                     }
                 }
                 super.statRestExec(prefix, isSuccess, (endTime - startTime));
             } finally {
-                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME);
             }
         }
         return responseEntity;
@@ -89,7 +91,7 @@ public class SyncClientTemplate extends Template.Sync {
     @Override
     public <T> ResponseEntity<T> postFormForEntity(BaseRequest<Map<String, String>> baseRequest,
                                                    Class<T> responseType) {
-        long startTime = System.nanoTime();
+        long startTime = System.nanoTime(), tookMs;
         boolean isSuccess = true;
         String prefix = super.getMetricsPrefixName(baseRequest);
         String url = baseRequest.getUrl();
@@ -110,22 +112,23 @@ public class SyncClientTemplate extends Template.Sync {
         } finally {
             try {
                 long endTime = System.nanoTime();
-                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME, String.valueOf(endTime - startTime));
+                tookMs = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
+                LyMDCUtil.put(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME, String.valueOf(tookMs));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
-                                Objects.isNull(responseEntity) ? null :
-                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
+                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url,
+                                TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
+                                Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
                     } else {
                         log.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
-                                LyJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
-                                Objects.isNull(responseEntity) ? null :
-                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
+                                LyJsonUtil.toJson4Log(baseRequest.getData()), url,
+                                TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
+                                Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
                     }
                 }
                 super.statRestExec(prefix, isSuccess, (endTime - startTime));
             } finally {
-                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME);
             }
         }
         return responseEntity;
@@ -133,7 +136,7 @@ public class SyncClientTemplate extends Template.Sync {
 
     @Override
     public <T> ResponseEntity<T> postForEntity(BaseRequest<?> baseRequest, Class<T> responseType) {
-        long startTime = System.nanoTime();
+        long startTime = System.nanoTime(), tookMs;
         boolean isSuccess = true;
         String prefix = super.getMetricsPrefixName(baseRequest);
 
@@ -148,22 +151,23 @@ public class SyncClientTemplate extends Template.Sync {
         } finally {
             try {
                 long endTime = System.nanoTime();
-                LyMDCUtil.put(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME, String.valueOf(endTime - startTime));
+                tookMs = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
+                LyMDCUtil.put(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME, String.valueOf(tookMs));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url, (endTime - startTime),
-                                Objects.isNull(responseEntity) ? null :
-                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
+                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url,
+                                TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
+                                Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
                     } else {
                         log.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
-                                LyJsonUtil.toJson4Log(baseRequest.getData()), url, (endTime - startTime),
-                                Objects.isNull(responseEntity) ? null :
-                                        LyJsonUtil.toJson4Log(responseEntity.getBody()));
+                                LyJsonUtil.toJson4Log(baseRequest.getData()), url,
+                                TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
+                                Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
                     }
                 }
                 super.statRestExec(prefix, isSuccess, (endTime - startTime));
             } finally {
-                LyMDCUtil.remove(LyMDCUtil.MDC_THIRD_ELAPSED_NANO_TIME);
+                LyMDCUtil.remove(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME);
             }
         }
         return responseEntity;
