@@ -28,7 +28,7 @@ dependencies {
     api "org.apache.httpcomponents:httpcore"
 
     api "org.hibernate.validator:hibernate-validator"
-    
+
     api "io.micrometer:micrometer-core"
 
     api "redis.clients:jedis"
@@ -94,8 +94,6 @@ dependencies {
     api "com.alibaba:druid"
 
     api "org.redisson:redisson"
-
-    api "it.sauronsoftware.ftp4j:ftp4j"
 
     api("com.squareup.retrofit2:retrofit") {
         exclude(group: 'com.squareup.okhttp3', module: 'okhttp')

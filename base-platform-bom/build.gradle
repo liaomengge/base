@@ -89,7 +89,6 @@ dependencyManagement {
 
         dependency "de.ruedigermoeller:fst:2.57"
         dependency "net.sourceforge.jexcelapi:jxl:2.6.12"
-        dependency "it.sauronsoftware.ftp4j:ftp4j:1.7.2-fixed"
         dependency "com.dyuproject.protostuff:protostuff-core:1.1.6"
         dependency "com.dyuproject.protostuff:protostuff-runtime:1.1.6"
 
