@@ -43,6 +43,8 @@ public class BaseWebServerInitializedListener {
             StringBuilder sBuilder = new StringBuilder(16);
             sBuilder.append("\n");
             sBuilder.append("---------------------------------------------------------------------------").append("\n");
+            //management.info.build.enabled=true
+            //management.endpoint.info.enabled=true
             String infoUrl = HTTP_PREFIX + getIpAndPort(event) + serverContextPath + endpointBasePath + "/info";
             TableElement tableElement = PrintLayoutUtil.buildTableStyle();
             PrintLayoutUtil.addRowElement(tableElement, "APPLICATION NAME: ", applicationName);

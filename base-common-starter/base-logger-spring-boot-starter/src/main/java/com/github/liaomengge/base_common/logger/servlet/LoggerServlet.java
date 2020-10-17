@@ -1,8 +1,11 @@
 package com.github.liaomengge.base_common.logger.servlet;
 
 import com.github.liaomengge.base_common.logger.LoggerProperties;
+import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import lombok.Data;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.logging.LoggersEndpoint;
 import org.springframework.boot.logging.LogLevel;
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by liaomengge on 2019/1/22.
@@ -51,23 +55,16 @@ public class LoggerServlet extends HttpServlet implements EnvironmentAware {
             return;
         }
 
-        LogLevel logLevel;
-        try {
-            logLevel = this.getLogLevel(loggerProperties.getLevel());
-        } catch (Exception e) {
-            respBody.setSuccess(false);
-            respBody.setMsg(e.getMessage());
+        Map<String, String> configureLevel = loggerProperties.getConfigureLevel();
+        if (MapUtils.isNotEmpty(configureLevel)) {
+            configureLevel.forEach((key, val) -> loggersEndpoint.configureLogLevel(key,
+                    LogLevel.valueOf(StringUtils.upperCase(val))));
+            respBody.setMsg("设置configureLevel[" + LyJacksonUtil.bean2Json(configureLevel) + "]成功");
             LyWebUtil.renderJson(resp, respBody);
             return;
         }
-
-        try {
-            loggersEndpoint.configureLogLevel(loggerProperties.getPkg(), LogLevel.valueOf(logLevel.name()));
-            respBody.setMsg("设置package[" + loggerProperties.getPkg() + "],级别[" + loggerProperties.getLevel() + "]成功");
-        } catch (Exception e) {
-            respBody.setSuccess(false);
-            respBody.setMsg("设置package[" + loggerProperties.getPkg() + "],级别[" + loggerProperties.getLevel() + "]失败");
-        }
+        respBody.setSuccess(false);
+        respBody.setMsg("configureLevel为空,设置失败");
         LyWebUtil.renderJson(resp, respBody);
     }
 

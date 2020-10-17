@@ -10,6 +10,8 @@ import java.lang.annotation.*;
 @Documented
 public @interface IgnoreServiceApiAop {
 
+    boolean ignoreHeader() default true;
+
     boolean ignoreArgs() default false;
 
     boolean ignoreResult() default false;

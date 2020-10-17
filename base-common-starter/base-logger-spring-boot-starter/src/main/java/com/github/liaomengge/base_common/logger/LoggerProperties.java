@@ -1,10 +1,9 @@
 package com.github.liaomengge.base_common.logger;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.logging.LogLevel;
-import org.springframework.boot.logging.LoggingSystem;
-
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.util.Map;
 
 /**
  * Created by liaomengge on 2019/1/21.
@@ -14,6 +13,5 @@ import lombok.Data;
 public class LoggerProperties {
 
     private String contextPath = "/log";
-    private String pkg = LoggingSystem.ROOT_LOGGER_NAME;
-    private String level = LogLevel.INFO.name();
+    private Map<String, String> configureLevel;
 }

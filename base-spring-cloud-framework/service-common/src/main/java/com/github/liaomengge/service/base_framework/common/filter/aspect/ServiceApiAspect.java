@@ -94,15 +94,12 @@ public class ServiceApiAspect {
 
     private StringBuilder buildRequestLog(ProceedingJoinPoint joinPoint) {
         StringBuilder sBuilder = new StringBuilder();
-        buildHeaderLog(sBuilder);
-        if (ServiceApiLogUtil.isIgnoreLogArgsMethod(joinPoint, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogArgsMethod(joinPoint)) {
-            return sBuilder;
-        }
+        buildHeaderLog(joinPoint, sBuilder);
+
         Method method = ServiceApiLogUtil.getMethod(joinPoint);
         sBuilder.append(", method => " + method.getName());
         sBuilder.append(", args => ");
-        Object[] args = joinPoint.getArgs();
-        buildArgsLog(args, sBuilder);
+        buildArgsLog(joinPoint, sBuilder);
         LyWebUtil.getHttpServletRequest().ifPresent(val -> {
             LyMDCUtil.put(LyMDCUtil.MDC_API_REMOTE_IP, LyNetworkUtil.getIpAddress(val));
             LyMDCUtil.put(LyMDCUtil.MDC_API_URI, val.getRequestURI());
@@ -110,14 +107,21 @@ public class ServiceApiAspect {
         return sBuilder;
     }
 
-    private void buildHeaderLog(StringBuilder sBuilder) {
+    private void buildHeaderLog(ProceedingJoinPoint joinPoint, StringBuilder sBuilder) {
+        if (ServiceApiLogUtil.isIgnoreLogHeaderMethod(joinPoint, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogHeaderMethod(joinPoint)) {
+            return;
+        }
         LyWebUtil.getHttpServletRequest().ifPresent(val -> {
             Map<String, String> headerMap = LyWebUtil.getRequestHeaders(val);
             sBuilder.append("header => " + LyJsonUtil.toJson4Log(headerMap));
         });
     }
 
-    private void buildArgsLog(Object[] args, StringBuilder sBuilder) {
+    private void buildArgsLog(ProceedingJoinPoint joinPoint, StringBuilder sBuilder) {
+        if (ServiceApiLogUtil.isIgnoreLogArgsMethod(joinPoint, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogArgsMethod(joinPoint)) {
+            return;
+        }
+        Object[] args = joinPoint.getArgs();
         if (Objects.isNull(args) || args.length <= 0) {
             sBuilder.append("null,");
             return;

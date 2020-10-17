@@ -27,6 +27,25 @@ public class ServiceApiLogUtil {
         return getMethod(joinPoint).getName();
     }
 
+    public boolean isIgnoreAopLogHeaderMethod(ProceedingJoinPoint joinPoint) {
+        Method method = getMethod(joinPoint);
+        IgnoreServiceApiAop ignoreServiceApiAop = method.getAnnotation(IgnoreServiceApiAop.class);
+        return Optional.ofNullable(ignoreServiceApiAop).map(IgnoreServiceApiAop::ignoreHeader).orElse(Boolean.FALSE);
+    }
+
+    public boolean isIgnoreLogHeaderMethod(ProceedingJoinPoint joinPoint, FilterConfig filterConfig) {
+        String ignoreHeaderMethodName = filterConfig.getLog().getIgnoreHeaderMethodName();
+        if (StringUtils.equalsIgnoreCase(ignoreHeaderMethodName, "*")) {
+            return true;
+        }
+        if (StringUtils.isNotBlank(ignoreHeaderMethodName)) {
+            String methodName = getMethodName(joinPoint);
+            Iterable<String> iterable = SPLITTER.split(ignoreHeaderMethodName);
+            return Iterables.contains(iterable, methodName);
+        }
+        return false;
+    }
+
     public boolean isIgnoreAopLogArgsMethod(ProceedingJoinPoint joinPoint) {
         Method method = getMethod(joinPoint);
         IgnoreServiceApiAop ignoreServiceApiAop = method.getAnnotation(IgnoreServiceApiAop.class);

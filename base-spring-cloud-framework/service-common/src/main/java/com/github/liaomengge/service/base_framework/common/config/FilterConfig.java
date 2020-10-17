@@ -48,6 +48,7 @@ public class FilterConfig {
     @Data
     public static class LogConfig {
 
+        private String ignoreHeaderMethodName = "*";//以逗号分隔,*表示ignore所有
         private String ignoreArgsMethodName = "";//以逗号分隔
         private String ignoreResultMethodName = "";//以逗号分隔
     }
