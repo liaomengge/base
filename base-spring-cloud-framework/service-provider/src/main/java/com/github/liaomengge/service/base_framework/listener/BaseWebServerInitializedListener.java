@@ -1,5 +1,7 @@
 package com.github.liaomengge.service.base_framework.listener;
 
+import com.github.liaomengge.service.base_framework.util.PrintLayoutUtil;
+import com.taobao.text.ui.TableElement;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
@@ -7,6 +9,7 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.context.WebServerApplicationContext;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
@@ -25,7 +28,7 @@ public class BaseWebServerInitializedListener {
 
     private static final String HTTP_PREFIX = "http://";
 
-    @Order
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     @EventListener(WebServerInitializedEvent.class)
     public void afterWebInitialize(WebServerInitializedEvent event) {
         WebServerApplicationContext context = event.getApplicationContext();
@@ -37,19 +40,21 @@ public class BaseWebServerInitializedListener {
             String applicationName = context.getEnvironment().getProperty("spring.application.name");
             String[] activeProfiles = context.getEnvironment().getActiveProfiles();
 
-            String infoUrl = HTTP_PREFIX + getIpAndPort(event) + serverContextPath + endpointBasePath + "/info";
             StringBuilder sBuilder = new StringBuilder(16);
             sBuilder.append("\n");
             sBuilder.append("---------------------------------------------------------------------------").append("\n");
-            sBuilder.append("APPLICATION NAME: ").append(applicationName).append("\n");
-            sBuilder.append("ACTIVE PROFILES:  ").append(JOINER.join(activeProfiles)).append("\n");
-            sBuilder.append("INFO URL:         ").append(infoUrl).append("\n");
+            String infoUrl = HTTP_PREFIX + getIpAndPort(event) + serverContextPath + endpointBasePath + "/info";
+            TableElement tableElement = PrintLayoutUtil.buildTableStyle();
+            PrintLayoutUtil.addRowElement(tableElement, "APPLICATION NAME: ", applicationName);
+            PrintLayoutUtil.addRowElement(tableElement, "ACTIVE PROFILES: ", JOINER.join(activeProfiles));
+            PrintLayoutUtil.addRowElement(tableElement, "INFO URL: ", infoUrl);
             if (ClassUtils.isPresent("springfox.documentation.spring.web.plugins.Docket", null)) {
                 String swaggerUrl = HTTP_PREFIX + getIpAndPort(event) + serverContextPath + "/doc.html";
-                sBuilder.append("SWAGGER URL:      ").append(swaggerUrl).append("\n");
+                PrintLayoutUtil.addRowElement(tableElement, "SWAGGER URL: ", swaggerUrl);
             }
+            sBuilder.append(PrintLayoutUtil.render(tableElement));
             sBuilder.append("---------------------------------------------------------------------------").append("\n");
-            System.err.println(sBuilder.toString());
+            System.out.println(sBuilder.toString());
         }
     }
 
