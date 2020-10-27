@@ -1,13 +1,13 @@
 package com.github.liaomengge.base_common.utils.date;
 
+import lombok.experimental.UtilityClass;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
-
-import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2018/6/2.
@@ -32,6 +32,17 @@ public class LyJdk8DateUtil {
     public final String HHmmssSSS = "HHmmssSSS";
     public final String HHmmss = "HHmmss";
     public final String HH_mm_ss = "HH:mm:ss";
+
+    public final String PATTERN_DATETIME = yyyy_MM_dd_HH_mm_ss;
+    public final String PATTERN_DATE = yyyy_MM_dd;
+    public final String PATTERN_TIME = HH_mm_ss;
+
+    public final DateTimeFormatter DATETIME_FORMATTER =
+            DateTimeFormatter.ofPattern(PATTERN_DATETIME).withZone(ZoneId.systemDefault());
+    public final DateTimeFormatter DATE_FORMATTER =
+            DateTimeFormatter.ofPattern(PATTERN_DATE).withZone(ZoneId.systemDefault());
+    public final DateTimeFormatter TIME_FORMATTER =
+            DateTimeFormatter.ofPattern(PATTERN_TIME).withZone(ZoneId.systemDefault());
 
     /********************************************************
      * Date to String

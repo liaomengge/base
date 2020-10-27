@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2020/9/29.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
 @ConditionalOnClass({MeterRegistry.class, PooledConnectionFactory.class})
 @ConditionalOnProperty(prefix = "base.metric.mq.activemq", name = "enabled", matchIfMissing = true)

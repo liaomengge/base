@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by liaomengge on 2020/9/17.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
 @ConditionalOnClass({MeterRegistry.class, DruidDataSource.class})
 @ConditionalOnProperty(prefix = "base.metric.datasource.druid", name = "enabled", matchIfMissing = true)

@@ -9,10 +9,12 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by liaomengge on 2018/12/18.
  */
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(prefix = "base.graceful.tomcat", name = "enabled")
 @ConditionalOnClass({ApplicationListener.class, Tomcat.class})
 public class TomcatAutoConfiguration {

@@ -31,7 +31,7 @@ import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.SP
  * Created by liaomengge on 2019/1/23.
  */
 @AllArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(SwaggerProperties.class)
 @EnableSwagger2
 @EnableExtendSwaggerBootstrapUI

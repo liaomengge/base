@@ -15,7 +15,7 @@ public class RetrofitProperties {
     private static final int DEFAULT_TIMEOUT_MILLIS = 5_000;//单位：毫秒
     private static final long DEFAULT_KEEP_ALIVE_MIN = 5L;//单位：分钟
 
-    private String projName = "retrofit";
+    private String projName = "base-retrofit";
     private String messageConverter = "fastjson";
     private final HttpClientProperties http = new HttpClientProperties();
     private final LogProperties log = new LogProperties();

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 /**
  * Created by liaomengge on 2018/11/14.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Import({JedisClusterConfiguration.class, SpringDataConfiguration.class, RedissonConfiguration.class})
 public class RedisAutoConfiguration {
 }

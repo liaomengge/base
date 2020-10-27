@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 /**
  * Created by liaomengge on 2019/8/9.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Import({SentinelConfiguration.class, GuavaRateLimitConfiguration.class, CustomCircuitBreakerConfiguration.class})
 public class DaYuAutoConfiguration {
 }

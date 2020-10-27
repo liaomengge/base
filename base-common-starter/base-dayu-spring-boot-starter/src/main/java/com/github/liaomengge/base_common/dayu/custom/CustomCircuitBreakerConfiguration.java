@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by liaomengge on 2019/6/26.
  */
 @AllArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 @ConditionalOnProperty(prefix = CustomCircuitBreakerConst.CUSTOM_CIRCUIT_BREAKER_PREFIX, name = "enabled")
 @EnableConfigurationProperties(CustomCircuitBreakerProperties.class)

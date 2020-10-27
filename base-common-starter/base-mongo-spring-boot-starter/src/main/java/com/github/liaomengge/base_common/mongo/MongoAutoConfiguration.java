@@ -1,11 +1,7 @@
 package com.github.liaomengge.base_common.mongo;
 
 import com.mongodb.ConnectionString;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -29,13 +25,15 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
-import lombok.AllArgsConstructor;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by liaomengge on 2018/11/7.
  */
 @AllArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(MongoDbFactory.class)
 @EnableConfigurationProperties(MongoProperties.class)
 public class MongoAutoConfiguration {

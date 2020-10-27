@@ -18,7 +18,7 @@ import java.util.List;
  * Created by liaomengge on 2020/9/17.
  * hikari本身也提供了setMetricRegistry,setMetricsTrackerFactory方法，作为监控的扩展点，比如：PrometheusHistogramMetricsTrackerFactory
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
 @ConditionalOnClass({MeterRegistry.class, HikariDataSource.class})
 @ConditionalOnProperty(prefix = "base.metric.datasource.hikari", name = "enabled", matchIfMissing = true)

@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 2019/3/1.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({OkHttpClient.class, HttpLoggingInterceptor.class, Retrofit.class, RetrofitFactory.class})
 @EnableConfigurationProperties(RetrofitProperties.class)
 public class RetrofitAutoConfiguration {

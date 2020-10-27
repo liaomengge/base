@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 2019/3/20.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 @EnableConfigurationProperties(CacheProperties.class)
 public class CacheAutoConfiguration {
@@ -55,11 +55,11 @@ public class CacheAutoConfiguration {
     }
 
     @Bean
-    public RedisCache redisCache() {
+    public RedisCache redisCache(@Qualifier("clusterRedissonClientManager") RedissonClientManager redissonClientManager) {
         Level2Properties level2Properties = this.cacheProperties.getLevel2();
         if (Objects.isNull(redissonHelper)) {
             return new RedisCache(level2Properties.isAllowNullValues(),
-                    new RedissonHelper(clusterRedissonClientManager().getRedissonClient()));
+                    new RedissonHelper(redissonClientManager.getRedissonClient()));
         }
         return new RedisCache(level2Properties.isAllowNullValues(), redissonHelper);
     }

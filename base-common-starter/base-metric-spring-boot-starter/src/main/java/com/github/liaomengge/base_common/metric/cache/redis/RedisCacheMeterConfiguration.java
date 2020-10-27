@@ -16,7 +16,7 @@ import redis.clients.jedis.JedisPoolConfig;
 /**
  * Created by liaomengge on 2020/9/22.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter({MetricsAutoConfiguration.class, RedisAutoConfiguration.class})
 @ConditionalOnClass({MeterRegistry.class, JedisPoolConfig.class})
 @ConditionalOnProperty(prefix = "base.metric.cache.redis", name = "enabled", matchIfMissing = true)

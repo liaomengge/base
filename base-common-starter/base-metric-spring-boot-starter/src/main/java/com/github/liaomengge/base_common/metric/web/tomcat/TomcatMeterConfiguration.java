@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2020/9/16.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({TomcatMetrics.class, Manager.class})
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnProperty(prefix = "base.metric.web.tomcat", name = "enabled", matchIfMissing = true)

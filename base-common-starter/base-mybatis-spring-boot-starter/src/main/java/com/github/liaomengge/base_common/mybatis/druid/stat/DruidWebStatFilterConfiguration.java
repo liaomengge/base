@@ -21,10 +21,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author lihengming [89921218@qq.com]
  */
+@Configuration
 @ConditionalOnWebApplication
 @ConditionalOnProperty(name = "base.mybatis.druid.web-stat-filter.enabled", havingValue = "true")
 public class DruidWebStatFilterConfiguration {

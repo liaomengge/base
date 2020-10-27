@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2020/9/17.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
 @ConditionalOnClass({MeterRegistry.class, PoolingHttpClientConnectionManager.class})
 @ConditionalOnProperty(prefix = "base.metric.http.httpclient", name = "enabled", matchIfMissing = true)

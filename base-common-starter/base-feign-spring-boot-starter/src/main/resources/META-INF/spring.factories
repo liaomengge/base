@@ -1,1 +1,3 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.liaomengge.base_common.feign.FeignAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.liaomengge.base_common.feign.FeignAutoConfiguration,\
+  com.github.liaomengge.base_common.feign.okhttp.OkHttpAutoConfiguration

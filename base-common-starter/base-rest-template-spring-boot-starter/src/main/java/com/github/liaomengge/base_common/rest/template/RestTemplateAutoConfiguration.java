@@ -54,7 +54,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 2018/11/1.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(SyncClientTemplate.class)
 @EnableConfigurationProperties(RestTemplateProperties.class)
 public class RestTemplateAutoConfiguration {

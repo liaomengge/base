@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2019/5/23.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class ActiveMQQueueConfigBeanRegistryConfiguration {
 
     @Bean

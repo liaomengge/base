@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 /**
  * Created by liaomengge on 2018/12/18.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Import({TomcatAutoConfiguration.class, UndertowAutoConfiguration.class})
 @EnableConfigurationProperties(GracefulProperties.class)
 public class GracefulAutoConfiguration {

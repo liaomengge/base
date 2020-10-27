@@ -26,7 +26,7 @@ import java.io.InputStream;
 /**
  * Created by liaomengge on 2018/11/16.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(Redisson.class)
 @ConditionalOnProperty(prefix = "base.redis.redisson", name = "enabled")
 @EnableConfigurationProperties(RedissonProperties.class)

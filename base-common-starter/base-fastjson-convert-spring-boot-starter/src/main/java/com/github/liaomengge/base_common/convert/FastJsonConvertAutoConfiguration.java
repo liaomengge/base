@@ -22,7 +22,7 @@ import java.util.Objects;
  * Created by liaomengge on 2018/12/10.
  */
 @AllArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(FastJsonHttpMessageConverter.class)
 @EnableConfigurationProperties(FastJsonConvertProperties.class)
 public class FastJsonConvertAutoConfiguration {

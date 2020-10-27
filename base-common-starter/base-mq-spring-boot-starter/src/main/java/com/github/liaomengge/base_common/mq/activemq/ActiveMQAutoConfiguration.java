@@ -23,7 +23,7 @@ import javax.jms.ConnectionFactory;
  * Created by liaomengge on 2019/5/5.
  */
 @AllArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({ConnectionFactory.class, ActiveMQConnectionFactory.class})
 @ConditionalOnProperty(name = "base.mq.type", havingValue = "activemq")
 @EnableConfigurationProperties(ActiveMQProperties.class)

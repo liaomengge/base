@@ -10,10 +10,12 @@ import org.springframework.boot.web.embedded.undertow.UndertowServletWebServer;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by liaomengge on 2018/12/18.
  */
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(prefix = "base.graceful.undertow", name = "enabled")
 @ConditionalOnClass({HandlerWrapper.class, HttpHandler.class, UndertowServletWebServer.class, Undertow.class,
         ApplicationListener.class})

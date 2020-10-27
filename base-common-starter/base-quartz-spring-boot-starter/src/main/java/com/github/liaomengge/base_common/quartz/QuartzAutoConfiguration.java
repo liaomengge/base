@@ -31,7 +31,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Created by liaomengge on 2019/1/29.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(QuartzProperties.class)
 @ConditionalOnClass({JobDetail.class, CronTrigger.class, SchedulerFactoryBean.class})
 @Import(QuartzBeanRegistryConfiguration.class)

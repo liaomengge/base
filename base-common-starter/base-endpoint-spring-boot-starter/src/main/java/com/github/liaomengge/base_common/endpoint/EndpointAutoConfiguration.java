@@ -1,7 +1,6 @@
 package com.github.liaomengge.base_common.endpoint;
 
 import com.github.liaomengge.base_common.endpoint.info.CustomInfoConfiguration;
-
 import org.springframework.boot.actuate.autoconfigure.info.InfoContributorAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -13,7 +12,7 @@ import org.springframework.context.annotation.Import;
 /**
  * Created by liaomengge on 2019/7/4.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(InfoContributorAutoConfiguration.class)
 @AutoConfigureAfter(ProjectInfoAutoConfiguration.class)
 @Import(CustomInfoConfiguration.class)

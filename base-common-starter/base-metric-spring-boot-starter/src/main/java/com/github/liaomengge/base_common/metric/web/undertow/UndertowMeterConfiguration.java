@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2020/9/16.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(Undertow.class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @AutoConfigureBefore(ServletWebServerFactoryAutoConfiguration.class)

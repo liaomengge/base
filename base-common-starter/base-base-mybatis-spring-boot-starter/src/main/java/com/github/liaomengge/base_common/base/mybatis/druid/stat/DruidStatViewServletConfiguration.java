@@ -21,10 +21,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author lihengming [89921218@qq.com]
  */
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnWebApplication
 @ConditionalOnProperty(name = "base.mybatis.druid.stat-view-servlet.enabled", havingValue = "true")
 public class DruidStatViewServletConfiguration {

@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Import({ShardingDataSourceConfiguration.class, ShardingDataSourceConfiguration2.class,
         ShardingDataSourceConfiguration3.class, ShardingDataSourceConfiguration4.class,
         ShardingDataSourceConfiguration5.class})
-public class ShardingSphereConfiguration {
+public class ShardingSphereAutoConfiguration {
 
     @Bean
     public HintMasterAspect hintMasterAspect() {

@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by liaomengge on 2020/8/25.
  */
 @AllArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({Feign.class, Encoder.class, RequestInterceptor.class})
 @EnableConfigurationProperties(FeignProperties.class)
 public class FeignAutoConfiguration {

@@ -9,6 +9,7 @@ import com.github.liaomengge.base_common.thread.pool.ThreadPoolGroupProperties;
 import com.github.liaomengge.base_common.thread.pool.queue.ResizableCapacityLinkedBlockIngQueue;
 import com.github.liaomengge.base_common.utils.binder.LyBinderUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import com.github.liaomengge.base_common.utils.regex.LyMatcherUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
@@ -25,6 +26,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
+import java.util.stream.Collectors;
 
 import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.SPLITTER;
 
@@ -62,31 +64,35 @@ public class ThreadPoolApolloListener implements ApplicationContextAware, Enviro
     @Override
     public void onChange(ConfigChangeEvent changeEvent) {
         Set<String> changedKeys = changeEvent.changedKeys();
-        Optional<String> threadPoolChange = changedKeys.stream().filter(val -> StringUtils.startsWithIgnoreCase(val,
-                "base.thread-pool")).findFirst();
-        threadPoolChange.ifPresent(val -> {
-            ThreadPoolGroupProperties threadPoolGroupProperties = LyBinderUtil.bind(environment, "base.thread-pool",
-                    ThreadPoolGroupProperties.class);
-            threadPoolGroupProperties.getGroups().stream().forEach(val2 -> {
+        Set<String> threadPoolChanges = changedKeys.stream().filter(val -> StringUtils.startsWithIgnoreCase(val,
+                "base.thread-pool")).collect(Collectors.toSet());
+        for (String threadPoolChange : threadPoolChanges) {
+            String threadPoolChangePrefix = StringUtils.substring(threadPoolChange, 0,
+                    threadPoolChange.lastIndexOf('.'));
+            if (LyMatcherUtil.isAllMatch("^base.thread-pool.groups\\[\\d+\\]$", threadPoolChangePrefix)) {
+                ThreadPoolGroupProperties.ThreadPoolProperties threadPoolProperties = LyBinderUtil.bind(environment,
+                        threadPoolChangePrefix, ThreadPoolGroupProperties.ThreadPoolProperties.class);
                 LyThreadPoolTaskWrappedExecutor wrappedExecutor =
-                        applicationContext.getBean(val2.buildBeanName(), LyThreadPoolTaskWrappedExecutor.class);
+                        applicationContext.getBean(threadPoolProperties.buildBeanName(),
+                                LyThreadPoolTaskWrappedExecutor.class);
                 if (Objects.isNull(wrappedExecutor)) {
-                    log.warn("can't modify thread name, thread pool name[{}], don't exist!!!", val2.buildBeanName());
-                    return;
+                    log.warn("can't modify thread name, thread pool name[{}], don't exist!!!",
+                            threadPoolProperties.buildBeanName());
+                    continue;
                 }
                 /**
                  * ThreadPoolTaskExecutor的处理和ThreadPoolExecutor处理有点区别。
                  * springframework blockQueue没有直接暴露出来，且修改其属性的时候，需要修改两边的属性
                  */
                 ThreadPoolTaskExecutor executor = wrappedExecutor.getThreadPoolTaskExecutor();
-                executor.setCorePoolSize(val2.getCorePoolSize());
-                executor.setMaxPoolSize(val2.getMaxPoolSize());
-                executor.setKeepAliveSeconds(val2.getKeepAliveSeconds());
-                setRejectedExecutionHandler(executor, val2.buildRejectionPolicy());
-                setAllowCoreThreadTimeOut(executor, val2.isAllowCoreThreadTimeOut());
-                setQueueCapacity(executor, val2.getQueueCapacity());
-            });
-        });
+                executor.setCorePoolSize(threadPoolProperties.getCorePoolSize());
+                executor.setMaxPoolSize(threadPoolProperties.getMaxPoolSize());
+                executor.setKeepAliveSeconds(threadPoolProperties.getKeepAliveSeconds());
+                setRejectedExecutionHandler(executor, threadPoolProperties.buildRejectionPolicy());
+                setAllowCoreThreadTimeOut(executor, threadPoolProperties.isAllowCoreThreadTimeOut());
+                setQueueCapacity(executor, threadPoolProperties.getQueueCapacity());
+            }
+        }
     }
 
     private void setRejectedExecutionHandler(ThreadPoolTaskExecutor executor,

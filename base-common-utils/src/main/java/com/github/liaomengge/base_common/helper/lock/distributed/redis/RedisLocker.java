@@ -2,11 +2,10 @@ package com.github.liaomengge.base_common.helper.lock.distributed.redis;
 
 import com.github.liaomengge.base_common.helper.lock.distributed.AcquiredLockWorker;
 import com.github.liaomengge.base_common.helper.lock.distributed.DistributedLocker;
+import org.redisson.api.RLock;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import org.redisson.api.RLock;
 
 /**
  * Created by liaomengge on 17/12/19.
@@ -179,13 +178,14 @@ public class RedisLocker implements DistributedLocker {
      *
      * @param lockName
      * @param worker
-     * @param waitTime 最多等待时间
+     * @param waitTime  最多等待时间
      * @param leaseTime 上锁后自动释放锁时间
      * @param timeUnit
      * @param <T>
      * @return
      */
-    public <T> T tryLock(String lockName, AcquiredLockWorker<T> worker, long waitTime, long leaseTime, TimeUnit timeUnit) {
+    public <T> T tryLock(String lockName, AcquiredLockWorker<T> worker, long waitTime, long leaseTime,
+                         TimeUnit timeUnit) {
         RLock rLock = redissonConfigManager.getRedissonClient().getLock(REDIS_LOCKER_PREFIX + lockName);
         boolean isSuccess = false;
         try {
@@ -200,7 +200,7 @@ public class RedisLocker implements DistributedLocker {
                     if (rLock.isHeldByCurrentThread()) {
                         rLock.unlock();
                         log.info("释放锁[{}]成功", rLock.getName());
-                    } else if (rLock.getHoldCount() == 0 && rLock.isLocked()) {
+                    } else if (rLock.getHoldCount() == 0) {
                         log.warn("锁[{}]已expire, 已被自动释放, 请合理设置leaseTime时间", rLock.getName());
                     }
                 }

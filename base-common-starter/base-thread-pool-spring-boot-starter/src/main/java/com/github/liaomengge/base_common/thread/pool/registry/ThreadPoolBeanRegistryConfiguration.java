@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2019/5/17.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class ThreadPoolBeanRegistryConfiguration {
 
     @Bean

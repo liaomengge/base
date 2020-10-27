@@ -31,7 +31,7 @@ import java.util.Objects;
  * Created by liaomengge on 2019/5/5.
  */
 @AllArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({RabbitTemplate.class, Channel.class})
 @ConditionalOnProperty(name = "base.mq.type", havingValue = "rabbitmq", matchIfMissing = true)
 @EnableConfigurationProperties(RabbitMQProperties.class)

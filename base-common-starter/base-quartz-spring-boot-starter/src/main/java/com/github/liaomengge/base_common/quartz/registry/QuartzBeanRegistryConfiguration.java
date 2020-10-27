@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2019/1/29.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class QuartzBeanRegistryConfiguration {
 
     @Bean

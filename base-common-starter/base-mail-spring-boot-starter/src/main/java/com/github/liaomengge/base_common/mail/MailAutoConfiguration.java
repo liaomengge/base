@@ -14,7 +14,7 @@ import org.springframework.mail.MailSender;
  * Created by liaomengge on 2018/10/27.
  */
 @AllArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(MailSender.class)
 @EnableConfigurationProperties(MailProperties.class)
 public class MailAutoConfiguration {

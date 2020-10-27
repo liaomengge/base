@@ -1,16 +1,14 @@
 package com.github.liaomengge.base_common.utils.copy;
 
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiConsumer;
-
+import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
 
-import lombok.experimental.UtilityClass;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 
 /**
  * Created by liaomengge on 16/7/28.

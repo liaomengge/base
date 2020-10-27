@@ -20,7 +20,7 @@ import java.util.Objects;
 /**
  * Created by liaomengge on 2020/8/11.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(prefix = "base.xxl-job", name = "enabled")
 @ConditionalOnClass(XxlJobSpringExecutor.class)
 @EnableConfigurationProperties(XxlJobProperties.class)

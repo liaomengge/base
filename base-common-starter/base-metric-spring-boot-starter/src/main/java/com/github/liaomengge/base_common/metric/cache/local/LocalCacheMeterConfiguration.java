@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2020/9/22.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
 @ConditionalOnClass({MeterRegistry.class, CaffeineCacheManager.class, CaffeineCache.class, Cache.class})
 @ConditionalOnProperty(prefix = "base.metric.cache.local", name = "enabled", matchIfMissing = true)

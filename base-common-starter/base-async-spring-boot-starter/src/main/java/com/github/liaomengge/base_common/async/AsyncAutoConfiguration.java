@@ -15,7 +15,7 @@ import java.util.concurrent.Executor;
 /**
  * Created by liaomengge on 2019/2/21.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableAsync(proxyTargetClass = true)
 public class AsyncAutoConfiguration {
 

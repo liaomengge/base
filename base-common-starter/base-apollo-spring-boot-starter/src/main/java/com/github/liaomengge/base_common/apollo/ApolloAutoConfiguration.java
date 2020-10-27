@@ -19,7 +19,7 @@ import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.SP
 /**
  * Created by liaomengge on 2020/8/1.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty("apollo.bootstrap.enabled")
 @ConditionalOnClass({ConfigChangeListener.class, ConfigChangeEvent.class, RefreshScope.class})
 public class ApolloAutoConfiguration {

@@ -1,63 +1,62 @@
 package com.github.liaomengge.base_common.jackson;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.jackson.JacksonProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.context.annotation.Primary;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by liaomengge on 2019/1/25.
  */
-@Configuration
-@AutoConfigureAfter(org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class)
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(ObjectMapper.class)
-@ConditionalOnBean(ObjectMapper.class)
-@ConditionalOnProperty(name = "spring.http.converters.preferred-json-mapper", havingValue = "jackson",
-        matchIfMissing = true)
+@AutoConfigureBefore(org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class)
 public class JacksonAutoConfiguration {
 
-    @Autowired(required = false)
-    private JacksonProperties jacksonProperties;
-
+    @Primary
     @Bean
-    @ConditionalOnMissingBean(MappingJackson2HttpMessageConverter.class)
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(
-            ObjectMapper objectMapper) {
-        if (Objects.nonNull(jacksonProperties)) {
-            Map<SerializationFeature, Boolean> serializationMap = jacksonProperties.getSerialization();
-            Optional.ofNullable(serializationMap).ifPresent(map -> map.forEach((key, value) -> objectMapper.configure(key, value)));
+    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
+        ObjectMapper objectMapper = builder.createXmlMapper(false).build();
+        objectMapper.setLocale(Locale.CHINA);
+        objectMapper.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
+        objectMapper.setDateFormat(new SimpleDateFormat(LyJdk8DateUtil.PATTERN_DATETIME, Locale.CHINA));
 
-            Map<DeserializationFeature, Boolean> deserializationMap = jacksonProperties.getDeserialization();
-            Optional.ofNullable(deserializationMap).ifPresent(map -> map.forEach((key, value) -> objectMapper.configure(key, value)));
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-            Map<MapperFeature, Boolean> mapperMap = jacksonProperties.getMapper();
-            Optional.ofNullable(mapperMap).ifPresent(map -> map.forEach((key, value) -> objectMapper.configure(key,
-                    value)));
-
-            Map<JsonGenerator.Feature, Boolean> generatorMap = jacksonProperties.getGenerator();
-            Optional.ofNullable(generatorMap).ifPresent(map -> map.forEach((key, value) -> objectMapper.configure(key
-                    , value)));
-
-            Map<JsonParser.Feature, Boolean> parserMap = jacksonProperties.getParser();
-            Optional.ofNullable(parserMap).ifPresent(map -> map.forEach((key, value) -> objectMapper.configure(key,
-                    value)));
-        }
-        return new MappingJackson2HttpMessageConverter(objectMapper);
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addDeserializer(LocalDateTime.class,
+                new LocalDateTimeDeserializer(LyJdk8DateUtil.DATETIME_FORMATTER));
+        simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(LyJdk8DateUtil.DATE_FORMATTER));
+        simpleModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(LyJdk8DateUtil.TIME_FORMATTER));
+        simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(LyJdk8DateUtil.DATETIME_FORMATTER));
+        simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer(LyJdk8DateUtil.DATE_FORMATTER));
+        simpleModule.addSerializer(LocalTime.class, new LocalTimeSerializer(LyJdk8DateUtil.TIME_FORMATTER));
+        objectMapper.registerModule(simpleModule);
+        return objectMapper;
     }
 }

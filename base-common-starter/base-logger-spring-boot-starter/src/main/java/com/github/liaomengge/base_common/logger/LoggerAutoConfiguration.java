@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by liaomengge on 2019/1/21.
  */
 @AllArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(LoggerProperties.class)
 @AutoConfigureAfter({EnableAutoConfiguration.class, LoggersEndpointAutoConfiguration.class})
 public class LoggerAutoConfiguration {

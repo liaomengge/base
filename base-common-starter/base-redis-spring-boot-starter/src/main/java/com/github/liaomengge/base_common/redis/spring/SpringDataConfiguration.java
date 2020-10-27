@@ -30,7 +30,7 @@ import java.util.Objects;
 /**
  * Created by liaomengge on 2018/11/16.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(SpringDataProperties.class)
 @ConditionalOnProperty(prefix = "base.redis.spring-data", name = "enabled")
 @ConditionalOnClass({GenericObjectPool.class, JedisConnection.class, Jedis.class})

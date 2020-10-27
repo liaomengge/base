@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by liaomengge on 2019/11/7.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class SentinelDataSourceConfiguration {
 
     @Bean("giraffeFlowRuleDataSource")

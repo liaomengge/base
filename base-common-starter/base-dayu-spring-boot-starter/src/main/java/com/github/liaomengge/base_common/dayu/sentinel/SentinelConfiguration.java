@@ -31,7 +31,7 @@ import static com.github.liaomengge.base_common.dayu.sentinel.consts.SentinelCon
 /**
  * Created by liaomengge on 2019/8/9.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(prefix = SENTINEL_PREFIX, name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(SentinelProperties.class)
 @Import({SentinelWebConfiguration.class, SentinelDataSourceConfiguration.class})

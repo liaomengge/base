@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * Created by liaomengge on 2019/7/11.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(HealthCheckProperties.class)
 public class HealthCheckAutoConfiguration implements ApplicationContextAware {
 

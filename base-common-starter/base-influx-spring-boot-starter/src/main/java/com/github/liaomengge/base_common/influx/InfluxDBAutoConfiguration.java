@@ -2,7 +2,7 @@ package com.github.liaomengge.base_common.influx;
 
 import com.github.liaomengge.base_common.influx.batch.InfluxBatchHandler;
 import com.github.liaomengge.base_common.influx.helper.InfluxHelper;
-
+import lombok.AllArgsConstructor;
 import org.influxdb.InfluxDB;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -10,13 +10,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import lombok.AllArgsConstructor;
-
 /**
  * Created by liaomengge on 2020/7/21.
  */
 @AllArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(InfluxDBProperties.class)
 @ConditionalOnClass(InfluxDB.class)
 public class InfluxDBAutoConfiguration {

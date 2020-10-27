@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 2018/11/16.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(JedisClusterProperties.class)
 @ConditionalOnProperty(prefix = "base.redis.jedis-cluster", name = "enabled")
 @ConditionalOnClass(JedisCluster.class)

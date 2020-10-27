@@ -15,7 +15,7 @@ import java.util.Properties;
 /**
  * Created by liaomengge on 2019/7/4.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnCustomProperty
 @ConditionalOnProperty(prefix = "base.endpoint.info", name = "enabled", matchIfMissing = true)
 public class CustomInfoConfiguration {

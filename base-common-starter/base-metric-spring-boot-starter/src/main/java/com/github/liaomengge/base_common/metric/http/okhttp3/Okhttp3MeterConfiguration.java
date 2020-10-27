@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2020/9/17.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
 @ConditionalOnClass({MeterRegistry.class, OkHttpClient.class})
 @ConditionalOnProperty(prefix = "base.metric.http.okhttp3", name = "enabled", matchIfMissing = true)
