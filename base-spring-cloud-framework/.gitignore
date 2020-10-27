@@ -6,3 +6,4 @@ gradlew.bat
 .idea
 build
 out
+publish.sh
