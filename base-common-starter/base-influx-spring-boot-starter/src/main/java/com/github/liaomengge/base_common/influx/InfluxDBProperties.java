@@ -1,15 +1,13 @@
 package com.github.liaomengge.base_common.influx;
 
 import com.github.liaomengge.base_common.influx.consts.InfluxConst;
-
-import java.time.Duration;
-
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.influxdb.InfluxDB.LogLevel;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-import lombok.Data;
+import java.time.Duration;
 
 /**
  * Created by liaomengge on 2020/7/21.
@@ -20,6 +18,7 @@ import lombok.Data;
 public class InfluxDBProperties {
 
     private String db;
+    private String measurement;
     private String url;
     private String username;
     private String password;
@@ -51,11 +50,16 @@ public class InfluxDBProperties {
         return StringUtils.isNoneBlank(this.db) ? this.db : InfluxConst.DEFAULT_DATABASE;
     }
 
+    public String getMeasurement() {
+        return StringUtils.isNoneBlank(this.measurement) ? this.measurement : InfluxConst.DEFAULT_MEASUREMENT;
+    }
+
     public String getRetentionPolicy() {
-        return StringUtils.isNoneBlank(this.retentionPolicy) ? this.retentionPolicy : "autogen";
+        return StringUtils.isNoneBlank(this.retentionPolicy) ? this.retentionPolicy : InfluxConst.DEFAULT_INFLUX_POLICY;
     }
 
     public String getConsistencyLevel() {
-        return StringUtils.isNoneBlank(this.consistencyLevel) ? this.consistencyLevel : "ALL";
+        return StringUtils.isNoneBlank(this.consistencyLevel) ? this.consistencyLevel :
+                InfluxConst.DEFAULT_CONSISTENCY_LEVEL;
     }
 }

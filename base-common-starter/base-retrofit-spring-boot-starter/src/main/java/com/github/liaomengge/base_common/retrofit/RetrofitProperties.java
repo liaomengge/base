@@ -16,7 +16,7 @@ public class RetrofitProperties {
     private static final long DEFAULT_KEEP_ALIVE_MIN = 5L;//单位：分钟
 
     private String projName = "base-retrofit";
-    private String messageConverter = "fastjson";
+    private String messageConverter = "jackson";
     private final HttpClientProperties http = new HttpClientProperties();
     private final LogProperties log = new LogProperties();
     private final SentinelProperties sentinel = new SentinelProperties();

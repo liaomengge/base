@@ -4,6 +4,7 @@ import com.alibaba.csp.sentinel.slots.block.AbstractRule;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.github.liaomengge.base_common.helper.rest.Template;
 import com.github.liaomengge.base_common.helper.rest.data.BaseRequest;
+import com.github.liaomengge.base_common.support.exception.CommunicationException;
 import com.github.liaomengge.base_common.utils.error.LyExceptionUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import com.github.liaomengge.base_common.utils.log.LyAlarmLogUtil;
@@ -198,5 +199,6 @@ public class SyncClientTemplate extends Template.Sync {
                         LyJsonUtil.toJson4Log(baseRequest.getData()), url, t.getMessage());
             }
         }
+        throw new CommunicationException("http请求失败, url=> " + url, t);
     }
 }

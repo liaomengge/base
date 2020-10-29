@@ -37,8 +37,7 @@ public class FastJsonConvertAutoConfiguration {
         if (Objects.nonNull(fastJsonConvertProperties)) {
             fastJsonConfig.setCharset(fastJsonConvertProperties.getCharset());
         }
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.BrowserSecure,
-                SerializerFeature.DisableCircularReferenceDetect);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.DisableCircularReferenceDetect);
         List<MediaType> fastMediaTypes = new ArrayList<>();
         fastMediaTypes.add(new MediaType("application", "json", fastJsonConfig.getCharset()));
         fastJsonHttpMessageConverter.setSupportedMediaTypes(fastMediaTypes);

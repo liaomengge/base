@@ -1,28 +1,16 @@
 package com.github.liaomengge.base_common.utils.http;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.github.liaomengge.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import com.github.liaomengge.base_common.support.exception.CommunicationException;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import com.github.liaomengge.base_common.utils.log.LyAlarmLogUtil;
-import com.github.liaomengge.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.properties.LyConfigUtil;
 import com.github.liaomengge.base_common.utils.properties.LyPropertiesUtil;
 import com.github.liaomengge.base_common.utils.thread.LyThreadFactoryBuilderUtil;
-
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Maps;
-
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
+import lombok.Data;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
@@ -42,7 +30,16 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 
-import lombok.Data;
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 16/12/13.
@@ -309,7 +306,7 @@ public class LyHttpClientUtil3 {
             LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
         }
         log.warn("调用服务失败, 服务地址: " + url, t);
-        throw new CommunicationException("调用服务失败, 服务地址: " + url + ", 异常类型: " + t.getClass() + ", 错误原因: " + t.getMessage());
+        throw new CommunicationException("http请求失败, url=> " + url, t);
     }
 
     private static void closeQuietly(CloseableHttpResponse httpResponse) {

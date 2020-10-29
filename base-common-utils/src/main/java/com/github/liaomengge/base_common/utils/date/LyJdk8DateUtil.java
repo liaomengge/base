@@ -33,16 +33,16 @@ public class LyJdk8DateUtil {
     public final String HHmmss = "HHmmss";
     public final String HH_mm_ss = "HH:mm:ss";
 
-    public final String PATTERN_DATETIME = yyyy_MM_dd_HH_mm_ss;
-    public final String PATTERN_DATE = yyyy_MM_dd;
-    public final String PATTERN_TIME = HH_mm_ss;
+    public final String DATE_PATTERN = yyyy_MM_dd;
+    public final String TIME_PATTERN = HH_mm_ss;
+    public final String DATETIME_PATTERN = yyyy_MM_dd_HH_mm_ss;
 
-    public final DateTimeFormatter DATETIME_FORMATTER =
-            DateTimeFormatter.ofPattern(PATTERN_DATETIME).withZone(ZoneId.systemDefault());
     public final DateTimeFormatter DATE_FORMATTER =
-            DateTimeFormatter.ofPattern(PATTERN_DATE).withZone(ZoneId.systemDefault());
+            DateTimeFormatter.ofPattern(DATE_PATTERN).withZone(ZoneId.systemDefault());
     public final DateTimeFormatter TIME_FORMATTER =
-            DateTimeFormatter.ofPattern(PATTERN_TIME).withZone(ZoneId.systemDefault());
+            DateTimeFormatter.ofPattern(TIME_PATTERN).withZone(ZoneId.systemDefault());
+    public final DateTimeFormatter DATETIME_FORMATTER =
+            DateTimeFormatter.ofPattern(DATETIME_PATTERN).withZone(ZoneId.systemDefault());
 
     /********************************************************
      * Date to String

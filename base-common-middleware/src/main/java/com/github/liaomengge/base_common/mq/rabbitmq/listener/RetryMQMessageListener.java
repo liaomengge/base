@@ -1,6 +1,6 @@
 package com.github.liaomengge.base_common.mq.rabbitmq.listener;
 
-import com.alibaba.fastjson.JSONException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.liaomengge.base_common.mq.consts.MetricsConst;
 import com.github.liaomengge.base_common.mq.domain.MQMessage;
 import com.github.liaomengge.base_common.mq.domain.MessageHeader;
@@ -56,7 +56,7 @@ public abstract class RetryMQMessageListener<T extends MQMessage> extends BaseMQ
 
             mqMonitor.monitorCount(MetricsConst.DEQUEUE_COUNT + "." + queueConfig.getExchangeName());
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-        } catch (ClassCastException | JSONException e) {
+        } catch (ClassCastException | JsonMappingException e) {
             log.error("Receive Message[" + LyJsonUtil.toJson4Log(t) + "] Format Error ===> ", e);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (ShutdownSignalException | ConsumerCancelledException e) {

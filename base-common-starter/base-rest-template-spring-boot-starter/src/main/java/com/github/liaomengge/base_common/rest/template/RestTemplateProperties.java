@@ -16,7 +16,7 @@ public class RestTemplateProperties {
     private static final int DEFAULT_TIMEOUT_MILLIS = 5_000;//单位：毫秒
 
     private String projName = "base-rest-template";
-    private String messageConverter = "fastjson";
+    private String messageConverter = "jackson";
     private final HttpClientProperties http = new HttpClientProperties();
     private final LogProperties log = new LogProperties();
     private final SentinelProperties sentinel = new SentinelProperties();

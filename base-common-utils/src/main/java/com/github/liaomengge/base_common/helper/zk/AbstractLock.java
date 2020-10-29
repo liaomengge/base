@@ -1,5 +1,6 @@
 package com.github.liaomengge.base_common.helper.zk;
 
+import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.net.LyNetworkUtil;
@@ -10,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -258,7 +258,7 @@ public abstract class AbstractLock {
             HeartBeat heartBeat = new HeartBeat();
             heartBeat.setHostIp(LyNetworkUtil.getHostAddress());
             heartBeat.setHostName(LyNetworkUtil.getHostName());
-            heartBeat.setLastTime(new Date());
+            heartBeat.setLastTime(LyJdk8DateUtil.getNowDate2String());
             zk.writeData(selfNodeFullName, LyJacksonUtil.toJson(heartBeat));
         }, 0, 15, TimeUnit.SECONDS);
     }

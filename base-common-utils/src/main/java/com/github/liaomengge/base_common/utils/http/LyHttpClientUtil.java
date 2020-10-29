@@ -1,18 +1,10 @@
 package com.github.liaomengge.base_common.utils.http;
 
-import com.github.liaomengge.base_common.support.exception.CommunicationException;
-import com.github.liaomengge.base_common.utils.log.LyAlarmLogUtil;
 import com.github.liaomengge.base_common.helper.rest.sync.interceptor.HttpHeaderInterceptor;
 import com.github.liaomengge.base_common.helper.rest.sync.retry.HttpRetryHandler;
+import com.github.liaomengge.base_common.support.exception.CommunicationException;
+import com.github.liaomengge.base_common.utils.log.LyAlarmLogUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InterruptedIOException;
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.Objects;
-
 import org.apache.http.Consts;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -30,6 +22,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InterruptedIOException;
+import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 高并发调用时, 不建议使用
@@ -382,7 +381,7 @@ public class LyHttpClientUtil {
             LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
         }
         log.warn("调用服务失败, 服务地址: " + url, t);
-        throw new CommunicationException("调用服务失败, 服务地址: " + url + ", 异常类型: " + t.getClass() + ", 错误原因: " + t.getMessage());
+        throw new CommunicationException("http请求失败, url=> " + url, t);
     }
 
     private static void closeQuietly(CloseableHttpClient httpClient) {

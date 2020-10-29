@@ -10,6 +10,9 @@ public interface InfluxConst {
     String DEFAULT_DATABASE = "InfluxDatabase";
     String DEFAULT_MEASUREMENT = "InfluxMeasurement";
 
+    String DEFAULT_INFLUX_POLICY = "autogen";
+    String DEFAULT_CONSISTENCY_LEVEL = "ALL";
+
     /**
      * influx batch properties
      */

@@ -1,9 +1,5 @@
 package com.github.liaomengge.base_common.helper.zk;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
-import java.util.Date;
-
 import lombok.Data;
 
 /**
@@ -25,6 +21,5 @@ public class HeartBeat {
     /**
      * 最后心跳时间
      */
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    private Date lastTime;
+    private String lastTime;
 }

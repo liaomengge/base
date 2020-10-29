@@ -1,1 +1,12 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.liaomengge.base_common.metric.MetricAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.liaomengge.base_common.metric.cache.local.LocalCacheMeterConfiguration,\
+  com.github.liaomengge.base_common.metric.cache.redis.RedisCacheMeterConfiguration,\
+  com.github.liaomengge.base_common.metric.datasource.druid.DruidMeterConfiguration,\
+  com.github.liaomengge.base_common.metric.datasource.hikari.HikariMeterConfiguration,\
+  com.github.liaomengge.base_common.metric.http.httpclient.HttpClientMeterConfiguration,\
+  com.github.liaomengge.base_common.metric.http.okhttp3.Okhttp3MeterConfiguration,\
+  com.github.liaomengge.base_common.metric.mq.activemq.ActiveMQMeterConfiguration,\
+  com.github.liaomengge.base_common.metric.threadpool.ThreadPoolMetricsConfiguration,\
+  com.github.liaomengge.base_common.metric.web.tomcat.TomcatMeterConfiguration,\
+  com.github.liaomengge.base_common.metric.web.undertow.UndertowMeterConfiguration,\
+  com.github.liaomengge.base_common.metric.MetricAutoConfiguration

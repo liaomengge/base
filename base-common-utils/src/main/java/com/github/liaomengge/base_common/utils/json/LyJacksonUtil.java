@@ -36,7 +36,7 @@ public class LyJacksonUtil {
     static {
         objectMapper.setLocale(Locale.CHINA);
         objectMapper.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
-        objectMapper.setDateFormat(new SimpleDateFormat(LyJdk8DateUtil.PATTERN_DATETIME, Locale.CHINA));
+        objectMapper.setDateFormat(new SimpleDateFormat(LyJdk8DateUtil.DATETIME_PATTERN, Locale.CHINA));
 
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -44,13 +44,17 @@ public class LyJacksonUtil {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         SimpleModule simpleModule = new SimpleModule();
+
+        simpleModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(LyJdk8DateUtil.TIME_FORMATTER));
+        simpleModule.addSerializer(LocalTime.class, new LocalTimeSerializer(LyJdk8DateUtil.TIME_FORMATTER));
+
+        simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(LyJdk8DateUtil.DATE_FORMATTER));
+        simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer(LyJdk8DateUtil.DATE_FORMATTER));
+
         simpleModule.addDeserializer(LocalDateTime.class,
                 new LocalDateTimeDeserializer(LyJdk8DateUtil.DATETIME_FORMATTER));
-        simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(LyJdk8DateUtil.DATE_FORMATTER));
-        simpleModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(LyJdk8DateUtil.TIME_FORMATTER));
         simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(LyJdk8DateUtil.DATETIME_FORMATTER));
-        simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer(LyJdk8DateUtil.DATE_FORMATTER));
-        simpleModule.addSerializer(LocalTime.class, new LocalTimeSerializer(LyJdk8DateUtil.TIME_FORMATTER));
+
         objectMapper.registerModule(simpleModule);
     }
 

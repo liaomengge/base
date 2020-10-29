@@ -1,7 +1,8 @@
 package com.github.liaomengge.base_common.influx.helper;
 
+import com.github.liaomengge.base_common.influx.InfluxDBProperties;
 import com.github.liaomengge.base_common.influx.batch.InfluxBatchHandler;
-import com.github.liaomengge.base_common.influx.consts.InfluxConst;
+import lombok.AllArgsConstructor;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 import org.springframework.util.CollectionUtils;
@@ -16,13 +17,11 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 2020/7/21.
  */
+@AllArgsConstructor
 public class InfluxHelper {
 
+    private final InfluxDBProperties influxDBProperties;
     private final InfluxBatchHandler influxBatchHandler;
-
-    public InfluxHelper(InfluxBatchHandler influxBatchHandler) {
-        this.influxBatchHandler = influxBatchHandler;
-    }
 
     public void write(Map<String, Object> fields) {
         write(new HashMap<>(), fields);
@@ -33,7 +32,7 @@ public class InfluxHelper {
     }
 
     public void write(Map<String, String> tags, Map<String, Object> fields) {
-        write(InfluxConst.DEFAULT_MEASUREMENT, tags, fields);
+        write(influxDBProperties.getMeasurement(), tags, fields);
     }
 
     public void write(String measurement, Map<String, String> tags, Map<String, Object> fields) {

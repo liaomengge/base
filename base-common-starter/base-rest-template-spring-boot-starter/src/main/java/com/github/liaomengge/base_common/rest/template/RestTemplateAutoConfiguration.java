@@ -3,13 +3,11 @@ package com.github.liaomengge.base_common.rest.template;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.liaomengge.base_common.helper.rest.interceptor.SentinelHttpRequestInterceptor;
 import com.github.liaomengge.base_common.helper.rest.sync.SyncClientTemplate;
 import com.github.liaomengge.base_common.helper.rest.sync.interceptor.HttpHeaderInterceptor;
 import com.github.liaomengge.base_common.helper.rest.sync.retry.HttpRetryHandler;
+import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import com.google.common.collect.ImmutableList;
@@ -138,11 +136,8 @@ public class RestTemplateAutoConfiguration {
 
         List<HttpMessageConverter<?>> messageConverters = Lists.newArrayList();
         if (this.restTemplateProperties.isJacksonMessageConverter()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
             MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter =
-                    new MappingJackson2HttpMessageConverter(objectMapper);
+                    new MappingJackson2HttpMessageConverter(LyJacksonUtil.getObjectMapper());
             messageConverters.add(mappingJackson2HttpMessageConverter);
         } else {
             FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();

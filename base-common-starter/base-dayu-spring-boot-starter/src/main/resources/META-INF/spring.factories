@@ -1,1 +1,3 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.liaomengge.base_common.dayu.DaYuAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.liaomengge.base_common.dayu.custom.CustomCircuitBreakerConfiguration,\
+  com.github.liaomengge.base_common.dayu.DaYuAutoConfiguration

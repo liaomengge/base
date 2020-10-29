@@ -1,22 +1,20 @@
 package com.github.liaomengge.base_common.helper.retrofit.factory;
 
-import com.github.liaomengge.base_common.helper.retrofit.api.RetrofitApi;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import java.util.Map;
-
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
-
+import com.github.liaomengge.base_common.helper.retrofit.api.RetrofitApi;
+import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import lombok.Setter;
 import okhttp3.OkHttpClient;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import retrofit2.Retrofit;
 import retrofit2.converter.fastjson.FastJsonConverterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by liaomengge on 2019/3/1.
@@ -27,11 +25,14 @@ public class RetrofitFactory {
 
     private final String messageConverter;
     private final OkHttpClient okHttpClient;
+
+    @Setter
+    private ObjectMapper objectMapper;
     @Setter
     private Map<String, OkHttpClient> okHttpClientMap;
 
     public RetrofitFactory(OkHttpClient okHttpClient) {
-        this("fastjson", okHttpClient);
+        this("jackson", okHttpClient);
     }
 
     public RetrofitFactory(String messageConverter, OkHttpClient okHttpClient) {
@@ -73,12 +74,15 @@ public class RetrofitFactory {
                 .client(okHttpClient)
                 .addConverterFactory(ScalarsConverterFactory.create());
         if (isJacksonMessageConverter()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-            builder.addConverterFactory(JacksonConverterFactory.create(objectMapper));
+            if (Objects.nonNull(objectMapper)) {
+                builder.addConverterFactory(JacksonConverterFactory.create(objectMapper));
+            } else {
+                builder.addConverterFactory(JacksonConverterFactory.create(LyJacksonUtil.getObjectMapper()));
+            }
         } else {
-            builder.addConverterFactory(FastJsonConverterFactory.create());
+            FastJsonConverterFactory fastJsonConverterFactory = FastJsonConverterFactory.create();
+            fastJsonConverterFactory.setSerializerFeatures(new SerializerFeature[]{SerializerFeature.DisableCircularReferenceDetect});
+            builder.addConverterFactory(fastJsonConverterFactory);
         }
         return builder;
     }

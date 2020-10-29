@@ -1,5 +1,6 @@
 package com.github.liaomengge.base_common.retrofit;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.liaomengge.base_common.helper.retrofit.RetrofitHelper;
 import com.github.liaomengge.base_common.helper.retrofit.api.RetrofitApi;
 import com.github.liaomengge.base_common.helper.retrofit.client.interceptor.HttpHeaderInterceptor;
@@ -49,6 +50,9 @@ public class RetrofitAutoConfiguration {
 
     @Autowired(required = false)
     private Environment environment;
+
+    @Autowired(required = false)
+    private ObjectMapper objectMapper;
 
     private final RetrofitProperties retrofitProperties;
 
@@ -129,6 +133,7 @@ public class RetrofitAutoConfiguration {
                                            HttpLoggingInterceptor httpLoggingInterceptor) {
         HttpClientProperties httpClientProperties = retrofitProperties.getHttp();
         RetrofitFactory retrofitFactory = new RetrofitFactory(retrofitProperties.getMessageConverter(), okHttpClient);
+        retrofitFactory.setObjectMapper(objectMapper);
         List<UrlHttpClientProperties> urlHttpClientProperties = httpClientProperties.getUrls();
         if (CollectionUtils.isNotEmpty(urlHttpClientProperties)) {
             Map<String, OkHttpClient> okHttpClientMap =
