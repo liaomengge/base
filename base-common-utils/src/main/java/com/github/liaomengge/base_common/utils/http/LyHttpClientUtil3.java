@@ -305,8 +305,8 @@ public class LyHttpClientUtil3 {
         } else {
             LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
         }
-        log.warn("调用服务失败, 服务地址: " + url, t);
-        throw new CommunicationException("http请求失败, url=> " + url, t);
+        log.warn("call service fail, url: " + url, t);
+        throw new CommunicationException("http call fail, url=> " + url, t);
     }
 
     private static void closeQuietly(CloseableHttpResponse httpResponse) {
@@ -314,7 +314,7 @@ public class LyHttpClientUtil3 {
             try {
                 httpResponse.close();
             } catch (IOException e) {
-                log.error("关闭http response失败", e);
+                log.error("close http response fail", e);
             }
         }
     }

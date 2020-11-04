@@ -12,6 +12,7 @@ import com.github.liaomengge.service.base_framework.base.DataResult;
 import com.github.liaomengge.service.base_framework.common.config.FilterConfig;
 import com.github.liaomengge.service.base_framework.common.filter.*;
 import com.github.liaomengge.service.base_framework.common.filter.chain.FilterChain;
+import com.github.liaomengge.service.base_framework.common.pojo.ServiceApiLogInfo;
 import com.github.liaomengge.service.base_framework.common.util.ServiceApiLogUtil;
 import com.github.liaomengge.service.base_framework.common.util.TimeThreadLocalUtil;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -25,17 +26,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.io.InputStreamSource;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -66,16 +58,16 @@ public class ServiceApiAspect {
             "&& execution(public * *(..)) ")
     public Object proceed(ProceedingJoinPoint joinPoint) throws Throwable {
         TimeThreadLocalUtil.set(System.nanoTime());
-        StringBuilder reqArgsBuilder = buildRequestLog(joinPoint);
+        ServiceApiLogInfo requestApiLogInfo = buildRequestLog(joinPoint);
 
         FilterChain filterChain = null;
         try {
             filterChain = defaultFilterChain.cloneChain();
             Object retObj = filterChain.doFilter(joinPoint, filterChain);
-            buildResultLog(joinPoint, retObj, reqArgsBuilder);
+            buildResponseLog(joinPoint, retObj, requestApiLogInfo);
             return retObj;
         } catch (Exception e) {
-            buildExceptionResultLog(e, reqArgsBuilder);
+            buildExceptionResponseLog(e, requestApiLogInfo);
             throw e;
         } finally {
             Optional.ofNullable(filterChain).ifPresent(FilterChain::reset);
@@ -92,79 +84,65 @@ public class ServiceApiAspect {
         }
     }
 
-    private StringBuilder buildRequestLog(ProceedingJoinPoint joinPoint) {
-        StringBuilder sBuilder = new StringBuilder();
-        buildHeaderLog(joinPoint, sBuilder);
-
-        Method method = ServiceApiLogUtil.getMethod(joinPoint);
-        sBuilder.append(", method => " + method.getName());
-        sBuilder.append(", args => ");
-        buildArgsLog(joinPoint, sBuilder);
-        LyWebUtil.getHttpServletRequest().ifPresent(val -> {
-            LyMDCUtil.put(LyMDCUtil.MDC_API_REMOTE_IP, LyNetworkUtil.getIpAddress(val));
-            LyMDCUtil.put(LyMDCUtil.MDC_API_URI, val.getRequestURI());
-        });
-        return sBuilder;
+    private ServiceApiLogInfo buildClassName(ProceedingJoinPoint joinPoint) {
+        ServiceApiLogInfo apiLogInfo = new ServiceApiLogInfo();
+        apiLogInfo.setClassMethod('[' + ServiceApiLogUtil.getClassName(joinPoint) + '#' + ServiceApiLogUtil.getMethodName(joinPoint) + ']');
+        return apiLogInfo;
     }
 
-    private void buildHeaderLog(ProceedingJoinPoint joinPoint, StringBuilder sBuilder) {
-        if (ServiceApiLogUtil.isIgnoreLogHeaderMethod(joinPoint, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogHeaderMethod(joinPoint)) {
+    private void buildHeaderLog(ProceedingJoinPoint joinPoint, ServiceApiLogInfo apiLogInfo) {
+        if (ServiceApiLogUtil.isIgnoreLogHeader(joinPoint, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogHeader(joinPoint)) {
             return;
         }
         LyWebUtil.getHttpServletRequest().ifPresent(val -> {
             Map<String, String> headerMap = LyWebUtil.getRequestHeaders(val);
-            sBuilder.append("header => " + LyJsonUtil.toJson4Log(headerMap));
+            apiLogInfo.setHeaderParams(headerMap);
         });
     }
 
-    private void buildArgsLog(ProceedingJoinPoint joinPoint, StringBuilder sBuilder) {
-        if (ServiceApiLogUtil.isIgnoreLogArgsMethod(joinPoint, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogArgsMethod(joinPoint)) {
-            return;
-        }
-        Object[] args = joinPoint.getArgs();
-        if (Objects.isNull(args) || args.length <= 0) {
-            sBuilder.append("null,");
-            return;
-        }
-        Arrays.stream(args)
-                .filter(Objects::nonNull)
-                .filter(val -> !(val instanceof HttpServletResponse || val instanceof MultipartFile
-                        || val instanceof InputStream || val instanceof InputStreamSource || val instanceof BindingResult))
-                .forEach(val -> {
-                    if (val instanceof HttpServletRequest) {
-                        sBuilder.append(LyJsonUtil.toJson4Log(LyWebUtil.getRequestParams((HttpServletRequest) val))).append(',');
-                    } else if (val instanceof WebRequest) {
-                        sBuilder.append(LyJsonUtil.toJson4Log(((WebRequest) val).getParameterMap())).append(',');
-                    } else {
-                        sBuilder.append(LyJsonUtil.toJson4Log(val)).append(',');
-                    }
-                });
+    private ServiceApiLogInfo buildRequestLog(ProceedingJoinPoint joinPoint) {
+        ServiceApiLogInfo apiLogInfo = buildClassName(joinPoint);
+        buildHeaderLog(joinPoint, apiLogInfo);
+        buildArgsLog(joinPoint, apiLogInfo);
+        LyWebUtil.getHttpServletRequest().ifPresent(val -> {
+            apiLogInfo.setHttpMethod(val.getMethod());
+            apiLogInfo.setQueryParams(val.getQueryString());
+            LyMDCUtil.put(LyMDCUtil.MDC_API_REMOTE_IP, LyNetworkUtil.getIpAddress(val));
+            LyMDCUtil.put(LyMDCUtil.MDC_API_URI, val.getRequestURI());
+        });
+        return apiLogInfo;
     }
 
-    private void buildResultLog(ProceedingJoinPoint joinPoint, Object retObj, StringBuilder sBuilder) {
+    private void buildArgsLog(ProceedingJoinPoint joinPoint, ServiceApiLogInfo apiLogInfo) {
+        if (ServiceApiLogUtil.isIgnoreLogRequest(joinPoint, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogRequest(joinPoint)) {
+            return;
+        }
+        Object requestParams = LyWebUtil.getRequestParams(ServiceApiLogUtil.getMethod(joinPoint), joinPoint.getArgs());
+        apiLogInfo.setRequestBody(requestParams);
+    }
+
+    private void buildResponseLog(ProceedingJoinPoint joinPoint, Object retObj, ServiceApiLogInfo apiLogInfo) {
         long elapsedNanoTime = System.nanoTime() - TimeThreadLocalUtil.get();
-        if (!ServiceApiLogUtil.isIgnoreLogResultMethod(joinPoint, filterConfig) && !ServiceApiLogUtil.isIgnoreAopLogResultMethod(joinPoint)) {
+        if (!ServiceApiLogUtil.isIgnoreLogResponse(joinPoint, filterConfig) && !ServiceApiLogUtil.isIgnoreAopLogResponse(joinPoint)) {
             if (retObj instanceof DataResult) {
                 DataResult dataResult = (DataResult) retObj;
                 dataResult.setElapsedMilliSeconds(elapsedNanoTime);
-                sBuilder.append(" result => " + LyJsonUtil.toJson4Log(dataResult));
-            } else if (retObj instanceof String) {
-                sBuilder.append(" result => " + retObj);
+                apiLogInfo.setResponseBody(dataResult);
             } else {
-                sBuilder.append(" result => " + LyJsonUtil.toJson4Log(retObj));
+                apiLogInfo.setResponseBody(retObj);
             }
         }
         LyMDCUtil.put(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME,
                 String.valueOf(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime)));
-        log.info("请求响应日志: {}", sBuilder.toString());
+        log.info("request response log info => {}", LyJsonUtil.toJson4Log(apiLogInfo));
     }
 
-    private void buildExceptionResultLog(Exception e, StringBuilder sBuilder) {
+    private void buildExceptionResponseLog(Exception e, ServiceApiLogInfo apiLogInfo) {
         long elapsedNanoTime = System.nanoTime() - TimeThreadLocalUtil.get();
-        sBuilder.append(" exception result => " + LyThrowableUtil.getStackTrace(e));
+        apiLogInfo.setExceptionStackTrace(LyThrowableUtil.getStackTrace(e));
         LyMDCUtil.put(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME,
                 String.valueOf(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime)));
-        log.error("请求响应日志: {}", sBuilder.toString());
+        log.error("request response log info => {}", LyJsonUtil.toJson4Log(apiLogInfo));
     }
 
     @PostConstruct
@@ -172,7 +150,8 @@ public class ServiceApiAspect {
         defaultFilterChain = new FilterChain();
         boolean enabledDefaultFilter = filterConfig.isEnabledDefaultFilter();
         if (enabledDefaultFilter) {
-            defaultFilterChain.addFilter(new FailFastFilter(filterConfig))
+            defaultFilterChain
+                    .addFilter(new FailFastFilter(filterConfig))
                     .addFilter(new TraceFilter())
                     .addFilter(new SignFilter(filterConfig))
                     .addFilter(new ParamValidateFilter())

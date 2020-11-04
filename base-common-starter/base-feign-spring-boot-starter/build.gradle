@@ -7,4 +7,6 @@ dependencies {
 
     //Feign Decoder坑: https://mp.weixin.qq.com/s/6JPSZpskQ_HNj70sSC5JQw
     api 'com.fasterxml.jackson.datatype:jackson-datatype-joda'
+
+    api "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel"
 }

@@ -31,7 +31,10 @@ public class FeignAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public HeaderRequestInterceptor headerRequestInterceptor() {
         return new HeaderRequestInterceptor();
     }
+
+
 }

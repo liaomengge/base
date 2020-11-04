@@ -3,19 +3,16 @@ package com.github.liaomengge.base_common.helper.async;
 import com.github.liaomengge.base_common.helper.async.callback.BaseFutureCallback;
 import com.github.liaomengge.base_common.helper.async.task.SingleTask;
 import com.github.liaomengge.base_common.utils.thread.LyThreadPoolExecutorUtil;
-
 import com.google.common.util.concurrent.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.springframework.beans.factory.InitializingBean;
 
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.springframework.beans.factory.InitializingBean;
-
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 /**
  * Created by liaomengge on 17/7/21.
@@ -49,8 +46,8 @@ public class GuavaAsyncFuture implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         if (Objects.isNull(executorService)) {
-            ExecutorService asyncExecutorService = LyThreadPoolExecutorUtil.buildCpuCoreThreadPool("async-exec", 30L,
-                    TimeUnit.SECONDS, new LinkedBlockingQueue<>(32));
+            ExecutorService asyncExecutorService = LyThreadPoolExecutorUtil.buildCpuCoreThreadPool("async-guava-exec",
+                    30L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(32));
             executorService = MoreExecutors.listeningDecorator(asyncExecutorService);
         }
     }

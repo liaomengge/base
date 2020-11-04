@@ -1,12 +1,13 @@
 package com.github.liaomengge.base_common.helper.concurrent.threadlocal.map;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.ThreadLocalConsumer;
-import com.github.liaomengge.base_common.support.threadlocal.ThreadLocalContextMap;
+import com.github.liaomengge.base_common.support.threadlocal.ThreadLocalContextUtils;
+import org.slf4j.MDC;
 
 import java.util.Map;
 import java.util.function.Consumer;
 
-import org.slf4j.MDC;
+import static com.github.liaomengge.base_common.support.threadlocal.ThreadLocalContextUtils.getBaseThreadLocalContextMap;
 
 /**
  * Created by liaomengge on 2020/5/20.
@@ -23,7 +24,7 @@ public class MapContextConsumer<V> extends ThreadLocalConsumer<Map<String, Objec
 
     @Override
     public void set(Map<String, Object> contextMap) {
-        ThreadLocalContextMap.putAll(contextMap);
+        ThreadLocalContextUtils.putAll(getBaseThreadLocalContextMap(), contextMap);
     }
 
     @Override
@@ -32,6 +33,6 @@ public class MapContextConsumer<V> extends ThreadLocalConsumer<Map<String, Objec
     }
 
     public static <V> MapContextConsumer<V> wrapConsumer(Consumer<V> consumer) {
-        return new MapContextConsumer(consumer, ThreadLocalContextMap.getAll());
+        return new MapContextConsumer(consumer, ThreadLocalContextUtils.getAll(getBaseThreadLocalContextMap()));
     }
 }

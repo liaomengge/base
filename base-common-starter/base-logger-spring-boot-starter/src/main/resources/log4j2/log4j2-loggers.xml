@@ -35,6 +35,14 @@
         <AppenderRef ref="SERVICE_CLIENT_ERROR_LOG"/>
     </AsyncLogger>
 
+    <AsyncLogger name="com.github.liaomengge.base_common.feign" level="INFO" includeLocation="true"
+                 additivity="false">
+        <AppenderRef ref="STDOUT"/>
+        <AppenderRef ref="SERVICE_CLIENT_INFO_LOG"/>
+        <AppenderRef ref="SERVICE_CLIENT_WARN_LOG"/>
+        <AppenderRef ref="SERVICE_CLIENT_ERROR_LOG"/>
+    </AsyncLogger>
+
     <Logger name="com.github.liaomengge.base_common.utils.log.LyMetricLogUtil" level="INFO" additivity="false">
         <AppenderRef ref="STDOUT"/>
         <AppenderRef ref="CUSTOM_INFO_LOG"/>

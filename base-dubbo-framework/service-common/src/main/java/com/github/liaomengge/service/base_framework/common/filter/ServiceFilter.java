@@ -190,7 +190,7 @@ public class ServiceFilter extends AbstractFilter {
             }
         }
 
-        Map<String, Object> queryParamMap = LyWebUtil.getRequestParams(servletRequest);
+        Map<String, String[]> queryParamMap = LyWebUtil.getRequestParams(servletRequest);
         logData.setInvocation("RpcInvocation[methodName=" + methodName + "], arguments=" + queryParamMap.toString());
     }
 

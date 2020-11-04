@@ -3,16 +3,14 @@ package com.github.liaomengge.base_common.helper.rest.async;
 import com.github.liaomengge.base_common.helper.rest.data.BaseRequest;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.string.LyStringUtil;
-
-import java.io.IOException;
-
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.client.HttpStatusCodeException;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import java.io.IOException;
 
 /**
  * Created by liaomengge on 17/3/9.
@@ -39,6 +37,7 @@ public abstract class CustomListenableCallBack<T> implements ListenableFutureCal
         if (baseRequest != null && baseRequest.getData() != null) {
             requestParams = LyStringUtil.getValue(baseRequest.getData());
         }
-        log.error("请求参数[{}], 异步调用服务失败, 状态码[{}], 异常原因 ===> [{}]", requestParams, statusCode, throwable.getMessage());
+        log.error("request params[{}], 异步call service fail, 状态码[{}], exception reason ===> [{}]", requestParams,
+                statusCode, throwable.getMessage());
     }
 }

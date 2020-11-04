@@ -2,14 +2,12 @@ package com.github.liaomengge.base_common.utils.okhttp;
 
 import com.github.liaomengge.base_common.support.exception.CommunicationException;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import okhttp3.*;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-
-import okhttp3.*;
 
 /**
  * Created by liaomengge on 2020/8/6.
@@ -161,10 +159,11 @@ public class LyOkHttpUtil {
             if (response.isSuccessful()) {
                 return response.body().string();
             }
-            log.warn("http请求失败, [url={}, errorCode = {}, message = {}]", url, response.code(), response.message());
+            log.warn("http call fail, [url={}, errorCode = {}, message = {}]", url, response.code(),
+                    response.message());
         } catch (Throwable t) {
-            log.warn("http请求失败, url=> " + url, t);
-            throw new CommunicationException("http请求失败, url=> " + url, t);
+            log.warn("http call fail, url=> " + url, t);
+            throw new CommunicationException("http call fail, url=> " + url, t);
         }
         return null;
     }

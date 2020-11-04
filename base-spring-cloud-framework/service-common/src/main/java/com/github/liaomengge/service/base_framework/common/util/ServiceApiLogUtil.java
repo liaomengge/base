@@ -23,17 +23,21 @@ public class ServiceApiLogUtil {
         return ((MethodSignature) joinPoint.getSignature()).getMethod();
     }
 
+    public String getClassName(ProceedingJoinPoint joinPoint) {
+        return getMethod(joinPoint).getDeclaringClass().getSimpleName();
+    }
+
     public String getMethodName(ProceedingJoinPoint joinPoint) {
         return getMethod(joinPoint).getName();
     }
 
-    public boolean isIgnoreAopLogHeaderMethod(ProceedingJoinPoint joinPoint) {
+    public boolean isIgnoreAopLogHeader(ProceedingJoinPoint joinPoint) {
         Method method = getMethod(joinPoint);
         IgnoreServiceApiAop ignoreServiceApiAop = method.getAnnotation(IgnoreServiceApiAop.class);
         return Optional.ofNullable(ignoreServiceApiAop).map(IgnoreServiceApiAop::ignoreHeader).orElse(Boolean.FALSE);
     }
 
-    public boolean isIgnoreLogHeaderMethod(ProceedingJoinPoint joinPoint, FilterConfig filterConfig) {
+    public boolean isIgnoreLogHeader(ProceedingJoinPoint joinPoint, FilterConfig filterConfig) {
         String ignoreHeaderMethodName = filterConfig.getLog().getIgnoreHeaderMethodName();
         if (StringUtils.equalsIgnoreCase(ignoreHeaderMethodName, "*")) {
             return true;
@@ -46,14 +50,14 @@ public class ServiceApiLogUtil {
         return false;
     }
 
-    public boolean isIgnoreAopLogArgsMethod(ProceedingJoinPoint joinPoint) {
+    public boolean isIgnoreAopLogRequest(ProceedingJoinPoint joinPoint) {
         Method method = getMethod(joinPoint);
         IgnoreServiceApiAop ignoreServiceApiAop = method.getAnnotation(IgnoreServiceApiAop.class);
         return Optional.ofNullable(ignoreServiceApiAop).map(IgnoreServiceApiAop::ignoreArgs).orElse(Boolean.FALSE);
     }
 
-    public boolean isIgnoreLogArgsMethod(ProceedingJoinPoint joinPoint, FilterConfig filterConfig) {
-        String ignoreArgsMethodName = filterConfig.getLog().getIgnoreArgsMethodName();
+    public boolean isIgnoreLogRequest(ProceedingJoinPoint joinPoint, FilterConfig filterConfig) {
+        String ignoreArgsMethodName = filterConfig.getLog().getIgnoreRequestMethodName();
         if (StringUtils.isNotBlank(ignoreArgsMethodName)) {
             String methodName = getMethodName(joinPoint);
             Iterable<String> iterable = SPLITTER.split(ignoreArgsMethodName);
@@ -62,14 +66,14 @@ public class ServiceApiLogUtil {
         return false;
     }
 
-    public boolean isIgnoreAopLogResultMethod(ProceedingJoinPoint joinPoint) {
+    public boolean isIgnoreAopLogResponse(ProceedingJoinPoint joinPoint) {
         Method method = getMethod(joinPoint);
         IgnoreServiceApiAop ignoreServiceApiAop = method.getAnnotation(IgnoreServiceApiAop.class);
         return Optional.ofNullable(ignoreServiceApiAop).map(IgnoreServiceApiAop::ignoreResult).orElse(Boolean.FALSE);
     }
 
-    public boolean isIgnoreLogResultMethod(ProceedingJoinPoint joinPoint, FilterConfig filterConfig) {
-        String ignoreResultMethodName = filterConfig.getLog().getIgnoreResultMethodName();
+    public boolean isIgnoreLogResponse(ProceedingJoinPoint joinPoint, FilterConfig filterConfig) {
+        String ignoreResultMethodName = filterConfig.getLog().getIgnoreResponseMethodName();
         if (StringUtils.isNotBlank(ignoreResultMethodName)) {
             String methodName = getMethodName(joinPoint);
             Iterable<String> iterable = SPLITTER.split(ignoreResultMethodName);

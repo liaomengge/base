@@ -71,11 +71,12 @@ public class SyncClientTemplate extends Template.Sync {
                 LyMDCUtil.put(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME, String.valueOf(tookMs));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url,
+                        log.info("call service success, url[{}], elapsed time[{}]ms, response result ===> [{}]", url,
                                 TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
                                 Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
                     } else {
-                        log.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
+                        log.info("call service success, request params[{}], url[{}], elapsed time[{}]ms, response " +
+                                        "result ===> [{}]",
                                 LyJsonUtil.toJson4Log(baseRequest.getData()), url,
                                 TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
                                 Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
@@ -117,11 +118,12 @@ public class SyncClientTemplate extends Template.Sync {
                 LyMDCUtil.put(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME, String.valueOf(tookMs));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url,
+                        log.info("call service success, url[{}], elapsed time[{}]ms, response result ===> [{}]", url,
                                 TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
                                 Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
                     } else {
-                        log.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
+                        log.info("call service success, request params[{}], url[{}], elapsed time[{}]ms, response " +
+                                        "result ===> [{}]",
                                 LyJsonUtil.toJson4Log(baseRequest.getData()), url,
                                 TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
                                 Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
@@ -156,11 +158,12 @@ public class SyncClientTemplate extends Template.Sync {
                 LyMDCUtil.put(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME, String.valueOf(tookMs));
                 if (isSuccess) {
                     if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                        log.info("调用服务成功, 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]", url,
+                        log.info("call service success, url[{}], elapsed time[{}]ms, response result ===> [{}]", url,
                                 TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
                                 Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
                     } else {
-                        log.info("调用服务成功, 请求参数[{}], 服务地址[{}], 耗时[{}]ms, 返回结果 ===> [{}]",
+                        log.info("call service success, request params[{}], url[{}], elapsed time[{}]ms, response " +
+                                        "result ===> [{}]",
                                 LyJsonUtil.toJson4Log(baseRequest.getData()), url,
                                 TimeUnit.NANOSECONDS.toMillis(endTime - startTime),
                                 Optional.ofNullable(responseEntity).map(ResponseEntity::getBody).map(LyJsonUtil::toJson4Log).orElse(null));
@@ -185,20 +188,21 @@ public class SyncClientTemplate extends Template.Sync {
             BlockException e = (BlockException) LyExceptionUtil.unwrap(t);
             Optional.ofNullable(e).map(BlockException::getRule).map(AbstractRule::getResource).ifPresent(val -> {
                 if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                    log.error("调用服务失败, 服务地址[{}], 异常原因 ===> [{}]", url, "[" + e + "] Block Exception...");
+                    log.error("call service fail, url[{}], exception reason ===> [{}]", url, "[" + e + "] Block " +
+                            "Exception...");
                 } else {
-                    log.error("调用服务失败, 请求参数[{}], 服务地址[{}], 异常原因 ===> [{}]",
+                    log.error("call service fail, request params[{}], url[{}], exception reason ===> [{}]",
                             LyJsonUtil.toJson4Log(baseRequest.getData()), url, "[" + e + "] Block Exception...");
                 }
             });
         } else {
             if (isIgnoreLogMethod(url, ignoreLogMethodName)) {
-                log.error("调用服务失败, 服务地址[{}], 异常原因 ===> [{}]", url, t.getMessage());
+                log.error("call service fail, url[{}], exception reason ===> [{}]", url, t.getMessage());
             } else {
-                log.error("调用服务失败, 请求参数[{}], 服务地址[{}], 异常原因 ===> [{}]",
+                log.error("call service fail, request params[{}], url[{}], exception reason ===> [{}]",
                         LyJsonUtil.toJson4Log(baseRequest.getData()), url, t.getMessage());
             }
         }
-        throw new CommunicationException("http请求失败, url=> " + url, t);
+        throw new CommunicationException("http call fail, url=> " + url, t);
     }
 }

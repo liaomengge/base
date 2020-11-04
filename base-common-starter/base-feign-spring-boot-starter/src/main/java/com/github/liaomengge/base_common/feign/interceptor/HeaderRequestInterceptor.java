@@ -22,15 +22,6 @@ public class HeaderRequestInterceptor implements RequestInterceptor {
                     requestTemplate.header(name, value);
                 }
             }
-
-            Enumeration<String> reqAttributeNames = request.getAttributeNames();
-            if (reqAttributeNames != null) {
-                while (reqAttributeNames.hasMoreElements()) {
-                    String attrName = reqAttributeNames.nextElement();
-                    String value = request.getAttribute(attrName).toString();
-                    requestTemplate.header(attrName, value);
-                }
-            }
         });
     }
 }

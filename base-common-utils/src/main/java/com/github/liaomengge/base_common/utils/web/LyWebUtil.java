@@ -1,27 +1,39 @@
 package com.github.liaomengge.base_common.utils.web;
 
 import com.github.liaomengge.base_common.support.misc.Charsets;
-import com.github.liaomengge.base_common.support.misc.consts.ToolConst;
+import com.github.liaomengge.base_common.utils.collection.LyMoreCollectionUtil;
 import com.github.liaomengge.base_common.utils.io.LyIOUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Function;
+
+import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.JOINER;
 
 /**
  * Created by liaomengge on 17/11/7.
@@ -62,44 +74,43 @@ public class LyWebUtil {
      * 获取Get/Post请求参数(文件上传除外)
      *
      * @param servletRequest
+     * @param function
+     * @param <V>
      * @return
      */
-    public Map<String, Object> getRequestParams(HttpServletRequest servletRequest) {
-        Map<String, Object> paramMap = new TreeMap<>();
+    public <V> Map<String, V> getRequestParams(HttpServletRequest servletRequest, Function<String[], V> function) {
+        Map<String, V> parameterMap = Maps.newHashMap();
         Enumeration<String> paramNames = servletRequest.getParameterNames();
         while (paramNames != null && paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
             String[] values = servletRequest.getParameterValues(paramName);
             if (values == null || values.length == 0) {
-                paramMap.put(paramName, null);
-            } else if (values.length > 1) {
-                paramMap.put(paramName, values);
+                parameterMap.put(paramName, null);
             } else {
-                paramMap.put(paramName, values[0]);
+                parameterMap.put(paramName, function.apply(values));
             }
         }
-        return paramMap;
+        return parameterMap;
     }
 
     /**
-     * 获取Get/Post Mutil请求参数(文件上传除外)
+     * 获取Get/Post请求参数(文件上传除外)
      *
      * @param servletRequest
      * @return
      */
-    public MultivaluedMap<String, String> getRequestMultiParams(HttpServletRequest servletRequest) {
-        MultivaluedMap<String, String> multivaluedMap = new MultivaluedHashMap<>();
-        Enumeration<String> paramNames = servletRequest.getParameterNames();
-        while (paramNames != null && paramNames.hasMoreElements()) {
-            String paramName = paramNames.nextElement();
-            String[] values = servletRequest.getParameterValues(paramName);
-            if (values == null || values.length == 0) {
-                multivaluedMap.put(paramName, Lists.newArrayList());
-            } else {
-                multivaluedMap.put(paramName, Lists.newArrayList(values));
-            }
-        }
-        return multivaluedMap;
+    public Map<String, String[]> getRequestParams(HttpServletRequest servletRequest) {
+        return getRequestParams(servletRequest, Function.identity());
+    }
+
+    /**
+     * 获取Get/Post请求参数(文件上传除外)
+     *
+     * @param servletRequest
+     * @return
+     */
+    public Map<String, List<String>> getRequestMultiParams(HttpServletRequest servletRequest) {
+        return getRequestParams(servletRequest, LyMoreCollectionUtil::toList);
     }
 
     /**
@@ -109,18 +120,71 @@ public class LyWebUtil {
      * @return
      */
     public Map<String, String> getRequestStringParams(HttpServletRequest servletRequest) {
-        Map<String, String> paramMap = new TreeMap<>();
-        Enumeration<String> paramNames = servletRequest.getParameterNames();
-        while (paramNames != null && paramNames.hasMoreElements()) {
-            String paramName = paramNames.nextElement();
-            String[] values = servletRequest.getParameterValues(paramName);
-            if (values == null || values.length == 0) {
-                paramMap.put(paramName, null);
-            } else {
-                paramMap.put(paramName, ToolConst.JOINER.join(values));
+        return getRequestParams(servletRequest, JOINER::join);
+    }
+
+    /**
+     * 获取切面请求信息
+     *
+     * @param method
+     * @param args
+     * @return
+     */
+    public Object getRequestParams(Method method, Object[] args) {
+        Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+        if (ArrayUtils.isEmpty(args) || ArrayUtils.isEmpty(parameterAnnotations)) {
+            return null;
+        }
+        if (args.length == 1) {
+            if (args[0] instanceof HttpServletRequest) {
+                HttpServletRequest request = (HttpServletRequest) args[0];
+                return getRequestParams(request);
+            }
+            if (args[0] instanceof WebRequest) {
+                WebRequest request = (WebRequest) args[0];
+                return request.getParameterMap();
             }
         }
-        return paramMap;
+        List<Object> parameterList = Lists.newArrayList();
+        for (int i = 0; i < parameterAnnotations.length && i < args.length; i++) {
+            if (validateAnnotation(parameterAnnotations[i])) {
+                parameterList.add(args[i]);
+            } else {
+                parameterList.add(convertStreamArg(args[i]));
+            }
+        }
+        return parameterList;
+    }
+
+    private boolean validateAnnotation(Annotation[] annotations) {
+        return Arrays.stream(annotations).anyMatch(annotation ->
+                annotation instanceof RequestBody || annotation instanceof RequestParam
+                        || annotation instanceof CookieValue || annotation instanceof PathVariable
+                        || annotation instanceof ModelAttribute || annotation instanceof RequestAttribute
+                        || annotation instanceof RequestHeader || annotation instanceof SessionAttribute
+        );
+    }
+
+    private String convertStreamArg(Object arg) {
+        if (arg instanceof InputStream || arg instanceof InputStreamSource) {
+            return "[Binary data]";
+        }
+        if (arg instanceof ServletRequest) {
+            return "[ServletRequest]";
+        }
+        if (arg instanceof WebRequest) {
+            return "[WebRequest]";
+        }
+        if (arg instanceof ServletResponse) {
+            return "[ServletResponse]";
+        }
+        if (arg instanceof Model) {
+            return "[Model]";
+        }
+        if (arg instanceof BindingResult) {
+            return "[BindingResult]";
+        }
+        return Objects.toString(arg, "NULL");
     }
 
     /**

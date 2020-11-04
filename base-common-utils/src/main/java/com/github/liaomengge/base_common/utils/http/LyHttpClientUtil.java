@@ -368,7 +368,7 @@ public class LyHttpClientUtil {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    log.error("关闭http client inputStream失败", e);
+                    log.error("close http client inputStream fail", e);
                 }
             }
         }
@@ -380,8 +380,8 @@ public class LyHttpClientUtil {
         } else {
             LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
         }
-        log.warn("调用服务失败, 服务地址: " + url, t);
-        throw new CommunicationException("http请求失败, url=> " + url, t);
+        log.warn("call service fail, url: " + url, t);
+        throw new CommunicationException("http call fail, url=> " + url, t);
     }
 
     private static void closeQuietly(CloseableHttpClient httpClient) {
@@ -389,7 +389,7 @@ public class LyHttpClientUtil {
             try {
                 httpClient.close();
             } catch (IOException e) {
-                log.error("关闭http client失败", e);
+                log.error("close http client fail", e);
             }
         }
     }

@@ -63,10 +63,10 @@ public class HttpLoggingInterceptor implements Interceptor {
             tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
             LyMDCUtil.put(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME, String.valueOf(tookMs));
             if (isIgnoreLogMethod(request)) {
-                log.warn("请求路径 ==> [{}], 请求异常 ===> [{}], 耗时[{}]ms",
+                log.error("url ==> [{}], exception reason ===> [{}], elapsed time[{}]ms",
                         buildReqUrl(request), LyThrowableUtil.getStackTrace(t), tookMs);
             } else {
-                log.warn("请求路径 ==> [{}], 请求参数 ==> [{}], 请求异常 ===> [{}], 耗时[{}]ms",
+                log.error("url ==> [{}], request params ==> [{}], exception reason ===> [{}], elapsed time[{}]ms",
                         buildReqUrl(request), buildReqStr(request), LyThrowableUtil.getStackTrace(t), tookMs);
             }
             throw t;
@@ -103,19 +103,20 @@ public class HttpLoggingInterceptor implements Interceptor {
                 }
 
                 if (isIgnoreLogMethod(request)) {
-                    log.info("请求路径 ==> [{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl, respStr, execTime);
+                    log.info("url ==> [{}], response result ===> [{}], elapsed time[{}]ms", reqUrl, respStr, execTime);
                 } else {
-                    log.info("请求路径 ==> [{}], 请求参数 ==> [{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl, reqStr,
-                            respStr, execTime);
+                    log.info("url ==> [{}], request params ==> [{}], response result ===> [{}], elapsed time[{}]ms",
+                            reqUrl, reqStr, respStr, execTime);
                 }
                 statIncrement(prefix + RetrofitMetricsConst.REQ_EXE_SUC);
             } else {
                 if (isIgnoreLogMethod(request)) {
-                    log.warn("请求路径 ==> [{}], 错误码[{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl,
+                    log.warn("url ==> [{}], error code[{}], response result ===> [{}], elapsed time[{}]ms", reqUrl,
                             response.code(), response.message(), execTime);
                 } else {
-                    log.warn("请求路径 ==> [{}], 请求参数 ==> [{}], 错误码[{}], 返回信息 ===> [{}], 耗时[{}]ms", reqUrl,
-                            reqStr, response.code(), response.message(), execTime);
+                    log.warn("url ==> [{}], request params ==> [{}], error code[{}], response result ===> [{}], " +
+                                    "elapsed time[{}]ms",
+                            reqUrl, reqStr, response.code(), response.message(), execTime);
                 }
                 statIncrement(prefix + RetrofitMetricsConst.REQ_EXE_FAIL);
             }

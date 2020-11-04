@@ -27,6 +27,7 @@ dependencyManagement {
         dependency "com.github.liaomengge:base-eureka-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "com.github.liaomengge:base-framework-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "com.github.liaomengge:base-fastjson-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-feign-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "com.github.liaomengge:base-health-check-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "com.github.liaomengge:base-influx-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "com.github.liaomengge:base-graceful-spring-boot-starter:${versions.baseSpringBootStarter}"

@@ -12,7 +12,25 @@ import java.util.concurrent.TimeUnit;
 @ConfigurationProperties("base.feign")
 public class FeignProperties {
 
+    private LoggerProperties logger = new LoggerProperties();
+    private AspectProperties aspect = new AspectProperties();
     private OkHttpProperties okhttp = new OkHttpProperties();
+
+    @Data
+    public static class LoggerProperties {
+        private boolean enabled = true;
+        private String ignoreHeaderMethodName = "*";//以逗号分隔,*表示ignore所有
+        private String ignoreRequestMethodName = "";//以逗号分隔
+        private String ignoreResponseMethodName = "";//以逗号分隔
+    }
+
+    @Data
+    public static class AspectProperties {
+        private boolean enabled;
+        private String ignoreHeaderMethodName = "*";//以逗号分隔,*表示ignore所有
+        private String ignoreRequestMethodName = "";//以逗号分隔
+        private String ignoreResponseMethodName = "";//以逗号分隔
+    }
 
     @Data
     public static class OkHttpProperties {

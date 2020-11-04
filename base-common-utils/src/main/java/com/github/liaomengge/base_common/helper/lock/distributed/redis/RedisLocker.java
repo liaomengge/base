@@ -1,11 +1,13 @@
 package com.github.liaomengge.base_common.helper.lock.distributed.redis;
 
-import com.github.liaomengge.base_common.helper.lock.distributed.AcquiredLockWorker;
-import com.github.liaomengge.base_common.helper.lock.distributed.DistributedLocker;
+import com.github.liaomengge.base_common.helper.lock.DistributedLocker;
+import com.github.liaomengge.base_common.helper.lock.distributed.callback.AcquiredLockCallback;
 import org.redisson.api.RLock;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
+import static com.github.liaomengge.base_common.helper.lock.distributed.consts.DistributedConst.*;
 
 /**
  * Created by liaomengge on 17/12/19.
@@ -98,12 +100,12 @@ public class RedisLocker implements DistributedLocker {
      * 锁不可用时,将一直等待
      *
      * @param lockName
-     * @param worker
+     * @param callback
      * @param <T>
      * @return
      */
-    public <T> T lock(String lockName, AcquiredLockWorker<T> worker) {
-        return lock(lockName, worker, DEFAULT_TIMEOUT, DEFAULT_TIME_UNIT);
+    public <T> T lock(String lockName, AcquiredLockCallback<T> callback) {
+        return lock(lockName, callback, DEFAULT_TIMEOUT, DEFAULT_TIME_UNIT);
     }
 
     /**
@@ -111,18 +113,18 @@ public class RedisLocker implements DistributedLocker {
      * 锁不可用时,将一直等待
      *
      * @param lockName
-     * @param worker
+     * @param callback
      * @param leaseTime 锁超时时间, 超时后,自动释放
      * @param timeUnit
      * @param <T>
      * @return
      */
-    public <T> T lock(String lockName, AcquiredLockWorker<T> worker, long leaseTime, TimeUnit timeUnit) {
+    public <T> T lock(String lockName, AcquiredLockCallback<T> callback, long leaseTime, TimeUnit timeUnit) {
         RLock rLock = null;
         try {
             rLock = redissonConfigManager.getRedissonClient().getLock(REDIS_LOCKER_PREFIX + lockName);
             rLock.lock(leaseTime, timeUnit);
-            return worker.lockSuccess();
+            return callback.onSuccess();
         } finally {
             if (Objects.nonNull(rLock) && rLock.isHeldByCurrentThread()) {
                 rLock.unlock();
@@ -135,12 +137,12 @@ public class RedisLocker implements DistributedLocker {
      * 必须手动释放锁
      *
      * @param lockName
-     * @param worker
+     * @param callback
      * @param <T>
      * @return
      */
-    public <T> T tryLock(String lockName, AcquiredLockWorker<T> worker) {
-        return tryLock(lockName, worker, 0, -1, DEFAULT_TIME_UNIT);
+    public <T> T tryLock(String lockName, AcquiredLockCallback<T> callback) {
+        return tryLock(lockName, callback, 0, -1, DEFAULT_TIME_UNIT);
     }
 
     /**
@@ -148,28 +150,28 @@ public class RedisLocker implements DistributedLocker {
      * 自动设置释放锁的时间
      *
      * @param lockName
-     * @param worker
+     * @param callback
      * @param leaseTime
      * @param timeUnit
      * @param <T>
      * @return
      */
-    public <T> T tryLock(String lockName, AcquiredLockWorker<T> worker, long leaseTime, TimeUnit timeUnit) {
-        return tryLock(lockName, worker, 0, leaseTime, timeUnit);
+    public <T> T tryLock(String lockName, AcquiredLockCallback<T> callback, long leaseTime, TimeUnit timeUnit) {
+        return tryLock(lockName, callback, 0, leaseTime, timeUnit);
     }
 
     /**
      * 指定默认超时单位：秒
      *
      * @param lockName
-     * @param worker
+     * @param callback
      * @param waitTime
      * @param leaseTime
      * @param <T>
      * @return
      */
-    public <T> T tryLock(String lockName, AcquiredLockWorker<T> worker, long waitTime, long leaseTime) {
-        return tryLock(lockName, worker, waitTime, leaseTime, DEFAULT_TIME_UNIT);
+    public <T> T tryLock(String lockName, AcquiredLockCallback<T> callback, long waitTime, long leaseTime) {
+        return tryLock(lockName, callback, waitTime, leaseTime, DEFAULT_TIME_UNIT);
     }
 
     /**
@@ -177,36 +179,36 @@ public class RedisLocker implements DistributedLocker {
      * 指定锁超时时间
      *
      * @param lockName
-     * @param worker
+     * @param callback
      * @param waitTime  最多等待时间
      * @param leaseTime 上锁后自动释放锁时间
      * @param timeUnit
      * @param <T>
      * @return
      */
-    public <T> T tryLock(String lockName, AcquiredLockWorker<T> worker, long waitTime, long leaseTime,
+    public <T> T tryLock(String lockName, AcquiredLockCallback<T> callback, long waitTime, long leaseTime,
                          TimeUnit timeUnit) {
         RLock rLock = redissonConfigManager.getRedissonClient().getLock(REDIS_LOCKER_PREFIX + lockName);
-        boolean isSuccess = false;
+        boolean isSuccess;
         try {
             isSuccess = rLock.tryLock(waitTime, leaseTime, timeUnit);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
+            return callback.onFailure(e);
         }
         if (isSuccess) {
             try {
-                return worker.lockSuccess();
+                return callback.onSuccess();
             } finally {
                 if (Objects.nonNull(rLock)) {
                     if (rLock.isHeldByCurrentThread()) {
                         rLock.unlock();
                         log.info("释放锁[{}]成功", rLock.getName());
-                    } else if (rLock.getHoldCount() == 0) {
+                    } else if (rLock.getHoldCount() == 0 && rLock.isLocked()) {
                         log.warn("锁[{}]已expire, 已被自动释放, 请合理设置leaseTime时间", rLock.getName());
                     }
                 }
             }
         }
-
-        return worker.lockFail();
+        return callback.onFailure();
     }
 }
