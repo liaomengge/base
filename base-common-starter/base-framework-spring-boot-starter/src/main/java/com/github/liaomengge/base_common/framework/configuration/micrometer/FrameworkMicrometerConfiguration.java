@@ -1,4 +1,4 @@
-package com.github.liaomengge.base_common.framework.configuration;
+package com.github.liaomengge.base_common.framework.configuration.micrometer;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2020/9/12.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class FrameworkMicrometerConfiguration {
 
     @Value("${spring.application.name}")

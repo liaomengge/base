@@ -20,7 +20,7 @@ import javax.servlet.Servlet;
 /**
  * Created by liaomengge on 2019/11/29.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({Servlet.class, DispatcherServlet.class, GlobalErrorAttributes.class, GlobalErrorController.class})
 @ConditionalOnWebApplication
 public class FrameworkErrorConfiguration {

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 /**
  * Created by liaomengge on 2019/10/16.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionOnFilter
 @Import(FilterImportSelector.class)
 public class FilterConfiguration {

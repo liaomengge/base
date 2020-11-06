@@ -92,10 +92,6 @@ public class FeignInterceptor implements MethodInterceptor, RequestInterceptor {
         feignLogInfo.setUrl(template.url());
         feignLogInfo.setHttpMethod(template.method());
         feignLogInfo.setQueryParams(template.queries());
-        template
-        if (!FeignLogUtil.isIgnoreLogHeader(method.getName(), feignProperties)) {
-            feignLogInfo.setHeaderParams(template.headers());
-        }
         ThreadLocalContextUtils.put(feignLogInfoThreadContextMap, FEIGN_LOG_INFO_THREAD_CONTEXT, feignLogInfo);
     }
 }

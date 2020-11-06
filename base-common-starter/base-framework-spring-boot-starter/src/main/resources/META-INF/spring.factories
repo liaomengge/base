@@ -1,1 +1,3 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.liaomengge.base_common.framework.FrameworkAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.liaomengge.base_common.framework.FrameworkAutoConfiguration,\
+  com.github.liaomengge.base_common.framework.configuration.jackson.FrameworkJacksonAutoConfiguration

@@ -1,8 +1,10 @@
 package com.github.liaomengge.base_common.framework;
 
-import com.github.liaomengge.base_common.framework.configuration.FrameworkCorsConfiguration;
-import com.github.liaomengge.base_common.framework.configuration.FrameworkMicrometerConfiguration;
-import com.github.liaomengge.base_common.framework.configurer.FrameworkWebMvcConfigurer;
+import com.github.liaomengge.base_common.framework.configuration.convert.FrameworkWebMvcConfigurer;
+import com.github.liaomengge.base_common.framework.configuration.cors.FrameworkCorsConfiguration;
+import com.github.liaomengge.base_common.framework.configuration.micrometer.FrameworkMicrometerConfiguration;
+import com.github.liaomengge.base_common.framework.configuration.xss.FrameworkXssConfiguration;
+import com.github.liaomengge.base_common.framework.consts.FrameworkConst;
 import com.github.liaomengge.base_common.framework.error.FrameworkErrorConfiguration;
 import com.github.liaomengge.base_common.framework.registry.FrameworkBeanRegistryConfiguration;
 import com.github.liaomengge.base_common.framework.selector.FilterConfiguration;
@@ -29,12 +31,12 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 2018/12/20.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)
 @EnableConfigurationProperties(FrameworkProperties.class)
 @Import({FrameworkBeanRegistryConfiguration.class, FrameworkErrorConfiguration.class,
-        FrameworkWebMvcConfigurer.class, FilterConfiguration.class,
-        FrameworkCorsConfiguration.class, FrameworkMicrometerConfiguration.class})
+        FilterConfiguration.class, FrameworkWebMvcConfigurer.class,
+        FrameworkCorsConfiguration.class, FrameworkXssConfiguration.class, FrameworkMicrometerConfiguration.class})
 public class FrameworkAutoConfiguration {
 
     @Autowired
@@ -48,7 +50,7 @@ public class FrameworkAutoConfiguration {
 
     @Bean("com.github.liaomengge.service.base_framework.common.config.FilterConfig")
     @ConditionalOnMissingBean
-    @ConfigurationProperties("base.framework")
+    @ConfigurationProperties(prefix = FrameworkConst.CONFIGURATION_PROPERTIES_PREFIX)
     public FilterConfig filterConfig() {
         return new FilterConfig();
     }

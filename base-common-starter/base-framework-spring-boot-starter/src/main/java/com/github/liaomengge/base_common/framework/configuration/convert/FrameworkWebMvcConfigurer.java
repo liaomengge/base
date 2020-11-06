@@ -1,4 +1,4 @@
-package com.github.liaomengge.base_common.framework.configurer;
+package com.github.liaomengge.base_common.framework.configuration.convert;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
