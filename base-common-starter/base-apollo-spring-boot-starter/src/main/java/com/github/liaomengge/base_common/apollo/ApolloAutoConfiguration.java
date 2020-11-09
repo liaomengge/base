@@ -34,7 +34,7 @@ public class ApolloAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(ApolloRefresher.class)
     public ApolloRefresher apolloRefresher() {
         return new ApolloRefresher(refreshScope);
     }

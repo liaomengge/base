@@ -17,10 +17,16 @@ import java.util.List;
 @Data
 @ConfigurationProperties(prefix = FrameworkConst.CONFIGURATION_PROPERTIES_PREFIX)
 public class FrameworkProperties {
-
+    
+    private final ControllerAopProperties controllerAop = new ControllerAopProperties();
     private final SentinelProperties sentinel = new SentinelProperties();
     private final CorsProperties cors = new CorsProperties();
     private final XssProperties xss = new XssProperties();
+
+    @Data
+    public static class ControllerAopProperties {
+        private String[] basePackages;
+    }
 
     @Data
     public static class SentinelProperties {

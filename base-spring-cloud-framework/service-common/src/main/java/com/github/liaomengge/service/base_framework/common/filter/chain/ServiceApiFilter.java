@@ -1,11 +1,11 @@
 package com.github.liaomengge.service.base_framework.common.filter.chain;
 
-import org.aspectj.lang.ProceedingJoinPoint;
+import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * Created by liaomengge on 2018/11/19.
  */
 public interface ServiceApiFilter extends IOrdered {
 
-    Object doFilter(ProceedingJoinPoint joinPoint, FilterChain chain) throws Throwable;
+    Object doFilter(MethodInvocation invocation, FilterChain chain) throws Throwable;
 }

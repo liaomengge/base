@@ -9,9 +9,8 @@ import com.github.liaomengge.service.base_framework.base.code.SystemResultCode;
 import com.github.liaomengge.service.base_framework.common.config.FilterConfig;
 import com.github.liaomengge.service.base_framework.common.filter.chain.FilterChain;
 import lombok.AllArgsConstructor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.collections4.MapUtils;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 
 import java.util.Map;
@@ -30,24 +29,23 @@ public class SignFilter extends AbstractFilter {
     private final FilterConfig filterConfig;
 
     @Override
-    public Object doFilter(ProceedingJoinPoint joinPoint, FilterChain chain) throws Throwable {
-        Object[] args = joinPoint.getArgs();
-        if (Objects.isNull(args) || args.length <= 0 || isDisableAndIgnoreMethodName(joinPoint)) {
-            return chain.doFilter(joinPoint, chain);
+    public Object doFilter(MethodInvocation invocation, FilterChain chain) throws Throwable {
+        Object[] args = invocation.getArguments();
+        if (Objects.isNull(args) || args.length <= 0 || isDisableAndIgnoreMethodName(invocation)) {
+            return chain.doFilter(invocation, chain);
         }
         for (Object obj : args) {
             if (obj instanceof BaseRequest) {
                 if (isSignOk((BaseRequest) obj)) {
-                    return chain.doFilter(joinPoint, chain);
+                    return chain.doFilter(invocation, chain);
                 }
             }
         }
         return DataResult.fail(SystemResultCode.SIGN_ERROR);
     }
 
-    private boolean isDisableAndIgnoreMethodName(ProceedingJoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        String methodName = signature.getMethod().getName();
+    private boolean isDisableAndIgnoreMethodName(MethodInvocation invocation) {
+        String methodName = invocation.getMethod().getName();
         FilterConfig.SignConfig signConfig = filterConfig.getSign();
         return !signConfig.isEnabled() || SPLITTER.splitToList(signConfig.getIgnoreMethodName()).contains(methodName);
     }

@@ -19,7 +19,7 @@ import org.springframework.web.filter.CorsFilter;
 public class FrameworkCorsConfiguration {
 
     @Bean("corsFilterRegistration")
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = "corsFilterRegistration")
     public FilterRegistrationBean corsFilterRegistration(FrameworkProperties frameworkProperties) {
         FrameworkProperties.CorsProperties corsProperties = frameworkProperties.getCors();
 
@@ -39,10 +39,10 @@ public class FrameworkCorsConfiguration {
         UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
         configSource.registerCorsConfiguration(corsProperties.getPath(), corsConfiguration);
 
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new CorsFilter(configSource));
-        filterRegistrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        filterRegistrationBean.setEnabled(corsProperties.isEnabled());
-        return filterRegistrationBean;
+        FilterRegistrationBean registration = new FilterRegistrationBean(new CorsFilter(configSource));
+        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        registration.setEnabled(corsProperties.isEnabled());
+        return registration;
     }
 
 }

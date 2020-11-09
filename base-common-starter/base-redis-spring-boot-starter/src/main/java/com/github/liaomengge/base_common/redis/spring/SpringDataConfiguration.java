@@ -101,7 +101,7 @@ public class SpringDataConfiguration {
         return stringRedisTemplate;
     }
 
-    @Bean
+    @Bean("redisTemplate")
     @ConditionalOnMissingBean(name = "redisTemplate")
     public <K, V> RedisTemplate<K, V> redisTemplate(
             RedisConnectionFactory redisConnectionFactory) {

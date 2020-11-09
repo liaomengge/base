@@ -5,7 +5,7 @@ import com.github.liaomengge.service.base_framework.common.filter.chain.FilterCh
 import com.github.liaomengge.service.base_framework.common.util.TimeThreadLocalUtil;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
-import org.aspectj.lang.ProceedingJoinPoint;
+import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.core.annotation.Order;
 
 import java.time.Duration;
@@ -21,15 +21,15 @@ public class MetricsFilter extends AbstractFilter {
     private final MeterRegistry meterRegistry;
 
     @Override
-    public Object doFilter(ProceedingJoinPoint joinPoint, FilterChain chain) throws Throwable {
+    public Object doFilter(MethodInvocation invocation, FilterChain chain) throws Throwable {
         boolean isSuccess = true;
         try {
-            return chain.doFilter(joinPoint, chain);
+            return chain.doFilter(invocation, chain);
         } catch (Exception e) {
             isSuccess = false;
             throw e;
         } finally {
-            String prefix = super.getMethodName(joinPoint);
+            String prefix = super.getMethodName(invocation);
             this.statRestExec(prefix, isSuccess);
         }
     }

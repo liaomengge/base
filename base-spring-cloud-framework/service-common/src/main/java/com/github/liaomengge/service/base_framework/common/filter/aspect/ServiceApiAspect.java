@@ -18,14 +18,12 @@ import com.github.liaomengge.service.base_framework.common.util.TimeThreadLocalU
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Getter;
 import lombok.Setter;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
@@ -36,9 +34,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 2018/10/23.
  */
-@Aspect
-@Order(Ordered.HIGHEST_PRECEDENCE)
-public class ServiceApiAspect {
+public class ServiceApiAspect implements MethodInterceptor, Ordered {
 
     private static final Logger log = LyLogger.getInstance(ServiceApiAspect.class);
 
@@ -54,17 +50,16 @@ public class ServiceApiAspect {
     @Autowired(required = false)
     private MeterRegistry meterRegistry;
 
-    @Around("target(com.github.liaomengge.service.base_framework.api.BaseFrameworkServiceApi) " +
-            "&& execution(public * *(..)) ")
-    public Object proceed(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Override
+    public Object invoke(MethodInvocation invocation) throws Throwable {
         TimeThreadLocalUtil.set(System.nanoTime());
-        ServiceApiLogInfo requestApiLogInfo = buildRequestLog(joinPoint);
+        ServiceApiLogInfo requestApiLogInfo = buildRequestLog(invocation);
 
         FilterChain filterChain = null;
         try {
             filterChain = defaultFilterChain.cloneChain();
-            Object retObj = filterChain.doFilter(joinPoint, filterChain);
-            buildResponseLog(joinPoint, retObj, requestApiLogInfo);
+            Object retObj = filterChain.doFilter(invocation, filterChain);
+            buildResponseLog(invocation, retObj, requestApiLogInfo);
             return retObj;
         } catch (Exception e) {
             buildExceptionResponseLog(e, requestApiLogInfo);
@@ -84,14 +79,14 @@ public class ServiceApiAspect {
         }
     }
 
-    private ServiceApiLogInfo buildClassName(ProceedingJoinPoint joinPoint) {
+    private ServiceApiLogInfo buildClassName(MethodInvocation invocation) {
         ServiceApiLogInfo apiLogInfo = new ServiceApiLogInfo();
-        apiLogInfo.setClassMethod('[' + ServiceApiLogUtil.getClassName(joinPoint) + '#' + ServiceApiLogUtil.getMethodName(joinPoint) + ']');
+        apiLogInfo.setClassMethod('[' + ServiceApiLogUtil.getClassName(invocation) + '#' + ServiceApiLogUtil.getMethodName(invocation) + ']');
         return apiLogInfo;
     }
 
-    private void buildHeaderLog(ProceedingJoinPoint joinPoint, ServiceApiLogInfo apiLogInfo) {
-        if (ServiceApiLogUtil.isIgnoreLogHeader(joinPoint, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogHeader(joinPoint)) {
+    private void buildHeaderLog(MethodInvocation invocation, ServiceApiLogInfo apiLogInfo) {
+        if (ServiceApiLogUtil.isIgnoreLogHeader(invocation, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogHeader(invocation)) {
             return;
         }
         LyWebUtil.getHttpServletRequest().ifPresent(val -> {
@@ -100,10 +95,10 @@ public class ServiceApiAspect {
         });
     }
 
-    private ServiceApiLogInfo buildRequestLog(ProceedingJoinPoint joinPoint) {
-        ServiceApiLogInfo apiLogInfo = buildClassName(joinPoint);
-        buildHeaderLog(joinPoint, apiLogInfo);
-        buildArgsLog(joinPoint, apiLogInfo);
+    private ServiceApiLogInfo buildRequestLog(MethodInvocation invocation) {
+        ServiceApiLogInfo apiLogInfo = buildClassName(invocation);
+        buildHeaderLog(invocation, apiLogInfo);
+        buildArgsLog(invocation, apiLogInfo);
         LyWebUtil.getHttpServletRequest().ifPresent(val -> {
             apiLogInfo.setHttpMethod(val.getMethod());
             apiLogInfo.setQueryParams(val.getQueryString());
@@ -113,17 +108,18 @@ public class ServiceApiAspect {
         return apiLogInfo;
     }
 
-    private void buildArgsLog(ProceedingJoinPoint joinPoint, ServiceApiLogInfo apiLogInfo) {
-        if (ServiceApiLogUtil.isIgnoreLogRequest(joinPoint, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogRequest(joinPoint)) {
+    private void buildArgsLog(MethodInvocation invocation, ServiceApiLogInfo apiLogInfo) {
+        if (ServiceApiLogUtil.isIgnoreLogRequest(invocation, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogRequest(invocation)) {
             return;
         }
-        Object requestParams = LyWebUtil.getRequestParams(ServiceApiLogUtil.getMethod(joinPoint), joinPoint.getArgs());
+        Object requestParams = LyWebUtil.getRequestParams(ServiceApiLogUtil.getMethod(invocation),
+                invocation.getArguments());
         apiLogInfo.setRequestBody(requestParams);
     }
 
-    private void buildResponseLog(ProceedingJoinPoint joinPoint, Object retObj, ServiceApiLogInfo apiLogInfo) {
+    private void buildResponseLog(MethodInvocation invocation, Object retObj, ServiceApiLogInfo apiLogInfo) {
         long elapsedNanoTime = System.nanoTime() - TimeThreadLocalUtil.get();
-        if (!ServiceApiLogUtil.isIgnoreLogResponse(joinPoint, filterConfig) && !ServiceApiLogUtil.isIgnoreAopLogResponse(joinPoint)) {
+        if (!ServiceApiLogUtil.isIgnoreLogResponse(invocation, filterConfig) && !ServiceApiLogUtil.isIgnoreAopLogResponse(invocation)) {
             if (retObj instanceof DataResult) {
                 DataResult dataResult = (DataResult) retObj;
                 dataResult.setElapsedMilliSeconds(elapsedNanoTime);
@@ -151,8 +147,8 @@ public class ServiceApiAspect {
         boolean enabledDefaultFilter = filterConfig.isEnabledDefaultFilter();
         if (enabledDefaultFilter) {
             defaultFilterChain
-                    .addFilter(new FailFastFilter(filterConfig))
                     .addFilter(new TraceFilter())
+                    .addFilter(new FailFastFilter(filterConfig))
                     .addFilter(new SignFilter(filterConfig))
                     .addFilter(new ParamValidateFilter())
                     .addFilter(new MetricsFilter(meterRegistry));
@@ -163,5 +159,10 @@ public class ServiceApiAspect {
         defaultFilterChain.sortFilters();
         LyMDCUtil.put(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME, NumberUtils.INTEGER_ZERO.toString());
         log.info("sort filter chain ===> {}", defaultFilterChain.printFilters());
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 }

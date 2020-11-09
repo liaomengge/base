@@ -17,7 +17,7 @@ import javax.servlet.DispatcherType;
 public class FrameworkXssConfiguration {
 
     @Bean("xssFilterRegistration")
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = "xssFilterRegistration")
     public FilterRegistrationBean<XssFilter> xssFilterRegistration(FrameworkProperties frameworkProperties) {
         FrameworkProperties.XssProperties xssProperties = frameworkProperties.getXss();
 
@@ -26,6 +26,7 @@ public class FrameworkXssConfiguration {
         registration.setFilter(new XssFilter());
         registration.setOrder(xssProperties.getOrder());
         registration.addUrlPatterns(xssProperties.getUrlPatterns());
+        registration.setEnabled(xssProperties.isEnabled());
         return registration;
     }
 }

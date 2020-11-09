@@ -29,7 +29,7 @@ public class FeignAspectAutoConfiguration {
     }
 
     @Bean("feignDefaultPointcutAdvisor")
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = "feignDefaultPointcutAdvisor")
     public DefaultPointcutAdvisor defaultPointcutAdvisor(FeignInterceptor feignInterceptor) {
         DefaultPointcutAdvisor defaultPointcutAdvisor = new DefaultPointcutAdvisor();
         defaultPointcutAdvisor.setAdvice(feignInterceptor);

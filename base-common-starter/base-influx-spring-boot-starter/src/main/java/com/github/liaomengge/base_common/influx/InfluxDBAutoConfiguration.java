@@ -36,6 +36,6 @@ public class InfluxDBAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public InfluxHelper influxHelper(InfluxBatchHandler influxBatchHandler) {
-        return new InfluxHelper(influxBatchHandler);
+        return new InfluxHelper(influxDBProperties, influxBatchHandler);
     }
 }

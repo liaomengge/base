@@ -31,7 +31,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Locale;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.TimeZone;
 
 /**
@@ -71,14 +71,13 @@ public class FrameworkJacksonAutoConfiguration {
         simpleModule.addDeserializer(LocalDateTime.class,
                 new LocalDateTimeDeserializer(LyJdk8DateUtil.DATETIME_FORMATTER));
 
-        Optional.ofNullable(environment)
-                .map(val -> val.getProperty("base.framework.xss.enabled", Boolean.class))
-                .ifPresent(val -> {
-                    if (BooleanUtils.toBoolean(val)) {
-                        simpleModule.addSerializer(String.class, new XssJacksonSerializer());
-                        simpleModule.addDeserializer(String.class, new XssJacksonDeserializer());
-                    }
-                });
+        if (Objects.nonNull(environment)) {
+            Boolean xxsEnabled = environment.getProperty("base.framework.xss.enabled", Boolean.class);
+            if (BooleanUtils.toBoolean(xxsEnabled)) {
+                simpleModule.addSerializer(String.class, new XssJacksonSerializer());
+                simpleModule.addDeserializer(String.class, new XssJacksonDeserializer());
+            }
+        }
 
         objectMapper.registerModule(simpleModule);
         return objectMapper;

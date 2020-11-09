@@ -75,7 +75,7 @@ public class BaseWebServerInitializedListener {
     private boolean isDevOrTestEnv(WebServerApplicationContext ctx) {
         String[] activeProfiles = ctx.getEnvironment().getActiveProfiles();
         if (ArrayUtils.isNotEmpty(activeProfiles)) {
-            return Arrays.stream(activeProfiles).anyMatch(val -> StringUtils.equalsIgnoreCase(val, "dev") || StringUtils.equalsIgnoreCase(val, "test"));
+            return Arrays.stream(activeProfiles).anyMatch(val -> StringUtils.equalsIgnoreCase(val, "dev") || StringUtils.equalsIgnoreCase(val, "test") || StringUtils.equalsIgnoreCase(val, "fat"));
         }
         return true;
     }

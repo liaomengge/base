@@ -4,7 +4,7 @@ import com.github.liaomengge.base_common.utils.validator.LyParamValidatorUtil;
 import com.github.liaomengge.service.base_framework.base.DataResult;
 import com.github.liaomengge.service.base_framework.base.code.SystemResultCode;
 import com.github.liaomengge.service.base_framework.common.filter.chain.FilterChain;
-import org.aspectj.lang.ProceedingJoinPoint;
+import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.core.annotation.Order;
 
 import java.util.*;
@@ -18,10 +18,10 @@ import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.JO
 public class ParamValidateFilter extends AbstractFilter {
 
     @Override
-    public Object doFilter(ProceedingJoinPoint joinPoint, FilterChain chain) throws Throwable {
-        Object[] args = joinPoint.getArgs();
+    public Object doFilter(MethodInvocation invocation, FilterChain chain) throws Throwable {
+        Object[] args = invocation.getArguments();
         if (Objects.isNull(args) || args.length <= 0) {
-            return chain.doFilter(joinPoint, chain);
+            return chain.doFilter(invocation, chain);
         }
         List<String> checkResults = new ArrayList<>();
         Arrays.stream(args).filter(Objects::nonNull).forEach(val -> {
@@ -33,6 +33,6 @@ public class ParamValidateFilter extends AbstractFilter {
         if (!checkResults.isEmpty()) {
             return DataResult.fail(SystemResultCode.PARAM_ERROR, JOINER.join(checkResults));
         }
-        return chain.doFilter(joinPoint, chain);
+        return chain.doFilter(invocation, chain);
     }
 }
