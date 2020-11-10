@@ -57,9 +57,15 @@ public class XxlJobAutoConfiguration {
         log.info("admin address => {}, ip => {}, port => {}", adminProperties.getAddresses(), ip,
                 executorProperties.getPort());
         xxlJobExecutor.setIp(ip);
-        xxlJobExecutor.setPort(executorProperties.getPort());
-        xxlJobExecutor.setLogPath(executorProperties.getLogPath());
-        xxlJobExecutor.setLogRetentionDays(executorProperties.getLogRetentionDays());
+        if (Objects.nonNull(executorProperties.getPort())) {
+            xxlJobExecutor.setPort(executorProperties.getPort());
+        }
+        if (StringUtils.isNoneBlank(executorProperties.getLogPath())) {
+            xxlJobExecutor.setLogPath(executorProperties.getLogPath());
+        }
+        if (Objects.nonNull(executorProperties.getLogRetentionDays())) {
+            xxlJobExecutor.setLogRetentionDays(executorProperties.getLogRetentionDays());
+        }
         return xxlJobExecutor;
     }
 }

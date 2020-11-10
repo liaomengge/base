@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN" monitorInterval = "3600" xmlns:xi="http://www.w3.org/2001/XInclude">
+<Configuration status="WARN" monitorInterval = "3600" packages = "com.github.liaomengge.base_common.logger.lookup"
+               xmlns:xi="http://www.w3.org/2001/XInclude" >
 
     <Properties>
 
         <Property name="BASE_FILE_SIZE">200M</Property>
         <Property name="ROLLING_MAX">20</Property>
 
-        <Property name="APPLICATION_NAME">${bundle:application:spring.application.name}</Property>
-        <Property name="LOG_FILE_PATH">${sys:user.dir:-/opt}/logs/${APPLICATION_NAME}</Property>
+        <Property name="APPLICATION_NAME">${logger:springApplicationName}</Property>
+        <Property name="LOG_FILE_PATH">${sys:user.dir}/logs/${APPLICATION_NAME}</Property>
 
         <!--==========================================Service Property==============================================-->
 

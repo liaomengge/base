@@ -1,5 +1,7 @@
 dependencies {
     api "org.springframework:spring-webmvc"
+    api "org.springframework.cloud:spring-cloud-commons"
+    api "org.springframework.cloud:spring-cloud-openfeign-core"
     api("com.github.liaomengge:base-spring-cloud-framework:${baseSpringCloudVersion}") {
         exclude(group: 'org.springframework')
         exclude(group: 'org.springframework.boot')
