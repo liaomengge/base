@@ -1,11 +1,8 @@
 package com.github.liaomengge.base_common.multi.shardingsphere.aspect;
 
 import com.github.liaomengge.base_common.multi.shardingsphere.annotation.HintMaster;
-
-import java.lang.reflect.Method;
-
 import org.apache.shardingsphere.api.hint.HintManager;
-import org.apache.shardingsphere.core.route.router.masterslave.MasterVisitedManager;
+import org.apache.shardingsphere.masterslave.route.engine.impl.MasterVisitedManager;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,6 +11,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.lang.reflect.Method;
 
 /**
  * Created by liaomengge on 2019/9/16.

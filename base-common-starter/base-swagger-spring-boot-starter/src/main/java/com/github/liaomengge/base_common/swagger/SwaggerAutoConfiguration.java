@@ -1,9 +1,8 @@
 package com.github.liaomengge.base_common.swagger;
 
+import com.github.liaomengge.base_common.support.predicate._Predicates;
 import com.github.liaomengge.base_common.swagger.SwaggerProperties.ApiInfoWrapper;
 import com.github.liaomengge.base_common.swagger.annotation.EnableExtendSwaggerBootstrapUI;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,9 +19,10 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.SPLITTER;
@@ -33,7 +33,7 @@ import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.SP
 @AllArgsConstructor
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(SwaggerProperties.class)
-@EnableSwagger2
+@EnableSwagger2WebMvc
 @EnableExtendSwaggerBootstrapUI
 public class SwaggerAutoConfiguration {
 
@@ -63,7 +63,7 @@ public class SwaggerAutoConfiguration {
                 .groupName(this.swaggerProperties.getGroupName())
                 .apiInfo(this.apiInfo())
                 .select()
-                .apis(Predicates.or(predicates))
+                .apis(_Predicates.or(predicates))
                 .paths(PathSelectors.any())
                 .build();
     }

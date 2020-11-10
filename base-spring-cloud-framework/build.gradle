@@ -1,7 +1,7 @@
 plugins {
     id 'se.patrikerdes.use-latest-versions' version '0.2.15'
-    id 'com.github.ben-manes.versions' version '0.33.0'
-    id 'com.github.spotbugs' version '4.5.0'
+    id 'com.github.ben-manes.versions' version '0.36.0'
+    id 'com.github.spotbugs' version '4.6.0'
     id 'com.diffplug.spotless' version '5.6.1'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 }
@@ -29,7 +29,7 @@ subprojects {
     apply from: "${rootProject.projectDir}/gradle/spotbug.gradle"
 
     group = 'com.github.liaomengge'
-    version = '2.0.3-SNAPSHOT'
+    version = '2.0.4-SNAPSHOT'
 
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
@@ -59,8 +59,8 @@ subprojects {
     }
 
     ext {
-        baseCommonMiddlewareVersion = '1.1.6-SNAPSHOT'
-        baseCommonUtilsVersion = '1.1.6-SNAPSHOT'
+        baseCommonMiddlewareVersion = '1.1.7-SNAPSHOT'
+        baseCommonUtilsVersion = '1.1.7-SNAPSHOT'
     }
 
     def versions = [

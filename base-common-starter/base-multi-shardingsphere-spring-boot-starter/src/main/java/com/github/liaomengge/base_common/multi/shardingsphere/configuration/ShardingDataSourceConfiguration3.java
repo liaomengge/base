@@ -11,8 +11,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shardingsphere.api.config.masterslave.MasterSlaveRuleConfiguration;
-import org.apache.shardingsphere.core.exception.ShardingException;
 import org.apache.shardingsphere.shardingjdbc.api.MasterSlaveDataSourceFactory;
+import org.apache.shardingsphere.underlying.common.exception.ShardingSphereException;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -97,7 +97,7 @@ public class ShardingDataSourceConfiguration3 extends AbstractShardingDataSource
         String prefix = "base.shardingsphere.three.datasource.";
         List<String> dataSourceNames = getDataSourceNames(environment, prefix);
         if (CollectionUtils.isEmpty(dataSourceNames)) {
-            throw new ShardingException("datasource couldn't null");
+            throw new ShardingSphereException("datasource couldn't null");
         }
         String masterDataSourceName = dataSourceNames.get(0);
         List<String> slaveDataSourceNames;
@@ -165,9 +165,9 @@ public class ShardingDataSourceConfiguration3 extends AbstractShardingDataSource
             try {
                 dataSourceMap.put(each, getDataSource(environment, prefix, each));
             } catch (ReflectiveOperationException ex) {
-                throw new ShardingException("Can't find three datasource type!", ex);
+                throw new ShardingSphereException("Can't find three datasource type!", ex);
             } catch (NamingException namingEx) {
-                throw new ShardingException("Can't find JNDI three datasource!", namingEx);
+                throw new ShardingSphereException("Can't find JNDI three datasource!", namingEx);
             }
         }
     }

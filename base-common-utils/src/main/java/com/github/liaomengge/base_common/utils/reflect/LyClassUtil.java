@@ -1,11 +1,6 @@
 package com.github.liaomengge.base_common.utils.reflect;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.*;
-
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +8,11 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.core.BridgeMethodResolver;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 
-import lombok.experimental.UtilityClass;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.*;
 
 /**
  * Created by liaomengge on 17/11/25.
@@ -25,15 +24,15 @@ public class LyClassUtil {
 
     private final Map<Class<?>, Class<?>> primitiveWrapperTypeMap = new IdentityHashMap<>(8);
 
-    {
+    static {
         primitiveWrapperTypeMap.put(Boolean.class, Boolean.TYPE);
-        LyClassUtil.primitiveWrapperTypeMap.put(Byte.class, Byte.TYPE);
-        LyClassUtil.primitiveWrapperTypeMap.put(Character.class, Character.TYPE);
-        LyClassUtil.primitiveWrapperTypeMap.put(Double.class, Double.TYPE);
-        LyClassUtil.primitiveWrapperTypeMap.put(Float.class, Float.TYPE);
-        LyClassUtil.primitiveWrapperTypeMap.put(Integer.class, Integer.TYPE);
-        LyClassUtil.primitiveWrapperTypeMap.put(Long.class, Long.TYPE);
-        LyClassUtil.primitiveWrapperTypeMap.put(Short.class, Short.TYPE);
+        primitiveWrapperTypeMap.put(Byte.class, Byte.TYPE);
+        primitiveWrapperTypeMap.put(Character.class, Character.TYPE);
+        primitiveWrapperTypeMap.put(Double.class, Double.TYPE);
+        primitiveWrapperTypeMap.put(Float.class, Float.TYPE);
+        primitiveWrapperTypeMap.put(Integer.class, Integer.TYPE);
+        primitiveWrapperTypeMap.put(Long.class, Long.TYPE);
+        primitiveWrapperTypeMap.put(Short.class, Short.TYPE);
     }
 
     private final String SETTER_PREFIX = "set";
