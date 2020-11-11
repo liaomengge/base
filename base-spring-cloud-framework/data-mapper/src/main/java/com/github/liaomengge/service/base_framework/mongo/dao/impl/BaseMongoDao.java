@@ -127,6 +127,6 @@ public abstract class BaseMongoDao<T extends BaseMongoDoc> implements IBaseMongo
     }
 
     private Class<T> getEntityClass() {
-        return LyGenericUtil.getGenericClassType(getClass());
+        return LyGenericUtil.getActualTypeArguments4GenericClass(getClass());
     }
 }
