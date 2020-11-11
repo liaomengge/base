@@ -8,6 +8,7 @@ import feign.RequestTemplate;
 import feign.Util;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.StringUtils;
 
@@ -18,7 +19,7 @@ import java.util.*;
  * Created by liaomengge on 2020/8/25.
  */
 @AllArgsConstructor
-public class GetPojoRequestInterceptor implements RequestInterceptor {
+public class GetPojoRequestInterceptor implements RequestInterceptor, Ordered {
 
     private static final Logger log = LyLogger.getInstance(GetPojoRequestInterceptor.class);
 
@@ -69,5 +70,10 @@ public class GetPojoRequestInterceptor implements RequestInterceptor {
                 }
             }
         }
+    }
+
+    @Override
+    public int getOrder() {
+        return 20;
     }
 }

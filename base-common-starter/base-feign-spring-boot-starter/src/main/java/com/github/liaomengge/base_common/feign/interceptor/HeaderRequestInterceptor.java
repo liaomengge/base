@@ -3,13 +3,14 @@ package com.github.liaomengge.base_common.feign.interceptor;
 import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.springframework.core.Ordered;
 
 import java.util.Enumeration;
 
 /**
  * Created by liaomengge on 2020/8/25.
  */
-public class HeaderRequestInterceptor implements RequestInterceptor {
+public class HeaderRequestInterceptor implements RequestInterceptor, Ordered {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
@@ -23,5 +24,10 @@ public class HeaderRequestInterceptor implements RequestInterceptor {
                 }
             }
         });
+    }
+
+    @Override
+    public int getOrder() {
+        return 0;
     }
 }
