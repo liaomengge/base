@@ -1,12 +1,11 @@
 package com.github.liaomengge.base_common.utils.number;
 
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
-import lombok.experimental.UtilityClass;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @UtilityClass
 public class LyNumberUtil {
@@ -264,7 +263,7 @@ public class LyNumberUtil {
     }
 
     public BigDecimal getBiDecimal(String s) {
-        if (StringUtils.isEmpty(s)) {
+        if (StringUtils.isBlank(s)) {
             return null;
         }
         return new BigDecimal(s);

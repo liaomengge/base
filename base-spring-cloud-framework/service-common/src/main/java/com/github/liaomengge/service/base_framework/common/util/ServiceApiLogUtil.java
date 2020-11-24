@@ -1,6 +1,6 @@
 package com.github.liaomengge.service.base_framework.common.util;
 
-import com.github.liaomengge.service.base_framework.common.annotation.IgnoreServiceApiAop;
+import com.github.liaomengge.service.base_framework.common.annotation.IgnoreServiceApiLog;
 import com.github.liaomengge.service.base_framework.common.config.FilterConfig;
 import com.google.common.collect.Iterables;
 import lombok.experimental.UtilityClass;
@@ -32,8 +32,8 @@ public class ServiceApiLogUtil {
 
     public boolean isIgnoreAopLogHeader(MethodInvocation invocation) {
         Method method = getMethod(invocation);
-        IgnoreServiceApiAop ignoreServiceApiAop = method.getAnnotation(IgnoreServiceApiAop.class);
-        return Optional.ofNullable(ignoreServiceApiAop).map(IgnoreServiceApiAop::ignoreHeader).orElse(Boolean.FALSE);
+        IgnoreServiceApiLog ignoreServiceApiLog = method.getAnnotation(IgnoreServiceApiLog.class);
+        return Optional.ofNullable(ignoreServiceApiLog).map(IgnoreServiceApiLog::ignoreHeader).orElse(Boolean.FALSE);
     }
 
     public boolean isIgnoreLogHeader(MethodInvocation invocation, FilterConfig filterConfig) {
@@ -51,8 +51,8 @@ public class ServiceApiLogUtil {
 
     public boolean isIgnoreAopLogRequest(MethodInvocation invocation) {
         Method method = getMethod(invocation);
-        IgnoreServiceApiAop ignoreServiceApiAop = method.getAnnotation(IgnoreServiceApiAop.class);
-        return Optional.ofNullable(ignoreServiceApiAop).map(IgnoreServiceApiAop::ignoreArgs).orElse(Boolean.FALSE);
+        IgnoreServiceApiLog ignoreServiceApiLog = method.getAnnotation(IgnoreServiceApiLog.class);
+        return Optional.ofNullable(ignoreServiceApiLog).map(IgnoreServiceApiLog::ignoreArgs).orElse(Boolean.FALSE);
     }
 
     public boolean isIgnoreLogRequest(MethodInvocation invocation, FilterConfig filterConfig) {
@@ -67,8 +67,8 @@ public class ServiceApiLogUtil {
 
     public boolean isIgnoreAopLogResponse(MethodInvocation invocation) {
         Method method = getMethod(invocation);
-        IgnoreServiceApiAop ignoreServiceApiAop = method.getAnnotation(IgnoreServiceApiAop.class);
-        return Optional.ofNullable(ignoreServiceApiAop).map(IgnoreServiceApiAop::ignoreResult).orElse(Boolean.FALSE);
+        IgnoreServiceApiLog ignoreServiceApiLog = method.getAnnotation(IgnoreServiceApiLog.class);
+        return Optional.ofNullable(ignoreServiceApiLog).map(IgnoreServiceApiLog::ignoreResult).orElse(Boolean.FALSE);
     }
 
     public boolean isIgnoreLogResponse(MethodInvocation invocation, FilterConfig filterConfig) {

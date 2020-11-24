@@ -143,7 +143,7 @@ public abstract class AbstractLock {
      */
     private void register() {
         selfNodeName = zk.createEphemeralSequential(selfNode + SPLIT, StringUtils.EMPTY);
-        if (!StringUtils.isEmpty(selfNodeName)) {
+        if (!StringUtils.isBlank(selfNodeName)) {
             selfNodeFullName = selfNodeName;
             log.info("自身节点：" + selfNodeName + ",注册成功！");
             selfNodeName = selfNodeName.substring(selfNode.length() + 1);

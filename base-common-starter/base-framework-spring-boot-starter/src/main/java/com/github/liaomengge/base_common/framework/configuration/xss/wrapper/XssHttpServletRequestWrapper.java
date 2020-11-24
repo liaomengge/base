@@ -1,4 +1,4 @@
-package com.github.liaomengge.base_common.framework.configuration.xss;
+package com.github.liaomengge.base_common.framework.configuration.xss.wrapper;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.text.StringEscapeUtils;

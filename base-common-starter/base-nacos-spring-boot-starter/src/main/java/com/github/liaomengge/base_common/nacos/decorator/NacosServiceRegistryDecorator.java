@@ -7,11 +7,11 @@ import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.github.liaomengge.base_common.nacos.NacosProperties;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
-import org.springframework.util.StringUtils;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -49,7 +49,7 @@ public class NacosServiceRegistryDecorator extends NacosServiceRegistry {
     @Override
     public void register(Registration registration) {
         if (isRegisterEnabled(environment)) {
-            if (StringUtils.isEmpty(registration.getServiceId())) {
+            if (StringUtils.isBlank(registration.getServiceId())) {
                 log.warn("No service to register for nacos client...");
                 return;
             }

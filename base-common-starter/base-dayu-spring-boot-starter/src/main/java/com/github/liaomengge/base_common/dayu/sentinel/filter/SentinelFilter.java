@@ -117,7 +117,7 @@ public class SentinelFilter implements Filter, EnvironmentAware {
         String origin = StringUtils.EMPTY;
         if (originParser != null) {
             origin = originParser.parseOrigin(request);
-            if (StringUtils.isEmpty(origin)) {
+            if (StringUtils.isBlank(origin)) {
                 return StringUtils.EMPTY;
             }
         }

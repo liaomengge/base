@@ -1,11 +1,10 @@
 package com.github.liaomengge.base_common.utils.number;
 
-import java.util.Objects;
-
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import lombok.experimental.UtilityClass;
+import java.util.Objects;
 
 /**
  * Created by liaomengge on 17/11/25.
@@ -125,7 +124,7 @@ public class LyMoreNumberUtil {
      * 将10进制的String安全的转化为Byte, 当str为空或非数字字符串时, 返回default值
      */
     public Byte toByteObject(String str, Byte defaultValue) {
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtils.isBlank(str)) {
             return defaultValue;
         }
         try {
@@ -146,7 +145,7 @@ public class LyMoreNumberUtil {
      * 将10进制的String安全的转化为Short, 当str为空或非数字字符串时, 返回default值
      */
     public Short toShortObject(String str, Short defaultValue) {
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtils.isBlank(str)) {
             return defaultValue;
         }
         try {
@@ -167,7 +166,7 @@ public class LyMoreNumberUtil {
      * 将10进制的String安全的转化为Integer, 当str为空或非数字字符串时, 返回default值
      */
     public Integer toIntObject(String str, Integer defaultValue) {
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtils.isBlank(str)) {
             return defaultValue;
         }
         try {
@@ -188,7 +187,7 @@ public class LyMoreNumberUtil {
      * 将10进制的String安全的转化为Long, 当str为空或非数字字符串时, 返回default值
      */
     public Long toLongObject(String str, Long defaultValue) {
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtils.isBlank(str)) {
             return defaultValue;
         }
         try {
@@ -209,7 +208,7 @@ public class LyMoreNumberUtil {
      * 将10进制的String安全的转化为Long, 当str为空或非数字字符串时, 返回default值
      */
     public Double toDoubleObject(String str, Double defaultValue) {
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtils.isBlank(str)) {
             return defaultValue;
         }
         try {

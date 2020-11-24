@@ -1,4 +1,4 @@
-package com.github.liaomengge.base_common.framework.configuration.xss;
+package com.github.liaomengge.base_common.framework.configuration.xss.serializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

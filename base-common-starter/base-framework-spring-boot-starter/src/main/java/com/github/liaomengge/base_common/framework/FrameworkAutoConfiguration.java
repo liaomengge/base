@@ -1,5 +1,6 @@
 package com.github.liaomengge.base_common.framework;
 
+import com.github.liaomengge.base_common.framework.advice.FrameworkResponseBodyAdviceConfiguration;
 import com.github.liaomengge.base_common.framework.aspect.FrameworkAspectConfiguration;
 import com.github.liaomengge.base_common.framework.configuration.convert.FrameworkWebMvcConfigurer;
 import com.github.liaomengge.base_common.framework.configuration.cors.FrameworkCorsConfiguration;
@@ -35,8 +36,8 @@ import java.util.stream.Collectors;
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)
 @EnableConfigurationProperties(FrameworkProperties.class)
-@Import({FrameworkBeanRegistryConfiguration.class, FrameworkErrorConfiguration.class,
-        FilterConfiguration.class, FrameworkWebMvcConfigurer.class,
+@Import({FrameworkResponseBodyAdviceConfiguration.class, FrameworkBeanRegistryConfiguration.class,
+        FrameworkErrorConfiguration.class, FilterConfiguration.class, FrameworkWebMvcConfigurer.class,
         FrameworkCorsConfiguration.class, FrameworkXssConfiguration.class,
         FrameworkMicrometerConfiguration.class, FrameworkAspectConfiguration.class})
 public class FrameworkAutoConfiguration implements ApplicationContextAware {

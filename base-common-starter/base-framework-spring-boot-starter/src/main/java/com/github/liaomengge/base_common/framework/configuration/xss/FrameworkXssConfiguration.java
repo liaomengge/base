@@ -1,6 +1,7 @@
 package com.github.liaomengge.base_common.framework.configuration.xss;
 
 import com.github.liaomengge.base_common.framework.FrameworkProperties;
+import com.github.liaomengge.base_common.framework.configuration.xss.filter.XssFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

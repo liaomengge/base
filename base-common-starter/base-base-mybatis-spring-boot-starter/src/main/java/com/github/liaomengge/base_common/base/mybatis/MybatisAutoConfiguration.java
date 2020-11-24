@@ -15,9 +15,11 @@ import lombok.AllArgsConstructor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -39,6 +41,7 @@ import java.util.Properties;
  */
 @AllArgsConstructor
 @Configuration
+@AutoConfigureBefore(DataSourceAutoConfiguration.class)
 @ConditionalOnClass(SqlSessionFactoryBean.class)
 @EnableTransactionManagement(proxyTargetClass = true)
 @EnableConfigurationProperties(MybatisProperties.class)

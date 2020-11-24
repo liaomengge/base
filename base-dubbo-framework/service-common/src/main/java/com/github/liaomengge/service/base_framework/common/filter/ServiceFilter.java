@@ -158,7 +158,7 @@ public class ServiceFilter extends AbstractFilter {
 
         //1. 获取nginx http的真实IP
         String realIp = servletRequest.getHeader("X-Real-IP");
-        if (!StringUtils.isEmpty(realIp) && !realIp.equals(logData.getRemoteIp())) {
+        if (!StringUtils.isBlank(realIp) && !realIp.equals(logData.getRemoteIp())) {
             logData.setRemoteIp(realIp);
         }
 

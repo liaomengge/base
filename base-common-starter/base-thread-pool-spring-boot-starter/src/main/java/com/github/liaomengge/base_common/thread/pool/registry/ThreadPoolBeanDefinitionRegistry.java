@@ -42,10 +42,10 @@ public class ThreadPoolBeanDefinitionRegistry implements EnvironmentAware, BeanD
                 "base.thread-pool", ThreadPoolGroupProperties.class);
         Optional.ofNullable(threadPoolGroupProperties).map(ThreadPoolGroupProperties::getGroups).ifPresent(threadPoolPropertiesList -> {
             threadPoolPropertiesList.forEach(threadPoolProperties -> {
-                LyThreadPoolTaskExecutor LyThreadPoolTaskExecutor = buildThreadPool(threadPoolProperties);
+                LyThreadPoolTaskExecutor lyThreadPoolTaskExecutor = buildThreadPool(threadPoolProperties);
                 BeanDefinitionBuilder builder =
                         BeanDefinitionBuilder.genericBeanDefinition(LyThreadPoolTaskWrappedExecutor.class);
-                builder.addConstructorArgValue(LyThreadPoolTaskExecutor);
+                builder.addConstructorArgValue(lyThreadPoolTaskExecutor);
                 BeanDefinition beanDefinition = builder.getRawBeanDefinition();
                 ScopeMetadata scopeMetadata = scopeMetadataResolver.resolveScopeMetadata(beanDefinition);
                 beanDefinition.setScope(scopeMetadata.getScopeName());

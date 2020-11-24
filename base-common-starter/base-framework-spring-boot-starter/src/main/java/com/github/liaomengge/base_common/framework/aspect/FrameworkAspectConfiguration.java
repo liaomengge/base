@@ -56,8 +56,9 @@ public class FrameworkAspectConfiguration {
     private String getApiExpression() {
         String controllerExpression = LyExpressionUtil.getWithinAnnotationExpression(Controller.class,
                 RestController.class);
-        FrameworkProperties.ControllerAopProperties controllerAopProperties = frameworkProperties.getControllerAop();
-        String[] basePackages = controllerAopProperties.getBasePackages();
+        FrameworkProperties.ControllerAspectProperties controllerAspectProperties =
+                frameworkProperties.getControllerAspect();
+        String[] basePackages = controllerAspectProperties.getBasePackages();
         if (ArrayUtils.isNotEmpty(basePackages)) {
             String executions = LyExpressionUtil.getPackagesExpression(basePackages);
             return "(" + executions + ")" + LyExpressionUtil.AND +

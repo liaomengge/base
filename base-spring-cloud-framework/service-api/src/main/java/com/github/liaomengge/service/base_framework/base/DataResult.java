@@ -150,7 +150,7 @@ public class DataResult<T> implements Serializable {
     private String sysException = "";
 
     /**
-     * 处理耗时(秒)
+     * 处理耗时(毫秒)
      */
     private long elapsedMilliSeconds;
 

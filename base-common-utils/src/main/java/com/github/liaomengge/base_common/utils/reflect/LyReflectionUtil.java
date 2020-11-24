@@ -1,13 +1,16 @@
 package com.github.liaomengge.base_common.utils.reflect;
 
+import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
+import java.util.Objects;
 
 /**
  * Created by liaomengge on 17/5/12.
@@ -15,7 +18,9 @@ import java.nio.charset.Charset;
 @UtilityClass
 public class LyReflectionUtil {
 
-    public final Object getFieldValue(Object obj, String fieldName) {
+    private static final Logger log = LyLogger.getInstance(LyReflectionUtil.class);
+
+    public Object getFieldValue(Object obj, String fieldName) {
         if (StringUtils.isBlank(fieldName)) {
             return null;
         }
@@ -34,11 +39,31 @@ public class LyReflectionUtil {
 
         Object result;
         try {
+            ReflectionUtils.makeAccessible(method);
             result = method.invoke(obj);
         } catch (IllegalAccessException | InvocationTargetException e) {
+            log.warn("get field value fail", e);
             result = null;
         }
         return result;
+    }
+
+    public void setFieldValue(Object obj, String fieldName, Object fieldValue) {
+        if (StringUtils.isBlank(fieldName) || Objects.isNull(fieldValue)) {
+            return;
+        }
+
+        Field field = ReflectionUtils.findField(obj.getClass(), fieldName);
+        if (field == null) {
+            return;
+        }
+
+        try {
+            ReflectionUtils.makeAccessible(field);
+            ReflectionUtils.setField(field, obj, fieldValue);
+        } catch (Exception e) {
+            log.warn("set field value fail", e);
+        }
     }
 
     private String getMethodPrefix(String fieldType) {
