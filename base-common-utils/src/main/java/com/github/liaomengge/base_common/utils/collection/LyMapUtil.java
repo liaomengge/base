@@ -1,14 +1,20 @@
 package com.github.liaomengge.base_common.utils.collection;
 
-import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-import com.github.liaomengge.base_common.utils.string.LyStringUtil;
-
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
+import com.github.liaomengge.base_common.utils.string.LyStringUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.cglib.beans.BeanMap;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -20,15 +26,6 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.collections4.IterableUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.cglib.beans.BeanMap;
-
-import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 16/5/10.
@@ -98,7 +95,7 @@ public class LyMapUtil {
      * @param obj
      * @return
      */
-    public Map<String, Object> bean2Map4Cglib(Object obj) {
+    public Map<String, Object> bean2Map4Cglib(Object obj, String... excludePropertyName) {
         if (null == obj) {
             return Maps.newHashMap();
         }
@@ -107,7 +104,9 @@ public class LyMapUtil {
 
         BeanMap beanMap = BeanMap.create(obj);
         for (Object key : beanMap.keySet()) {
-            resultMap.put(LyStringUtil.getValue(key), beanMap.get(key));
+            if (!ArrayUtils.contains(excludePropertyName, LyStringUtil.getValue(key))) {
+                resultMap.put(LyStringUtil.getValue(key), beanMap.get(key));
+            }
         }
         return resultMap;
     }

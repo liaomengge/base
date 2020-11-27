@@ -24,6 +24,7 @@ import java.util.Objects;
 
 /**
  * Created by liaomengge on 2020/11/23.
+ * 针对controller返回void，如果请求参数含HttpServletResponse，则不会走该包装内，具体可见：http://riun.xyz/work/101
  */
 @Order
 @AllArgsConstructor

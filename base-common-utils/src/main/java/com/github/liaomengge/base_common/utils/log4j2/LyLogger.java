@@ -4,13 +4,12 @@ import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import com.github.liaomengge.base_common.utils.text.LyEscapeJsonUtil;
 import com.github.liaomengge.base_common.utils.trace.LyTraceLogUtil;
-
-import java.util.IllegalFormatException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
+
+import java.util.IllegalFormatException;
 
 
 /**
@@ -18,19 +17,30 @@ import org.slf4j.Marker;
  */
 public class LyLogger implements Logger {
 
-    private final Logger log;
-
     private final static String WRAPPER = "";
 
-    private final Class<?> clz;
+    private final Logger log;
+
+    private Class<?> clz;
+
+    private String name;
 
     public LyLogger(Class clz) {
         this.clz = clz;
-        log = LoggerFactory.getLogger(clz);
+        log = LoggerFactory.getLogger(this.clz);
     }
 
-    public static LyLogger getInstance(Class clz) {
+    public LyLogger(String name) {
+        this.name = name;
+        log = LoggerFactory.getLogger(this.name);
+    }
+
+    public static LyLogger getInstance(Class<?> clz) {
         return new LyLogger(clz);
+    }
+
+    public static LyLogger getInstance(String name) {
+        return new LyLogger(name);
     }
 
     @Override

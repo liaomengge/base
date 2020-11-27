@@ -35,10 +35,13 @@ public class BaseWebServerInitializedListener {
         if (isDevOrTestEnv(context)) {
             ServerProperties serverProperties = context.getBean(ServerProperties.class);
             WebEndpointProperties webEndpointProperties = context.getBean(WebEndpointProperties.class);
-            String serverContextPath = serverProperties.getServlet().getContextPath();
-            String endpointBasePath = webEndpointProperties.getBasePath();
+            String serverContextPath = StringUtils.defaultIfBlank(serverProperties.getServlet().getContextPath(), "");
+            String endpointBasePath = StringUtils.defaultIfBlank(webEndpointProperties.getBasePath(), "");
             String applicationName = context.getEnvironment().getProperty("spring.application.name");
             String[] activeProfiles = context.getEnvironment().getActiveProfiles();
+            if (ArrayUtils.isEmpty(activeProfiles)) {
+                activeProfiles = context.getEnvironment().getDefaultProfiles();
+            }
 
             StringBuilder sBuilder = new StringBuilder(16);
             sBuilder.append("\n");
