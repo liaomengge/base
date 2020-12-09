@@ -1,10 +1,9 @@
 package com.github.liaomengge.base_common.helper.concurrent.threadlocal.mdc;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.ThreadLocalRunnable;
+import org.slf4j.MDC;
 
 import java.util.Map;
-
-import org.slf4j.MDC;
 
 /**
  * Created by liaomengge on 2020/5/20.
@@ -20,8 +19,8 @@ public class MDCContextRunnable extends ThreadLocalRunnable<Map<String, String>>
     }
 
     @Override
-    public void set(Map<String, String> contextMap) {
-        MDC.setContextMap(contextMap);
+    public void set(Map<String, String> mdcContext) {
+        MDC.setContextMap(mdcContext);
     }
 
     @Override
@@ -30,6 +29,9 @@ public class MDCContextRunnable extends ThreadLocalRunnable<Map<String, String>>
     }
 
     public static MDCContextRunnable wrapRunnable(Runnable runnable) {
+        if (runnable instanceof MDCContextRunnable) {
+            return (MDCContextRunnable) runnable;
+        }
         return new MDCContextRunnable(runnable, MDC.getCopyOfContextMap());
     }
 }

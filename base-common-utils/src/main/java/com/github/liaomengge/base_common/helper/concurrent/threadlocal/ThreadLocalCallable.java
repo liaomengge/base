@@ -1,9 +1,9 @@
 package com.github.liaomengge.base_common.helper.concurrent.threadlocal;
 
+import lombok.Setter;
+
 import java.util.Objects;
 import java.util.concurrent.Callable;
-
-import lombok.Setter;
 
 /**
  * Created by liaomengge on 2020/5/20.

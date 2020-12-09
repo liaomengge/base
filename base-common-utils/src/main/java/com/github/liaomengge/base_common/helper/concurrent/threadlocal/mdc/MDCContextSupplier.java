@@ -1,11 +1,10 @@
 package com.github.liaomengge.base_common.helper.concurrent.threadlocal.mdc;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.ThreadLocalSupplier;
+import org.slf4j.MDC;
 
 import java.util.Map;
 import java.util.function.Supplier;
-
-import org.slf4j.MDC;
 
 /**
  * Created by liaomengge on 2020/5/20.
@@ -21,8 +20,8 @@ public class MDCContextSupplier<V> extends ThreadLocalSupplier<Map<String, Strin
     }
 
     @Override
-    public void set(Map<String, String> contextMap) {
-        MDC.setContextMap(contextMap);
+    public void set(Map<String, String> mdcContext) {
+        MDC.setContextMap(mdcContext);
     }
 
     @Override
@@ -31,6 +30,9 @@ public class MDCContextSupplier<V> extends ThreadLocalSupplier<Map<String, Strin
     }
 
     public static <V> MDCContextSupplier<V> wrapSupplier(Supplier<V> supplier) {
+        if (supplier instanceof MDCContextSupplier) {
+            return (MDCContextSupplier<V>) supplier;
+        }
         return new MDCContextSupplier(supplier, MDC.getCopyOfContextMap());
     }
 }

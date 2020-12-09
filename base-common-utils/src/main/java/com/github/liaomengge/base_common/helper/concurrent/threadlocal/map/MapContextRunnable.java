@@ -6,8 +6,6 @@ import org.slf4j.MDC;
 
 import java.util.Map;
 
-import static com.github.liaomengge.base_common.support.threadlocal.ThreadLocalContextUtils.getBaseThreadLocalContextMap;
-
 /**
  * Created by liaomengge on 2020/5/20.
  */
@@ -22,8 +20,8 @@ public class MapContextRunnable extends ThreadLocalRunnable<Map<String, Object>>
     }
 
     @Override
-    public void set(Map<String, Object> contextMap) {
-        ThreadLocalContextUtils.putAll(getBaseThreadLocalContextMap(), contextMap);
+    public void set(Map<String, Object> mapContext) {
+        ThreadLocalContextUtils.putAll(mapContext);
     }
 
     @Override
@@ -32,6 +30,9 @@ public class MapContextRunnable extends ThreadLocalRunnable<Map<String, Object>>
     }
 
     public static MapContextRunnable wrapRunnable(Runnable runnable) {
-        return new MapContextRunnable(runnable, ThreadLocalContextUtils.getAll(getBaseThreadLocalContextMap()));
+        if (runnable instanceof MapContextRunnable) {
+            return (MapContextRunnable) runnable;
+        }
+        return new MapContextRunnable(runnable, ThreadLocalContextUtils.getAll());
     }
 }

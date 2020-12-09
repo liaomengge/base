@@ -21,6 +21,7 @@ public class FrameworkProperties {
     private final ControllerAspectProperties controllerAspect = new ControllerAspectProperties();
     private final ResponseBodyAdviceProperties responseBodyAdvice = new ResponseBodyAdviceProperties();
     private final SentinelProperties sentinel = new SentinelProperties();
+    private final HeaderProperties header = new HeaderProperties();
     private final CorsProperties cors = new CorsProperties();
     private final XssProperties xss = new XssProperties();
 
@@ -38,6 +39,13 @@ public class FrameworkProperties {
     @Data
     public static class SentinelProperties {
         private boolean enabled = false;
+    }
+
+    @Data
+    public static class HeaderProperties {
+        private boolean enabled = true;
+        private int order = Ordered.HIGHEST_PRECEDENCE;
+        private String[] urlPatterns = {"/*"};
     }
 
     @Data

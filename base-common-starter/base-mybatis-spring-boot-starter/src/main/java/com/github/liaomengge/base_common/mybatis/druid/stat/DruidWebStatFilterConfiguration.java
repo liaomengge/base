@@ -31,12 +31,12 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(name = "base.mybatis.druid.web-stat-filter.enabled", havingValue = "true")
 public class DruidWebStatFilterConfiguration {
 
-    @Bean
+    @Bean("webStatFilterRegistrationBean")
     public FilterRegistrationBean webStatFilterRegistrationBean(DruidStatProperties properties) {
         DruidStatProperties.WebStatFilter config = properties.getWebStatFilter();
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        WebStatFilter filter = new WebStatFilter();
-        registrationBean.setFilter(filter);
+        registrationBean.setFilter(new WebStatFilter());
+        registrationBean.setName("webStatFilterRegistrationBean");
         registrationBean.addUrlPatterns(config.getUrlPattern() != null ? config.getUrlPattern() : "/*");
         registrationBean.addInitParameter("exclusions", config.getExclusions() != null ? config.getExclusions() : "*" +
                 ".js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");

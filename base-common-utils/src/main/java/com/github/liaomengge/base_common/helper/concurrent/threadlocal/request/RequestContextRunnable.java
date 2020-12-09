@@ -1,7 +1,6 @@
 package com.github.liaomengge.base_common.helper.concurrent.threadlocal.request;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.ThreadLocalRunnable;
-
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -19,8 +18,8 @@ public class RequestContextRunnable extends ThreadLocalRunnable<RequestAttribute
     }
 
     @Override
-    public void set(RequestAttributes requestAttributes) {
-        RequestContextHolder.setRequestAttributes(requestAttributes);
+    public void set(RequestAttributes requestAttributesContext) {
+        RequestContextHolder.setRequestAttributes(requestAttributesContext);
     }
 
     @Override
@@ -29,6 +28,9 @@ public class RequestContextRunnable extends ThreadLocalRunnable<RequestAttribute
     }
 
     public static RequestContextRunnable wrapRunnable(Runnable runnable) {
+        if (runnable instanceof RequestContextRunnable) {
+            return (RequestContextRunnable) runnable;
+        }
         return new RequestContextRunnable(runnable, RequestContextHolder.getRequestAttributes());
     }
 }

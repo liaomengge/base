@@ -1,11 +1,10 @@
 package com.github.liaomengge.base_common.helper.concurrent.threadlocal.request;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.ThreadLocalConsumer;
-
-import java.util.function.Consumer;
-
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+
+import java.util.function.Consumer;
 
 /**
  * Created by liaomengge on 2020/5/26.
@@ -21,8 +20,8 @@ public class RequestContextConsumer<V> extends ThreadLocalConsumer<RequestAttrib
     }
 
     @Override
-    public void set(RequestAttributes requestAttributes) {
-        RequestContextHolder.setRequestAttributes(requestAttributes);
+    public void set(RequestAttributes requestAttributesContext) {
+        RequestContextHolder.setRequestAttributes(requestAttributesContext);
     }
 
     @Override
@@ -30,7 +29,10 @@ public class RequestContextConsumer<V> extends ThreadLocalConsumer<RequestAttrib
         RequestContextHolder.resetRequestAttributes();
     }
 
-    public static <V> Consumer<V> wrapConsumer(Consumer<V> consumer) {
+    public static <V> RequestContextConsumer<V> wrapConsumer(Consumer<V> consumer) {
+        if (consumer instanceof RequestContextConsumer) {
+            return (RequestContextConsumer<V>) consumer;
+        }
         return new RequestContextConsumer(consumer, RequestContextHolder.getRequestAttributes());
     }
 }

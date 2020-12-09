@@ -17,14 +17,15 @@ import javax.servlet.DispatcherType;
 @ConditionalOnProperty(name = "base.framework.xss.enabled", havingValue = "true")
 public class FrameworkXssConfiguration {
 
-    @Bean("xssFilterRegistration")
-    @ConditionalOnMissingBean(name = "xssFilterRegistration")
-    public FilterRegistrationBean<XssFilter> xssFilterRegistration(FrameworkProperties frameworkProperties) {
+    @Bean("xssFilterRegistrationBean")
+    @ConditionalOnMissingBean(name = "xssFilterRegistrationBean")
+    public FilterRegistrationBean xssFilterRegistrationBean(FrameworkProperties frameworkProperties) {
         FrameworkProperties.XssProperties xssProperties = frameworkProperties.getXss();
 
-        FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<>();
+        FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         registration.setFilter(new XssFilter());
+        registration.setName("xssFilterRegistrationBean");
         registration.setOrder(xssProperties.getOrder());
         registration.addUrlPatterns(xssProperties.getUrlPatterns());
         registration.setEnabled(xssProperties.isEnabled());

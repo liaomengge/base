@@ -2,12 +2,9 @@ package com.github.liaomengge.base_common.helper.concurrent.threadlocal.map;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.ThreadLocalCallable;
 import com.github.liaomengge.base_common.support.threadlocal.ThreadLocalContextUtils;
-import org.slf4j.MDC;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import static com.github.liaomengge.base_common.support.threadlocal.ThreadLocalContextUtils.getBaseThreadLocalContextMap;
 
 /**
  * Created by liaomengge on 2020/5/20.
@@ -23,16 +20,19 @@ public class MapContextCallable<V> extends ThreadLocalCallable<Map<String, Objec
     }
 
     @Override
-    public void set(Map<String, Object> contextMap) {
-        ThreadLocalContextUtils.putAll(getBaseThreadLocalContextMap(), contextMap);
+    public void set(Map<String, Object> mapContext) {
+        ThreadLocalContextUtils.putAll(mapContext);
     }
 
     @Override
     public void clear() {
-        MDC.clear();
+        ThreadLocalContextUtils.remove();
     }
 
     public static <V> MapContextCallable<V> wrapCallable(Callable<V> callable) {
-        return new MapContextCallable(callable, ThreadLocalContextUtils.getAll(getBaseThreadLocalContextMap()));
+        if (callable instanceof MapContextCallable) {
+            return (MapContextCallable<V>) callable;
+        }
+        return new MapContextCallable(callable, ThreadLocalContextUtils.getAll());
     }
 }

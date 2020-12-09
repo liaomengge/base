@@ -245,4 +245,42 @@ public class LyStringUtil {
         }
         return str;
     }
+
+    /**
+     * 去除末尾指定字符
+     *
+     * @param str
+     * @param trailingCharacter
+     * @return
+     */
+    public String trimTrailingCharacter(String str, char trailingCharacter) {
+        if (StringUtils.isBlank(str)) {
+            return str;
+        }
+
+        StringBuilder sb = new StringBuilder(str);
+        while (sb.length() > 0 && sb.charAt(sb.length() - 1) == trailingCharacter) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 添加末尾指定字符
+     *
+     * @param str
+     * @param trailingCharacter
+     * @return
+     */
+    public String appendTrailingCharacter(String str, char trailingCharacter) {
+        if (StringUtils.isBlank(str)) {
+            return str;
+        }
+
+        StringBuilder sb = new StringBuilder(str);
+        if (sb.length() > 0 && sb.charAt(sb.length() - 1) != trailingCharacter) {
+            sb.append(trailingCharacter);
+        }
+        return sb.toString();
+    }
 }

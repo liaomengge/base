@@ -3,4 +3,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.liaomengge.base_common.feign.okhttp.OkHttpAutoConfiguration,\
   com.github.liaomengge.base_common.feign.client.FeignClientAutoConfiguration,\
   com.github.liaomengge.base_common.feign.logger.FeignLoggerConfiguration,\
-  com.github.liaomengge.base_common.feign.aspect.FeignAspectAutoConfiguration
+  com.github.liaomengge.base_common.feign.aspect.FeignAspectAutoConfiguration,\
+  com.github.liaomengge.base_common.feign.hystrix.FeignHystrixAutoConfiguration

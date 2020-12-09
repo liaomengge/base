@@ -1,6 +1,7 @@
 package com.github.liaomengge.service.base_framework.common.filter.aspect;
 
 import com.github.liaomengge.base_common.support.datasource.DBContext;
+import com.github.liaomengge.base_common.utils.aop.LyAopUtil;
 import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import com.github.liaomengge.base_common.utils.log.LyMDCUtil;
@@ -90,7 +91,7 @@ public class ServiceApiAspect implements MethodInterceptor, Ordered {
             return;
         }
         LyWebUtil.getHttpServletRequest().ifPresent(val -> {
-            Map<String, String> headerMap = LyWebUtil.getRequestHeaders(val);
+            Map<String, String> headerMap = LyWebUtil.getRequestStringHeaders(val);
             apiLogInfo.setHeaderParams(headerMap);
         });
     }
@@ -112,7 +113,7 @@ public class ServiceApiAspect implements MethodInterceptor, Ordered {
         if (ServiceApiLogUtil.isIgnoreLogRequest(invocation, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogRequest(invocation)) {
             return;
         }
-        Object requestParams = LyWebUtil.getRequestParams(ServiceApiLogUtil.getMethod(invocation),
+        Object requestParams = LyAopUtil.getRequestParams(ServiceApiLogUtil.getMethod(invocation),
                 invocation.getArguments());
         apiLogInfo.setRequestBody(requestParams);
     }

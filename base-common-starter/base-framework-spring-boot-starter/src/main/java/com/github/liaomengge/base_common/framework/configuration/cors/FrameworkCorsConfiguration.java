@@ -40,6 +40,7 @@ public class FrameworkCorsConfiguration {
         configSource.registerCorsConfiguration(corsProperties.getPath(), corsConfiguration);
 
         FilterRegistrationBean registration = new FilterRegistrationBean(new CorsFilter(configSource));
+        registration.setName("corsFilterRegistration");
         registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
         registration.setEnabled(corsProperties.isEnabled());
         return registration;

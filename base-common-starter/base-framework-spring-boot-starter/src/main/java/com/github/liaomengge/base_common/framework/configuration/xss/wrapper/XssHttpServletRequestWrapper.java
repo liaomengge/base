@@ -6,6 +6,7 @@ import org.apache.commons.text.StringEscapeUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+
 /**
  * Created by liaomengge on 2020/10/17.
  */
@@ -13,6 +14,11 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     public XssHttpServletRequestWrapper(HttpServletRequest request) {
         super(request);
+    }
+
+    @Override
+    public String getHeader(String name) {
+        return StringEscapeUtils.escapeHtml4(super.getHeader(name));
     }
 
     @Override

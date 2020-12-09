@@ -8,6 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,7 @@ public class SentinelWebConfiguration {
     }
 
     @Bean("sentinelFilterRegistrationBean")
+    @ConditionalOnMissingBean(name = "sentinelFilterRegistrationBean")
     public FilterRegistrationBean sentinelFilterRegistrationBean(SentinelFilter filter) {
         FilterRegistrationBean registration = new FilterRegistrationBean();
 
@@ -47,6 +49,7 @@ public class SentinelWebConfiguration {
             registration.setInitParameters(ImmutableMap.of("excludedUris", filterProperties.getExcludedUris()));
         }
         registration.setFilter(filter);
+        registration.setName("sentinelFilterRegistrationBean");
         registration.setOrder(filterProperties.getOrder());
         log.info("[Sentinel Starter] register Sentinel with urlPatterns: {}.", filterProperties.getUrlPatterns());
         return registration;

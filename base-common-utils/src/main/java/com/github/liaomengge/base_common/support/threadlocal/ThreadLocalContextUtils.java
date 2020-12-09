@@ -16,6 +16,10 @@ public class ThreadLocalContextUtils {
     private static ThreadLocal<Map<String, Object>> baseThreadLocalContextMap =
             new NamedThreadLocal("BASE-THREAD-LOCAL-CONTEXT-MAP");
 
+    public void put(String key, Object value) {
+        put(getBaseThreadLocalContextMap(), key, value);
+    }
+
     public void put(ThreadLocal<Map<String, Object>> threadLocalMap, String key, Object value) {
         if (Objects.isNull(key)) {
             throw new IllegalArgumentException("key cannot be null");
@@ -28,6 +32,10 @@ public class ThreadLocalContextUtils {
         map.put(key, value);
     }
 
+    public void putAll(Map<String, Object> map) {
+        putAll(getBaseThreadLocalContextMap(), map);
+    }
+
     public void putAll(ThreadLocal<Map<String, Object>> threadLocalMap, Map<String, Object> map) {
         Map<String, Object> localMap = threadLocalMap.get();
         if (Objects.isNull(localMap)) {
@@ -35,6 +43,10 @@ public class ThreadLocalContextUtils {
             return;
         }
         localMap.putAll(map);
+    }
+
+    public <T> T get(String key) {
+        return get(getBaseThreadLocalContextMap(), key);
     }
 
     public <T> T get(ThreadLocal<Map<String, Object>> threadLocalMap, String key) {
@@ -45,8 +57,16 @@ public class ThreadLocalContextUtils {
         return null;
     }
 
+    public Map<String, Object> getAll() {
+        return getAll(getBaseThreadLocalContextMap());
+    }
+
     public Map<String, Object> getAll(ThreadLocal<Map<String, Object>> threadLocalMap) {
         return threadLocalMap.get();
+    }
+
+    public void remove() {
+        remove(getBaseThreadLocalContextMap());
     }
 
     public void remove(ThreadLocal<Map<String, Object>> threadLocalMap) {

@@ -1,11 +1,10 @@
 package com.github.liaomengge.base_common.helper.concurrent.threadlocal.mdc;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.ThreadLocalCallable;
+import org.slf4j.MDC;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import org.slf4j.MDC;
 
 /**
  * Created by liaomengge on 2020/5/20.
@@ -21,8 +20,8 @@ public class MDCContextCallable<V> extends ThreadLocalCallable<Map<String, Strin
     }
 
     @Override
-    public void set(Map<String, String> contextMap) {
-        MDC.setContextMap(contextMap);
+    public void set(Map<String, String> mdcContext) {
+        MDC.setContextMap(mdcContext);
     }
 
     @Override
@@ -31,6 +30,9 @@ public class MDCContextCallable<V> extends ThreadLocalCallable<Map<String, Strin
     }
 
     public static <V> MDCContextCallable<V> wrapCallable(Callable<V> callable) {
+        if (callable instanceof MDCContextCallable) {
+            return (MDCContextCallable<V>) callable;
+        }
         return new MDCContextCallable(callable, MDC.getCopyOfContextMap());
     }
 }

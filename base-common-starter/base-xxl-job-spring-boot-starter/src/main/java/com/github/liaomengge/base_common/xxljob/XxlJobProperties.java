@@ -25,6 +25,6 @@ public class XxlJobProperties {
         private String logPath;
         private String ip;
         private Integer port = 9999;
-        private Integer logRetentionDays = 30;
+        private Integer logRetentionDays = 14;
     }
 }

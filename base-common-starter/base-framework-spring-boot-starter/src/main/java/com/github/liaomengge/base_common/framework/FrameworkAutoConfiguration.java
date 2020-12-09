@@ -4,6 +4,7 @@ import com.github.liaomengge.base_common.framework.advice.FrameworkResponseBodyA
 import com.github.liaomengge.base_common.framework.aspect.FrameworkAspectConfiguration;
 import com.github.liaomengge.base_common.framework.configuration.convert.FrameworkWebMvcConfigurer;
 import com.github.liaomengge.base_common.framework.configuration.cors.FrameworkCorsConfiguration;
+import com.github.liaomengge.base_common.framework.configuration.header.FrameworkHeaderConfiguration;
 import com.github.liaomengge.base_common.framework.configuration.micrometer.FrameworkMicrometerConfiguration;
 import com.github.liaomengge.base_common.framework.configuration.xss.FrameworkXssConfiguration;
 import com.github.liaomengge.base_common.framework.consts.FrameworkConst;
@@ -38,7 +39,7 @@ import java.util.stream.Collectors;
 @EnableConfigurationProperties(FrameworkProperties.class)
 @Import({FrameworkResponseBodyAdviceConfiguration.class, FrameworkBeanRegistryConfiguration.class,
         FrameworkErrorConfiguration.class, FilterConfiguration.class, FrameworkWebMvcConfigurer.class,
-        FrameworkCorsConfiguration.class, FrameworkXssConfiguration.class,
+        FrameworkCorsConfiguration.class, FrameworkXssConfiguration.class, FrameworkHeaderConfiguration.class,
         FrameworkMicrometerConfiguration.class, FrameworkAspectConfiguration.class})
 public class FrameworkAutoConfiguration implements ApplicationContextAware {
 
