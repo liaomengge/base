@@ -13,8 +13,8 @@ import org.springframework.web.client.AsyncRestTemplate;
 /**
  * Created by liaomengge on 17/3/9.
  */
-@NoArgsConstructor
 @Deprecated
+@NoArgsConstructor
 public class AsyncClientTemplate extends Template.Async {
 
     @Setter

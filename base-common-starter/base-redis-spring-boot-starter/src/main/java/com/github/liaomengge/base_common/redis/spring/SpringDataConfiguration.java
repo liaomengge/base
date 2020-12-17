@@ -3,6 +3,7 @@ package com.github.liaomengge.base_common.redis.spring;
 import com.github.liaomengge.base_common.helper.redis.RedisTemplateHelper;
 import com.github.liaomengge.base_common.redis.SpringDataProperties;
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import org.springframework.data.redis.connection.jedis.JedisConnection;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -64,7 +64,7 @@ public class SpringDataConfiguration {
         if (Objects.nonNull(jedisPoolConfig)) {
             builder.usePooling().poolConfig(jedisPoolConfig);
         }
-        if (StringUtils.hasText(springDataProperties.getUrl())) {
+        if (StringUtils.isNoneBlank(springDataProperties.getUrl())) {
             customizeConfigurationFromUrl(builder);
         }
         builderCustomizers.orderedStream().forEach((customizer) -> customizer.customize(builder));
@@ -79,7 +79,7 @@ public class SpringDataConfiguration {
             Duration timeout = springDataProperties.getTimeout();
             builder.readTimeout(timeout).connectTimeout(timeout);
         }
-        if (StringUtils.hasText(springDataProperties.getClientName())) {
+        if (StringUtils.isNoneBlank(springDataProperties.getClientName())) {
             builder.clientName(springDataProperties.getClientName());
         }
         return builder;

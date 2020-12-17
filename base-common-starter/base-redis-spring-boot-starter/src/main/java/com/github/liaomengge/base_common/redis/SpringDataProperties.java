@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.redis.connection.*;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.net.URI;
@@ -77,7 +77,7 @@ public class SpringDataProperties {
         List<RedisNode> nodes = new ArrayList<>();
         for (String node : sentinel.getNodes()) {
             try {
-                String[] parts = StringUtils.split(node, ":");
+                String[] parts = StringUtils.split(node, ':');
                 Assert.state(parts.length == 2, "Must be defined as 'host:port'");
                 nodes.add(new RedisNode(parts[0], Integer.parseInt(parts[1])));
             } catch (RuntimeException ex) {
@@ -105,7 +105,7 @@ public class SpringDataProperties {
 
     public final RedisStandaloneConfiguration getStandaloneConfig() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        if (StringUtils.hasText(getUrl())) {
+        if (StringUtils.isNoneBlank(getUrl())) {
             ConnectionInfo connectionInfo = parseUrl(getUrl());
             config.setHostName(connectionInfo.getHostName());
             config.setPort(connectionInfo.getPort());

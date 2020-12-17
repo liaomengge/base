@@ -1,4 +1,4 @@
-package com.github.liaomengge.base_common.support.format;
+package com.github.liaomengge.base_common.support.resolve;
 
 import com.google.common.base.CaseFormat;
 import lombok.experimental.UtilityClass;
@@ -9,7 +9,7 @@ import org.springframework.core.env.Environment;
  * Created by liaomengge on 2020/11/12.
  */
 @UtilityClass
-public class PropertiesFormat {
+public class PropertiesResolve {
 
     public String getPropertyValue(Environment environment, String propertyName) {
         return getPropertyValue(environment, propertyName, "");
@@ -21,12 +21,12 @@ public class PropertiesFormat {
         }
         String value = environment.getProperty(propertyName);
         if (StringUtils.isBlank(value)) {
-            value = environment.getProperty(convert(propertyName));
+            value = environment.getProperty(resolve(propertyName));
         }
         return StringUtils.defaultIfBlank(value, defaultValue);
     }
 
-    public String convert(String propertyName) {
+    private String resolve(String propertyName) {
         if (StringUtils.isBlank(propertyName)) {
             return propertyName;
         }

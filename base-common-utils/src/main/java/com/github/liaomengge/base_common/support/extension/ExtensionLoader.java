@@ -1,6 +1,9 @@
 package com.github.liaomengge.base_common.support.extension;
 
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import org.slf4j.Logger;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.OrderUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,10 +17,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.OrderUtils;
 
 /**
  * 参照：https://github.com/yu120/neural
@@ -58,7 +57,8 @@ public class ExtensionLoader<T> {
     public T getExtension() {
         SPI spi = serviceType.getAnnotation(SPI.class);
         if (spi.value().length() == 0) {
-            throw new RuntimeException(serviceType.getName() + ": The default implementation ID(@SPI.value()) is not set");
+            throw new RuntimeException(serviceType.getName() + ": The default implementation ID(@SPI.value()) is not " +
+                    "set");
         }
         return getExtension(spi.value());
     }
@@ -142,7 +142,8 @@ public class ExtensionLoader<T> {
         return loader;
     }
 
-    private static synchronized <T> ExtensionLoader<T> initExtensionLoader(Class<T> serviceType, ClassLoader classLoader) {
+    private static synchronized <T> ExtensionLoader<T> initExtensionLoader(Class<T> serviceType,
+                                                                           ClassLoader classLoader) {
         ExtensionLoader<T> loader = (ExtensionLoader<T>) extensionLoaders.get(serviceType);
         if (loader == null) {
             loader = new ExtensionLoader<>(serviceType, classLoader);

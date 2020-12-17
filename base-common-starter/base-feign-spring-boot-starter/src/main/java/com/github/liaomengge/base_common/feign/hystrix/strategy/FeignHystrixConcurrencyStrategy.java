@@ -1,4 +1,4 @@
-package com.github.liaomengge.base_common.feign.hystrix;
+package com.github.liaomengge.base_common.feign.hystrix.strategy;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.request.RequestContextCallable;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;

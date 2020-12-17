@@ -27,6 +27,7 @@ public class ThreadPoolGroupProperties {
     @Data
     public static class ThreadPoolProperties {
         private boolean ttlEnabled = false;
+        private boolean requestContextEnabled = false;
         private String threadName;
         private String beanName;
         private int corePoolSize = LyRuntimeUtil.getCpuNum();//可动态修改

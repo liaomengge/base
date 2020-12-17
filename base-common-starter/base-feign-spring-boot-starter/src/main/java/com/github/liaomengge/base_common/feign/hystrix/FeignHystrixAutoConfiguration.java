@@ -1,5 +1,8 @@
 package com.github.liaomengge.base_common.feign.hystrix;
 
+import com.github.liaomengge.base_common.feign.hystrix.initializer.FeignHystrixInitializer;
+import com.github.liaomengge.base_common.feign.hystrix.strategy.FeignHystrixConcurrencyStrategy;
+import com.github.liaomengge.base_common.feign.manager.FeignClientManager;
 import com.netflix.hystrix.HystrixCommand;
 import feign.hystrix.HystrixFeign;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -11,14 +14,20 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by liaomengge on 2020/12/8.
  */
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(name = "feign.hystrix.enabled")
 @ConditionalOnClass({HystrixCommand.class, HystrixFeign.class})
-@Configuration(proxyBeanMethods = false)
 public class FeignHystrixAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean(name = "feignHystrixConcurrencyStrategy")
+    @ConditionalOnMissingBean(FeignHystrixConcurrencyStrategy.class)
     public FeignHystrixConcurrencyStrategy feignHystrixConcurrencyStrategy() {
         return new FeignHystrixConcurrencyStrategy();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(FeignHystrixInitializer.class)
+    public FeignHystrixInitializer feignHystrixInitializer(FeignClientManager feignClientManager) {
+        return new FeignHystrixInitializer(feignClientManager);
     }
 }

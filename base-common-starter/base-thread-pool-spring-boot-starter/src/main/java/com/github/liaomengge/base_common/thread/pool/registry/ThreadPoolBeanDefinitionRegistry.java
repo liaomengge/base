@@ -3,6 +3,7 @@ package com.github.liaomengge.base_common.thread.pool.registry;
 import com.github.liaomengge.base_common.helper.concurrent.LyThreadPoolTaskExecutor;
 import com.github.liaomengge.base_common.helper.concurrent.LyThreadPoolTaskWrappedExecutor;
 import com.github.liaomengge.base_common.helper.concurrent.LyTtlThreadPoolTaskExecutor;
+import com.github.liaomengge.base_common.helper.concurrent.threadlocal.request.RequestContextRunnable;
 import com.github.liaomengge.base_common.thread.pool.ThreadPoolGroupProperties;
 import com.github.liaomengge.base_common.utils.binder.LyBinderUtil;
 import org.springframework.beans.BeansException;
@@ -79,6 +80,9 @@ public class ThreadPoolBeanDefinitionRegistry implements EnvironmentAware, BeanD
         threadPoolTaskExecutor.setQueueCapacity(threadPoolProperties.getQueueCapacity());
         threadPoolTaskExecutor.setBlockingQueue(threadPoolProperties.buildBlockingQueue());
         threadPoolTaskExecutor.setRejectedExecutionHandler(threadPoolProperties.buildRejectionPolicy());
+        if (threadPoolProperties.isRequestContextEnabled()) {
+            threadPoolTaskExecutor.setTaskDecorator(RequestContextRunnable::wrapRunnable);
+        }
 
         threadPoolTaskExecutor.setCheckInterval(threadPoolProperties.getCheckInterval());
         threadPoolTaskExecutor.setAwaitTerminationSeconds(threadPoolProperties.getAwaitTerminationSeconds());

@@ -1,10 +1,9 @@
 package com.github.liaomengge.base_common.support.exception;
 
-import org.apache.commons.lang3.StringUtils;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by liaomengge on 17/11/17.
@@ -15,6 +14,7 @@ import lombok.ToString;
 public abstract class AbstractAppException extends Exception {
 
     private static final long serialVersionUID = 2433471215312281752L;
+    
     protected String errCode;
     protected String errMsg;
 

@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import lombok.Getter;
 import org.reflections.Reflections;
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.ClassUtils;
 
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by liaomengge on 2020/11/10.
+ * 获取所有子类的实例
  */
 public class ExtReflectionLoader<T> {
 
@@ -35,7 +37,7 @@ public class ExtReflectionLoader<T> {
             return;
         }
         Reflections reflections = reflectionsMap.computeIfAbsent(serviceType,
-                val -> new Reflections(val.getPackage().getName()));
+                val -> new Reflections(ClassUtils.getPackageName(val)));
         Set<Class<? extends T>> classSet = reflections.getSubTypesOf(this.serviceType);
         for (Class<? extends T> clazz : classSet) {
             T t;

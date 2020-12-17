@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Scope;
 /**
  * Created by liaomengge on 2020/10/28.
  */
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(FeignClientsConfiguration.class)
 public class FeignClientAutoConfiguration {
 

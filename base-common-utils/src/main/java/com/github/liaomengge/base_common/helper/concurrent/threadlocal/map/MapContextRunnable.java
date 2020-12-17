@@ -2,7 +2,6 @@ package com.github.liaomengge.base_common.helper.concurrent.threadlocal.map;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.ThreadLocalRunnable;
 import com.github.liaomengge.base_common.support.threadlocal.ThreadLocalContextUtils;
-import org.slf4j.MDC;
 
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class MapContextRunnable extends ThreadLocalRunnable<Map<String, Object>>
 
     @Override
     public void clear() {
-        MDC.clear();
+        ThreadLocalContextUtils.remove();
     }
 
     public static MapContextRunnable wrapRunnable(Runnable runnable) {

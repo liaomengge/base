@@ -5,6 +5,8 @@ package com.github.liaomengge.base_common.support.exception;
  */
 public class CircuitBreakerException extends AbstractAppRuntimeException {
 
+    private static final long serialVersionUID = 3838097860810065792L;
+
     public CircuitBreakerException(String errMsg) {
         super(errMsg);
     }
@@ -27,6 +29,6 @@ public class CircuitBreakerException extends AbstractAppRuntimeException {
 
     @Override
     public String getMessage() {
-        return super.getMessage("熔断异常");
+        return super.getMessage("circuit breaker exception");
     }
 }

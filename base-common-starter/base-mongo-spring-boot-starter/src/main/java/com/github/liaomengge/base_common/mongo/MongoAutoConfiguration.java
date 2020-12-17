@@ -2,6 +2,7 @@ package com.github.liaomengge.base_common.mongo;
 
 import com.mongodb.ConnectionString;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -23,7 +24,6 @@ import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.util.ClassUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -52,13 +52,13 @@ public class MongoAutoConfiguration {
     }
 
     private Set<Class<?>> scanForEntities(String basePackage) throws ClassNotFoundException {
-        if (!StringUtils.hasText(basePackage)) {
+        if (StringUtils.isBlank(basePackage)) {
             return Collections.emptySet();
         }
 
         Set<Class<?>> initialEntitySet = new HashSet<>();
 
-        if (StringUtils.hasText(basePackage)) {
+        if (StringUtils.isNoneBlank(basePackage)) {
 
             ClassPathScanningCandidateComponentProvider componentProvider = new
                     ClassPathScanningCandidateComponentProvider(

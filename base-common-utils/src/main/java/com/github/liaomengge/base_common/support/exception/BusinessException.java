@@ -2,6 +2,8 @@ package com.github.liaomengge.base_common.support.exception;
 
 public class BusinessException extends AbstractAppException {
 
+    private static final long serialVersionUID = -2687547527140780955L;
+
     public BusinessException(String errMsg) {
         super(errMsg);
     }
@@ -24,6 +26,6 @@ public class BusinessException extends AbstractAppException {
 
     @Override
     public String getMessage() {
-        return super.getMessage("业务异常");
+        return super.getMessage("bussiness exception");
     }
 }

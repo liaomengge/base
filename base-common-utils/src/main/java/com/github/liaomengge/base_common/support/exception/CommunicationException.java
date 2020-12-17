@@ -5,6 +5,7 @@ package com.github.liaomengge.base_common.support.exception;
  */
 public class CommunicationException extends AbstractAppRuntimeException {
 
+    private static final long serialVersionUID = 5932955305707532229L;
 
     public CommunicationException(String errMsg) {
         super(errMsg);
@@ -28,6 +29,6 @@ public class CommunicationException extends AbstractAppRuntimeException {
 
     @Override
     public String getMessage() {
-        return super.getMessage("通信异常");
+        return super.getMessage("communication exception");
     }
 }

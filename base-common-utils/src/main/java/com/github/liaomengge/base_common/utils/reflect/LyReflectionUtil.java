@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.Objects;
@@ -26,22 +25,28 @@ public class LyReflectionUtil {
         }
 
         Field field = ReflectionUtils.findField(obj.getClass(), fieldName);
-        if (field == null) {
+        if (Objects.isNull(field)) {
             return null;
         }
 
         String fieldType = field.getType().getTypeName();
         String methodName = getMethodPrefix(fieldType) + getMethodSuffix(fieldName);
         Method method = ReflectionUtils.findMethod(obj.getClass(), methodName);
-        if (method == null) {
-            return null;
+        if (Objects.isNull(method)) {
+            try {
+                ReflectionUtils.makeAccessible(field);
+                return ReflectionUtils.getField(field, obj);
+            } catch (Exception e) {
+                log.warn("get field value fail", e);
+                return null;
+            }
         }
 
         Object result;
         try {
             ReflectionUtils.makeAccessible(method);
             result = method.invoke(obj);
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (Exception e) {
             log.warn("get field value fail", e);
             result = null;
         }
@@ -54,7 +59,7 @@ public class LyReflectionUtil {
         }
 
         Field field = ReflectionUtils.findField(obj.getClass(), fieldName);
-        if (field == null) {
+        if (Objects.isNull(field)) {
             return;
         }
 
@@ -64,6 +69,28 @@ public class LyReflectionUtil {
         } catch (Exception e) {
             log.warn("set field value fail", e);
         }
+    }
+
+    public Object invokeMethod(Object obj, String methodName) {
+        return invokeMethod(obj, methodName, new Object[0]);
+    }
+
+    public Object invokeMethod(Object obj, String methodName, Object... methodArgs) {
+        if (StringUtils.isBlank(methodName)) {
+            return null;
+        }
+        Method method = ReflectionUtils.findMethod(obj.getClass(), methodName);
+        if (Objects.isNull(method)) {
+            return null;
+        }
+        Object result = null;
+        try {
+            ReflectionUtils.makeAccessible(method);
+            result = ReflectionUtils.invokeMethod(method, obj, methodArgs);
+        } catch (Exception e) {
+            log.warn("get field value fail", e);
+        }
+        return result;
     }
 
     private String getMethodPrefix(String fieldType) {

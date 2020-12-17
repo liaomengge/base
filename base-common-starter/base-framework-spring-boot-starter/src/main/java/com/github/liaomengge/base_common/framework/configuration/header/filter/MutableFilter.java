@@ -1,23 +1,26 @@
 package com.github.liaomengge.base_common.framework.configuration.header.filter;
 
 import com.github.liaomengge.base_common.framework.configuration.header.wrapper.MutableHttpServletRequestWrapper;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
  * Created by liaomengge on 2020/12/8.
  */
-public class MutableFilter implements Filter {
+public class MutableFilter extends OncePerRequestFilter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-            ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         if (request instanceof MutableHttpServletRequestWrapper) {
-            chain.doFilter(request, response);
+            filterChain.doFilter(request, response);
             return;
         }
-        chain.doFilter(new MutableHttpServletRequestWrapper((HttpServletRequest) request), response);
+        filterChain.doFilter(new MutableHttpServletRequestWrapper(request), response);
     }
 }

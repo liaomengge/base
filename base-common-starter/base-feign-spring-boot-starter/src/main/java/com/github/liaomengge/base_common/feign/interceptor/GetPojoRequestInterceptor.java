@@ -7,10 +7,10 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import feign.Util;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -63,7 +63,7 @@ public class GetPojoRequestInterceptor implements RequestInterceptor, Ordered {
             Iterator<Map.Entry<String, JsonNode>> it = jsonNode.fields();
             while (it.hasNext()) {
                 Map.Entry<String, JsonNode> entry = it.next();
-                if (StringUtils.hasText(path)) {
+                if (StringUtils.isNoneBlank(path)) {
                     buildQuery(entry.getValue(), path + "." + entry.getKey(), queries);
                 } else {
                     buildQuery(entry.getValue(), entry.getKey(), queries);

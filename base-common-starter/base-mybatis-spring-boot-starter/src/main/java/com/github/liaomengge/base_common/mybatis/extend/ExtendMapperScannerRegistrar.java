@@ -102,6 +102,7 @@ public class ExtendMapperScannerRegistrar implements ImportBeanDefinitionRegistr
         scanner.doScan(StringUtils.toStringArray(basePackages));
     }
 
+    //或者直接通过environment.resolvePlaceholders()解析对应的值
     private List<String> parsePlaceHolder(String pkg) {
         if (Objects.nonNull(pkg) && pkg.contains(PropertySourcesPlaceholderConfigurer.DEFAULT_PLACEHOLDER_PREFIX)) {
             String key = pkg.substring(2, pkg.length() - 1);

@@ -1,8 +1,10 @@
 package com.github.liaomengge.base_common.feign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.liaomengge.base_common.feign.helper.FeignHelper;
 import com.github.liaomengge.base_common.feign.interceptor.GetPojoRequestInterceptor;
 import com.github.liaomengge.base_common.feign.interceptor.HeaderRequestInterceptor;
+import com.github.liaomengge.base_common.feign.manager.FeignClientManager;
 import feign.Feign;
 import feign.RequestInterceptor;
 import feign.codec.Encoder;
@@ -36,5 +38,15 @@ public class FeignAutoConfiguration {
         return new HeaderRequestInterceptor();
     }
 
+    @Bean
+    @ConditionalOnMissingBean
+    public FeignHelper feignHelper() {
+        return new FeignHelper();
+    }
 
+    @Bean
+    @ConditionalOnMissingBean
+    public FeignClientManager feignClientManager(FeignHelper feignHelper, FeignProperties feignProperties) {
+        return new FeignClientManager(feignHelper, feignProperties);
+    }
 }

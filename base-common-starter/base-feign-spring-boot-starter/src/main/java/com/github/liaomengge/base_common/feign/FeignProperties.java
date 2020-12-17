@@ -3,6 +3,7 @@ package com.github.liaomengge.base_common.feign;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 @ConfigurationProperties("base.feign")
 public class FeignProperties {
 
+    private List<String> basePackages;
     private LoggerProperties logger = new LoggerProperties();
     private AspectProperties aspect = new AspectProperties();
     private OkHttpProperties okhttp = new OkHttpProperties();

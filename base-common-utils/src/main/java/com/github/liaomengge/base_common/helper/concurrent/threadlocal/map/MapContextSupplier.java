@@ -2,7 +2,6 @@ package com.github.liaomengge.base_common.helper.concurrent.threadlocal.map;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.ThreadLocalSupplier;
 import com.github.liaomengge.base_common.support.threadlocal.ThreadLocalContextUtils;
-import org.slf4j.MDC;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -27,7 +26,7 @@ public class MapContextSupplier<V> extends ThreadLocalSupplier<Map<String, Objec
 
     @Override
     public void clear() {
-        MDC.clear();
+        ThreadLocalContextUtils.remove();
     }
 
     public static <V> MapContextSupplier<V> wrapSupplier(Supplier<V> supplier) {

@@ -5,13 +5,20 @@ import java.lang.reflect.Proxy;
 
 /**
  * Created by liaomengge on 2020/5/20.
+ * 可参考spring#ProxyFactory
  */
 public abstract class JdkDynamicProxy implements InvocationHandler {
 
     private Object target;
+    private Class<?> targetClass;
 
-    public Object newProxy(Object target) {
+    public <T> T newProxy(Object target) {
         this.target = target;
-        return Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
+        return (T) Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
+    }
+
+    public <T> T newProxy(Class<?> targetClass) {
+        this.targetClass = targetClass;
+        return (T) Proxy.newProxyInstance(targetClass.getClassLoader(), targetClass.getInterfaces(), this);
     }
 }

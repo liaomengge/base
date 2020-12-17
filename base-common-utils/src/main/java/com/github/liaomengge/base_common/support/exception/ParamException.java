@@ -3,6 +3,8 @@ package com.github.liaomengge.base_common.support.exception;
 
 public class ParamException extends AbstractAppException {
 
+    private static final long serialVersionUID = 7160731759493165193L;
+
     public ParamException(String errMsg) {
         super(errMsg);
     }
@@ -25,6 +27,6 @@ public class ParamException extends AbstractAppException {
 
     @Override
     public String getMessage() {
-        return super.getMessage("参数错误");
+        return super.getMessage("param exception");
     }
 }

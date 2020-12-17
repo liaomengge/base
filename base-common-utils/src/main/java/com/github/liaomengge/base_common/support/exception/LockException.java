@@ -5,6 +5,8 @@ package com.github.liaomengge.base_common.support.exception;
  */
 public class LockException extends AbstractAppRuntimeException {
 
+    private static final long serialVersionUID = -2078255553870810196L;
+
     public LockException(String errMsg) {
         super(errMsg);
     }
@@ -27,6 +29,6 @@ public class LockException extends AbstractAppRuntimeException {
 
     @Override
     public String getMessage() {
-        return super.getMessage("锁异常");
+        return super.getMessage("lock exception");
     }
 }

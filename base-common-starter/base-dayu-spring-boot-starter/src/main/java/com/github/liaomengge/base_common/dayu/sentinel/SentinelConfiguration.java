@@ -13,6 +13,7 @@ import com.github.liaomengge.base_common.dayu.sentinel.datasource.SentinelDataSo
 import com.github.liaomengge.base_common.dayu.sentinel.filter.SentinelWebConfiguration;
 import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import io.micrometer.core.instrument.MeterRegistry;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -22,7 +23,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 
@@ -66,10 +66,10 @@ public class SentinelConfiguration {
 
     @PostConstruct
     private void init() {
-        if (StringUtils.hasText(projectName)) {
+        if (StringUtils.isNoneBlank(projectName)) {
             System.setProperty(AppNameUtil.getAppName(), projectName);
         }
-        if (StringUtils.hasText(sentinelProperties.getServlet().getBlockPage())) {
+        if (StringUtils.isNoneBlank(sentinelProperties.getServlet().getBlockPage())) {
             WebServletConfig.setBlockPage(sentinelProperties.getServlet().getBlockPage());
         }
 
