@@ -1,6 +1,6 @@
-package com.github.liaomengge.base_common.framework.configuration.header.filter;
+package com.github.liaomengge.base_common.framework.configuration.request.filter;
 
-import com.github.liaomengge.base_common.framework.configuration.header.wrapper.MutableHttpServletRequestWrapper;
+import com.github.liaomengge.base_common.framework.configuration.request.wrapper.MutableHttpServletRequestWrapper;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;

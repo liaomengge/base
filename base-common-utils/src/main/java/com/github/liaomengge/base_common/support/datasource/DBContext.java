@@ -1,6 +1,7 @@
 package com.github.liaomengge.base_common.support.datasource;
 
 import com.github.liaomengge.base_common.support.datasource.enums.DbType;
+import com.github.liaomengge.base_common.utils.threadlocal.ThreadLocalUtil;
 
 /**
  * Created by liaomengge on 16/4/11.
@@ -8,7 +9,7 @@ import com.github.liaomengge.base_common.support.datasource.enums.DbType;
 
 public class DBContext {
 
-    private static final ThreadLocal<DbType> tlDbKey = new ThreadLocal<>();
+    private static final ThreadLocal<DbType> tlDbKey = ThreadLocalUtil.getThreadLocal();
 
     public static DbType getDBKey() {
         DbType tlDbType = tlDbKey.get();

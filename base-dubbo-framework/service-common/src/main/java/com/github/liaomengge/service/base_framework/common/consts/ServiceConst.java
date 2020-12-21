@@ -32,6 +32,7 @@ public class ServiceConst {
             SERVER_ERROR("000500", "服务器内部错误"),
             SIGN_ERROR("000600", "签名失败"),
             FAIL_FAST_ERROR("000700", "接口暂不可用"),
+            FALLBACK_ERROR("000701", "接口降级"),
             SERVER_BUSY_ERROR("000800", "服务器繁忙,请稍后再试"),
             UNKNOWN_ERROR("000900", "未知错误"),
             BIZ_DEFAULT_ERROR("100000", "业务处理失败");

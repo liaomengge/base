@@ -48,6 +48,23 @@ public class LyWebUtil {
         return getRequestAttributes().map(ServletRequestAttributes::getResponse);
     }
 
+    public Map<String, Object> getRequestAttributes(HttpServletRequest request) {
+        Map<String, Object> attributeMap = Maps.newHashMap();
+        Enumeration<String> attributeNames = request.getAttributeNames();
+        if (Objects.nonNull(attributeNames)) {
+            while (attributeNames.hasMoreElements()) {
+                String name = attributeNames.nextElement();
+                if (StringUtils.isNoneBlank(name)) {
+                    Object value = request.getAttribute(name);
+                    attributeMap.put(name, value);
+                }
+            }
+        }
+        return attributeMap;
+    }
+
+    /*******************************************************Header*****************************************************/
+
     public Map<String, String> getRequestStringHeaders(HttpServletRequest request) {
         return getRequestHeaders(request, val -> LyListUtil.getFirst(EnumerationUtils.toList(val)));
     }
@@ -56,6 +73,14 @@ public class LyWebUtil {
         return getRequestHeaders(request, EnumerationUtils::toList);
     }
 
+    /**
+     * 获取请求参数
+     *
+     * @param request
+     * @param function
+     * @param <V>
+     * @return
+     */
     public <V> Map<String, V> getRequestHeaders(HttpServletRequest request, Function<Enumeration<String>, V> function) {
         Map<String, V> headerMap = Maps.newHashMap();
         Enumeration<String> headerNames = request.getHeaderNames();
@@ -74,6 +99,8 @@ public class LyWebUtil {
         }
         return headerMap;
     }
+
+    /*******************************************************Params*****************************************************/
 
     /**
      * 获取Get/Post请求参数(文件上传除外)
@@ -129,6 +156,8 @@ public class LyWebUtil {
         }
         return parameterMap;
     }
+
+    /*******************************************************Render*****************************************************/
 
     /**
      * 获取请求的json body
@@ -187,6 +216,8 @@ public class LyWebUtil {
             log.error("write response stream exception", e);
         }
     }
+
+    /*******************************************************Other*****************************************************/
 
     /**
      * 是否为GET请求

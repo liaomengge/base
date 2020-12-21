@@ -7,6 +7,10 @@ import com.google.common.collect.Maps;
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.reflections.Reflections;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.cloud.openfeign.FeignClient;
 
 import javax.annotation.PostConstruct;
@@ -18,10 +22,12 @@ import java.util.Set;
 /**
  * Created by liaomengge on 2020/12/17.
  */
-public class FeignClientManager {
+public class FeignClientManager implements BeanFactoryAware {
 
     @Getter
     private final Map<String, FeignTarget> feignTargetMap = Maps.newConcurrentMap();
+
+    private BeanFactory beanFactory;
 
     private final FeignHelper feignHelper;
     private final FeignProperties feignProperties;
@@ -34,6 +40,9 @@ public class FeignClientManager {
     @PostConstruct
     public void init() {
         List<String> basePackages = feignProperties.getBasePackages();
+        if (CollectionUtils.isEmpty(basePackages)) {
+            basePackages = AutoConfigurationPackages.get(this.beanFactory);
+        }
         if (CollectionUtils.isEmpty(basePackages)) {
             return;
         }
@@ -55,5 +64,10 @@ public class FeignClientManager {
             feignTarget.setType(clazz);
             feignTargetMap.putIfAbsent(feignTarget.getName(), feignTarget);
         }
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
     }
 }

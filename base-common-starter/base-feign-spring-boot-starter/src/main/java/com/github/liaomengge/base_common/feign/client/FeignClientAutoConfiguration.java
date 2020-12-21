@@ -1,7 +1,5 @@
 package com.github.liaomengge.base_common.feign.client;
 
-import com.alibaba.cloud.sentinel.feign.SentinelFeign;
-import com.alibaba.csp.sentinel.SphU;
 import com.netflix.hystrix.HystrixCommand;
 import feign.Feign;
 import feign.Retryer;
@@ -47,18 +45,5 @@ public class FeignClientAutoConfiguration {
             return HystrixFeign.builder().decode404();
         }
 
-    }
-
-    @Configuration(proxyBeanMethods = false)
-    @ConditionalOnClass({SphU.class, Feign.class})
-    protected static class SentinelFeignConfiguration {
-
-        @Bean
-        @Scope("prototype")
-        @ConditionalOnMissingBean
-        @ConditionalOnProperty(name = "feign.sentinel.enabled")
-        public Feign.Builder feignSentinelBuilder() {
-            return SentinelFeign.builder().decode404();
-        }
     }
 }

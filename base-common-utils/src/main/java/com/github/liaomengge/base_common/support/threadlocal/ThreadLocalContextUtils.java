@@ -1,7 +1,7 @@
 package com.github.liaomengge.base_common.support.threadlocal;
 
+import com.github.liaomengge.base_common.utils.threadlocal.ThreadLocalUtil;
 import lombok.experimental.UtilityClass;
-import org.springframework.core.NamedThreadLocal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +13,8 @@ import java.util.Objects;
 @UtilityClass
 public class ThreadLocalContextUtils {
 
-    private static ThreadLocal<Map<String, Object>> baseThreadLocalContextMap =
-            new NamedThreadLocal("BASE-THREAD-LOCAL-CONTEXT-MAP");
+    private ThreadLocal<Map<String, Object>> baseThreadLocalContextMap =
+            ThreadLocalUtil.getNamedThreadLocal("BASE-THREAD-LOCAL-CONTEXT-MAP");
 
     public void put(String key, Object value) {
         put(getBaseThreadLocalContextMap(), key, value);
@@ -73,7 +73,7 @@ public class ThreadLocalContextUtils {
         threadLocalMap.remove();
     }
 
-    public static ThreadLocal<Map<String, Object>> getBaseThreadLocalContextMap() {
+    public ThreadLocal<Map<String, Object>> getBaseThreadLocalContextMap() {
         return baseThreadLocalContextMap;
     }
 }

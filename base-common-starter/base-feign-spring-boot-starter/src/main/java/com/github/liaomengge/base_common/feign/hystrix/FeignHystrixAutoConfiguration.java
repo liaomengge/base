@@ -8,6 +8,7 @@ import feign.hystrix.HystrixFeign;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.openfeign.FeignHystrixTargeter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 public class FeignHystrixAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean(FeignHystrixConcurrencyStrategy.class)
+    @ConditionalOnMissingBean
     public FeignHystrixConcurrencyStrategy feignHystrixConcurrencyStrategy() {
         return new FeignHystrixConcurrencyStrategy();
     }
@@ -29,5 +30,12 @@ public class FeignHystrixAutoConfiguration {
     @ConditionalOnMissingBean(FeignHystrixInitializer.class)
     public FeignHystrixInitializer feignHystrixInitializer(FeignClientManager feignClientManager) {
         return new FeignHystrixInitializer(feignClientManager);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnClass(name = "feign.hystrix.HystrixFeign")
+    public FeignHystrixTargeter targeter() {
+        return new FeignHystrixTargeter();
     }
 }

@@ -1,6 +1,7 @@
 package com.github.liaomengge.service.base_framework.common.util;
 
 import com.github.liaomengge.base_common.utils.number.LyNumberUtil;
+import com.github.liaomengge.base_common.utils.threadlocal.ThreadLocalUtil;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -9,7 +10,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class TimeThreadLocalUtil {
 
-    private final ThreadLocal<Long> threadLocal = new ThreadLocal<>();
+    private final ThreadLocal<Long> threadLocal = ThreadLocalUtil.getThreadLocal();
 
     public void set(long time) {
         threadLocal.set(time);

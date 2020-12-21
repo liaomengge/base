@@ -9,12 +9,12 @@ import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import com.github.liaomengge.base_common.utils.log.LyMDCUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import com.github.liaomengge.base_common.utils.threadlocal.ThreadLocalUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
-import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.Ordered;
 
 import java.lang.reflect.Method;
@@ -32,7 +32,7 @@ public class FeignInterceptor implements MethodInterceptor, RequestInterceptor, 
     private static final Logger log = LyLogger.getInstance(FeignInterceptor.class);
 
     private static ThreadLocal<Map<String, Object>> feignLogInfoThreadContextMap =
-            new NamedThreadLocal("FEIGN_LOG_INFO_THREAD_CONTEXT_MAP");
+            ThreadLocalUtil.getNamedThreadLocal("FEIGN_LOG_INFO_THREAD_CONTEXT_MAP");
 
     private final FeignProperties feignProperties;
 

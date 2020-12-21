@@ -1,11 +1,13 @@
 package com.github.liaomengge.base_common.support.datasource;
 
+import com.github.liaomengge.base_common.utils.threadlocal.ThreadLocalUtil;
+
 /**
  * Created by liaomengge on 2019/7/5.
  */
 public class StringDBContext {
 
-    private static final ThreadLocal<String> tlDbKey = new ThreadLocal<>();
+    private static final ThreadLocal<String> tlDbKey = ThreadLocalUtil.getThreadLocal();
 
     public static String getDBKey() {
         return tlDbKey.get();
