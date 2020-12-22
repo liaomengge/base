@@ -38,7 +38,7 @@ apply from: "${rootProject.projectDir}/gradle/publish-bom.gradle"
 
 def versions = [
         alibaba    : '2.2.3.RELEASE',
-        springBoot : '2.2.11.RELEASE',
+        springBoot : '2.2.12.RELEASE',
         springCloud: 'Hoxton.SR9'
 ]
 
@@ -53,7 +53,7 @@ dependencyManagement {
 
         dependency "com.google.auto.service:auto-service:1.0-rc6"
 
-        dependency "com.google.guava:guava:30.0-jre"
+        dependency "com.google.guava:guava:30.1-jre"
         dependency("net.javacrumbs.future-converter:future-converter-spring-java8:1.2.0") {
             exclude 'com.google.guava:guava'
         }
@@ -94,14 +94,14 @@ dependencyManagement {
         dependency "com.dyuproject.protostuff:protostuff-runtime:1.1.6"
 
         dependency "com.lmax:disruptor:3.4.2"
-        dependency "org.influxdb:influxdb-java:2.20"
+        dependency "org.influxdb:influxdb-java:2.21"
 
         dependency "com.thoughtworks.xstream:xstream:1.4.13"
 
         dependency "com.taobao.text:text-ui:0.0.2"
         dependency "com.alibaba:fastjson:1.2.75"
-        dependency "com.alibaba:transmittable-thread-local:2.11.5"
-        dependency "com.alibaba:log4j2-ttl-thread-context-map:1.3.2"
+        dependency "com.alibaba:transmittable-thread-local:2.12.0"
+        dependency "com.alibaba:log4j2-ttl-thread-context-map:1.3.3"
 
         /***********************************************数据源依赖******************************************************/
 
@@ -109,7 +109,7 @@ dependencyManagement {
         dependency "org.mybatis:mybatis:3.5.6"
         dependency "org.mybatis:mybatis-spring:2.0.5"
         dependency "com.github.pagehelper:pagehelper:5.2.0"
-        dependency "com.alibaba:druid:1.1.3"
+        dependency "com.alibaba:druid:1.2.4"
         dependency "org.apache.shardingsphere:sharding-jdbc-core:4.1.1"
 
         /***********************************************中间件依赖******************************************************/
@@ -147,8 +147,8 @@ dependencyManagement {
 
         dependency "io.springfox:springfox-swagger2:2.10.5"
         dependency "io.springfox:springfox-swagger-ui:2.10.5"
-        dependency "com.github.xiaoymin:knife4j-spring:2.0.7"
-        dependency "com.github.xiaoymin:knife4j-spring-ui:2.0.7"
+        dependency "com.github.xiaoymin:knife4j-spring:2.0.8"
+        dependency "com.github.xiaoymin:knife4j-spring-ui:2.0.8"
 
         dependency "io.github.openfeign.form:feign-form:3.8.0"
         dependency "io.github.openfeign.form:feign-form-spring:3.8.0"

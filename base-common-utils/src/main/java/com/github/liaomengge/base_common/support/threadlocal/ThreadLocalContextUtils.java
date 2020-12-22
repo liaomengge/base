@@ -1,6 +1,6 @@
 package com.github.liaomengge.base_common.support.threadlocal;
 
-import com.github.liaomengge.base_common.utils.threadlocal.ThreadLocalUtil;
+import com.github.liaomengge.base_common.utils.threadlocal.LyThreadLocalUtil;
 import lombok.experimental.UtilityClass;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import java.util.Objects;
 public class ThreadLocalContextUtils {
 
     private ThreadLocal<Map<String, Object>> baseThreadLocalContextMap =
-            ThreadLocalUtil.getNamedThreadLocal("BASE-THREAD-LOCAL-CONTEXT-MAP");
+            LyThreadLocalUtil.getNamedThreadLocal("BASE-THREAD-LOCAL-CONTEXT-MAP");
 
     public void put(String key, Object value) {
         put(getBaseThreadLocalContextMap(), key, value);

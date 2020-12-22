@@ -3,7 +3,7 @@ package com.github.liaomengge.base_common.utils.trace;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
 import com.github.liaomengge.base_common.utils.misc.LyIdGeneratorUtil;
-import com.github.liaomengge.base_common.utils.threadlocal.ThreadLocalUtil;
+import com.github.liaomengge.base_common.utils.threadlocal.LyThreadLocalUtil;
 import lombok.experimental.UtilityClass;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class LyTraceLogUtil {
     public final String TRACE_ID = "x-base-trace-id";
 
     private final TransmittableThreadLocal<Map<String, String>> TRANSMITTABLE_THREAD_LOCAL =
-            ThreadLocalUtil.getTransmittableThreadLocal();
+            LyThreadLocalUtil.getTransmittableThreadLocal();
 
     public void put(String val) {
         put(TRACE_ID, val);

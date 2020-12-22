@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  * Created by liaomengge on 2020/12/18.
  */
 @UtilityClass
-public class ThreadLocalUtil {
+public class LyThreadLocalUtil {
 
     public <T> ThreadLocal<T> getThreadLocal() {
         return new ThreadLocal<>();
