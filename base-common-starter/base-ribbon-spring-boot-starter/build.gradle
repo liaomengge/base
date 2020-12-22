@@ -1,0 +1,4 @@
+dependencies {
+    api(project(":base-feign-spring-boot-starter"))
+    api "org.springframework.cloud:spring-cloud-starter-netflix-ribbon"
+}

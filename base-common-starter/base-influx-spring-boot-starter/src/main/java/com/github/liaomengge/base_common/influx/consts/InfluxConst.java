@@ -13,7 +13,7 @@ public interface InfluxConst {
     String DEFAULT_INFLUX_POLICY = "autogen";
     String DEFAULT_CONSISTENCY_LEVEL = "ALL";
 
-    String DEFAULT_INSTANCE = "Instance";
+    String DEFAULT_INSTANCE = "instance";
 
     /**
      * influx batch properties

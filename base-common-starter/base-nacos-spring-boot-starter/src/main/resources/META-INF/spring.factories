@@ -1,3 +1,5 @@
-org.springframework.context.ApplicationContextInitializer=com.github.liaomengge.base_common.nacos.initializer.NacosApplicationContextInitializer
+org.springframework.context.ApplicationContextInitializer=\
+  com.github.liaomengge.base_common.nacos.initializer.NacosApplicationContextInitializer
 
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.liaomengge.base_common.nacos.NacosAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.liaomengge.base_common.nacos.NacosAutoConfiguration

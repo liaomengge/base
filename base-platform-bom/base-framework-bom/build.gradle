@@ -47,6 +47,7 @@ dependencyManagement {
         dependency "com.github.liaomengge:base-redis-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "com.github.liaomengge:base-rest-template-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "com.github.liaomengge:base-retrofit-spring-boot-starter:${versions.baseSpringBootStarter}"
+        dependency "com.github.liaomengge:base-ribbon-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "com.github.liaomengge:base-swagger-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "com.github.liaomengge:base-thread-pool-spring-boot-starter:${versions.baseSpringBootStarter}"
         dependency "com.github.liaomengge:base-xxl-job-spring-boot-starter:${versions.baseSpringBootStarter}"

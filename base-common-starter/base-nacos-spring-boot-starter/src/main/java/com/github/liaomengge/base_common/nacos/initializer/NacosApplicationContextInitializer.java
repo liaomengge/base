@@ -6,8 +6,6 @@ import com.alibaba.cloud.nacos.registry.NacosServiceRegistry;
 import com.github.liaomengge.base_common.nacos.NacosProperties;
 import com.github.liaomengge.base_common.nacos.consts.NacosConst;
 import com.github.liaomengge.base_common.nacos.decorator.NacosServiceRegistryDecorator;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.SpringBootVersion;
@@ -21,8 +19,6 @@ import java.util.Map;
  * Created by liaomengge on 2020/8/17.
  */
 public class NacosApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-
-    private static final Logger log = LyLogger.getInstance(NacosApplicationContextInitializer.class);
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {

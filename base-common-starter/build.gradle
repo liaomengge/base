@@ -41,7 +41,7 @@ subprojects {
     apply plugin: "io.spring.dependency-management"
 
     group = 'com.github.liaomengge'
-    version = '2.0.4-SNAPSHOT'
+    version = '2.0.6-SNAPSHOT'
 
     apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
     apply from: "${rootProject.projectDir}/gradle/publish-jar.gradle"
@@ -77,15 +77,15 @@ subprojects {
     }
 
     ext {
-        baseSpringCloudVersion = '2.0.4-SNAPSHOT'
-        baseCommonMiddlewareVersion = '1.1.7-SNAPSHOT'
-        baseDayuVersion = '1.1.7-SNAPSHOT'
-        baseCacheVersion = '1.1.7-SNAPSHOT'
-        baseCommonUtilsVersion = '1.1.7-SNAPSHOT'
+        baseSpringCloudVersion = '2.0.6-SNAPSHOT'
+        baseCommonMiddlewareVersion = '1.1.9-SNAPSHOT'
+        baseDayuVersion = '1.1.9-SNAPSHOT'
+        baseCacheVersion = '1.1.9-SNAPSHOT'
+        baseCommonUtilsVersion = '1.1.9-SNAPSHOT'
     }
 
     def versions = [
-            platformBom: '1.0.6-SNAPSHOT'
+            platformBom: '1.0.9-SNAPSHOT'
     ]
 
     dependencyManagement {
