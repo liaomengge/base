@@ -7,6 +7,7 @@ import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.github.liaomengge.base_common.nacos.NacosProperties;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.cloud.client.serviceregistry.Registration;
@@ -58,7 +59,7 @@ public class NacosServiceRegistryDecorator extends NacosServiceRegistry {
             String group = nacosDiscoveryProperties.getGroup();
 
             Instance instance = getNacosInstanceFromRegistration(registration);
-            if (nacosProperties.getPull().isEnabled() && switchFlow.compareAndSet(false, true)) {
+            if (nacosProperties.getHealthy().isEnabled() && switchFlow.compareAndSet(false, true)) {
                 instance.setEnabled(false);
                 log.info("set init status[Disabled]...");
             }
@@ -113,7 +114,7 @@ public class NacosServiceRegistryDecorator extends NacosServiceRegistry {
         return instance;
     }
 
-    private Boolean isRegisterEnabled(Environment environment) {
-        return environment.getProperty("base.nacos.registry.enabled", Boolean.class, Boolean.TRUE);
+    private boolean isRegisterEnabled(Environment environment) {
+        return BooleanUtils.toBoolean(environment.getProperty("base.nacos.registry.enabled", Boolean.class));
     }
 }

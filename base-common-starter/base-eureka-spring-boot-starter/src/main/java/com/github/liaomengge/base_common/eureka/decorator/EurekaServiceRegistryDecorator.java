@@ -1,5 +1,6 @@
 package com.github.liaomengge.base_common.eureka.decorator;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration;
 import org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -50,8 +51,8 @@ public class EurekaServiceRegistryDecorator extends EurekaServiceRegistry {
         eurekaServiceRegistry.close();
     }
 
-    private Boolean isRegisterEnabled(Environment environment) {
-        return environment.getProperty("base.eureka.registry.enabled", Boolean.class, Boolean.TRUE);
+    private boolean isRegisterEnabled(Environment environment) {
+        return BooleanUtils.toBoolean(environment.getProperty("base.eureka.registry.enabled", Boolean.class));
     }
 
 }

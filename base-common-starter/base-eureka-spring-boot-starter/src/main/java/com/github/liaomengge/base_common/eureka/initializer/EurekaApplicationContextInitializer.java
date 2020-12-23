@@ -41,7 +41,7 @@ public class EurekaApplicationContextInitializer implements ApplicationContextIn
                     EurekaInstanceConfigBean instanceConfigBean = (EurekaInstanceConfigBean) bean;
 
                     EurekaProperties eurekaProperties = applicationContext.getBean(EurekaProperties.class);
-                    if (eurekaProperties.getPull().isEnabled() && switchFlow.compareAndSet(false, true)) {
+                    if (eurekaProperties.getHealthy().isEnabled() && switchFlow.compareAndSet(false, true)) {
                         instanceConfigBean.setInitialStatus(InstanceInfo.InstanceStatus.OUT_OF_SERVICE);
                         log.info("set init status[OUT_OF_SERVICE] and meta data...");
                     }

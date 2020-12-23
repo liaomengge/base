@@ -1,8 +1,7 @@
 package com.github.liaomengge.base_common.eureka;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Created by liaomengge on 2020/8/15.
@@ -11,16 +10,16 @@ import lombok.Data;
 @ConfigurationProperties("base.eureka")
 public class EurekaProperties {
 
-    private Registry registry = new Registry();
-    private Pull pull = new Pull();
+    private RegistryProperties registry = new RegistryProperties();
+    private HealthyProperties healthy = new HealthyProperties();
 
     @Data
-    public class Registry {
+    public class RegistryProperties {
         private boolean enabled = true;
     }
 
     @Data
-    public class Pull {
+    public class HealthyProperties {
         private boolean enabled = false;
     }
 }

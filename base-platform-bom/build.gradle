@@ -37,16 +37,16 @@ apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
 apply from: "${rootProject.projectDir}/gradle/publish-bom.gradle"
 
 def versions = [
-        alibaba    : '2.2.3.RELEASE',
-        springBoot : '2.2.12.RELEASE',
-        springCloud: 'Hoxton.SR9'
+        springBoot        : '2.2.12.RELEASE',
+        springCloud       : 'Hoxton.SR9',
+        alibabaSpringCloud: '2.2.3.RELEASE'
 ]
 
 dependencyManagement {
     imports {
-        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${versions.alibaba}"
         mavenBom "org.springframework.boot:spring-boot-dependencies:${versions.springBoot}"
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${versions.springCloud}"
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${versions.alibabaSpringCloud}"
     }
     dependencies {
         /***********************************************Jdk依赖********************************************************/
