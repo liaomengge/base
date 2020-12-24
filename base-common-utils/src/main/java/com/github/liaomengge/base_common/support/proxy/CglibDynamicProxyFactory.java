@@ -61,24 +61,16 @@ public class CglibDynamicProxyFactory {
             if (Objects.isNull(this.target) && Objects.isNull(this.targetClass)) {
                 throw new IllegalArgumentException("target & target class both null");
             }
-            Enhancer enhancer = new Enhancer();
-            Class<?> superClass = Objects.nonNull(this.target) ? this.target.getClass() : this.targetClass;
-            enhancer.setSuperclass(superClass);
-            enhancer.setCallback(this.callback);
-            enhancer.setUseCache(useCache);
-            return (T) enhancer.create();
+            return (T) createEnhancer(useCache).create();
         }
 
-        public <T> T getProxy(boolean useCache, boolean ignoreObjectMethod) {
-            if (Objects.isNull(this.target) && Objects.isNull(this.targetClass)) {
-                throw new IllegalArgumentException("target & target class both null");
-            }
+        protected Enhancer createEnhancer(boolean useCache) {
             Enhancer enhancer = new Enhancer();
             Class<?> superClass = Objects.nonNull(this.target) ? this.target.getClass() : this.targetClass;
             enhancer.setSuperclass(superClass);
             enhancer.setCallback(this.callback);
             enhancer.setUseCache(useCache);
-            return (T) enhancer.create();
+            return enhancer;
         }
     }
 }

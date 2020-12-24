@@ -41,7 +41,7 @@ public class FeignFallbackFactory<T> implements FallbackFactory<T> {
         @Override
         public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
             log.error("call service[" + target.name() + "], " +
-                    "feign key[" + Feign.configKey(target.type(), method) + "] fallback...", cause);
+                    "feign config key[" + Feign.configKey(target.type(), method) + "] fallback...", cause);
             FallbackReturn fallbackReturn = LyClassUtil.getAnnotation(method, FallbackReturn.class);
             if (Objects.nonNull(fallbackReturn)) {
                 FallbackReturnHandler handler;

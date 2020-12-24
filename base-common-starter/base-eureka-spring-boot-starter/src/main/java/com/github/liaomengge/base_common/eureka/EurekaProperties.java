@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class EurekaProperties {
 
     private RegistryProperties registry = new RegistryProperties();
-    private HealthyProperties healthy = new HealthyProperties();
+    private ReceiveTrafficProperties receiveTraffic = new ReceiveTrafficProperties();
 
     @Data
     public class RegistryProperties {
@@ -19,7 +19,7 @@ public class EurekaProperties {
     }
 
     @Data
-    public class HealthyProperties {
+    public class ReceiveTrafficProperties {
         private boolean enabled = false;
     }
 }

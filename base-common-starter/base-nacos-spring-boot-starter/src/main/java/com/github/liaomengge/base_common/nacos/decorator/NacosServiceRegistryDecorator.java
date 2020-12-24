@@ -59,7 +59,7 @@ public class NacosServiceRegistryDecorator extends NacosServiceRegistry {
             String group = nacosDiscoveryProperties.getGroup();
 
             Instance instance = getNacosInstanceFromRegistration(registration);
-            if (nacosProperties.getHealthy().isEnabled() && switchFlow.compareAndSet(false, true)) {
+            if (nacosProperties.getReceiveTraffic().isEnabled() && switchFlow.compareAndSet(false, true)) {
                 instance.setEnabled(false);
                 log.info("set init status[Disabled]...");
             }

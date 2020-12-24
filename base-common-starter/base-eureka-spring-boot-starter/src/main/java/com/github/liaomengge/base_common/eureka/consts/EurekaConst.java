@@ -10,6 +10,6 @@ public interface EurekaConst {
     String SPRING_APPLICATION_CONTEXT_PATH = "server.servlet.context-path";
     String SPRING_APPLICATION_SERVER_PORT = "server.port";
 
-    String PULL_IN_ENDPOINT = "pull-in";
-    String PULL_OUT_ENDPOINT = "pull-out";
+    String PULL_IN_ENDPOINT = "pullin";
+    String PULL_OUT_ENDPOINT = "pullout";
 }
