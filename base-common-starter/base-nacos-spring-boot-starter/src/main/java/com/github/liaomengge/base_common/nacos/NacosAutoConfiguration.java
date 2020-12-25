@@ -31,7 +31,7 @@ public class NacosAutoConfiguration {
     }
 
     @Bean
-    public NacosEndpointBeanPostProcess nacosEndpointBeanPostProcess() {
+    public static NacosEndpointBeanPostProcess nacosEndpointBeanPostProcess() {
         return new NacosEndpointBeanPostProcess();
     }
 }

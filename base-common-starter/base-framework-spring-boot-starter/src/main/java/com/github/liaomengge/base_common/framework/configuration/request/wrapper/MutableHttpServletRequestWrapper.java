@@ -59,7 +59,9 @@ public class MutableHttpServletRequestWrapper extends HttpServletRequestWrapper 
 
     @Override
     public void setAttribute(String name, Object obj) {
-        this.attributeMap.put(name, obj);
-        super.setAttribute(name, obj);
+        if (Objects.nonNull(name)) {
+            this.attributeMap.put(name, obj);
+            super.setAttribute(name, obj);
+        }
     }
 }

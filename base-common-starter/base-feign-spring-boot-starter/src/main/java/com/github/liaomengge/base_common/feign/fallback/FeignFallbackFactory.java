@@ -2,17 +2,18 @@ package com.github.liaomengge.base_common.feign.fallback;
 
 import com.github.liaomengge.base_common.feign.fallback.annotation.FallbackReturn;
 import com.github.liaomengge.base_common.feign.fallback.handler.FallbackReturnHandler;
-import com.github.liaomengge.base_common.support.proxy.CglibDynamicProxyFactory;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.reflect.LyClassUtil;
 import feign.Feign;
 import feign.Target;
 import feign.hystrix.FallbackFactory;
 import lombok.AllArgsConstructor;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
+import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.cglib.proxy.MethodInterceptor;
-import org.springframework.cglib.proxy.MethodProxy;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -27,7 +28,7 @@ public class FeignFallbackFactory<T> implements FallbackFactory<T> {
 
     @Override
     public T create(Throwable cause) {
-        return CglibDynamicProxyFactory.getProxy(target.type(), new FeignFallbackInterceptor<>(target, cause));
+        return ProxyFactory.getProxy(target.type(), new FeignFallbackInterceptor<>(target, cause));
     }
 
     @AllArgsConstructor
@@ -39,9 +40,13 @@ public class FeignFallbackFactory<T> implements FallbackFactory<T> {
         private final Throwable cause;
 
         @Override
-        public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-            log.error("call service[" + target.name() + "], " +
-                    "feign config key[" + Feign.configKey(target.type(), method) + "] fallback...", cause);
+        public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+            Method method = methodInvocation.getMethod();
+            if (ReflectionUtils.isObjectMethod(method)) {
+                return null;
+            }
+            log.error("call service[" + target.name() + "], " + "feign config key[" + Feign.configKey(target.type(),
+                    method) + "] fallback...", cause);
             FallbackReturn fallbackReturn = LyClassUtil.getAnnotation(method, FallbackReturn.class);
             if (Objects.nonNull(fallbackReturn)) {
                 FallbackReturnHandler handler;
@@ -65,8 +70,7 @@ public class FeignFallbackFactory<T> implements FallbackFactory<T> {
                 return false;
             }
             FeignFallbackInterceptor<?> that = (FeignFallbackInterceptor<?>) o;
-            return Objects.equals(target, that.target) &&
-                    Objects.equals(cause, that.cause);
+            return target.equals(that.target) && cause.equals(that.cause);
         }
 
         @Override

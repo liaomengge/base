@@ -13,8 +13,8 @@ import java.util.Objects;
 @UtilityClass
 public class ThreadLocalContextUtils {
 
-    private ThreadLocal<Map<String, Object>> baseThreadLocalContextMap =
-            LyThreadLocalUtil.getNamedThreadLocal("BASE-THREAD-LOCAL-CONTEXT-MAP");
+    private ThreadLocal<Map<String, Object>> BASE_THREAD_LOCAL_CONTEXT_MAP =
+            LyThreadLocalUtil.getNamedThreadLocal("BASE_THREAD_LOCAL_CONTEXT_MAP");
 
     public void put(String key, Object value) {
         put(getBaseThreadLocalContextMap(), key, value);
@@ -25,7 +25,7 @@ public class ThreadLocalContextUtils {
             throw new IllegalArgumentException("key cannot be null");
         }
         Map<String, Object> map = threadLocalMap.get();
-        if (map == null) {
+        if (Objects.isNull(map)) {
             map = new HashMap<>();
             threadLocalMap.set(map);
         }
@@ -51,7 +51,7 @@ public class ThreadLocalContextUtils {
 
     public <T> T get(ThreadLocal<Map<String, Object>> threadLocalMap, String key) {
         Map<String, Object> map = threadLocalMap.get();
-        if ((map != null) && (key != null)) {
+        if (Objects.nonNull(map) && Objects.nonNull(key)) {
             return (T) map.get(key);
         }
         return null;
@@ -74,6 +74,6 @@ public class ThreadLocalContextUtils {
     }
 
     public ThreadLocal<Map<String, Object>> getBaseThreadLocalContextMap() {
-        return baseThreadLocalContextMap;
+        return BASE_THREAD_LOCAL_CONTEXT_MAP;
     }
 }
