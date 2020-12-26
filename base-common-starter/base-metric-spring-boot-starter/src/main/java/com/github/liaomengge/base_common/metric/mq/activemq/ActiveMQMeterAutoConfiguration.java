@@ -1,7 +1,7 @@
-package com.github.liaomengge.base_common.metric.datasource.druid;
+package com.github.liaomengge.base_common.metric.mq.activemq;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import io.micrometer.core.instrument.MeterRegistry;
+import org.apache.activemq.pool.PooledConnectionFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -11,27 +11,24 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
-import java.util.List;
-
 /**
- * Created by liaomengge on 2020/9/17.
+ * Created by liaomengge on 2020/9/29.
  */
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
-@ConditionalOnClass({MeterRegistry.class, DruidDataSource.class})
-@ConditionalOnProperty(prefix = "base.metric.datasource.druid", name = "enabled", matchIfMissing = true)
-public class DruidMeterConfiguration {
+@ConditionalOnClass({MeterRegistry.class, PooledConnectionFactory.class})
+@ConditionalOnProperty(prefix = "base.metric.mq.activemq", name = "enabled", matchIfMissing = true)
+public class ActiveMQMeterAutoConfiguration {
 
-    private final List<DataSource> dataSources;
+    private final PooledConnectionFactory pooledConnectionFactory;
 
-    public DruidMeterConfiguration(ObjectProvider<List<DataSource>> objectProvider) {
-        this.dataSources = objectProvider.getIfAvailable();
+    public ActiveMQMeterAutoConfiguration(ObjectProvider<PooledConnectionFactory> objectProvider) {
+        this.pooledConnectionFactory = objectProvider.getIfAvailable();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public DruidMeterBinder druidMeterBinder() {
-        return new DruidMeterBinder(dataSources);
+    public ActiveMQMeterBinder activeMQMeterBinder() {
+        return new ActiveMQMeterBinder(pooledConnectionFactory);
     }
 }

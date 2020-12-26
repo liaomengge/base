@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @AutoConfigureBefore(ServletWebServerFactoryAutoConfiguration.class)
 @ConditionalOnProperty(prefix = "base.metric.web.undertow", name = "enabled", matchIfMissing = true)
-public class UndertowMeterConfiguration {
+public class UndertowMeterAutoConfiguration {
 
     @Bean
     @ConditionalOnClass(MeterRegistry.class)

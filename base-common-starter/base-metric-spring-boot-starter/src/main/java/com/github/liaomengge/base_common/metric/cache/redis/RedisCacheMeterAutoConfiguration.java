@@ -20,13 +20,13 @@ import redis.clients.jedis.JedisPoolConfig;
 @AutoConfigureAfter({MetricsAutoConfiguration.class, RedisAutoConfiguration.class})
 @ConditionalOnClass({MeterRegistry.class, JedisPoolConfig.class})
 @ConditionalOnProperty(prefix = "base.metric.cache.redis", name = "enabled", matchIfMissing = true)
-public class RedisCacheMeterConfiguration {
+public class RedisCacheMeterAutoConfiguration {
 
     private final JedisClusterProperties jedisClusterProperties;
     private final SpringDataProperties springDataProperties;
 
-    public RedisCacheMeterConfiguration(ObjectProvider<JedisClusterProperties> objectProvider,
-                                        ObjectProvider<SpringDataProperties> objectProvider2) {
+    public RedisCacheMeterAutoConfiguration(ObjectProvider<JedisClusterProperties> objectProvider,
+                                            ObjectProvider<SpringDataProperties> objectProvider2) {
         this.jedisClusterProperties = objectProvider.getIfAvailable();
         this.springDataProperties = objectProvider2.getIfAvailable();
     }

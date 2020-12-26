@@ -19,13 +19,13 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
 @ConditionalOnClass({MeterRegistry.class, PoolingHttpClientConnectionManager.class})
 @ConditionalOnProperty(prefix = "base.metric.http.httpclient", name = "enabled", matchIfMissing = true)
-public class HttpClientMeterConfiguration {
+public class HttpClientMeterAutoConfiguration {
 
     private final MetricProperties metricProperties;
     private final PoolingHttpClientConnectionManager poolConnManager;
 
-    public HttpClientMeterConfiguration(MetricProperties metricProperties,
-                                        ObjectProvider<PoolingHttpClientConnectionManager> provider) {
+    public HttpClientMeterAutoConfiguration(MetricProperties metricProperties,
+                                            ObjectProvider<PoolingHttpClientConnectionManager> provider) {
         this.metricProperties = metricProperties;
         this.poolConnManager = provider.getIfAvailable();
     }

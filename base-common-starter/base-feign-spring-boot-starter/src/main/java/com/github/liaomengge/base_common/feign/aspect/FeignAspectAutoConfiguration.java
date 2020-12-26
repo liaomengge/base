@@ -11,6 +11,10 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by liaomengge on 2020/10/31.
+ * <p>
+ * SentinelBeanPostProcessor非static定义，导致所有AOP切面定义的对象都会被提前加载，导致BeanPostProcessorChecker检查失败
+ *
+ * @see com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration#sentinelBeanPostProcessor(ApplicationContext)
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(prefix = "base.feign.aspect", name = "enabled", havingValue = "true")

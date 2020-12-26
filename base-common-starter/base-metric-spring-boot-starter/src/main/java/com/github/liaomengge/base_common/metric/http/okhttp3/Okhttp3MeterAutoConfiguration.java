@@ -1,7 +1,8 @@
-package com.github.liaomengge.base_common.metric.mq.activemq;
+package com.github.liaomengge.base_common.metric.http.okhttp3;
 
 import io.micrometer.core.instrument.MeterRegistry;
-import org.apache.activemq.pool.PooledConnectionFactory;
+import okhttp3.ConnectionPool;
+import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -12,23 +13,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by liaomengge on 2020/9/29.
+ * Created by liaomengge on 2020/9/17.
  */
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
-@ConditionalOnClass({MeterRegistry.class, PooledConnectionFactory.class})
-@ConditionalOnProperty(prefix = "base.metric.mq.activemq", name = "enabled", matchIfMissing = true)
-public class ActiveMQMeterConfiguration {
+@ConditionalOnClass({MeterRegistry.class, OkHttpClient.class})
+@ConditionalOnProperty(prefix = "base.metric.http.okhttp3", name = "enabled", matchIfMissing = true)
+public class Okhttp3MeterAutoConfiguration {
 
-    private final PooledConnectionFactory pooledConnectionFactory;
+    private final ConnectionPool connectionPool;
 
-    public ActiveMQMeterConfiguration(ObjectProvider<PooledConnectionFactory> objectProvider) {
-        this.pooledConnectionFactory = objectProvider.getIfAvailable();
+    public Okhttp3MeterAutoConfiguration(ObjectProvider<ConnectionPool> provider) {
+        this.connectionPool = provider.getIfAvailable();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public ActiveMQMeterBinder activeMQMeterBinder() {
-        return new ActiveMQMeterBinder(pooledConnectionFactory);
+    public Okhttp3MeterBinder okhttp3MeterBinder() {
+        return new Okhttp3MeterBinder(connectionPool);
     }
 }

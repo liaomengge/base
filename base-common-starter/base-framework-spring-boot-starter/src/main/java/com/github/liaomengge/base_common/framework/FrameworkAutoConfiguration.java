@@ -1,35 +1,22 @@
 package com.github.liaomengge.base_common.framework;
 
 import com.github.liaomengge.base_common.framework.advice.FrameworkResponseBodyAdviceConfiguration;
-import com.github.liaomengge.base_common.framework.aspect.FrameworkAspectConfiguration;
 import com.github.liaomengge.base_common.framework.configuration.convert.FrameworkWebMvcConfigurer;
 import com.github.liaomengge.base_common.framework.configuration.cors.FrameworkCorsConfiguration;
 import com.github.liaomengge.base_common.framework.configuration.micrometer.FrameworkMicrometerConfiguration;
 import com.github.liaomengge.base_common.framework.configuration.request.FrameworkRequestConfiguration;
 import com.github.liaomengge.base_common.framework.configuration.xss.FrameworkXssConfiguration;
-import com.github.liaomengge.base_common.framework.consts.FrameworkConst;
 import com.github.liaomengge.base_common.framework.error.FrameworkErrorConfiguration;
 import com.github.liaomengge.base_common.framework.registry.FrameworkBeanRegistryConfiguration;
 import com.github.liaomengge.base_common.framework.selector.FilterConfiguration;
 import com.github.liaomengge.base_common.support.spring.SpringUtils;
-import com.github.liaomengge.service.base_framework.common.config.FilterConfig;
-import com.github.liaomengge.service.base_framework.common.filter.chain.FilterChain;
-import com.github.liaomengge.service.base_framework.common.filter.chain.ServiceApiFilter;
-import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created by liaomengge on 2018/12/20.
@@ -40,35 +27,12 @@ import java.util.stream.Collectors;
 @Import({FrameworkResponseBodyAdviceConfiguration.class, FrameworkBeanRegistryConfiguration.class,
         FrameworkErrorConfiguration.class, FilterConfiguration.class, FrameworkWebMvcConfigurer.class,
         FrameworkCorsConfiguration.class, FrameworkXssConfiguration.class, FrameworkRequestConfiguration.class,
-        FrameworkMicrometerConfiguration.class, FrameworkAspectConfiguration.class})
-public class FrameworkAutoConfiguration implements ApplicationContextAware {
-
-    private ApplicationContext applicationContext;
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
+        FrameworkMicrometerConfiguration.class})
+public class FrameworkAutoConfiguration {
 
     @Bean("com.github.liaomengge.base_common.support.spring.SpringUtils")
     @ConditionalOnMissingBean
     public SpringUtils springUtils() {
         return new SpringUtils();
-    }
-
-    @Bean("com.github.liaomengge.service.base_framework.common.config.FilterConfig")
-    @ConditionalOnMissingBean
-    @ConfigurationProperties(prefix = FrameworkConst.CONFIGURATION_PROPERTIES_PREFIX)
-    public FilterConfig filterConfig() {
-        return new FilterConfig();
-    }
-
-    @Bean("com.github.liaomengge.service.base_framework.common.filter.chain.FilterChain")
-    @ConditionalOnMissingBean
-    public FilterChain filterChain() {
-        FilterChain filterChain = new FilterChain();
-        Map<String, ServiceApiFilter> serviceFilterMap = applicationContext.getBeansOfType(ServiceApiFilter.class);
-        Optional.ofNullable(serviceFilterMap).ifPresent(val -> filterChain.addFilter(val.values().parallelStream().collect(Collectors.toList())));
-        return filterChain;
     }
 }

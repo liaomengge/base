@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnProperty(prefix = "base.metric.web.tomcat", name = "enabled", matchIfMissing = true)
 @AutoConfigureBefore(TomcatMetricsAutoConfiguration.class)
-public class TomcatMeterConfiguration {
+public class TomcatMeterAutoConfiguration {
 
     @Bean
     @ConditionalOnClass(MeterRegistry.class)

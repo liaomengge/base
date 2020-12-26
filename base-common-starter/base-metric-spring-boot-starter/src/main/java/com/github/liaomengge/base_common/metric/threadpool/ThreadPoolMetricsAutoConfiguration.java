@@ -1,8 +1,5 @@
-package com.github.liaomengge.base_common.metric.cache.local;
+package com.github.liaomengge.base_common.metric.threadpool;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.liaomengge.base_common.cache.caffeine.CaffeineCache;
-import com.github.liaomengge.base_common.cache.caffeine.CaffeineCacheManager;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -13,17 +10,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by liaomengge on 2020/9/22.
+ * Created by liaomengge on 2020/9/18.
  */
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
-@ConditionalOnClass({MeterRegistry.class, CaffeineCacheManager.class, CaffeineCache.class, Cache.class})
-@ConditionalOnProperty(prefix = "base.metric.cache.local", name = "enabled", matchIfMissing = true)
-public class LocalCacheMeterConfiguration {
+@ConditionalOnClass(MeterRegistry.class)
+@ConditionalOnProperty(prefix = "base.metric.threadpool", name = "enabled", matchIfMissing = true)
+public class ThreadPoolMetricsAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public LocalCacheMeterBinder localCacheMeterBinder() {
-        return new LocalCacheMeterBinder();
+    public ThreadPoolMetricsBinder threadPoolMetricsBinder() {
+        return new ThreadPoolMetricsBinder();
     }
 }

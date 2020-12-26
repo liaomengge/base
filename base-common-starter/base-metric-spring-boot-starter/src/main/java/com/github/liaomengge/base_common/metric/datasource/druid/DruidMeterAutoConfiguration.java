@@ -1,6 +1,6 @@
-package com.github.liaomengge.base_common.metric.datasource.hikari;
+package com.github.liaomengge.base_common.metric.datasource.druid;
 
-import com.zaxxer.hikari.HikariDataSource;
+import com.alibaba.druid.pool.DruidDataSource;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
@@ -16,23 +16,22 @@ import java.util.List;
 
 /**
  * Created by liaomengge on 2020/9/17.
- * hikari本身也提供了setMetricRegistry,setMetricsTrackerFactory方法，作为监控的扩展点，比如：PrometheusHistogramMetricsTrackerFactory
  */
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(MetricsAutoConfiguration.class)
-@ConditionalOnClass({MeterRegistry.class, HikariDataSource.class})
-@ConditionalOnProperty(prefix = "base.metric.datasource.hikari", name = "enabled", matchIfMissing = true)
-public class HikariMeterConfiguration {
+@ConditionalOnClass({MeterRegistry.class, DruidDataSource.class})
+@ConditionalOnProperty(prefix = "base.metric.datasource.druid", name = "enabled", matchIfMissing = true)
+public class DruidMeterAutoConfiguration {
 
     private final List<DataSource> dataSources;
 
-    public HikariMeterConfiguration(ObjectProvider<List<DataSource>> objectProvider) {
+    public DruidMeterAutoConfiguration(ObjectProvider<List<DataSource>> objectProvider) {
         this.dataSources = objectProvider.getIfAvailable();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public HikariMeterBinder hikariMeterBinder() {
-        return new HikariMeterBinder(dataSources);
+    public DruidMeterBinder druidMeterBinder() {
+        return new DruidMeterBinder(dataSources);
     }
 }

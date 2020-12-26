@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 @ConditionalOnProperty(prefix = CustomCircuitBreakerConst.CUSTOM_CIRCUIT_BREAKER_PREFIX, name = "enabled")
 @EnableConfigurationProperties(CustomCircuitBreakerProperties.class)
-public class CustomCircuitBreakerConfiguration {
+public class CustomCircuitBreakerAutoConfiguration {
 
     private final CustomCircuitBreakerProperties customCircuitBreakerProperties;
 

@@ -17,11 +17,11 @@ import org.springframework.context.annotation.Primary;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(prefix = "base.feign.logger", name = "enabled", havingValue = "true")
 @AutoConfigureBefore(FeignClientsConfiguration.class)
-public class FeignLoggerConfiguration {
+public class FeignLoggerAutoConfiguration {
 
     private final FeignProperties feignProperties;
 
-    public FeignLoggerConfiguration(FeignProperties feignProperties) {
+    public FeignLoggerAutoConfiguration(FeignProperties feignProperties) {
         this.feignProperties = feignProperties;
     }
 
