@@ -3,6 +3,7 @@ package com.github.liaomengge.base_common.eureka.initializer;
 import com.github.liaomengge.base_common.eureka.EurekaProperties;
 import com.github.liaomengge.base_common.eureka.consts.EurekaConst;
 import com.github.liaomengge.base_common.eureka.decorator.EurekaServiceRegistryDecorator;
+import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.netflix.appinfo.InstanceInfo;
 import org.slf4j.Logger;
@@ -55,6 +56,7 @@ public class EurekaApplicationContextInitializer implements ApplicationContextIn
                             environment.getProperty(EurekaConst.SPRING_APPLICATION_CONTEXT_PATH, "/"));
                     metaMap.put(EurekaConst.SPRING_APPLICATION_SERVER_PORT,
                             environment.getProperty(EurekaConst.SPRING_APPLICATION_SERVER_PORT));
+                    metaMap.put(EurekaConst.INSTANCE_REGISTRY_TIME, LyJdk8DateUtil.getNowDate2String());
                 }
                 return bean;
             }

@@ -25,7 +25,7 @@ public class NacosServiceRegistryDecorator extends NacosServiceRegistry {
 
     private static final Logger log = LyLogger.getInstance(NacosServiceRegistryDecorator.class);
 
-    private AtomicBoolean switchFlow = new AtomicBoolean(false);
+    private AtomicBoolean switchTraffic = new AtomicBoolean(false);
 
     private final NacosProperties nacosProperties;
     private final ConfigurableEnvironment environment;
@@ -59,7 +59,7 @@ public class NacosServiceRegistryDecorator extends NacosServiceRegistry {
             String group = nacosDiscoveryProperties.getGroup();
 
             Instance instance = getNacosInstanceFromRegistration(registration);
-            if (nacosProperties.getReceiveTraffic().isEnabled() && switchFlow.compareAndSet(false, true)) {
+            if (nacosProperties.getReceiveTraffic().isEnabled() && switchTraffic.compareAndSet(false, true)) {
                 instance.setEnabled(false);
                 log.info("set init status[Disabled]...");
             }
@@ -111,6 +111,7 @@ public class NacosServiceRegistryDecorator extends NacosServiceRegistry {
         instance.setWeight(this.nacosDiscoveryProperties.getWeight());
         instance.setClusterName(this.nacosDiscoveryProperties.getClusterName());
         instance.setMetadata(registration.getMetadata());
+        instance.setEphemeral(nacosDiscoveryProperties.isEphemeral());
         return instance;
     }
 

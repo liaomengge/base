@@ -34,7 +34,6 @@ public class EurekaAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean
     public static EurekaEndpointBeanPostProcess eurekaBeanPostProcess() {
         return new EurekaEndpointBeanPostProcess();
     }

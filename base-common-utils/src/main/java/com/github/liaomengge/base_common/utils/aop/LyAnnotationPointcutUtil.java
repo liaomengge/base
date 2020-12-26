@@ -44,6 +44,6 @@ public class LyAnnotationPointcutUtil {
      * @return
      */
     public Pointcut buildAnnotationMethodPointcut(Class<? extends Annotation> annotationType) {
-        return AnnotationMatchingPointcut.forMethodAnnotation(annotationType);
+        return new AnnotationMatchingPointcut(null, annotationType, true);
     }
 }

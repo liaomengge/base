@@ -10,6 +10,8 @@ public interface NacosConst {
     String SPRING_APPLICATION_CONTEXT_PATH = "server.servlet.context-path";
     String SPRING_APPLICATION_SERVER_PORT = "server.port";
 
+    String INSTANCE_REGISTRY_TIME = "registry.time";
+
     String PULL_IN_ENDPOINT = "pullin";
     String PULL_OUT_ENDPOINT = "pullout";
 }
