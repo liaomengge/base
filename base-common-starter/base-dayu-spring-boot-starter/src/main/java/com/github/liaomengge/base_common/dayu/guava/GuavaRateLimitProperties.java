@@ -11,7 +11,7 @@ import java.util.List;
  * Created by liaomengge on 2019/8/12.
  */
 @Data
-@ConfigurationProperties(prefix = GuavaRateLimitConst.GUAVA_RATE_LIMIT_PREFIX)
+@ConfigurationProperties(GuavaRateLimitConst.GUAVA_RATE_LIMIT_PREFIX)
 public class GuavaRateLimitProperties {
 
     private boolean enabled;

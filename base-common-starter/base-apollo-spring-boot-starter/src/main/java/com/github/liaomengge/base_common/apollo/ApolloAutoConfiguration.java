@@ -4,6 +4,7 @@ import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigChangeListener;
 import com.ctrip.framework.apollo.ConfigService;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+import com.ctrip.framework.apollo.spring.config.PropertySourcesConstants;
 import com.github.liaomengge.base_common.apollo.listener.ApolloRefreshListener;
 import com.github.liaomengge.base_common.apollo.refresh.ApolloRefresher;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,7 @@ import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.SP
  * Created by liaomengge on 2020/8/1.
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty("apollo.bootstrap.enabled")
+@ConditionalOnProperty(PropertySourcesConstants.APOLLO_BOOTSTRAP_ENABLED)
 @ConditionalOnClass({ConfigChangeListener.class, ConfigChangeEvent.class, RefreshScope.class})
 public class ApolloAutoConfiguration {
 

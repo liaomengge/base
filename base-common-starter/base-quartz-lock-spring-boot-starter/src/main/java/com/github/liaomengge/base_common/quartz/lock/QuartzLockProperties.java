@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "base.quartz.lock")
+@ConfigurationProperties("base.quartz.lock")
 public class QuartzLockProperties {
 
     private int lockNumber = 1;

@@ -19,7 +19,7 @@ import java.util.concurrent.*;
  * Created by liaomengge on 2019/5/17.
  */
 @Data
-@ConfigurationProperties(prefix = "base.thread-pool")
+@ConfigurationProperties("base.thread-pool")
 public class ThreadPoolGroupProperties {
 
     private List<ThreadPoolProperties> groups = Lists.newArrayList();

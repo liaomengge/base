@@ -1,25 +1,22 @@
 package com.github.liaomengge.base_common.quartz;
 
-import static org.quartz.CalendarIntervalTrigger.MISFIRE_INSTRUCTION_DO_NOTHING;
-
 import com.google.common.collect.Lists;
-
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-import lombok.Data;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
+import static org.quartz.CalendarIntervalTrigger.MISFIRE_INSTRUCTION_DO_NOTHING;
 
 /**
  * Created by liaomengge on 2019/1/29.
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "base.quartz")
+@ConfigurationProperties("base.quartz")
 public class QuartzProperties {
 
     private int startupDelay = 0;

@@ -39,19 +39,19 @@ import java.util.Properties;
 public class DynamicDataSourceConfiguration2 {
 
     @Bean("mybatisProperties2")
-    @ConfigurationProperties(prefix = "base.mybatis.two")
+    @ConfigurationProperties("base.mybatis.two")
     public MybatisProperties mybatisProperties2() {
         return new MybatisProperties();
     }
 
     @Bean("pageHelperProperties2")
-    @ConfigurationProperties(prefix = "base.mybatis.two.pagehelper")
+    @ConfigurationProperties("base.mybatis.two.pagehelper")
     public Properties pageHelperProperties2() {
         return new Properties();
     }
 
     @Bean("flowProperties2")
-    @ConfigurationProperties(prefix = "base.mybatis.two.flow")
+    @ConfigurationProperties("base.mybatis.two.flow")
     public Properties flowProperties2() {
         return new Properties();
     }

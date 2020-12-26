@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = CustomCircuitBreakerConst.CUSTOM_CIRCUIT_BREAKER_PREFIX)
+@ConfigurationProperties(CustomCircuitBreakerConst.CUSTOM_CIRCUIT_BREAKER_PREFIX)
 public class CustomCircuitBreakerProperties {
 
     private boolean enabled;

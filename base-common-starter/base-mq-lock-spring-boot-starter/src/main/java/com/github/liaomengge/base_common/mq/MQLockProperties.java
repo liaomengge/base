@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "base.mq.lock")
+@ConfigurationProperties("base.mq.lock")
 public class MQLockProperties {
 
     private int lockNumber = 1;

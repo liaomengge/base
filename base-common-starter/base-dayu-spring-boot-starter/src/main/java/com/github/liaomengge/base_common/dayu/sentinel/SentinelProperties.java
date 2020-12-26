@@ -11,7 +11,7 @@ import java.util.List;
  * Created by liaomengge on 2019/8/9.
  */
 @Data
-@ConfigurationProperties(prefix = SentinelConst.SENTINEL_PREFIX)
+@ConfigurationProperties(SentinelConst.SENTINEL_PREFIX)
 public class SentinelProperties {
 
     private boolean enabled;

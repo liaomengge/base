@@ -50,7 +50,7 @@ public class FrameworkAspectAutoConfiguration implements ApplicationContextAware
 
     @Bean("com.github.liaomengge.service.base_framework.common.config.FilterConfig")
     @ConditionalOnMissingBean
-    @ConfigurationProperties(prefix = FrameworkConst.CONFIGURATION_PROPERTIES_PREFIX)
+    @ConfigurationProperties(FrameworkConst.CONFIGURATION_PROPERTIES_PREFIX)
     public FilterConfig filterConfig() {
         return new FilterConfig();
     }

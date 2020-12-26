@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by liaomengge on 2019/1/21.
  */
 @Data
-@ConfigurationProperties(prefix = "base.log")
+@ConfigurationProperties("base.log")
 public class LoggerProperties {
 
     private String contextPath = "/log";

@@ -15,7 +15,7 @@ import java.util.List;
  * Created by liaomengge on 2019/11/6.
  */
 @Data
-@ConfigurationProperties(prefix = FrameworkConst.CONFIGURATION_PROPERTIES_PREFIX)
+@ConfigurationProperties(FrameworkConst.CONFIGURATION_PROPERTIES_PREFIX)
 public class FrameworkProperties {
 
     private final ControllerAspectProperties controllerAspect = new ControllerAspectProperties();

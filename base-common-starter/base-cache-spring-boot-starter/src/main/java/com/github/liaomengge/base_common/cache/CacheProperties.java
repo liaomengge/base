@@ -1,16 +1,15 @@
 package com.github.liaomengge.base_common.cache;
 
-import java.util.List;
-
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import lombok.Data;
+import java.util.List;
 
 /**
  * Created by liaomengge on 2019/3/20.
  */
 @Data
-@ConfigurationProperties(prefix = "base.cache")
+@ConfigurationProperties("base.cache")
 public class CacheProperties {
 
     private Level1Properties level1 = new Level1Properties();

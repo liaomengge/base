@@ -48,19 +48,19 @@ public class ShardingDataSourceConfiguration4 extends AbstractShardingDataSource
     private final Map<String, DataSource> dataSourceMap = new LinkedHashMap<>();
 
     @Bean("shardingSphereProperties4")
-    @ConfigurationProperties(prefix = "base.shardingsphere.four")
+    @ConfigurationProperties("base.shardingsphere.four")
     public ShardingSphereProperties shardingSphereProperties4() {
         return new ShardingSphereProperties();
     }
 
     @Bean("pageHelperProperties4")
-    @ConfigurationProperties(prefix = "base.shardingsphere.four.mybatis.pagehelper")
+    @ConfigurationProperties("base.shardingsphere.four.mybatis.pagehelper")
     public Properties pageHelperProperties4() {
         return new Properties();
     }
 
     @Bean("flowProperties4")
-    @ConfigurationProperties(prefix = "base.shardingsphere.four.mybatis.flow")
+    @ConfigurationProperties("base.shardingsphere.four.mybatis.flow")
     public Properties flowProperties4() {
         return new Properties();
     }

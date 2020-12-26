@@ -48,19 +48,19 @@ public class ShardingDataSourceConfiguration3 extends AbstractShardingDataSource
     private final Map<String, DataSource> dataSourceMap = new LinkedHashMap<>();
 
     @Bean("shardingSphereProperties3")
-    @ConfigurationProperties(prefix = "base.shardingsphere.three")
+    @ConfigurationProperties("base.shardingsphere.three")
     public ShardingSphereProperties shardingSphereProperties3() {
         return new ShardingSphereProperties();
     }
 
     @Bean("pageHelperProperties3")
-    @ConfigurationProperties(prefix = "base.shardingsphere.three.mybatis.pagehelper")
+    @ConfigurationProperties("base.shardingsphere.three.mybatis.pagehelper")
     public Properties pageHelperProperties3() {
         return new Properties();
     }
 
     @Bean("flowProperties3")
-    @ConfigurationProperties(prefix = "base.shardingsphere.three.mybatis.flow")
+    @ConfigurationProperties("base.shardingsphere.three.mybatis.flow")
     public Properties flowProperties3() {
         return new Properties();
     }

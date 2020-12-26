@@ -10,7 +10,7 @@ import java.util.List;
  * Created by liaomengge on 2018/11/1.
  */
 @Data
-@ConfigurationProperties(prefix = "base.rest.template")
+@ConfigurationProperties("base.rest.template")
 public class RestTemplateProperties {
 
     private static final int DEFAULT_TIMEOUT_MILLIS = 5_000;//单位：毫秒

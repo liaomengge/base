@@ -3,21 +3,23 @@ package com.github.liaomengge.base_common.feign.manager;
 import com.github.liaomengge.base_common.feign.FeignProperties;
 import com.github.liaomengge.base_common.feign.helper.FeignHelper;
 import com.github.liaomengge.base_common.feign.pojo.FeignTarget;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.reflections.Reflections;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.util.ClassUtils;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by liaomengge on 2020/12/17.
@@ -42,11 +44,40 @@ public class FeignClientManager implements BeanFactoryAware {
         List<String> basePackages = feignProperties.getBasePackages();
         if (CollectionUtils.isEmpty(basePackages)) {
             basePackages = AutoConfigurationPackages.get(this.beanFactory);
+            List<String> enableFeignClientsPackages = getEnableFeignClientsPackages(basePackages);
+            if (CollectionUtils.isNotEmpty(enableFeignClientsPackages)) {
+                basePackages = enableFeignClientsPackages;
+            }
         }
         if (CollectionUtils.isEmpty(basePackages)) {
             return;
         }
-        scanFeignClient(basePackages);
+        scanFeignClient(basePackages.stream().distinct().collect(Collectors.toList()));
+    }
+
+    private List<String> getEnableFeignClientsPackages(List<String> basePackages) {
+        List<String> enableFeignClientsPackages = Lists.newArrayList();
+        Reflections reflections = new Reflections(basePackages);
+        Set<Class<?>> enableFeignClientsClassSet = reflections.getTypesAnnotatedWith(EnableFeignClients.class);
+        if (CollectionUtils.isNotEmpty(enableFeignClientsClassSet)) {
+            for (Class<?> clazz : enableFeignClientsClassSet) {
+                EnableFeignClients enableFeignClients = clazz.getDeclaredAnnotation(EnableFeignClients.class);
+                if (Objects.isNull(enableFeignClients)) {
+                    continue;
+                }
+                String[] pkgs = enableFeignClients.basePackages();
+                if (ArrayUtils.isNotEmpty(pkgs)) {
+                    enableFeignClientsPackages.addAll(Arrays.asList(pkgs));
+                }
+                Class<?>[] pkgClasses = enableFeignClients.basePackageClasses();
+                if (ArrayUtils.isNotEmpty(pkgClasses)) {
+                    for (Class<?> pkgClazz : pkgClasses) {
+                        enableFeignClientsPackages.add(ClassUtils.getPackageName(pkgClazz));
+                    }
+                }
+            }
+        }
+        return enableFeignClientsPackages;
     }
 
     private void scanFeignClient(List<String> basePackages) {

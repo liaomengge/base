@@ -52,13 +52,13 @@ public class MybatisAutoConfiguration {
     private final MybatisProperties mybatisProperties;
 
     @Bean("pageHelperProperties")
-    @ConfigurationProperties(prefix = "base.mybatis.pagehelper")
+    @ConfigurationProperties("base.mybatis.pagehelper")
     public Properties pageHelperProperties() {
         return new Properties();
     }
 
     @Bean("flowProperties")
-    @ConfigurationProperties(prefix = "base.mybatis.flow")
+    @ConfigurationProperties("base.mybatis.flow")
     public Properties flowProperties() {
         return new Properties();
     }

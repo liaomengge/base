@@ -9,7 +9,7 @@ import java.util.List;
  * Created by liaomengge on 2019/3/1.
  */
 @Data
-@ConfigurationProperties(prefix = "base.retrofit")
+@ConfigurationProperties("base.retrofit")
 public class RetrofitProperties {
 
     private static final int DEFAULT_TIMEOUT_MILLIS = 5_000;//单位：毫秒
