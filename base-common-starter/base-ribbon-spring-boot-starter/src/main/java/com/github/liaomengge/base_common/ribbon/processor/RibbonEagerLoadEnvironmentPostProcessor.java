@@ -21,7 +21,7 @@ public class RibbonEagerLoadEnvironmentPostProcessor implements EnvironmentPostP
         if (BooleanUtils.toBoolean(enabled)) {
             Map<String, Object> propertiesMap = Maps.newHashMap();
             propertiesMap.put("ribbon.eager-load.enabled", true);
-            MapPropertySource mapPropertySource = new MapPropertySource("feignEagerLoadProperties", propertiesMap);
+            MapPropertySource mapPropertySource = new MapPropertySource("ribbonEagerLoadProperties", propertiesMap);
             environment.getPropertySources().addFirst(mapPropertySource);
         }
     }

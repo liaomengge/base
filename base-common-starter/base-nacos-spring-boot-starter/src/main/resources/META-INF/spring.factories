@@ -3,3 +3,6 @@ org.springframework.context.ApplicationContextInitializer=\
 
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.liaomengge.base_common.nacos.NacosAutoConfiguration
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.github.liaomengge.base_common.nacos.process.NacosRegistryEnvironmentPostProcessor

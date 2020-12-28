@@ -29,16 +29,12 @@ public class EurekaServiceRegistryDecorator extends EurekaServiceRegistry {
 
     @Override
     public void deregister(EurekaRegistration reg) {
-        if (isRegisterEnabled(environment)) {
-            eurekaServiceRegistry.deregister(reg);
-        }
+        eurekaServiceRegistry.deregister(reg);
     }
 
     @Override
     public void setStatus(EurekaRegistration registration, String status) {
-        if (isRegisterEnabled(environment)) {
-            eurekaServiceRegistry.setStatus(registration, status);
-        }
+        eurekaServiceRegistry.setStatus(registration, status);
     }
 
     @Override

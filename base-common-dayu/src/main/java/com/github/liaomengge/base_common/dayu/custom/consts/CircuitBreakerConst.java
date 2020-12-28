@@ -5,11 +5,11 @@ package com.github.liaomengge.base_common.dayu.custom.consts;
  */
 public interface CircuitBreakerConst {
 
-    interface Metric {
+    interface MetricConst {
         String CIRCUIT_BREAKER_PREFIX = "metric-circuit-breaker.";
     }
 
-    interface CacheKeySuffix {
+    interface CacheKeySuffixConst {
         String REDIS_LATEST_FAILURE_TIME = ":latest:failure:time";
     }
 }

@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Created by liaomengge on 2020/8/15.
  */
-@Endpoint(id = EurekaConst.PULL_IN_ENDPOINT)
+@Endpoint(id = EurekaConst.EndpointConst.PULL_IN)
 public class EurekaPullInEndpoint implements ApplicationContextAware {
 
     private static final Logger log = LyLogger.getInstance(EurekaPullInEndpoint.class);

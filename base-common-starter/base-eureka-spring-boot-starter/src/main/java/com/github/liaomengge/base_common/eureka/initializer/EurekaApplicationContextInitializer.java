@@ -26,7 +26,7 @@ public class EurekaApplicationContextInitializer implements ApplicationContextIn
 
     private static final Logger log = LyLogger.getInstance(EurekaApplicationContextInitializer.class);
 
-    private AtomicBoolean switchFlow = new AtomicBoolean(false);
+    private AtomicBoolean switchTraffic = new AtomicBoolean(false);
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
@@ -42,21 +42,21 @@ public class EurekaApplicationContextInitializer implements ApplicationContextIn
                     EurekaInstanceConfigBean instanceConfigBean = (EurekaInstanceConfigBean) bean;
 
                     EurekaProperties eurekaProperties = applicationContext.getBean(EurekaProperties.class);
-                    if (eurekaProperties.getReceiveTraffic().isEnabled() && switchFlow.compareAndSet(false, true)) {
+                    if (!eurekaProperties.getReceiveTraffic().isEnabled() && switchTraffic.compareAndSet(false, true)) {
                         instanceConfigBean.setInitialStatus(InstanceInfo.InstanceStatus.OUT_OF_SERVICE);
                         log.info("set init status[OUT_OF_SERVICE] and meta data...");
                     }
 
                     Map<String, String> metaMap = instanceConfigBean.getMetadataMap();
-                    metaMap.put(EurekaConst.SPRING_BOOT_VERSION,
+                    metaMap.put(EurekaConst.MetadataConst.SPRING_BOOT_VERSION,
                             SpringBootVersion.getVersion());
-                    metaMap.put(EurekaConst.SPRING_APPLICATION_NAME,
-                            environment.getProperty(EurekaConst.SPRING_APPLICATION_NAME));
-                    metaMap.put(EurekaConst.SPRING_APPLICATION_CONTEXT_PATH,
-                            environment.getProperty(EurekaConst.SPRING_APPLICATION_CONTEXT_PATH, "/"));
-                    metaMap.put(EurekaConst.SPRING_APPLICATION_SERVER_PORT,
-                            environment.getProperty(EurekaConst.SPRING_APPLICATION_SERVER_PORT));
-                    metaMap.put(EurekaConst.INSTANCE_REGISTRY_TIME, LyJdk8DateUtil.getNowDate2String());
+                    metaMap.put(EurekaConst.MetadataConst.SPRING_APPLICATION_NAME,
+                            environment.getProperty(EurekaConst.MetadataConst.SPRING_APPLICATION_NAME));
+                    metaMap.put(EurekaConst.MetadataConst.APPLICATION_CONTEXT_PATH,
+                            environment.getProperty(EurekaConst.MetadataConst.APPLICATION_CONTEXT_PATH, "/"));
+                    metaMap.put(EurekaConst.MetadataConst.APPLICATION_SERVER_PORT,
+                            environment.getProperty(EurekaConst.MetadataConst.APPLICATION_SERVER_PORT));
+                    metaMap.put(EurekaConst.MetadataConst.PRESERVED_REGISTER_TIME, LyJdk8DateUtil.getNowDate2String());
                 }
                 return bean;
             }

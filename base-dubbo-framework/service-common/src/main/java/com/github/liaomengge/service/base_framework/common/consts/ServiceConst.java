@@ -13,7 +13,7 @@ public class ServiceConst {
 
         @Getter
         @AllArgsConstructor
-        enum SuccCodeEnum {
+        enum SuccessCodeEnum {
             SUCCESS("000000", "成功");
 
             private String code;

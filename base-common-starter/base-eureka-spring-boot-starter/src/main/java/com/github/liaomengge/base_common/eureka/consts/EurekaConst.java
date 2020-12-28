@@ -5,13 +5,18 @@ package com.github.liaomengge.base_common.eureka.consts;
  */
 public interface EurekaConst {
 
-    String SPRING_BOOT_VERSION = "spring.boot.version";
-    String SPRING_APPLICATION_NAME = "spring.application.name";
-    String SPRING_APPLICATION_CONTEXT_PATH = "server.servlet.context-path";
-    String SPRING_APPLICATION_SERVER_PORT = "server.port";
+    interface MetadataConst {
+        String SPRING_BOOT_VERSION = "spring.boot.version";
+        String SPRING_APPLICATION_NAME = "spring.application.name";
 
-    String INSTANCE_REGISTRY_TIME = "registry.time";
+        String APPLICATION_CONTEXT_PATH = "server.servlet.context-path";
+        String APPLICATION_SERVER_PORT = "server.port";
 
-    String PULL_IN_ENDPOINT = "pullin";
-    String PULL_OUT_ENDPOINT = "pullout";
+        String PRESERVED_REGISTER_TIME = "preserved.register.time";
+    }
+
+    interface EndpointConst {
+        String PULL_IN = "pullin";
+        String PULL_OUT = "pullout";
+    }
 }

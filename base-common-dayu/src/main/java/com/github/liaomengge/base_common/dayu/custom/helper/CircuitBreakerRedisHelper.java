@@ -21,7 +21,7 @@ public class CircuitBreakerRedisHelper {
     private final CircuitBreakerConfig circuitBreakerConfig;
 
     public String getLatestFailureTimeStr(String resource) {
-        return "{" + resource + "}" + CircuitBreakerConst.CacheKeySuffix.REDIS_LATEST_FAILURE_TIME;
+        return "{" + resource + "}" + CircuitBreakerConst.CacheKeySuffixConst.REDIS_LATEST_FAILURE_TIME;
     }
 
     public long getLatestFailureTime(String resource) {

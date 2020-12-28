@@ -18,8 +18,9 @@ public abstract class AbstractPullEndpoint {
         instance.setPort(registration.getPort());
         instance.setWeight(registration.getRegisterWeight());
         instance.setClusterName(registration.getCluster());
-        instance.setMetadata(registration.getMetadata());
         instance.setEnabled(enabled);
+        instance.setMetadata(registration.getMetadata());
+        instance.setEphemeral(registration.getNacosDiscoveryProperties().isEphemeral());
         return instance;
     }
 }

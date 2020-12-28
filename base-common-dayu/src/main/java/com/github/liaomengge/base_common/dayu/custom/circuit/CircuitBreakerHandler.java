@@ -44,7 +44,7 @@ public class CircuitBreakerHandler {
                     //open status
                     log.warn("Resource[{}], Custom Circuit Open...", resource);
                     _MeterRegistrys.counter(meterRegistry,
-                            CircuitBreakerConst.Metric.CIRCUIT_BREAKER_PREFIX + resource).ifPresent(Counter::increment);
+                            CircuitBreakerConst.MetricConst.CIRCUIT_BREAKER_PREFIX + resource).ifPresent(Counter::increment);
                     return circuitBreaker.fallback();
                 }
                 //half open status

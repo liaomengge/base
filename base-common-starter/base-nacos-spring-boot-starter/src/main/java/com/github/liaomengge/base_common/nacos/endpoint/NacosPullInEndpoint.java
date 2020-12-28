@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Created by liaomengge on 2020/8/15.
  */
-@Endpoint(id = NacosConst.PULL_IN_ENDPOINT)
+@Endpoint(id = NacosConst.EndpointConst.PULL_IN)
 public class NacosPullInEndpoint extends AbstractPullEndpoint implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -33,10 +33,9 @@ public class NacosPullInEndpoint extends AbstractPullEndpoint implements Applica
     public Map<String, Object> pullIn() {
         Map<String, Object> retMap = Maps.newHashMap();
         try {
-            NacosDiscoveryProperties nacosDiscoveryProperties =
-                    applicationContext.getBean(NacosDiscoveryProperties.class);
             NacosRegistration nacosRegistration = applicationContext.getBean(NacosRegistration.class);
             Instance instance = getNacosInstance(nacosRegistration, true);
+            NacosDiscoveryProperties nacosDiscoveryProperties = nacosRegistration.getNacosDiscoveryProperties();
             NacosServiceManager nacosServiceManager = applicationContext.getBean(NacosServiceManager.class);
             NamingMaintainService namingMaintainService =
                     nacosServiceManager.getNamingMaintainService(nacosDiscoveryProperties.getNacosProperties());

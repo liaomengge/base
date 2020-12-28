@@ -37,7 +37,8 @@ public class NacosAutoConfiguration {
     @Bean
     public NacosRegistrationCustomizer nacosRegistrationCustomizer() {
         return registration ->
-                registration.getMetadata().put(NacosConst.INSTANCE_REGISTRY_TIME, LyJdk8DateUtil.getNowDate2String());
+                registration.getMetadata().put(NacosConst.MetadataConst.PRESERVED_REGISTER_TIME,
+                        LyJdk8DateUtil.getNowDate2String());
     }
 
     @Bean
