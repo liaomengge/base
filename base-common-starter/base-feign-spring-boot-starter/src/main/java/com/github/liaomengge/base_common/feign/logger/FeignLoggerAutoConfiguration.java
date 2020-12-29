@@ -2,11 +2,9 @@ package com.github.liaomengge.base_common.feign.logger;
 
 import com.github.liaomengge.base_common.feign.FeignProperties;
 import feign.Logger;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -16,7 +14,6 @@ import org.springframework.context.annotation.Primary;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(prefix = "base.feign.logger", name = "enabled", havingValue = "true")
-@AutoConfigureBefore(FeignClientsConfiguration.class)
 public class FeignLoggerAutoConfiguration {
 
     private final FeignProperties feignProperties;

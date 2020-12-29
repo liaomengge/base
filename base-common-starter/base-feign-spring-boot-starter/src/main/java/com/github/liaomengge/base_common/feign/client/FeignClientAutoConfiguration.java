@@ -4,11 +4,9 @@ import com.netflix.hystrix.HystrixCommand;
 import feign.Feign;
 import feign.Retryer;
 import feign.hystrix.HystrixFeign;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -17,7 +15,6 @@ import org.springframework.context.annotation.Scope;
  * Created by liaomengge on 2020/10/28.
  */
 @Configuration(proxyBeanMethods = false)
-@AutoConfigureBefore(FeignClientsConfiguration.class)
 public class FeignClientAutoConfiguration {
 
     @Bean
