@@ -9,10 +9,12 @@ import com.github.liaomengge.base_common.nacos.consts.NacosConst;
 import com.github.liaomengge.base_common.ribbon.RibbonProperties;
 import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import com.github.liaomengge.base_common.utils.number.LyBigDecimalUtil;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.netflix.client.config.IClientConfig;
-import com.netflix.loadbalancer.AbstractLoadBalancerRule;
 import com.netflix.loadbalancer.DynamicServerListLoadBalancer;
-import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.Server;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,10 +31,9 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 2020/12/28.
  * <p>
- * 1. 此处不能用构造器注入, {@link com.netflix.loadbalancer.ZoneAwareLoadBalancer#cloneRule(IRule)}会copy Rule，需要无参构造函数
- * 2. 也可以继承{@link com.netflix.loadbalancer.PredicateBasedRule}, 使用断言规则处理
+ * 1. 也可以继承{@link com.netflix.loadbalancer.PredicateBasedRule}
  */
-public abstract class AbstractRibbonNacosRule extends AbstractLoadBalancerRule {
+public abstract class AbstractRibbonNacosRule extends AbstractPredicateRule {
 
     protected static final Logger log = LyLogger.getInstance(AbstractRibbonNacosRule.class);
 
@@ -56,9 +57,18 @@ public abstract class AbstractRibbonNacosRule extends AbstractLoadBalancerRule {
             NamingService namingService =
                     nacosServiceManager.getNamingService(nacosDiscoveryProperties.getNacosProperties());
             List<Instance> instances = namingService.selectInstances(name, group, true);
-            instances = filterSameCluster(name, clusterName, instances);
             if (CollectionUtils.isEmpty(instances)) {
                 log.warn("no instance in service {}", name);
+                return null;
+            }
+            //依据集群过滤
+            instances = filterSameCluster(name, clusterName, instances);
+            //predicate过滤
+            instances = Lists.newArrayList(Iterables.filter(instances, getPredicate()));
+            //其他条件过滤
+            instances = filterInstances(instances);
+            if (CollectionUtils.isEmpty(instances)) {
+                log.warn("no match instance in service {}", name);
                 return null;
             }
             instances = rebuildInstanceWeight(instances);
@@ -99,7 +109,7 @@ public abstract class AbstractRibbonNacosRule extends AbstractLoadBalancerRule {
             return weight;
         }
         LocalDateTime registerLocalDateTime = LyJdk8DateUtil.getString2Date(registerTime);
-        long startUpTime = ChronoUnit.MILLIS.between(registerLocalDateTime, registerLocalDateTime);
+        long startUpTime = ChronoUnit.MILLIS.between(registerLocalDateTime, LocalDateTime.now());
         startUpTime = Math.max(startUpTime, 1);
         long warmupTime = ribbonProperties.getWeightWarmup().getTime().toMillis();
         if (startUpTime < warmupTime) {
@@ -109,12 +119,21 @@ public abstract class AbstractRibbonNacosRule extends AbstractLoadBalancerRule {
     }
 
     private double calculateWarmupWeight(long startUpTime, long warmupTime, double weight) {
-        double calculateWeight = ((double) startUpTime / (double) warmupTime) * weight;
+        double calculateWeight = LyBigDecimalUtil.div(LyBigDecimalUtil.mul(startUpTime, weight), warmupTime);
         return Math.min(weight, Math.max(calculateWeight, NumberUtils.DOUBLE_ZERO));
     }
 
     @Override
     public void initWithNiwsConfig(IClientConfig clientConfig) {
+    }
+
+    @Override
+    public Predicate<Instance> getPredicate() {
+        return input -> true;
+    }
+
+    public List<Instance> filterInstances(List<Instance> instances) {
+        return instances;
     }
 
     public abstract Instance chooseInstance(List<Instance> instances);

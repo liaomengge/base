@@ -13,6 +13,8 @@ public interface NacosConst {
         String APPLICATION_SERVER_PORT = "server.port";
 
         String PRESERVED_REGISTER_TIME = "preserved.register.time";
+
+        String TAG = "tag";
     }
 
     interface EndpointConst {
