@@ -7,6 +7,7 @@ import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.github.liaomengge.base_common.nacos.consts.NacosConst;
 import com.github.liaomengge.base_common.ribbon.RibbonProperties;
+import com.github.liaomengge.base_common.ribbon.loadbalance.filter.ServerFilter;
 import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.number.LyBigDecimalUtil;
@@ -18,7 +19,6 @@ import com.netflix.loadbalancer.DynamicServerListLoadBalancer;
 import com.netflix.loadbalancer.Server;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,6 +36,9 @@ import java.util.stream.Collectors;
 public abstract class AbstractRibbonNacosRule extends AbstractPredicateRule {
 
     protected static final Logger log = LyLogger.getInstance(AbstractRibbonNacosRule.class);
+
+    @Autowired(required = false)
+    protected List<ServerFilter> serverFilters;
 
     @Autowired
     protected RibbonProperties ribbonProperties;
@@ -67,6 +70,12 @@ public abstract class AbstractRibbonNacosRule extends AbstractPredicateRule {
             instances = Lists.newArrayList(Iterables.filter(instances, getPredicate()));
             //其他条件过滤
             instances = filterInstances(instances);
+            //自定义扩展filter
+            if (Objects.nonNull(serverFilters)) {
+                for (ServerFilter serverFilter : serverFilters) {
+                    instances = serverFilter.apply(instances);
+                }
+            }
             if (CollectionUtils.isEmpty(instances)) {
                 log.warn("no match instance in service {}", name);
                 return null;
@@ -120,7 +129,7 @@ public abstract class AbstractRibbonNacosRule extends AbstractPredicateRule {
 
     private double calculateWarmupWeight(long startUpTime, long warmupTime, double weight) {
         double calculateWeight = LyBigDecimalUtil.div(LyBigDecimalUtil.mul(startUpTime, weight), warmupTime);
-        return Math.min(weight, Math.max(calculateWeight, NumberUtils.DOUBLE_ZERO));
+        return Math.min(Math.max(calculateWeight, Double.valueOf(0.01d)), weight);
     }
 
     @Override

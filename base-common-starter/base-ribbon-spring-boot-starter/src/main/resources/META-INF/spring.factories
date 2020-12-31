@@ -5,4 +5,5 @@ org.springframework.context.ApplicationContextInitializer=\
   com.github.liaomengge.base_common.ribbon.initializer.RibbonEagerLoadContextInitializer
 
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.github.liaomengge.base_common.ribbon.processor.RibbonEagerLoadEnvironmentPostProcessor
+  com.github.liaomengge.base_common.ribbon.processor.RibbonEagerLoadEnvironmentPostProcessor,\
+  com.github.liaomengge.base_common.ribbon.processor.RibbonRetryEnvironmentPostProcess
