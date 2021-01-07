@@ -13,6 +13,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 
+import java.nio.charset.Charset;
 import java.util.Objects;
 
 /**
@@ -23,7 +24,7 @@ public abstract class AbstractMQMessageListener<T extends MQMessage> implements 
     protected static final Logger log = LyLogger.getInstance(AbstractMQMessageListener.class);
 
     protected T parseMessage(Message message) {
-        String receiveMsg = new String(message.getBody());
+        String receiveMsg = new String(message.getBody(), Charset.forName(MQConst.DEFAULT_CHARSET));
         log.info("receive message: {}", receiveMsg);
 
         if (StringUtils.isBlank(receiveMsg)) {

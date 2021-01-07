@@ -1,6 +1,5 @@
-package com.github.liaomengge.base_common.utils.aop;
+package com.github.liaomengge.base_common.utils.web;
 
-import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.ArrayUtils;
@@ -24,7 +23,7 @@ import java.util.Objects;
  * Created by liaomengge on 2019/12/8.
  */
 @UtilityClass
-public class LyAopUtil {
+public class LyWebAopUtil {
 
     /**
      * 获取切面请求信息
@@ -50,7 +49,7 @@ public class LyAopUtil {
         }
         List<Object> parameterList = Lists.newArrayList();
         for (int i = 0; i < parameterAnnotations.length && i < args.length; i++) {
-            if (validateAnnotation(parameterAnnotations[i])) {
+            if (matchAnnotation(parameterAnnotations[i])) {
                 parameterList.add(args[i]);
             } else {
                 parameterList.add(convertStreamArg(args[i]));
@@ -59,7 +58,7 @@ public class LyAopUtil {
         return parameterList;
     }
 
-    private boolean validateAnnotation(Annotation[] annotations) {
+    private boolean matchAnnotation(Annotation[] annotations) {
         return Arrays.stream(annotations).anyMatch(annotation ->
                 annotation instanceof RequestBody || annotation instanceof RequestParam
                         || annotation instanceof CookieValue || annotation instanceof PathVariable

@@ -19,11 +19,11 @@ import org.springframework.context.annotation.Scope;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({SphU.class, Feign.class})
+@ConditionalOnProperty(name = "feign.sentinel.enabled")
 @AutoConfigureBefore(SentinelFeignAutoConfiguration.class)
 public class FeignSentinelAutoConfiguration {
 
     @Bean
-    @ConditionalOnProperty(name = "feign.sentinel.enabled")
     @ConditionalOnMissingBean(FeignSentinelInitializer.class)
     public FeignSentinelInitializer feignSentinelInitializer(FeignClientManager feignClientManager) {
         return new FeignSentinelInitializer(feignClientManager);
@@ -32,7 +32,6 @@ public class FeignSentinelAutoConfiguration {
     @Bean
     @Scope("prototype")
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(name = "feign.sentinel.enabled")
     public Feign.Builder feignSentinelBuilder() {
         return SentinelFeign.builder().decode404();
     }

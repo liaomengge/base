@@ -1,6 +1,9 @@
 package com.github.liaomengge.base_common.utils.page;
 
 import com.google.common.collect.Lists;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.UtilityClass;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,10 +12,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 import java.util.function.UnaryOperator;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2018/8/9.
@@ -362,7 +361,7 @@ public class LyPageUtil {
         }
 
         public Pagination nextPageNo() {
-            this.pageNo = ++this.pageNo;
+            ++this.pageNo;
             return this;
         }
     }

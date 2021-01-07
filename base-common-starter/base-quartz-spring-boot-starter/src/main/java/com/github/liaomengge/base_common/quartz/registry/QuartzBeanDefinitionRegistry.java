@@ -38,7 +38,7 @@ public class QuartzBeanDefinitionRegistry implements EnvironmentAware, Applicati
     private static final String JOB_PKG = "base.quartz.basePackage";
 
     private Environment environment;
-    private static ApplicationContext applicationContext;
+    private static ApplicationContext staticApplicationContext;
     private static Set<String> jobBeanDefinitionSet = Sets.newConcurrentHashSet();
     private static Map<String, Object> jobBeanMap = Maps.newConcurrentMap();
 
@@ -49,11 +49,11 @@ public class QuartzBeanDefinitionRegistry implements EnvironmentAware, Applicati
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        QuartzBeanDefinitionRegistry.applicationContext = applicationContext;
+        QuartzBeanDefinitionRegistry.staticApplicationContext = applicationContext;
     }
 
     public static ApplicationContext getApplicationContext() {
-        return applicationContext;
+        return staticApplicationContext;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class QuartzBeanDefinitionRegistry implements EnvironmentAware, Applicati
     }
 
     public static Map<String, Object> getJobBeanMap() {
-        Map<String, AbstractBaseJob> baseJobMap = applicationContext.getBeansOfType(AbstractBaseJob.class);
+        Map<String, AbstractBaseJob> baseJobMap = staticApplicationContext.getBeansOfType(AbstractBaseJob.class);
         baseJobMap.values().forEach(val -> {
             String className = val.getClass().getName();
             if (jobBeanDefinitionSet.contains(className)) {

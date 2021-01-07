@@ -4,12 +4,12 @@ import com.github.liaomengge.base_common.feign.FeignProperties;
 import com.github.liaomengge.base_common.feign.pojo.FeignLogInfo;
 import com.github.liaomengge.base_common.feign.util.FeignLogUtil;
 import com.github.liaomengge.base_common.support.threadlocal.ThreadLocalContextUtils;
-import com.github.liaomengge.base_common.utils.aop.LyAopUtil;
 import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import com.github.liaomengge.base_common.utils.log.LyMDCUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.threadlocal.LyThreadLocalUtil;
+import com.github.liaomengge.base_common.utils.web.LyWebAopUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -49,7 +49,7 @@ public class FeignInterceptor implements MethodInterceptor, RequestInterceptor, 
         String classMethod = '[' + method.getDeclaringClass().getSimpleName() + '#' + method.getName() + ']';
         logInfo.setClassMethod(classMethod);
         if (!FeignLogUtil.isIgnoreLogRequest(method.getName(), feignProperties)) {
-            logInfo.setRequestBody(LyAopUtil.getRequestParams(method, args));
+            logInfo.setRequestBody(LyWebAopUtil.getRequestParams(method, args));
         }
         boolean isSuccess = false;
         Object result = null;

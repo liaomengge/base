@@ -7,7 +7,6 @@ import lombok.Data;
  */
 @Data
 public class FilterConfig {
-
     //是否开启默认filter
     private boolean enabledDefaultFilter = true;
 
@@ -21,7 +20,6 @@ public class FilterConfig {
      */
     @Data
     public static class SignConfig {
-
         private boolean enabled = true;
         private String ignoreMethodName = "";//以逗号分隔
         private String config = "";//签名配置,格式:{key:value}
@@ -32,7 +30,6 @@ public class FilterConfig {
      */
     @Data
     public static class FailFastConfig {
-
         private String methodName = "";//以逗号分隔
     }
 
@@ -41,13 +38,11 @@ public class FilterConfig {
      */
     @Data
     public static class RateLimitConfig {
-
         private String config = "";//限流配置,格式:{key:value}
     }
 
     @Data
     public static class LogConfig {
-
         private String ignoreHeaderMethodName = "*";//以逗号分隔,*表示ignore所有
         private String ignoreRequestMethodName = "";//以逗号分隔
         private String ignoreResponseMethodName = "";//以逗号分隔

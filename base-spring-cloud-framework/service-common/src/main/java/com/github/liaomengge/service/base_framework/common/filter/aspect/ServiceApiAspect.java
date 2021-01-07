@@ -1,13 +1,13 @@
 package com.github.liaomengge.service.base_framework.common.filter.aspect;
 
 import com.github.liaomengge.base_common.support.datasource.DBContext;
-import com.github.liaomengge.base_common.utils.aop.LyAopUtil;
 import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import com.github.liaomengge.base_common.utils.log.LyMDCUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.net.LyNetworkUtil;
 import com.github.liaomengge.base_common.utils.trace.LyTraceLogUtil;
+import com.github.liaomengge.base_common.utils.web.LyWebAopUtil;
 import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import com.github.liaomengge.service.base_framework.base.DataResult;
 import com.github.liaomengge.service.base_framework.common.config.FilterConfig;
@@ -113,7 +113,7 @@ public class ServiceApiAspect implements MethodInterceptor, Ordered {
         if (ServiceApiLogUtil.isIgnoreLogRequest(invocation, filterConfig) || ServiceApiLogUtil.isIgnoreAopLogRequest(invocation)) {
             return;
         }
-        Object requestParams = LyAopUtil.getRequestParams(ServiceApiLogUtil.getMethod(invocation),
+        Object requestParams = LyWebAopUtil.getRequestParams(ServiceApiLogUtil.getMethod(invocation),
                 invocation.getArguments());
         apiLogInfo.setRequestBody(requestParams);
     }

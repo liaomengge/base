@@ -11,56 +11,56 @@ import org.springframework.core.env.Environment;
  */
 public class SpringUtils implements ApplicationContextAware {
 
-    private static Environment environment;
-    private static ApplicationContext context;
+    private static Environment staticEnvironment;
+    private static ApplicationContext staticApplicationContext;
 
     @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
-        SpringUtils.context = context;
-        SpringUtils.environment = context.getEnvironment();
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        staticApplicationContext = applicationContext;
+        staticEnvironment = applicationContext.getEnvironment();
     }
 
     public static <T> T getBean(Class<T> clz) {
-        if (context == null) {
+        if (staticApplicationContext == null) {
             return null;
         }
-        return context.getBean(clz);
+        return staticApplicationContext.getBean(clz);
     }
 
     public static <T> T getBean(String beanName) {
-        if (context == null) {
+        if (staticApplicationContext == null) {
             return null;
         }
-        return (T) context.getBean(beanName);
+        return (T) staticApplicationContext.getBean(beanName);
     }
 
     public static <T> T getBean(String beanName, Class<T> clz) {
-        if (context == null) {
+        if (staticApplicationContext == null) {
             return null;
         }
-        return context.getBean(beanName, clz);
-    }
-
-    public static ApplicationContext getContext() {
-        return context;
-    }
-
-    public static Environment getEnvironment() {
-        return environment;
+        return staticApplicationContext.getBean(beanName, clz);
     }
 
     public static void publishEvent(ApplicationEvent event) {
-        if (context == null) {
+        if (staticApplicationContext == null) {
             return;
         }
-        context.publishEvent(event);
+        staticApplicationContext.publishEvent(event);
     }
 
-    public static String getApplicationName(Environment environment) {
-        return environment.getProperty("spring.application.name");
+    public static ApplicationContext getApplicationContext() {
+        return staticApplicationContext;
     }
 
-    public static String getContextPath(Environment environment) {
-        return environment.getProperty("server.servlet.context-path", "/");
+    public static Environment getEnvironment() {
+        return staticEnvironment;
+    }
+
+    public static String getApplicationName() {
+        return getEnvironment().getProperty("spring.application.name");
+    }
+
+    public static String getContextPath() {
+        return getEnvironment().getProperty("server.servlet.context-path", "/");
     }
 }
