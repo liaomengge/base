@@ -96,22 +96,19 @@ public class LyExpressionUtil {
     }
 
     public String and(String... expressions) {
-        StringBuilder sBuilder = new StringBuilder();
-        for (int i = 0; i < expressions.length; i++) {
-            sBuilder.append(expressions[i]);
-            if (i != expressions.length - 1) {
-                sBuilder.append(OR);
-            }
-        }
-        return sBuilder.toString();
+        return operate(AND, expressions);
     }
 
     public String or(String... expressions) {
+        return operate(OR, expressions);
+    }
+
+    private String operate(String appendOperate, String... expressions) {
         StringBuilder sBuilder = new StringBuilder();
         for (int i = 0; i < expressions.length; i++) {
             sBuilder.append(expressions[i]);
             if (i != expressions.length - 1) {
-                sBuilder.append(AND);
+                sBuilder.append(appendOperate);
             }
         }
         return sBuilder.toString();

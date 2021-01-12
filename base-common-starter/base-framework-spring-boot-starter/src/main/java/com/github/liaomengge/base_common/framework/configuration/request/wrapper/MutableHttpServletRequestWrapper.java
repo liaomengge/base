@@ -6,6 +6,7 @@ import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.EnumerationUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -18,23 +19,43 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MutableHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
+    private String requestURI;
+    private StringBuffer requestURL;
     private Map<String, List<String>> headerMap;
     private Map<String, Object> attributeMap;
 
     public MutableHttpServletRequestWrapper(HttpServletRequest request) {
         super(request);
+        this.requestURI = request.getRequestURI();
+        this.requestURL = request.getRequestURL();
         this.headerMap = LyWebUtil.getRequestListHeaders(request);
         this.attributeMap = new ConcurrentHashMap<>(LyWebUtil.getRequestAttributes(request));
     }
 
     @Override
+    public String getRequestURI() {
+        return requestURI;
+    }
+
+    @Override
+    public StringBuffer getRequestURL() {
+        return requestURL;
+    }
+
+    @Override
     public String getHeader(String name) {
-        return LyListUtil.getFirst(MapUtils.getObject(headerMap, name, Lists.newArrayList()));
+        if (StringUtils.isBlank(name)) {
+            return null;
+        }
+        return LyListUtil.getFirst(MapUtils.getObject(headerMap, name.toLowerCase(), Lists.newArrayList()));
     }
 
     @Override
     public Enumeration<String> getHeaders(String name) {
-        return Collections.enumeration(MapUtils.getObject(this.headerMap, name, Lists.newArrayList()));
+        if (StringUtils.isBlank(name)) {
+            return Collections.enumeration(Lists.newArrayList());
+        }
+        return Collections.enumeration(MapUtils.getObject(this.headerMap, name.toLowerCase(), Lists.newArrayList()));
     }
 
     @Override
@@ -59,9 +80,9 @@ public class MutableHttpServletRequestWrapper extends HttpServletRequestWrapper 
 
     @Override
     public void setAttribute(String name, Object obj) {
-        if (Objects.nonNull(name)) {
+        if (Objects.nonNull(name) && Objects.nonNull(obj)) {
             this.attributeMap.put(name, obj);
-            super.setAttribute(name, obj);
         }
+        super.setAttribute(name, obj);
     }
 }

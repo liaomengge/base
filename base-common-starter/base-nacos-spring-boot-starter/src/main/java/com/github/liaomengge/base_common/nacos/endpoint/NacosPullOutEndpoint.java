@@ -39,7 +39,8 @@ public class NacosPullOutEndpoint extends AbstractPullEndpoint implements Applic
             NacosServiceManager nacosServiceManager = applicationContext.getBean(NacosServiceManager.class);
             NamingMaintainService namingMaintainService =
                     nacosServiceManager.getNamingMaintainService(nacosDiscoveryProperties.getNacosProperties());
-            namingMaintainService.updateInstance(nacosDiscoveryProperties.getService(), instance);
+            namingMaintainService.updateInstance(nacosDiscoveryProperties.getService(),
+                    nacosDiscoveryProperties.getGroup(), instance);
 
             log.info("set service => {}, instance => {}, status => Disabled", nacosDiscoveryProperties.getService(),
                     nacosDiscoveryProperties.getIp());
