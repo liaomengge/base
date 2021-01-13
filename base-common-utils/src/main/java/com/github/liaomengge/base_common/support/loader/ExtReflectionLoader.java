@@ -12,14 +12,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by liaomengge on 2020/11/10.
- * 获取所有子类的实例
  */
 public class ExtReflectionLoader<T> {
 
     private Class<T> serviceType;
-    private Map<Class<T>, Reflections> reflectionsMap;
+    private Map<Class<T>, Reflections> reflectionsMap = Maps.newConcurrentMap();
 
-    private AtomicBoolean isInit;
+    private AtomicBoolean isInit = new AtomicBoolean(false);
+
     @Getter
     private Map<String, Class<? extends T>> classMap = Maps.newConcurrentMap();
     @Getter
@@ -27,8 +27,6 @@ public class ExtReflectionLoader<T> {
 
     private ExtReflectionLoader(Class<T> serviceType) {
         this.serviceType = serviceType;
-        this.reflectionsMap = Maps.newConcurrentMap();
-        this.isInit = new AtomicBoolean(false);
         this.loadReflections();
     }
 
