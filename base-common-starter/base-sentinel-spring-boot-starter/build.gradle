@@ -1,0 +1,4 @@
+dependencies {
+    api "com.alibaba.csp:sentinel-datasource-apollo"
+    api "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel"
+}
