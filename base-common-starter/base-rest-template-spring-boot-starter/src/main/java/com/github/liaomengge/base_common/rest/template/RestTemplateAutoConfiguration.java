@@ -3,6 +3,7 @@ package com.github.liaomengge.base_common.rest.template;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.github.liaomengge.base_common.helper.rest.interceptor.HeaderHttpRequestInterceptor;
 import com.github.liaomengge.base_common.helper.rest.interceptor.SentinelHttpRequestInterceptor;
 import com.github.liaomengge.base_common.helper.rest.sync.SyncClientTemplate;
 import com.github.liaomengge.base_common.helper.rest.sync.interceptor.HttpHeaderInterceptor;
@@ -72,7 +73,13 @@ public class RestTemplateAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(HeaderHttpRequestInterceptor.class)
+    public HeaderHttpRequestInterceptor headerHttpRequestInterceptor() {
+        return new HeaderHttpRequestInterceptor();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(SentinelHttpRequestInterceptor.class)
     @ConditionalOnClass(MeterRegistry.class)
     public SentinelHttpRequestInterceptor sentinelHttpRequestInterceptor(MeterRegistry meterRegistry) {
         return new SentinelHttpRequestInterceptor(meterRegistry);
@@ -116,6 +123,7 @@ public class RestTemplateAutoConfiguration {
     @ConditionalOnBean(PoolingHttpClientConnectionManager.class)
     @ConditionalOnMissingBean
     public RestTemplate restTemplate(PoolingHttpClientConnectionManager poolingHttpClientConnectionManager,
+                                     HeaderHttpRequestInterceptor headerHttpRequestInterceptor,
                                      SentinelHttpRequestInterceptor sentinelHttpRequestInterceptor) {
         RestTemplateProperties.HttpClientProperties httpClientProperties = this.restTemplateProperties.getHttp();
         RestTemplate restTemplate = new RestTemplate();
@@ -168,6 +176,7 @@ public class RestTemplateAutoConfiguration {
         if (dayuSentinelEnabled && sentinelProperties.isEnabled()) {
             restTemplate.getInterceptors().add(0, sentinelHttpRequestInterceptor);
         }
+        restTemplate.getInterceptors().add(headerHttpRequestInterceptor);
         return restTemplate;
     }
 

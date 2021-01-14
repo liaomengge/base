@@ -18,7 +18,7 @@ public class ExtReflectionLoader<T> {
     private Class<T> serviceType;
     private Map<Class<T>, Reflections> reflectionsMap = Maps.newConcurrentMap();
 
-    private AtomicBoolean isInit = new AtomicBoolean(false);
+    private AtomicBoolean initialized = new AtomicBoolean(false);
 
     @Getter
     private Map<String, Class<? extends T>> classMap = Maps.newConcurrentMap();
@@ -31,7 +31,7 @@ public class ExtReflectionLoader<T> {
     }
 
     private void loadReflections() {
-        if (!isInit.compareAndSet(false, true)) {
+        if (!initialized.compareAndSet(false, true)) {
             return;
         }
         Reflections reflections = reflectionsMap.computeIfAbsent(serviceType,

@@ -3,6 +3,7 @@ package com.github.liaomengge.base_common.feign.interceptor;
 import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.Ordered;
 
 import java.util.Enumeration;
@@ -20,7 +21,9 @@ public class HeaderRequestInterceptor implements RequestInterceptor, Ordered {
                 while (headerNames.hasMoreElements()) {
                     String name = headerNames.nextElement();
                     String value = request.getHeader(name);
-                    requestTemplate.header(name, value);
+                    if (StringUtils.isNotBlank(name)) {
+                        requestTemplate.header(name, value);
+                    }
                 }
             }
         });
