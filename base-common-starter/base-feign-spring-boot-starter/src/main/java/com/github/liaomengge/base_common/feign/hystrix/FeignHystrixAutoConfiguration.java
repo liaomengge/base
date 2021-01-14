@@ -27,7 +27,7 @@ public class FeignHystrixAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(FeignHystrixInitializer.class)
+    @ConditionalOnMissingBean
     public FeignHystrixInitializer feignHystrixInitializer(FeignClientManager feignClientManager) {
         return new FeignHystrixInitializer(feignClientManager);
     }

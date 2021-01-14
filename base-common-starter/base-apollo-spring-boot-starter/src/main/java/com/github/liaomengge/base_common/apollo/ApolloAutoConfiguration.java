@@ -35,13 +35,13 @@ public class ApolloAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(ApolloRefresher.class)
+    @ConditionalOnMissingBean
     public ApolloRefresher apolloRefresher() {
         return new ApolloRefresher(refreshScope);
     }
 
     @Bean
-    @ConditionalOnMissingBean({ApolloRefreshListener.class})
+    @ConditionalOnMissingBean
     public ApolloRefreshListener apolloAutoRefreshListener(ApolloRefresher apolloRefresher) {
         ApolloRefreshListener apolloAutoRefreshListener = new ApolloRefreshListener(apolloRefresher);
         SPLITTER.split(this.namespaces).forEach(namespace -> {

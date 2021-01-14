@@ -40,9 +40,8 @@ public class RabbitMQAutoConfiguration {
 
     private final RabbitMQProperties rabbitMQProperties;
 
-    @Bean
+    @Bean(destroyMethod = "destroy")
     @Primary
-    @ConditionalOnMissingBean
     public CachingConnectionFactory cachingConnectionFactory() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
         if (StringUtils.isNotBlank(this.rabbitMQProperties.getVirtualHost())) {

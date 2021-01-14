@@ -65,7 +65,7 @@ public class CacheAutoConfiguration {
     }
 
     @Bean(name = "clusterRedissonClientManager", destroyMethod = "destroy")
-    @ConditionalOnMissingBean(name = "clusterRedissonClientManager")
+    @ConditionalOnMissingBean
     public RedissonClientManager clusterRedissonClientManager() {
         Level2Properties level2Properties = this.cacheProperties.getLevel2();
         String clusterConfigLocation = level2Properties.getClusterConfigLocation();
@@ -82,7 +82,7 @@ public class CacheAutoConfiguration {
     }
 
     @Bean(name = "sentinelRedissonClientManager", destroyMethod = "destroy")
-    @ConditionalOnMissingBean(name = "sentinelRedissonClientManager")
+    @ConditionalOnMissingBean
     public RedissonClientManager sentinelRedissonClientManager() {
         ChannelProperties channelProperties = this.cacheProperties.getChannel();
         String sentinelConfigLocation = channelProperties.getSentinelConfigLocation();

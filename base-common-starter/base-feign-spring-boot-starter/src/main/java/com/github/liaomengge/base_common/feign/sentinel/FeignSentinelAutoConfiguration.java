@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Scope;
 public class FeignSentinelAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean(FeignSentinelInitializer.class)
+    @ConditionalOnMissingBean
     public FeignSentinelInitializer feignSentinelInitializer(FeignClientManager feignClientManager) {
         return new FeignSentinelInitializer(feignClientManager);
     }

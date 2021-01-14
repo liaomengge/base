@@ -73,13 +73,13 @@ public class RestTemplateAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(HeaderHttpRequestInterceptor.class)
+    @ConditionalOnMissingBean
     public HeaderHttpRequestInterceptor headerHttpRequestInterceptor() {
         return new HeaderHttpRequestInterceptor();
     }
 
     @Bean
-    @ConditionalOnMissingBean(SentinelHttpRequestInterceptor.class)
+    @ConditionalOnMissingBean
     @ConditionalOnClass(MeterRegistry.class)
     public SentinelHttpRequestInterceptor sentinelHttpRequestInterceptor(MeterRegistry meterRegistry) {
         return new SentinelHttpRequestInterceptor(meterRegistry);
@@ -96,7 +96,8 @@ public class RestTemplateAutoConfiguration {
         poolingHttpClientConnectionManager.setDefaultMaxPerRoute(httpClientProperties.getDefaultMaxPerRoute());
         poolingHttpClientConnectionManager.setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(httpClientProperties.getReadTimeout()).build());
 
-        List<RestTemplateProperties.UrlHttpClientProperties> urlHttpClientProperties = httpClientProperties.getUrls();
+        List<RestTemplateProperties.UrlHttpClientProperties> urlHttpClientProperties =
+                httpClientProperties.getUrls();
         if (CollectionUtils.isNotEmpty(urlHttpClientProperties)) {
             urlHttpClientProperties.forEach(val -> {
                 try {
@@ -158,7 +159,8 @@ public class RestTemplateAutoConfiguration {
         messageConverters.add(new FormHttpMessageConverter());
         messageConverters.add(new ByteArrayHttpMessageConverter());
 
-        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+        StringHttpMessageConverter stringHttpMessageConverter =
+                new StringHttpMessageConverter(StandardCharsets.UTF_8);
         stringHttpMessageConverter.setSupportedMediaTypes(ImmutableList.of(MediaType.valueOf("text/plain;" +
                 "charset=UTF-8")));
         stringHttpMessageConverter.setWriteAcceptCharset(false);

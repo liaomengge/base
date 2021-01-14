@@ -35,8 +35,8 @@ import java.util.TimeZone;
 @AutoConfigureBefore(org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class)
 public class JacksonAutoConfiguration {
 
-    @Primary
     @Bean
+    @Primary
     public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         objectMapper.setLocale(Locale.CHINA);

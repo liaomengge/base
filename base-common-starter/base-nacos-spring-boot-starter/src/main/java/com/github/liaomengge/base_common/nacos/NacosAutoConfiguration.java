@@ -35,7 +35,6 @@ public class NacosAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(NacosRegistrationCustomizer.class)
     public NacosRegistrationCustomizer nacosRegistrationCustomizer() {
         return registration ->
                 registration.getMetadata().put(NacosConst.MetadataConst.PRESERVED_REGISTER_TIME,

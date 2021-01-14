@@ -36,7 +36,7 @@ public class CustomCircuitBreakerAutoConfiguration {
     @RefreshScope
     @Bean
     @ConditionalOnBean(IRedisHelper.class)
-    @ConditionalOnMissingBean(CircuitBreakerRedisHelper.class)
+    @ConditionalOnMissingBean
     public CircuitBreakerRedisHelper circuitBreakerRedisHelper(IRedisHelper iRedisHelper) {
         RuleProperties ruleProperties = customCircuitBreakerProperties.getRule();
         CircuitBreakerConfig circuitBreakerConfig = new CircuitBreakerConfig();
@@ -49,7 +49,7 @@ public class CustomCircuitBreakerAutoConfiguration {
     @Bean
     @ConditionalOnClass(MeterRegistry.class)
     @ConditionalOnBean(CircuitBreakerRedisHelper.class)
-    @ConditionalOnMissingBean(CircuitBreakerHandler.class)
+    @ConditionalOnMissingBean
     public CircuitBreakerHandler circuitHandler(MeterRegistry meterRegistry,
                                                 CircuitBreakerRedisHelper circuitBreakerRedisHelper) {
         return new CircuitBreakerHandler(meterRegistry, circuitBreakerRedisHelper);
@@ -58,7 +58,7 @@ public class CustomCircuitBreakerAutoConfiguration {
     @Bean
     @ConditionalOnClass(MeterRegistry.class)
     @ConditionalOnBean(CircuitBreakerRedisHelper.class)
-    @ConditionalOnMissingBean(CircuitBreakerResourceAspect.class)
+    @ConditionalOnMissingBean
     public CircuitBreakerResourceAspect circuitBreakerResourceAspect(MeterRegistry meterRegistry,
                                                                      CircuitBreakerRedisHelper circuitBreakerRedisHelper) {
         return new CircuitBreakerResourceAspect(meterRegistry, circuitBreakerRedisHelper);

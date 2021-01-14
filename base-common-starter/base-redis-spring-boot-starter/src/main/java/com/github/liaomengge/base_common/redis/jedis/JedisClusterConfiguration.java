@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
 
@@ -32,7 +31,6 @@ public class JedisClusterConfiguration {
     private JedisClusterProperties jedisClusterProperties;
 
     @Bean
-    @Primary
     @ConditionalOnMissingBean
     public JedisClusterHelper jedisClusterHelper(JedisCluster jedisCluster) {
         return new JedisClusterHelper(jedisCluster);

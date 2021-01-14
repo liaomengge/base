@@ -21,7 +21,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
@@ -44,8 +43,7 @@ import java.util.TimeZone;
 public class FrameworkJacksonAutoConfiguration {
 
     private final Environment environment;
-
-    @Primary
+    
     @Bean
     @ConditionalOnMissingBean
     public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {

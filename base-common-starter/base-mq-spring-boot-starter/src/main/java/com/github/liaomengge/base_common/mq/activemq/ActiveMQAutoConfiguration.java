@@ -34,7 +34,6 @@ public class ActiveMQAutoConfiguration {
 
     @Bean(destroyMethod = "stop")
     @Primary
-    @ConditionalOnMissingBean
     public PooledConnectionFactory pooledConnectionFactory() {
         ActiveMQConnectionFactory activeMQConnectionFactory =
                 new ActiveMQConnectionFactory(this.activeMQProperties.getBrokerUrl());
