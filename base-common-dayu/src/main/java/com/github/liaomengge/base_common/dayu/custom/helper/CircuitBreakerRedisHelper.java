@@ -20,17 +20,16 @@ public class CircuitBreakerRedisHelper {
     @Getter
     private final CircuitBreakerConfig circuitBreakerConfig;
 
-    public String getLatestFailureTimeStr(String resource) {
+    public String getLatestFailureTimeKey(String resource) {
         return "{" + resource + "}" + CircuitBreakerConst.CacheKeySuffixConst.REDIS_LATEST_FAILURE_TIME;
     }
 
     public long getLatestFailureTime(String resource) {
-        return LyMoreNumberUtil.toLong(iRedisHelper.get(this.getLatestFailureTimeStr(resource)));
+        return LyMoreNumberUtil.toLong(iRedisHelper.get(this.getLatestFailureTimeKey(resource)));
     }
 
     public int getFailureCount(String resource) {
-        String failureCountStr = iRedisHelper.get(resource);
-        return LyMoreNumberUtil.toInt(failureCountStr);
+        return LyMoreNumberUtil.toInt(iRedisHelper.get(resource));
     }
 
     public void incrFailureCount(String resource) {

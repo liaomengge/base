@@ -47,7 +47,7 @@ public class MutableHttpServletRequestWrapper extends HttpServletRequestWrapper 
         if (StringUtils.isBlank(name)) {
             return null;
         }
-        return LyListUtil.getFirst(MapUtils.getObject(headerMap, name.toLowerCase(), Lists.newArrayList()));
+        return LyListUtil.getFirst(MapUtils.getObject(headerMap, name, Lists.newArrayList()));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class MutableHttpServletRequestWrapper extends HttpServletRequestWrapper 
         if (StringUtils.isBlank(name)) {
             return Collections.enumeration(Lists.newArrayList());
         }
-        return Collections.enumeration(MapUtils.getObject(this.headerMap, name.toLowerCase(), Lists.newArrayList()));
+        return Collections.enumeration(MapUtils.getObject(this.headerMap, name, Lists.newArrayList()));
     }
 
     @Override

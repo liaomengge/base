@@ -2,7 +2,6 @@ package com.github.liaomengge.base_common.framework.configuration.cors;
 
 import com.github.liaomengge.base_common.framework.FrameworkProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,6 @@ import org.springframework.web.filter.CorsFilter;
  * Created by liaomengge on 2020/8/4.
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty(name = "base.framework.cors.enabled", havingValue = "true")
 public class FrameworkCorsConfiguration {
 
     @Bean("corsFilterRegistration")

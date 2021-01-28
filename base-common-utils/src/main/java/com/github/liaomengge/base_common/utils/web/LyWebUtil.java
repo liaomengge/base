@@ -13,6 +13,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.http.MediaType;
+import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -82,7 +83,7 @@ public class LyWebUtil {
      * @return
      */
     public <V> Map<String, V> getRequestHeaders(HttpServletRequest request, Function<Enumeration<String>, V> function) {
-        Map<String, V> headerMap = Maps.newHashMap();
+        Map<String, V> headerMap = new LinkedCaseInsensitiveMap<>();
         Enumeration<String> headerNames = request.getHeaderNames();
         if (Objects.nonNull(headerNames)) {
             while (headerNames.hasMoreElements()) {

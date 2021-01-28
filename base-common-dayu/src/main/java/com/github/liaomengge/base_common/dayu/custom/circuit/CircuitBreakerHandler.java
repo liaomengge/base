@@ -54,13 +54,12 @@ public class CircuitBreakerHandler {
         } catch (Throwable t) {
             log.warn("Resource[{}], request custom circuit handle failed ==> {}", resource,
                     LyThrowableUtil.getStackTrace(t));
+            circuitBreakerRedisHelper.incrFailureCount(resource);
             if (failureCount >= circuitBreakerRedisHelper.getCircuitBreakerConfig().getFailureThreshold()) {
-                circuitBreakerRedisHelper.getIRedisHelper().set(circuitBreakerRedisHelper.getLatestFailureTimeStr(resource),
+                circuitBreakerRedisHelper.getIRedisHelper().set(circuitBreakerRedisHelper.getLatestFailureTimeKey(resource),
                         String.valueOf(LyJdk8DateUtil.getMilliSecondsTime()));
                 throw t;
             }
-            //todo 是否可以交换下位置
-            circuitBreakerRedisHelper.incrFailureCount(resource);
             throw t;
         }
         return result;

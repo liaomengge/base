@@ -75,7 +75,7 @@ public class CircuitBreakerResourceAspect extends AbstractAspectSupport {
             log.warn("Resource[{}], request custom circuit handle failed ==> {}", resource,
                     LyThrowableUtil.getStackTrace(t));
             if (failureCount >= circuitBreakerRedisHelper.getCircuitBreakerConfig().getFailureThreshold()) {
-                circuitBreakerRedisHelper.getIRedisHelper().set(circuitBreakerRedisHelper.getLatestFailureTimeStr(resource),
+                circuitBreakerRedisHelper.getIRedisHelper().set(circuitBreakerRedisHelper.getLatestFailureTimeKey(resource),
                         String.valueOf(LyJdk8DateUtil.getMilliSecondsTime()));
                 throw t;
             }
