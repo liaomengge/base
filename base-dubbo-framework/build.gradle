@@ -3,7 +3,7 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.36.0'
     id 'com.github.spotbugs' version '4.6.0'
     id 'com.diffplug.spotless' version '5.9.0'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 apply plugin: 'project-report'
@@ -29,7 +29,7 @@ subprojects {
     apply from: "${rootProject.projectDir}/gradle/spotbug.gradle"
 
     group = 'com.github.liaomengge'
-    version = '2.0.6-SNAPSHOT'
+    version = '3.0.0-SNAPSHOT'
 
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
@@ -58,12 +58,12 @@ subprojects {
     }
 
     ext {
-        baseCommonMiddlewareVersion = '1.1.9-SNAPSHOT'
-        baseCommonUtilsVersion = '1.1.9-SNAPSHOT'
+        baseCommonMiddlewareVersion = '3.0.0-SNAPSHOT'
+        baseCommonUtilsVersion = '3.0.0-SNAPSHOT'
     }
 
     def versions = [
-            platformBom: '1.0.9-SNAPSHOT'
+            platformBom: '3.0.0-SNAPSHOT'
     ]
 
     dependencyManagement {

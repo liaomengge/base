@@ -3,7 +3,7 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.36.0' apply false
     id 'com.github.spotbugs' version '4.6.0' apply false
     id 'com.diffplug.spotless' version '5.9.0' apply false
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 }
 
 allprojects {
@@ -27,7 +27,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
     group = 'com.github.liaomengge'
-    version = '1.1.9-SNAPSHOT'
+    version = '3.0.0-SNAPSHOT'
 
     apply from: "${rootProject.projectDir}/gradle/latest-version.gradle"
 
@@ -65,7 +65,7 @@ subprojects {
     }
 
     def versions = [
-            platformBom: '1.0.9-SNAPSHOT'
+            platformBom: '3.0.0-SNAPSHOT'
     ]
 
     dependencyManagement {

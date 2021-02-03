@@ -1,16 +1,16 @@
-version = '0.0.9-SNAPSHOT'
+version = '3.0.0-SNAPSHOT'
 
 apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
 apply from: "${rootProject.projectDir}/gradle/publish-bom.gradle"
 
 def versions = [
-        baseCommonUtils         : '1.1.9-SNAPSHOT',
-        baseCommonMiddleware    : '1.1.9-SNAPSHOT',
-        baseCommonDayu          : '1.1.9-SNAPSHOT',
-        baseCommonCache         : '1.1.9-SNAPSHOT',
-        baseDubboFramework      : '2.0.6-SNAPSHOT',
-        baseSpringBootStarter   : '2.0.6-SNAPSHOT',
-        baseSpringCloudFramework: '2.0.6-SNAPSHOT'
+        baseCommonUtils         : '3.0.0-SNAPSHOT',
+        baseCommonMiddleware    : '3.0.0-SNAPSHOT',
+        baseCommonDayu          : '3.0.0-SNAPSHOT',
+        baseCommonCache         : '3.0.0-SNAPSHOT',
+        baseDubboFramework      : '3.0.0-SNAPSHOT',
+        baseSpringBootStarter   : '3.0.0-SNAPSHOT',
+        baseSpringCloudFramework: '3.0.0-SNAPSHOT'
 ]
 
 dependencyManagement {
