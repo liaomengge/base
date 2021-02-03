@@ -21,7 +21,7 @@ public class ApolloProperties {
     private ConditionalProperties conditional = new ConditionalProperties();
 
     /**
-     * 针对@RefreshScope刷新指定的keys
+     * 针对@RefreshScope注解刷新指定的keys
      */
     @Data
     public static class RefreshScopeProperties {
@@ -29,9 +29,9 @@ public class ApolloProperties {
     }
 
     /**
-     * 只针对@Bean @ConditionalOnProperty动态刷新符合条件的bean
+     * 只针对@Bean @ConditionalOnProperty注解动态刷新符合条件的bean
      * 注：
-     * 1. 被调用的bean，如果被@Autowired(required = false)注释，则不会动态生效，AutowiredAnnotationBeanPostProcessor不会再次执行
+     * 1. 被调用的bean，如果被@Autowired(required = false)注解，则不会动态生效，AutowiredAnnotationBeanPostProcessor不会再次执行
      * 2. 只有直接通过ApplicationContext或者ObjectProvider修饰的bean才会动态生效
      */
     @Data
