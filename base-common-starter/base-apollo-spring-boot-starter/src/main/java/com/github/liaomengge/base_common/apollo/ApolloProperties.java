@@ -31,8 +31,7 @@ public class ApolloProperties {
     /**
      * 只针对@Bean @ConditionalOnProperty注解动态刷新符合条件的bean
      * 注：
-     * 1. 被调用的bean，如果被@Autowired(required = false)注解，则不会动态生效，AutowiredAnnotationBeanPostProcessor不会再次执行
-     * 2. 只有直接通过ApplicationContext或者ObjectProvider修饰的bean才会动态生效
+     * 1. 被调用的bean，不能被@Autowired(required = false)注解
      */
     @Data
     public static class ConditionalProperties {

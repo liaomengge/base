@@ -40,20 +40,24 @@ public class ApolloRefresher implements ApplicationContextAware {
     }
 
     public void refresh(ConfigChangeEvent changeEvent) {
-        RefreshTypeEnum refreshTypeEnum = getRefreshTypeEnum(changeEvent);
-        Set<String> changeKeys = this.apolloProperties.getRefreshScope().getChangeKeys();
-        switch (refreshTypeEnum) {
-            case SCOPE:
-                refreshScope(changeKeys);
-                return;
-            case ALL:
-                refreshProperties(changeEvent);
-                refreshScope(changeKeys);
-                return;
-            case PROPERTIES:
-            default:
-                refreshProperties(changeEvent);
-                return;
+        try {
+            RefreshTypeEnum refreshTypeEnum = getRefreshTypeEnum(changeEvent);
+            Set<String> changeKeys = this.apolloProperties.getRefreshScope().getChangeKeys();
+            switch (refreshTypeEnum) {
+                case SCOPE:
+                    refreshScope(changeKeys);
+                    return;
+                case ALL:
+                    refreshProperties(changeEvent);
+                    refreshScope(changeKeys);
+                    return;
+                case PROPERTIES:
+                default:
+                    refreshProperties(changeEvent);
+                    return;
+            }
+        } catch (Exception e) {
+            log.error("apollo refresh fail", e);
         }
     }
 

@@ -46,18 +46,22 @@ public class ApolloConditionalRefresh implements ApplicationContextAware {
     }
 
     public void refresh(ConfigChangeEvent changeEvent) {
-        RefreshTypeEnum refreshTypeEnum = getRefreshTypeEnum(changeEvent);
-        if (refreshTypeEnum == RefreshTypeEnum.PROPERTIES || refreshTypeEnum == RefreshTypeEnum.ALL) {
-            Map<ConditionalOnPropertyDomain, ConditionalOnProperty> conditionalClassMap =
-                    conditionalOnPropertyManager.getConditionalBeanMap();
+        try {
+            RefreshTypeEnum refreshTypeEnum = getRefreshTypeEnum(changeEvent);
+            if (refreshTypeEnum == RefreshTypeEnum.PROPERTIES || refreshTypeEnum == RefreshTypeEnum.ALL) {
+                Map<ConditionalOnPropertyDomain, ConditionalOnProperty> conditionalClassMap =
+                        conditionalOnPropertyManager.getConditionalBeanMap();
 
-            conditionalClassMap.entrySet().stream().map(entry -> {
-                ConditionalOnPropertySpec spec = new ConditionalOnPropertySpec(entry.getValue());
-                spec.setBeanName(entry.getKey().getBeanName());
-                spec.setBeanClass(entry.getKey().getBeanClass());
-                return spec;
-            }).filter(spec -> ArrayUtils.isNotEmpty(spec.getNames()))
-                    .forEach(spec -> dynamicChangeBean(changeEvent, spec));
+                conditionalClassMap.entrySet().stream().map(entry -> {
+                    ConditionalOnPropertySpec spec = new ConditionalOnPropertySpec(entry.getValue());
+                    spec.setBeanName(entry.getKey().getBeanName());
+                    spec.setBeanClass(entry.getKey().getBeanClass());
+                    return spec;
+                }).filter(spec -> ArrayUtils.isNotEmpty(spec.getNames()))
+                        .forEach(spec -> dynamicChangeBean(changeEvent, spec));
+            }
+        } catch (Exception e) {
+            log.error("apollo refresh conditional fail", e);
         }
     }
 
@@ -82,6 +86,7 @@ public class ApolloConditionalRefresh implements ApplicationContextAware {
                 log.info("not need remove registry, bean class name[{}] is not exist ...", beanName);
                 return;
             }
+            //同时会destory依赖的bean，不能用@Autowired(required = false)注解使用
             SpringUtils.unregisterBean(beanName);
             log.info("unregister bean class name[{}] ...", beanName);
             return;
