@@ -33,5 +33,6 @@ include 'base-ribbon-spring-boot-starter'
 include 'base-sentinel-spring-boot-starter'
 include 'base-swagger-spring-boot-starter'
 include 'base-thread-pool-spring-boot-starter'
+include 'base-webflux-spring-boot-starter'
 include 'base-xxl-job-spring-boot-starter'
 
