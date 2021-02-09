@@ -64,14 +64,10 @@ subprojects {
         mavenCentral()
     }
 
-    def versions = [
-            platformBom: '3.0.0-SNAPSHOT'
-    ]
-
     dependencyManagement {
         dependencies {
             imports {
-                mavenBom "com.github.liaomengge:base-platform-bom:${versions.platformBom}"
+                mavenBom "com.github.liaomengge:base-platform-bom:${version}"
             }
         }
         resolutionStrategy {

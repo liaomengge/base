@@ -17,9 +17,6 @@ public class ReactorRequestContextHolder {
             LyThreadLocalUtil.getNamedTransmittableThreadLocal("EXCHANGE_CONTEXT");
 
     public static void putExchange(ServerWebExchange exchange) {
-        if (Objects.nonNull(getExchange())) {
-            remove();
-        }
         if (Objects.nonNull(exchange)) {
             EXCHANGE_CONTEXT_THREAD_LOCAL.set(exchange);
         }
@@ -33,7 +30,7 @@ public class ReactorRequestContextHolder {
         return Optional.ofNullable(getExchange()).map(ServerWebExchange::getRequest).orElse(null);
     }
 
-    public static void remove() {
+    public static void removeExchange() {
         EXCHANGE_CONTEXT_THREAD_LOCAL.remove();
     }
 }

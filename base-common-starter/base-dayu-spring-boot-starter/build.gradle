@@ -1,6 +1,6 @@
 dependencies {
     api(project(":base-redis-spring-boot-starter"))
-    api "com.github.liaomengge:base-common-dayu:${baseDayuVersion}"
+    api "com.github.liaomengge:base-common-dayu:${version}"
     api "org.springframework:spring-webmvc"
     api "com.alibaba.csp:sentinel-core"
     api "com.alibaba.csp:sentinel-web-servlet"

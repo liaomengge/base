@@ -15,7 +15,7 @@ public class ReactorServerWebExchangeContextFilter implements WebFilter, Ordered
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         ReactorRequestContextHolder.putExchange(exchange);
-        return chain.filter(exchange).doFinally(signalType -> ReactorRequestContextHolder.remove());
+        return chain.filter(exchange).doFinally(signalType -> ReactorRequestContextHolder.removeExchange());
     }
 
     @Override

@@ -75,22 +75,10 @@ subprojects {
         mavenCentral()
     }
 
-    ext {
-        baseSpringCloudVersion = '3.0.0-SNAPSHOT'
-        baseCommonMiddlewareVersion = '3.0.0-SNAPSHOT'
-        baseDayuVersion = '3.0.0-SNAPSHOT'
-        baseCacheVersion = '3.0.0-SNAPSHOT'
-        baseCommonUtilsVersion = '3.0.0-SNAPSHOT'
-    }
-
-    def versions = [
-            platformBom: '3.0.0-SNAPSHOT'
-    ]
-
     dependencyManagement {
         dependencies {
             imports {
-                mavenBom "com.github.liaomengge:base-platform-bom:${versions.platformBom}"
+                mavenBom "com.github.liaomengge:base-platform-bom:${version}"
             }
         }
         resolutionStrategy {
@@ -105,7 +93,7 @@ subprojects {
     }
 
     dependencies {
-        api "com.github.liaomengge:base-common-utils:${baseCommonUtilsVersion}"
+        api "com.github.liaomengge:base-common-utils:${version}"
 
         api "org.springframework.boot:spring-boot-starter"
         api "org.springframework.boot:spring-boot-starter-actuator"

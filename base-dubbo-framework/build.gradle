@@ -57,19 +57,10 @@ subprojects {
         mavenCentral()
     }
 
-    ext {
-        baseCommonMiddlewareVersion = '3.0.0-SNAPSHOT'
-        baseCommonUtilsVersion = '3.0.0-SNAPSHOT'
-    }
-
-    def versions = [
-            platformBom: '3.0.0-SNAPSHOT'
-    ]
-
     dependencyManagement {
         dependencies {
             imports {
-                mavenBom "com.github.liaomengge:base-platform-bom:${versions.platformBom}"
+                mavenBom "com.github.liaomengge:base-platform-bom:${version}"
             }
         }
         resolutionStrategy {
@@ -84,11 +75,11 @@ subprojects {
     }
 
     dependencies {
-        api("com.github.liaomengge:base-common-middleware:${baseCommonMiddlewareVersion}") {
+        api("com.github.liaomengge:base-common-middleware:${version}") {
             exclude(module: 'base-common-utils')
         }
 
-        api "com.github.liaomengge:base-common-utils:${baseCommonUtilsVersion}"
+        api "com.github.liaomengge:base-common-utils:${version}"
 
         /************************************************华丽的分割线***************************************************/
 

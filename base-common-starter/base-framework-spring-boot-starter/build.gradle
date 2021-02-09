@@ -1,6 +1,6 @@
 dependencies {
     api "org.springframework:spring-webmvc"
-    api("com.github.liaomengge:base-spring-cloud-framework:${baseSpringCloudVersion}") {
+    api("com.github.liaomengge:base-spring-cloud-framework:${version}") {
         exclude(group: 'org.springframework')
         exclude(group: 'org.springframework.boot')
         exclude(module: 'base-common-middleware')
