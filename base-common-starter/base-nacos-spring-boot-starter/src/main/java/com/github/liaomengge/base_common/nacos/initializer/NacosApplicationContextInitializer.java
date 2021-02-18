@@ -36,7 +36,7 @@ public class NacosApplicationContextInitializer implements ApplicationContextIni
                     NacosProperties nacosProperties = applicationContext.getBean(NacosProperties.class);
                     if (!nacosProperties.getReceiveTraffic().isEnabled() && switchTraffic.compareAndSet(false, true)) {
                         nacosDiscoveryProperties.setInstanceEnabled(false);
-                        log.info("set init instance enabled[false] and meta data...");
+                        log.info("set init instance enabled[false]...");
                     }
                     Map<String, String> metaMap = nacosDiscoveryProperties.getMetadata();
                     metaMap.put(NacosConst.MetadataConst.SPRING_BOOT_VERSION,

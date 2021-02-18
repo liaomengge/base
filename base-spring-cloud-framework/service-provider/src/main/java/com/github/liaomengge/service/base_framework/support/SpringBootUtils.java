@@ -1,4 +1,4 @@
-package com.github.liaomengge.service.base_framework.util;
+package com.github.liaomengge.service.base_framework.support;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.boot.WebApplicationType;

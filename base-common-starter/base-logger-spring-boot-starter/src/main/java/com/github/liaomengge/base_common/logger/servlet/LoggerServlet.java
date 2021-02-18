@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by liaomengge on 2019/1/22.
@@ -32,7 +33,7 @@ public class LoggerServlet extends HttpServlet implements EnvironmentAware {
     @Autowired
     private LoggerProperties loggerProperties;
 
-    @Autowired
+    @Autowired(required = false)
     private LoggersEndpoint loggersEndpoint;
 
     @Override
@@ -48,7 +49,7 @@ public class LoggerServlet extends HttpServlet implements EnvironmentAware {
     private void doHandle(HttpServletRequest req, HttpServletResponse resp) {
         RespBody respBody = new RespBody();
         Boolean enabled = this.environment.getProperty("management.endpoint.loggers.enabled", Boolean.class);
-        if (!Boolean.TRUE.equals(enabled)) {
+        if (!Boolean.TRUE.equals(enabled) || Objects.isNull(loggersEndpoint)) {
             respBody.setSuccess(false);
             respBody.setMsg("management.endpoint.loggers.enabled必须开启");
             LyWebUtil.renderJson(resp, respBody);

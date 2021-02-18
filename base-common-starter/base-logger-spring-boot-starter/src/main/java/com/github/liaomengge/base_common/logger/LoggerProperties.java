@@ -9,9 +9,9 @@ import java.util.Map;
  * Created by liaomengge on 2019/1/21.
  */
 @Data
-@ConfigurationProperties("base.log")
+@ConfigurationProperties("base.logger")
 public class LoggerProperties {
-
-    private String contextPath = "/log";
+    
+    private String contextPath = "/logger";
     private Map<String, String> configureLevel;
 }
