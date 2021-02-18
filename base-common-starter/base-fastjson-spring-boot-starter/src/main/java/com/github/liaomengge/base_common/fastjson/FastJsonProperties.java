@@ -1,4 +1,4 @@
-package com.github.liaomengge.base_common.convert;
+package com.github.liaomengge.base_common.fastjson;
 
 import com.google.common.base.Charsets;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.nio.charset.Charset;
  */
 @Data
 @ConfigurationProperties("base.http.encoding")
-public class FastJsonConvertProperties {
+public class FastJsonProperties {
 
     private Charset charset = Charsets.UTF_8;
 }

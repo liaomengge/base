@@ -1,4 +1,4 @@
-package com.github.liaomengge.base_common.convert.wrapper;
+package com.github.liaomengge.base_common.fastjson.wrapper;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
