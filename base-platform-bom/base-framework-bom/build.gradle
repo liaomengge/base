@@ -20,7 +20,6 @@ dependencyManagement {
         dependency "com.github.liaomengge:base-feign-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-health-check-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-influx-spring-boot-starter:${version}"
-        dependency "com.github.liaomengge:base-graceful-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-jackson-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-logger-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-mail-spring-boot-starter:${version}"

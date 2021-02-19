@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.data.annotation.Persistent;
 import org.springframework.data.convert.CustomConversions;
-import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
@@ -34,7 +34,7 @@ import java.util.Set;
  */
 @AllArgsConstructor
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass(MongoDbFactory.class)
+@ConditionalOnClass(MongoDatabaseFactory.class)
 @EnableConfigurationProperties(MongoProperties.class)
 public class MongoAutoConfiguration {
 
@@ -42,8 +42,8 @@ public class MongoAutoConfiguration {
 
     @Bean
     @ConditionalOnClass(ConnectionString.class)
-    public MongoDbFactory mongoDbFactory() {
-        return new SimpleMongoClientDbFactory(mongoProperties.getUri());
+    public MongoDatabaseFactory mongoDatabaseFactory() {
+        return new SimpleMongoClientDatabaseFactory(mongoProperties.getUri());
     }
 
     @Bean
@@ -95,23 +95,24 @@ public class MongoAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnClass({MongoDbFactory.class, MongoMappingContext.class, DefaultMongoTypeMapper.class})
-    public MappingMongoConverter mappingMongoConverter(MongoDbFactory mongoDbFactory,
+    @ConditionalOnClass({MongoDatabaseFactory.class, MongoMappingContext.class, DefaultMongoTypeMapper.class})
+    public MappingMongoConverter mappingMongoConverter(MongoDatabaseFactory mongoDatabaseFactory,
                                                        MongoMappingContext mongoMappingContext,
                                                        DefaultMongoTypeMapper defaultMongoTypeMapper,
                                                        CustomConversions customConversions) {
         MappingMongoConverter mappingMongoConverter =
-                new MappingMongoConverter(new DefaultDbRefResolver(mongoDbFactory), mongoMappingContext);
+                new MappingMongoConverter(new DefaultDbRefResolver(mongoDatabaseFactory), mongoMappingContext);
         mappingMongoConverter.setTypeMapper(defaultMongoTypeMapper);
         mappingMongoConverter.setCustomConversions(customConversions);
-        mappingMongoConverter.setCodecRegistryProvider(mongoDbFactory);
+        mappingMongoConverter.setCodecRegistryProvider(mongoDatabaseFactory);
         return mappingMongoConverter;
     }
 
     @Bean
-    @ConditionalOnClass({MongoDbFactory.class, MappingMongoConverter.class})
+    @ConditionalOnClass({MongoDatabaseFactory.class, MappingMongoConverter.class})
     @ConditionalOnMissingBean
-    public MongoTemplate mongoTemplate(MongoDbFactory mongoDbFactory, MappingMongoConverter mappingMongoConverter) {
-        return new MongoTemplate(mongoDbFactory, mappingMongoConverter);
+    public MongoTemplate mongoTemplate(MongoDatabaseFactory mongoDatabaseFactory,
+                                       MappingMongoConverter mappingMongoConverter) {
+        return new MongoTemplate(mongoDatabaseFactory, mappingMongoConverter);
     }
 }

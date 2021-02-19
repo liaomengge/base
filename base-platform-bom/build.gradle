@@ -37,9 +37,9 @@ apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
 apply from: "${rootProject.projectDir}/gradle/publish-bom.gradle"
 
 def versions = [
-        springBoot        : '2.2.13.RELEASE',
+        springBoot        : '2.3.9.RELEASE',
         springCloud       : 'Hoxton.SR9',
-        alibabaSpringCloud: '2.2.3.RELEASE'
+        alibabaSpringCloud: '2.2.5.RELEASE'
 ]
 
 dependencyManagement {
@@ -109,7 +109,7 @@ dependencyManagement {
         dependency "org.mybatis:mybatis:3.5.6"
         dependency "org.mybatis:mybatis-spring:2.0.5"
         dependency "com.github.pagehelper:pagehelper:5.2.0"
-        dependency "com.alibaba:druid:1.2.4"
+        dependency "com.alibaba:druid:1.2.5"
         dependency "org.apache.shardingsphere:sharding-jdbc-core:4.1.1"
 
         /***********************************************中间件依赖******************************************************/
@@ -156,8 +156,8 @@ dependencyManagement {
         /**************************************************组件依赖*****************************************************/
 
         dependency "com.alibaba:dubbo:2.6.8"
-        dependency "com.xuxueli:xxl-job-core:2.2.0"
-        dependency "com.ctrip.framework.apollo:apollo-client:1.7.0"
+        dependency "com.xuxueli:xxl-job-core:2.3.0"
+        dependency "com.ctrip.framework.apollo:apollo-client:1.8.0"
     }
     resolutionStrategy {
         cacheChangingModulesFor 0, 'seconds'
