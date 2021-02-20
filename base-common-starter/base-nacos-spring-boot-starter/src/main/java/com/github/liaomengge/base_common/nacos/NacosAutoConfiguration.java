@@ -2,6 +2,7 @@ package com.github.liaomengge.base_common.nacos;
 
 import com.alibaba.cloud.nacos.ConditionalOnNacosDiscoveryEnabled;
 import com.alibaba.cloud.nacos.registry.NacosRegistrationCustomizer;
+import com.github.liaomengge.base_common.consts.BaseConst;
 import com.github.liaomengge.base_common.nacos.consts.NacosConst;
 import com.github.liaomengge.base_common.nacos.endpoint.NacosPullInEndpoint;
 import com.github.liaomengge.base_common.nacos.endpoint.NacosPullOutEndpoint;
@@ -36,9 +37,12 @@ public class NacosAutoConfiguration {
 
     @Bean
     public NacosRegistrationCustomizer nacosRegistrationCustomizer() {
-        return registration ->
-                registration.getMetadata().put(NacosConst.MetadataConst.PRESERVED_REGISTER_TIME,
-                        LyJdk8DateUtil.getNowDate2String());
+        return registration -> {
+            registration.getMetadata().put(NacosConst.MetadataConst.PRESERVED_REGISTER_TIME,
+                    LyJdk8DateUtil.getNowDate2String());
+            registration.getMetadata().put(BaseConst.BASE_FRAMEWORK_VERSION_NAME,
+                    BaseConst.BASE_FRAMEWORK_VERSION_VALUE);
+        };
     }
 
     @Bean

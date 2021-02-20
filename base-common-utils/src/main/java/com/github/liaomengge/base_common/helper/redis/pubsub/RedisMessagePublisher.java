@@ -5,7 +5,6 @@ import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
 import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.net.LyNetworkUtil;
-
 import org.slf4j.Logger;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -37,7 +36,7 @@ public class RedisMessagePublisher implements MessagePublisher {
         } catch (Exception e) {
             log.error("Publish Redis异常 ===> ", e);
             if (mailHelper != null) {
-                mailHelper.sendTextMail(LyNetworkUtil.getHostAddress() + "/" + LyNetworkUtil.getHostName() +
+                mailHelper.sendTextMail(LyNetworkUtil.getIpAddress() + "/" + LyNetworkUtil.getHostName() +
                         "发布消息异常!", LyJdk8DateUtil.getNowDate2String() + " ===> " + LyThrowableUtil.getStackTrace(e));
             }
         }

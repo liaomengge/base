@@ -22,6 +22,7 @@ public class BaseApplicationContextInitializer implements ApplicationContextInit
             String applicationName = applicationContext.getEnvironment().getProperty("spring.application.name");
             PrintLayoutUtil.addRowElement(tableElement, "Application: ", applicationName);
             PrintLayoutUtil.addRowElement(tableElement, "Github: ", "https://github.com/liaomengge/base");
+            PrintLayoutUtil.addRowElement(tableElement, "Doc: ", "https://liaomengge.github.io/docsify");
             System.out.println(PrintLayoutUtil.render(tableElement));
         }
     }

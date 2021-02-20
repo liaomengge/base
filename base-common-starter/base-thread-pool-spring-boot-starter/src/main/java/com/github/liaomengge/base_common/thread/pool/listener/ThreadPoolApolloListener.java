@@ -72,25 +72,27 @@ public class ThreadPoolApolloListener implements ApplicationContextAware, Enviro
             if (LyMatcherUtil.isAllMatch("^base.thread-pool.groups\\[\\d+\\]$", threadPoolChangePrefix)) {
                 ThreadPoolGroupProperties.ThreadPoolProperties threadPoolProperties = LyBinderUtil.bind(environment,
                         threadPoolChangePrefix, ThreadPoolGroupProperties.ThreadPoolProperties.class);
-                LyThreadPoolTaskWrappedExecutor wrappedExecutor =
-                        applicationContext.getBean(threadPoolProperties.buildBeanName(),
-                                LyThreadPoolTaskWrappedExecutor.class);
-                if (Objects.isNull(wrappedExecutor)) {
-                    log.warn("can't modify thread name, thread pool name[{}], don't exist!!!",
-                            threadPoolProperties.buildBeanName());
-                    continue;
+                if (Objects.nonNull(threadPoolProperties)) {
+                    LyThreadPoolTaskWrappedExecutor wrappedExecutor =
+                            applicationContext.getBean(threadPoolProperties.buildBeanName(),
+                            LyThreadPoolTaskWrappedExecutor.class);
+                    if (Objects.isNull(wrappedExecutor)) {
+                        log.warn("can't modify thread name, thread pool name[{}], don't exist!!!",
+                                threadPoolProperties.buildBeanName());
+                        continue;
+                    }
+                    /**
+                     * ThreadPoolTaskExecutor的处理和ThreadPoolExecutor处理有点区别。
+                     * springframework blockQueue没有直接暴露出来，且修改其属性的时候，需要修改两边的属性
+                     */
+                    ThreadPoolTaskExecutor executor = wrappedExecutor.getThreadPoolTaskExecutor();
+                    executor.setCorePoolSize(threadPoolProperties.getCorePoolSize());
+                    executor.setMaxPoolSize(threadPoolProperties.getMaxPoolSize());
+                    executor.setKeepAliveSeconds(threadPoolProperties.getKeepAliveSeconds());
+                    setRejectedExecutionHandler(executor, threadPoolProperties.buildRejectionPolicy());
+                    setAllowCoreThreadTimeOut(executor, threadPoolProperties.isAllowCoreThreadTimeOut());
+                    setQueueCapacity(executor, threadPoolProperties.getQueueCapacity());
                 }
-                /**
-                 * ThreadPoolTaskExecutor的处理和ThreadPoolExecutor处理有点区别。
-                 * springframework blockQueue没有直接暴露出来，且修改其属性的时候，需要修改两边的属性
-                 */
-                ThreadPoolTaskExecutor executor = wrappedExecutor.getThreadPoolTaskExecutor();
-                executor.setCorePoolSize(threadPoolProperties.getCorePoolSize());
-                executor.setMaxPoolSize(threadPoolProperties.getMaxPoolSize());
-                executor.setKeepAliveSeconds(threadPoolProperties.getKeepAliveSeconds());
-                setRejectedExecutionHandler(executor, threadPoolProperties.buildRejectionPolicy());
-                setAllowCoreThreadTimeOut(executor, threadPoolProperties.isAllowCoreThreadTimeOut());
-                setQueueCapacity(executor, threadPoolProperties.getQueueCapacity());
             }
         }
     }

@@ -256,7 +256,7 @@ public abstract class AbstractLock {
                 "-zk"));
         service.scheduleAtFixedRate(() -> {
             HeartBeat heartBeat = new HeartBeat();
-            heartBeat.setHostIp(LyNetworkUtil.getHostAddress());
+            heartBeat.setHostIp(LyNetworkUtil.getIpAddress());
             heartBeat.setHostName(LyNetworkUtil.getHostName());
             heartBeat.setLastTime(LyJdk8DateUtil.getNowDate2String());
             zk.writeData(selfNodeFullName, LyJacksonUtil.toJson(heartBeat));

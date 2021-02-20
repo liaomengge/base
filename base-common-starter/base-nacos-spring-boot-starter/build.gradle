@@ -1,4 +1,5 @@
 dependencies {
+    api(project(":base-tool-spring-boot-starter"))
     api "org.springframework.boot:spring-boot-starter-actuator"
     api "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
 }

@@ -1,17 +1,22 @@
 package com.github.liaomengge.base_common.utils.net;
 
-import java.net.*;
-import java.util.Enumeration;
+import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-
-import lombok.experimental.UtilityClass;
+import java.net.*;
+import java.util.Enumeration;
+import java.util.Objects;
 
 /**
  * Created by liaomengge on 17/10/10.
  */
 @UtilityClass
 public class LyNetworkUtil {
+
+    private static final Logger log = LyLogger.getInstance(LyNetworkUtil.class);
 
     /**
      * 获取请求主机IP地址,如果通过代理进来, 则透过防火墙获取真实IP地址;
@@ -24,7 +29,7 @@ public class LyNetworkUtil {
      * @param request
      * @return
      */
-    public final String getIpAddress(HttpServletRequest request) {
+    public final String getRemoteIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
 
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -64,28 +69,13 @@ public class LyNetworkUtil {
      *
      * @return
      */
-    public String getHostAddress() {
+    public String getIpAddress() {
         String result = "127.0.0.1";
-        Enumeration allNetInterfaces;
-        try {
-            allNetInterfaces = NetworkInterface.getNetworkInterfaces();
-        } catch (SocketException e) {
-            return result;
+        InetAddress inetAddress = findFirstNonLoopbackAddress();
+        if (Objects.nonNull(inetAddress)) {
+            result = StringUtils.defaultIfBlank(inetAddress.getHostAddress(), result);
         }
-        InetAddress ip;
-        while (allNetInterfaces.hasMoreElements()) {
-            NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();
-            Enumeration addresses = netInterface.getInetAddresses();
-            while (addresses.hasMoreElements()) {
-                ip = (InetAddress) addresses.nextElement();
-                if (ip != null && ip instanceof Inet4Address && !ip.getHostAddress().equals(result)) {
-                    return ip.getHostAddress();
-                }
-            }
-        }
-
         return result;
-
     }
 
     /**
@@ -97,30 +87,62 @@ public class LyNetworkUtil {
         try {
             return java.net.InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e) {
-            return getMachineName();
+            return getLocalHostName();
         }
     }
 
-    private String getMachineName() {
+    private String getLocalHostName() {
         String result = "localhost";
-        Enumeration allNetInterfaces;
-        try {
-            allNetInterfaces = NetworkInterface.getNetworkInterfaces();
-        } catch (SocketException e) {
-            return result;
+        InetAddress inetAddress = findFirstNonLoopbackAddress();
+        if (Objects.nonNull(inetAddress)) {
+            result = StringUtils.defaultIfBlank(inetAddress.getHostName(), result);
         }
-        InetAddress ip;
-        while (allNetInterfaces.hasMoreElements()) {
-            NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();
-            Enumeration addresses = netInterface.getInetAddresses();
-            while (addresses.hasMoreElements()) {
-                ip = (InetAddress) addresses.nextElement();
-                if (ip != null && ip instanceof Inet4Address && !ip.getHostName().equals(result)) {
-                    return ip.getHostName();
-                }
-            }
-        }
-
         return result;
     }
+
+    /**
+     * 参考
+     * {@link org.springframework.cloud.commons.util.InetUtils#findFirstNonLoopbackAddress()}
+     *
+     * @return
+     */
+    private InetAddress findFirstNonLoopbackAddress() {
+        InetAddress result = null;
+        try {
+            int lowest = Integer.MAX_VALUE;
+            for (Enumeration<NetworkInterface> networkInterfaceEnumeration = NetworkInterface.getNetworkInterfaces();
+                 networkInterfaceEnumeration.hasMoreElements(); ) {
+                NetworkInterface networkInterface = networkInterfaceEnumeration.nextElement();
+                if (networkInterface.isUp()) {
+                    if (networkInterface.getIndex() < lowest || result == null) {
+                        lowest = networkInterface.getIndex();
+                    } else if (result != null) {
+                        continue;
+                    }
+
+                    for (Enumeration<InetAddress> inetAddressEnumeration = networkInterface.getInetAddresses();
+                         inetAddressEnumeration.hasMoreElements(); ) {
+                        InetAddress inetAddress = inetAddressEnumeration.nextElement();
+                        if (inetAddress instanceof Inet4Address && !inetAddress.isLoopbackAddress()) {
+                            result = inetAddress;
+                        }
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            log.error("cannot get first non-loopback address", e);
+        }
+
+        if (result != null) {
+            return result;
+        }
+
+        try {
+            return InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            log.warn("unable to retrieve localhost");
+        }
+        return null;
+    }
+
 }

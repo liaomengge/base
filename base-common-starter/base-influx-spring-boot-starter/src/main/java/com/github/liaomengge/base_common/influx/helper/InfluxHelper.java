@@ -3,17 +3,14 @@ package com.github.liaomengge.base_common.influx.helper;
 import com.github.liaomengge.base_common.influx.InfluxDBProperties;
 import com.github.liaomengge.base_common.influx.batch.InfluxBatchHandler;
 import com.github.liaomengge.base_common.influx.consts.InfluxConst;
+import com.github.liaomengge.base_common.utils.net.LyNetworkUtil;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.commons.util.InetUtils;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -22,11 +19,6 @@ import java.util.stream.Collectors;
  * Created by liaomengge on 2020/7/21.
  */
 public class InfluxHelper {
-
-    private String instance = "127.0.0.1";
-
-    @Autowired(required = false)
-    private InetUtils inetUtils;
 
     private final InfluxDBProperties influxDBProperties;
     private final InfluxBatchHandler influxBatchHandler;
@@ -50,7 +42,7 @@ public class InfluxHelper {
 
     public void write(String measurement, Map<String, String> tags, Map<String, Object> fields) {
         Point.Builder builder = Point.measurement(measurement);
-        builder.tag(InfluxConst.DEFAULT_INSTANCE, instance);
+        builder.tag(InfluxConst.DEFAULT_INSTANCE, LyNetworkUtil.getIpAddress());
         if (!CollectionUtils.isEmpty(tags)) {
             builder.tag(tags);
         }
@@ -80,11 +72,6 @@ public class InfluxHelper {
 
     public void write(BatchPoints batchPoints) {
         influxBatchHandler.getInfluxDBConnection().getInfluxDB().write(batchPoints);
-    }
-
-    @PostConstruct
-    public void init() {
-        Optional.ofNullable(inetUtils).ifPresent(val -> val.findFirstNonLoopbackHostInfo().getIpAddress());
     }
 
     private final class NanoClock {

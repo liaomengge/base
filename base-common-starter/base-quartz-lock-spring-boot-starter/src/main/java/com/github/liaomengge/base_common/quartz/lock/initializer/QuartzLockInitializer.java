@@ -49,7 +49,7 @@ public class QuartzLockInitializer extends AbstractLock implements EnvironmentAw
     protected void lockSuccess() {
         if (Objects.nonNull(schedulerFactoryBean) && !schedulerFactoryBean.isRunning()) {
             schedulerFactoryBean.start();
-            log.info("Machine[{}], quartz acquire lock success, start up...", LyNetworkUtil.getHostAddress());
+            log.info("Machine[{}], quartz acquire lock success, start up...", LyNetworkUtil.getIpAddress());
         }
         this.registerShutdownHook(schedulerFactoryBean);
     }
@@ -58,7 +58,7 @@ public class QuartzLockInitializer extends AbstractLock implements EnvironmentAw
     protected void lockFail() {
         if (Objects.nonNull(schedulerFactoryBean) && schedulerFactoryBean.isRunning()) {
             schedulerFactoryBean.stop();
-            log.info("Machine[{}], quartz acquire lock fail, start fail...", LyNetworkUtil.getHostAddress());
+            log.info("Machine[{}], quartz acquire lock fail, start fail...", LyNetworkUtil.getIpAddress());
         }
     }
 

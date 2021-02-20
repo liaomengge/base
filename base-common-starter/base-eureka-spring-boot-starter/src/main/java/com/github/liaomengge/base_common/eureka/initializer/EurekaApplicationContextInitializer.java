@@ -1,5 +1,6 @@
 package com.github.liaomengge.base_common.eureka.initializer;
 
+import com.github.liaomengge.base_common.consts.BaseConst;
 import com.github.liaomengge.base_common.eureka.EurekaProperties;
 import com.github.liaomengge.base_common.eureka.consts.EurekaConst;
 import com.github.liaomengge.base_common.eureka.decorator.EurekaServiceRegistryDecorator;
@@ -57,6 +58,7 @@ public class EurekaApplicationContextInitializer implements ApplicationContextIn
                     metaMap.put(EurekaConst.MetadataConst.APPLICATION_SERVER_PORT,
                             environment.getProperty(EurekaConst.MetadataConst.APPLICATION_SERVER_PORT));
                     metaMap.put(EurekaConst.MetadataConst.PRESERVED_REGISTER_TIME, LyJdk8DateUtil.getNowDate2String());
+                    metaMap.put(BaseConst.BASE_FRAMEWORK_VERSION_NAME, BaseConst.BASE_FRAMEWORK_VERSION_VALUE);
                 }
                 return bean;
             }

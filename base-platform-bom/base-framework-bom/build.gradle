@@ -40,6 +40,7 @@ dependencyManagement {
         dependency "com.github.liaomengge:base-sentinel-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-swagger-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-thread-pool-spring-boot-starter:${version}"
+        dependency "com.github.liaomengge:base-tool-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-webflux-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-xxl-job-spring-boot-starter:${version}"
 

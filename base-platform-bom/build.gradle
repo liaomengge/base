@@ -157,7 +157,7 @@ dependencyManagement {
 
         dependency "com.alibaba:dubbo:2.6.8"
         dependency "com.xuxueli:xxl-job-core:2.3.0"
-        dependency "com.ctrip.framework.apollo:apollo-client:1.8.0"
+        dependency "com.ctrip.framework.apollo:apollo-client:1.7.0"
     }
     resolutionStrategy {
         cacheChangingModulesFor 0, 'seconds'

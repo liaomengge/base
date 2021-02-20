@@ -232,7 +232,7 @@ public class ServiceFilter extends AbstractFilter {
         if (hasException) {
             log.error(logData);
             if (serviceConfig.isSendEmail() && mailHelper != null) {
-                mailHelper.sendTextMail(LyNetworkUtil.getHostAddress() + "/" + LyNetworkUtil.getHostName() +
+                mailHelper.sendTextMail(LyNetworkUtil.getIpAddress() + "/" + LyNetworkUtil.getHostName() +
                         "-[" + serviceConfig.getServiceName() + "] ERROR!", LyJsonUtil.toJson4Log(logData));
             }
             return;

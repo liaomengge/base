@@ -1,4 +1,3 @@
 dependencies {
     api "org.influxdb:influxdb-java"
-    api "org.springframework.cloud:spring-cloud-commons"
 }

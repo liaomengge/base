@@ -100,11 +100,11 @@ public class ServiceApiAspect implements MethodInterceptor, Ordered {
         ServiceApiLogInfo apiLogInfo = buildClassName(invocation);
         buildHeaderLog(invocation, apiLogInfo);
         buildArgsLog(invocation, apiLogInfo);
-        LyWebUtil.getHttpServletRequest().ifPresent(val -> {
-            apiLogInfo.setHttpMethod(val.getMethod());
-            apiLogInfo.setQueryParams(val.getQueryString());
-            LyMDCUtil.put(LyMDCUtil.MDC_API_REMOTE_IP, LyNetworkUtil.getIpAddress(val));
-            LyMDCUtil.put(LyMDCUtil.MDC_API_URI, val.getRequestURI());
+        LyWebUtil.getHttpServletRequest().ifPresent(request -> {
+            apiLogInfo.setHttpMethod(request.getMethod());
+            apiLogInfo.setQueryParams(request.getQueryString());
+            LyMDCUtil.put(LyMDCUtil.MDC_API_REMOTE_IP, LyNetworkUtil.getRemoteIpAddress(request));
+            LyMDCUtil.put(LyMDCUtil.MDC_API_URI, request.getRequestURI());
         });
         return apiLogInfo;
     }
