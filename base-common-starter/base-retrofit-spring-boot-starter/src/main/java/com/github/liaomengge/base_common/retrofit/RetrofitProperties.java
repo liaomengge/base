@@ -23,7 +23,7 @@ public class RetrofitProperties {
 
     @Data
     public static class HttpClientProperties {
-        private int maxIdleConnections = 5;
+        private int maxIdleConnections = 128;
         private long keepAlive = DEFAULT_KEEP_ALIVE_MIN;
         private boolean enabledTraceHeader = true;
         private int connectTimeout = DEFAULT_TIMEOUT_MILLIS;
