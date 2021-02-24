@@ -9,7 +9,7 @@ import com.github.liaomengge.base_common.utils.threadlocal.LyThreadLocalUtil;
 
 public class DBContext {
 
-    private static ThreadLocal<DbType> DB_TYPE_THREAD_LOCAL = LyThreadLocalUtil.getThreadLocal();
+    private static ThreadLocal<DbType> DB_TYPE_THREAD_LOCAL = LyThreadLocalUtil.getNamedThreadLocal("enum-db-type");
 
     public static DbType getDBKey() {
         DbType tlDbType = DB_TYPE_THREAD_LOCAL.get();

@@ -10,17 +10,17 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class TimeThreadLocalUtil {
 
-    private final ThreadLocal<Long> threadLocal = LyThreadLocalUtil.getThreadLocal();
+    private final ThreadLocal<Long> TIME_THREAD_LOCAL = LyThreadLocalUtil.getNamedThreadLocal("elapsed-time");
 
     public void set(long time) {
-        threadLocal.set(time);
+        TIME_THREAD_LOCAL.set(time);
     }
 
     public long get() {
-        return LyNumberUtil.getLongValue(threadLocal.get());
+        return LyNumberUtil.getLongValue(TIME_THREAD_LOCAL.get());
     }
 
     public void remove() {
-        threadLocal.remove();
+        TIME_THREAD_LOCAL.remove();
     }
 }

@@ -19,7 +19,7 @@ public class LyTraceLogUtil {
     public final String TRACE_ID = "x-base-trace-id";
 
     private final TransmittableThreadLocal<Map<String, String>> BASE_TRACE_THREAD_LOCAL =
-            LyThreadLocalUtil.getTransmittableThreadLocal();
+            LyThreadLocalUtil.getNamedTransmittableThreadLocal("base-trace-id");
 
     public void put(String value) {
         put(TRACE_ID, value);

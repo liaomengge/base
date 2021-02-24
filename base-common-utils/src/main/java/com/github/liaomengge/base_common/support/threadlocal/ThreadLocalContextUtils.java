@@ -14,7 +14,7 @@ import java.util.Objects;
 public class ThreadLocalContextUtils {
 
     private ThreadLocal<Map<String, Object>> BASE_THREAD_LOCAL_CONTEXT_MAP =
-            LyThreadLocalUtil.getNamedThreadLocal("BASE_THREAD_LOCAL_CONTEXT_MAP");
+            LyThreadLocalUtil.getNamedThreadLocal("base-thread-local-context", HashMap::new);
 
     public void put(String key, Object value) {
         put(getBaseThreadLocalContextMap(), key, value);

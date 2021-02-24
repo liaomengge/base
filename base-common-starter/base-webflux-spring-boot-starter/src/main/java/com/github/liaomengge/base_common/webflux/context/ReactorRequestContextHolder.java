@@ -13,8 +13,8 @@ import java.util.Optional;
  */
 public class ReactorRequestContextHolder {
 
-    private static final ThreadLocal<ServerWebExchange> EXCHANGE_CONTEXT_THREAD_LOCAL =
-            LyThreadLocalUtil.getNamedTransmittableThreadLocal("EXCHANGE_CONTEXT");
+    private static ThreadLocal<ServerWebExchange> EXCHANGE_CONTEXT_THREAD_LOCAL =
+            LyThreadLocalUtil.getNamedTransmittableThreadLocal("server-web-exchange");
 
     public static void putExchange(ServerWebExchange exchange) {
         if (Objects.nonNull(exchange)) {

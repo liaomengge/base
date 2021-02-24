@@ -6,6 +6,8 @@ import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.EncodedResource;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -46,8 +48,16 @@ public class LyResourceUtil {
     }
 
     public Properties loadYml(String resourceName) {
+        return loadYml(new ClassPathResource(resourceName));
+    }
+
+    public Properties loadYml(EncodedResource encodedResource) {
+        return loadYml(encodedResource.getResource());
+    }
+
+    public Properties loadYml(Resource... resource) {
         YamlPropertiesFactoryBean factoryBean = new YamlPropertiesFactoryBean();
-        factoryBean.setResources(new ClassPathResource(resourceName));
+        factoryBean.setResources(resource);
         factoryBean.afterPropertiesSet();
         return factoryBean.getObject();
     }

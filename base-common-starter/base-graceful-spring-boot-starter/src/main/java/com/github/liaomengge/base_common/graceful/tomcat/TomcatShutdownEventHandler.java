@@ -5,30 +5,30 @@ import com.github.liaomengge.base_common.graceful.consts.GracefulConst;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import org.apache.catalina.connector.Connector;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by liaomengge on 2018/12/18.
+ * Created by liaomengge on 2021/2/24.
+ * 注：
+ * {@link com.alibaba.cloud.nacos.registry.NacosServiceRegistry#close()}关闭时，未判断namingService是否为空，会出现NPE异常
  */
-public class TomcatShutdown implements TomcatConnectorCustomizer, ApplicationListener<ContextClosedEvent> {
+public class TomcatShutdownEventHandler implements TomcatConnectorCustomizer,
+        ApplicationListener<ContextClosedEvent> {
 
-    private static final Logger log = LyLogger.getInstance(TomcatShutdown.class);
+    private static final Logger log = LyLogger.getInstance(TomcatShutdownEventHandler.class);
 
     private volatile Connector connector;
 
+    @Autowired
     private GracefulProperties gracefulProperties;
-
-    public TomcatShutdown(GracefulProperties gracefulProperties) {
-        this.gracefulProperties = gracefulProperties;
-    }
 
     @Override
     public void customize(Connector connector) {
@@ -37,8 +37,10 @@ public class TomcatShutdown implements TomcatConnectorCustomizer, ApplicationLis
 
     @Override
     public void onApplicationEvent(ContextClosedEvent event) {
-        Optional.ofNullable(this.connector).ifPresent(val -> {
-            val.pause();
+        if (Objects.nonNull(this.connector)) {
+            this.connector.pause();
+            log.info("paused {} to stop accepting new requests", connector);
+
             ThreadPoolExecutor executor = this.getThreadPoolExecutor();
             if (Objects.nonNull(executor)) {
                 executor.shutdown();
@@ -46,16 +48,17 @@ public class TomcatShutdown implements TomcatConnectorCustomizer, ApplicationLis
                 if (this.gracefulProperties.getTimeout() > 0) {
                     try {
                         for (int remaining = this.gracefulProperties.getTimeout(); remaining > 0; remaining -= GracefulConst.CHECK_INTERVAL) {
+                            int awaitTime = Math.min(remaining, GracefulConst.CHECK_INTERVAL);
                             try {
-                                if (executor.awaitTermination(Math.min(remaining, GracefulConst.CHECK_INTERVAL),
-                                        TimeUnit.SECONDS)) {
+                                if (executor.awaitTermination(awaitTime, TimeUnit.SECONDS)) {
                                     break;
                                 }
                             } catch (InterruptedException e) {
                                 log.warn("Interrupted while waiting for executor [tomcat] to terminate");
                                 Thread.currentThread().interrupt();
                             }
-                            log.info("{} thread(s) active, {} seconds remaining", executor.getActiveCount(), remaining);
+                            log.info("{} thread(s) active, after {} seconds run over", executor.getActiveCount(),
+                                    awaitTime);
                         }
                     } catch (Exception e) {
                         log.info("tomcat shutdown exception", e);
@@ -63,7 +66,7 @@ public class TomcatShutdown implements TomcatConnectorCustomizer, ApplicationLis
                 }
                 log.info("tomcat shutdown end...");
             }
-        });
+        }
     }
 
     private ThreadPoolExecutor getThreadPoolExecutor() {

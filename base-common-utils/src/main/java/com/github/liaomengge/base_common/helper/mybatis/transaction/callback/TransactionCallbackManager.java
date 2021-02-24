@@ -1,12 +1,12 @@
 package com.github.liaomengge.base_common.helper.mybatis.transaction.callback;
 
+import com.github.liaomengge.base_common.utils.threadlocal.LyThreadLocalUtil;
 import com.google.common.collect.Sets;
+import lombok.experimental.UtilityClass;
 
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-
-import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 2019/12/20.
@@ -14,37 +14,38 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class TransactionCallbackManager {
 
-    private static final ThreadLocal<Set<Runnable>> successThreadLocal =
-            ThreadLocal.withInitial(() -> Sets.newHashSet());
+    private static ThreadLocal<Set<Runnable>> SUCCESS_THREAD_LOCAL =
+            LyThreadLocalUtil.getNamedThreadLocal("success", Sets::newHashSet);
 
-    private static final ThreadLocal<Set<Consumer<Throwable>>> throwableThreadLocal =
-            ThreadLocal.withInitial(() -> Sets.newHashSet());
+    private static ThreadLocal<Set<Consumer<Throwable>>> THROWABLE_THREAD_LOCAL =
+            LyThreadLocalUtil.getNamedThreadLocal("throwable", Sets::newHashSet);
+    
 
     public void registerOnSuccess(Runnable runnable) {
-        Set<Runnable> runnableSet = successThreadLocal.get();
+        Set<Runnable> runnableSet = SUCCESS_THREAD_LOCAL.get();
         Optional.ofNullable(runnableSet).ifPresent(val -> val.add(runnable));
     }
 
     public void registerOnThrowable(Consumer<Throwable> consumer) {
-        Set<Consumer<Throwable>> consumerSet = throwableThreadLocal.get();
+        Set<Consumer<Throwable>> consumerSet = THROWABLE_THREAD_LOCAL.get();
         Optional.ofNullable(consumerSet).ifPresent(val -> val.add(consumer));
     }
 
     protected void invokeSuccess() {
-        successThreadLocal.get().forEach(Runnable::run);
+        SUCCESS_THREAD_LOCAL.get().forEach(Runnable::run);
     }
 
     protected void invokeOnThrowable(Throwable t) {
-        throwableThreadLocal.get().forEach(val -> val.accept(t));
+        THROWABLE_THREAD_LOCAL.get().forEach(val -> val.accept(t));
     }
 
     protected void clear() {
-        Set<Runnable> runnableSet = successThreadLocal.get();
+        Set<Runnable> runnableSet = SUCCESS_THREAD_LOCAL.get();
         Optional.ofNullable(runnableSet).ifPresent(val -> val.clear());
-        successThreadLocal.remove();
+        SUCCESS_THREAD_LOCAL.remove();
 
-        Set<Consumer<Throwable>> consumerSet = throwableThreadLocal.get();
+        Set<Consumer<Throwable>> consumerSet = THROWABLE_THREAD_LOCAL.get();
         Optional.ofNullable(consumerSet).ifPresent(val -> val.clear());
-        throwableThreadLocal.remove();
+        THROWABLE_THREAD_LOCAL.remove();
     }
 }

@@ -7,7 +7,7 @@ import com.github.liaomengge.base_common.utils.threadlocal.LyThreadLocalUtil;
  */
 public class StringDBContext {
 
-    private static ThreadLocal<String> STRING_THREAD_LOCAL = LyThreadLocalUtil.getThreadLocal();
+    private static ThreadLocal<String> STRING_THREAD_LOCAL = LyThreadLocalUtil.getNamedThreadLocal("string-db-type");
 
     public static String getDBKey() {
         return STRING_THREAD_LOCAL.get();

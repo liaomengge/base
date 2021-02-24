@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.springframework.core.Ordered;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -31,8 +32,8 @@ public class FeignInterceptor implements MethodInterceptor, RequestInterceptor, 
 
     private static final Logger log = LyLogger.getInstance(FeignInterceptor.class);
 
-    private static ThreadLocal<Map<String, Object>> FEIGN_LOG_INFO_THREAD_CONTEXT_MAP =
-            LyThreadLocalUtil.getNamedThreadLocal("FEIGN_LOG_INFO_THREAD_CONTEXT_MAP");
+    private static ThreadLocal<Map<String, Object>> FEIGN_LOG_INFO_THREAD_LOCAL =
+            LyThreadLocalUtil.getNamedThreadLocal("feign-log-info", HashMap::new);
 
     private final FeignProperties feignProperties;
 
@@ -61,7 +62,7 @@ public class FeignInterceptor implements MethodInterceptor, RequestInterceptor, 
             throw t;
         } finally {
             try {
-                FeignLogInfo threadLocalLogInfo = ThreadLocalContextUtils.get(FEIGN_LOG_INFO_THREAD_CONTEXT_MAP,
+                FeignLogInfo threadLocalLogInfo = ThreadLocalContextUtils.get(FEIGN_LOG_INFO_THREAD_LOCAL,
                         FEIGN_LOG_INFO_THREAD_CONTEXT);
                 if (Objects.nonNull(threadLocalLogInfo)) {
                     logInfo.setUrl(threadLocalLogInfo.getUrl());
@@ -86,7 +87,7 @@ public class FeignInterceptor implements MethodInterceptor, RequestInterceptor, 
                 }
             } finally {
                 LyMDCUtil.remove(LyMDCUtil.MDC_CLIENT_ELAPSED_MILLI_TIME);
-                ThreadLocalContextUtils.remove(FEIGN_LOG_INFO_THREAD_CONTEXT_MAP);
+                ThreadLocalContextUtils.remove(FEIGN_LOG_INFO_THREAD_LOCAL);
             }
         }
         return result;
@@ -98,7 +99,7 @@ public class FeignInterceptor implements MethodInterceptor, RequestInterceptor, 
         feignLogInfo.setUrl(template.url());
         feignLogInfo.setHttpMethod(template.method());
         feignLogInfo.setQueryParams(template.queries());
-        ThreadLocalContextUtils.put(FEIGN_LOG_INFO_THREAD_CONTEXT_MAP, FEIGN_LOG_INFO_THREAD_CONTEXT, feignLogInfo);
+        ThreadLocalContextUtils.put(FEIGN_LOG_INFO_THREAD_LOCAL, FEIGN_LOG_INFO_THREAD_CONTEXT, feignLogInfo);
     }
 
     @Override
