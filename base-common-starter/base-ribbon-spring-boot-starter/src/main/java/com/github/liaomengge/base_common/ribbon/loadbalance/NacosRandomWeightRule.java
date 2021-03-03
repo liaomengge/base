@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by liaomengge on 2020/12/28.
  */
-public class RibbonNacosRandomWeightRule extends AbstractRibbonNacosRule {
+public class NacosRandomWeightRule extends AbstractNacosRule {
 
     @Override
     public Instance chooseInstance(List<Instance> instances) {

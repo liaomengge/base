@@ -11,7 +11,7 @@ import java.time.Duration;
 @Data
 @ConfigurationProperties("base.ribbon")
 public class RibbonProperties {
-
+    
     private EagerLoadProperties eagerLoad = new EagerLoadProperties();
     private WeightWarmupProperties weightWarmup = new WeightWarmupProperties();
 

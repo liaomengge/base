@@ -8,6 +8,6 @@ import java.util.List;
  * Created by liaomengge on 2020/12/31.
  */
 @FunctionalInterface
-public interface ServerFilter {
+public interface InstanceFilter {
     List<Instance> apply(List<Instance> instances);
 }
