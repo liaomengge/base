@@ -39,8 +39,8 @@ public class EurekaPullOutEndpoint implements ApplicationContextAware {
 
             InstanceInfo instanceInfo = eurekaRegistration.getApplicationInfoManager().getInfo();
             eurekaRegistration.getEurekaClient().setStatus(InstanceInfo.InstanceStatus.OUT_OF_SERVICE, instanceInfo);
-            log.info("set service => {}, instance => {}, status => OUT_OF_SERVICE", eurekaRegistration.getServiceId(),
-                    eurekaRegistration.getHost());
+            log.info("set service => {}, instance => {}, metadata => {}, status => OUT_OF_SERVICE",
+                    eurekaRegistration.getServiceId(), eurekaRegistration.getHost(), eurekaRegistration.getMetadata());
             retMap.put("status", instanceInfo.getStatus());
             retMap.put("success", true);
         } catch (Exception e) {

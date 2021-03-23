@@ -39,8 +39,8 @@ public class EurekaPullInEndpoint implements ApplicationContextAware {
 
             InstanceInfo instanceInfo = eurekaRegistration.getApplicationInfoManager().getInfo();
             eurekaRegistration.getEurekaClient().setStatus(InstanceInfo.InstanceStatus.UP, instanceInfo);
-            log.info("set service => {}, instance => {}, status => UP", eurekaRegistration.getServiceId(),
-                    eurekaRegistration.getHost());
+            log.info("set service => {}, instance => {}, metadata => {}, status => UP",
+                    eurekaRegistration.getServiceId(), eurekaRegistration.getHost(), eurekaRegistration.getMetadata());
             retMap.put("status", instanceInfo.getStatus());
             retMap.put("success", true);
         } catch (Exception e) {

@@ -17,6 +17,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.Order;
 
 import java.lang.reflect.Method;
@@ -44,7 +45,8 @@ public class CircuitBreakerResourceAspect extends AbstractAspectSupport {
         if (Objects.isNull(method)) {
             return joinPoint.proceed();
         }
-        CircuitBreakerResource circuitBreakerResource = method.getAnnotation(CircuitBreakerResource.class);
+        CircuitBreakerResource circuitBreakerResource =
+                AnnotatedElementUtils.findMergedAnnotation(method, CircuitBreakerResource.class);
         if (Objects.isNull(circuitBreakerResource)) {
             return joinPoint.proceed();
         }

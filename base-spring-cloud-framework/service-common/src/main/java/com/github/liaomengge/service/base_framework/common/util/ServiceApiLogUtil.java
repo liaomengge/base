@@ -6,6 +6,7 @@ import com.google.common.collect.Iterables;
 import lombok.experimental.UtilityClass;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 
 import java.lang.reflect.Method;
 import java.util.Optional;
@@ -32,7 +33,8 @@ public class ServiceApiLogUtil {
 
     public boolean isIgnoreAopLogHeader(MethodInvocation invocation) {
         Method method = getMethod(invocation);
-        IgnoreServiceApiLog ignoreServiceApiLog = method.getAnnotation(IgnoreServiceApiLog.class);
+        IgnoreServiceApiLog ignoreServiceApiLog =
+                AnnotatedElementUtils.findMergedAnnotation(method, IgnoreServiceApiLog.class);
         return Optional.ofNullable(ignoreServiceApiLog).map(IgnoreServiceApiLog::ignoreHeader).orElse(Boolean.FALSE);
     }
 
@@ -51,7 +53,8 @@ public class ServiceApiLogUtil {
 
     public boolean isIgnoreAopLogRequest(MethodInvocation invocation) {
         Method method = getMethod(invocation);
-        IgnoreServiceApiLog ignoreServiceApiLog = method.getAnnotation(IgnoreServiceApiLog.class);
+        IgnoreServiceApiLog ignoreServiceApiLog =
+                AnnotatedElementUtils.findMergedAnnotation(method, IgnoreServiceApiLog.class);
         return Optional.ofNullable(ignoreServiceApiLog).map(IgnoreServiceApiLog::ignoreArgs).orElse(Boolean.FALSE);
     }
 
@@ -67,7 +70,8 @@ public class ServiceApiLogUtil {
 
     public boolean isIgnoreAopLogResponse(MethodInvocation invocation) {
         Method method = getMethod(invocation);
-        IgnoreServiceApiLog ignoreServiceApiLog = method.getAnnotation(IgnoreServiceApiLog.class);
+        IgnoreServiceApiLog ignoreServiceApiLog =
+                AnnotatedElementUtils.findMergedAnnotation(method, IgnoreServiceApiLog.class);
         return Optional.ofNullable(ignoreServiceApiLog).map(IgnoreServiceApiLog::ignoreResult).orElse(Boolean.FALSE);
     }
 

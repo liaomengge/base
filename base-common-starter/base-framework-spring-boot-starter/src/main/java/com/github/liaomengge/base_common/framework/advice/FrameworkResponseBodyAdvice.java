@@ -9,6 +9,7 @@ import com.github.liaomengge.service.base_framework.base.code.IResultCode;
 import com.github.liaomengge.service.base_framework.base.code.SystemResultCode;
 import lombok.AllArgsConstructor;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -44,8 +45,10 @@ public class FrameworkResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             return false;
         }
         Class<?> declaringClass = returnType.getDeclaringClass();
-        boolean isClassIgnoreResponseAdvice = declaringClass.isAnnotationPresent(IgnoreResponseAdvice.class);
-        boolean isMethodIgnoreResponseAdvice = returnType.getMethod().isAnnotationPresent(IgnoreResponseAdvice.class);
+        boolean isClassIgnoreResponseAdvice =
+                AnnotatedElementUtils.hasAnnotation(declaringClass, IgnoreResponseAdvice.class);
+        boolean isMethodIgnoreResponseAdvice =
+                AnnotatedElementUtils.hasAnnotation(returnType.getMethod(), IgnoreResponseAdvice.class);
         if (isClassIgnoreResponseAdvice || isMethodIgnoreResponseAdvice || DataResult.class.equals(returnType.getGenericParameterType())) {
             return false;
         }

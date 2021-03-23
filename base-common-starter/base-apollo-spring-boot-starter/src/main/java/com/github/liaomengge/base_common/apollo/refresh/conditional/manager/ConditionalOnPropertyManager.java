@@ -15,6 +15,7 @@ import org.reflections.ReflectionUtils;
 import org.slf4j.Logger;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
@@ -91,7 +92,7 @@ public class ConditionalOnPropertyManager {
     }
 
     private String getBeanName(Method method) {
-        Bean bean = method.getAnnotation(Bean.class);
+        Bean bean = AnnotatedElementUtils.findMergedAnnotation(method, Bean.class);
         if (Objects.isNull(bean)) {
             return null;
         }

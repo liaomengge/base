@@ -58,7 +58,7 @@ public abstract class AbstractDiscoveryRule extends PredicateBasedRule {
             if (serverOptional.isPresent()) {
                 return serverOptional.get();
             }
-            log.warn("no match server in service {}", this.getServiceName());
+            log.warn("for server list[{}], no match server in service {}", serverList, this.getServiceName());
         } catch (Exception e) {
             log.warn("choose server error", e);
         }

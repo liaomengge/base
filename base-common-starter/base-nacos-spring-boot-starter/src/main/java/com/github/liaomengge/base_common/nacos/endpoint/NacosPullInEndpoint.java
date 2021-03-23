@@ -42,8 +42,9 @@ public class NacosPullInEndpoint extends AbstractPullEndpoint implements Applica
             namingMaintainService.updateInstance(nacosDiscoveryProperties.getService(),
                     nacosDiscoveryProperties.getGroup(), instance);
 
-            log.info("set service => {}, instance => {}, status => Enabled", nacosDiscoveryProperties.getService(),
-                    nacosDiscoveryProperties.getIp());
+            log.info("set service => {}, instance => {}, metadata => {}, status => Enabled",
+                    nacosDiscoveryProperties.getService(), nacosDiscoveryProperties.getIp(),
+                    nacosDiscoveryProperties.getMetadata());
             retMap.put("status", "Enabled");
             retMap.put("success", true);
         } catch (Exception e) {
