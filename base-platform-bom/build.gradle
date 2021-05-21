@@ -44,7 +44,7 @@ def versions = [
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.boot:sprFastJsonMessageConvertering-boot-dependencies:${versions.springBoot}"
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${versions.springBoot}"
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${versions.springCloud}"
         mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${versions.alibabaSpringCloud}"
     }
@@ -109,7 +109,7 @@ dependencyManagement {
         dependency "org.mybatis:mybatis:3.5.7"
         dependency "org.mybatis:mybatis-spring:2.0.6"
         dependency "com.github.pagehelper:pagehelper:5.2.0"
-        dependency "com.alibaba:druid:1.2.6"
+        dependency "com.alibaba:druid:1.2.5"
         dependency "org.apache.shardingsphere:sharding-jdbc-core:4.1.1"
 
         /***********************************************middleware依赖**************************************************/
