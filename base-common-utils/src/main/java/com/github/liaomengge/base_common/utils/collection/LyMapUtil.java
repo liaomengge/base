@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,19 @@ import java.util.stream.Collectors;
 public class LyMapUtil {
 
     private final String PROPERTY_NAME = "class";
+
+    /**
+     * jdk8 bug https://bugs.openjdk.java.net/browse/JDK-8161372
+     *
+     * @see https://www.jianshu.com/p/6c294df2b88d
+     */
+    public static <K, V> V computeIfAbsent(Map<K, V> map, K key, Function<K, V> mappingFunction) {
+        V value = map.get(key);
+        if (value != null) {
+            return value;
+        }
+        return map.computeIfAbsent(key, mappingFunction);
+    }
 
     /**********************************************Map的集合操作********************************************/
 

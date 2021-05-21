@@ -446,7 +446,7 @@ public class LyNumberUtil {
         if (StringUtils.isBlank(str)) {
             return defaultValue;
         }
-        return Double.valueOf(str).doubleValue();
+        return Double.parseDouble(str);
     }
 
     public double getDoubleValue(double value, int length) {

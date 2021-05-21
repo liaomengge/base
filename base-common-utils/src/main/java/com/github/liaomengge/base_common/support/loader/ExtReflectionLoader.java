@@ -1,5 +1,6 @@
 package com.github.liaomengge.base_common.support.loader;
 
+import com.github.liaomengge.base_common.utils.collection.LyMapUtil;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 import org.reflections.Reflections;
@@ -34,7 +35,7 @@ public class ExtReflectionLoader<T> {
         if (!initialized.compareAndSet(false, true)) {
             return;
         }
-        Reflections reflections = reflectionsMap.computeIfAbsent(serviceType,
+        Reflections reflections = LyMapUtil.computeIfAbsent(reflectionsMap, serviceType,
                 val -> new Reflections(ClassUtils.getPackageName(val)));
         Set<Class<? extends T>> classSet = reflections.getSubTypesOf(this.serviceType);
         for (Class<? extends T> clazz : classSet) {

@@ -2,17 +2,15 @@ package com.github.liaomengge.base_common.helper.mybatis.batch;
 
 import com.github.liaomengge.base_common.helper.mybatis.extension.MapResultHandler;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
-
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by liaomengge on 16/6/23.
@@ -21,11 +19,11 @@ public abstract class AbstractGeneralService {
 
     protected final Logger log = LyLogger.getInstance(AbstractGeneralService.class);
 
-    protected final int segmentNumber = 500;
+    protected final int SEGMENT_NUMBER = 500;
 
     protected <T> void batchInsertEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz,
                                         List<T> list) {
-        batchInsertEntry(sqlSessionFactory, clz, list, segmentNumber);
+        batchInsertEntry(sqlSessionFactory, clz, list, SEGMENT_NUMBER);
     }
 
     protected <T> void batchInsertEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz,
@@ -60,7 +58,7 @@ public abstract class AbstractGeneralService {
     }
 
     protected <T> void batchInsertEntry(SqlSessionFactory sqlSessionFactory, String statement, List<T> list) {
-        batchInsertEntry(sqlSessionFactory, statement, list, segmentNumber);
+        batchInsertEntry(sqlSessionFactory, statement, list, SEGMENT_NUMBER);
     }
 
     protected <T> void batchInsertEntry(SqlSessionFactory sqlSessionFactory, String statement, List<T> list, int size) {
@@ -94,7 +92,7 @@ public abstract class AbstractGeneralService {
 
     protected <T> void batchUpdateEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz,
                                         List<T> list) {
-        batchUpdateEntry(sqlSessionFactory, clz, list, segmentNumber);
+        batchUpdateEntry(sqlSessionFactory, clz, list, SEGMENT_NUMBER);
     }
 
     protected <T> void batchUpdateEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz,
@@ -129,7 +127,7 @@ public abstract class AbstractGeneralService {
     }
 
     protected <T> void batchUpdateEntry(SqlSessionFactory sqlSessionFactory, String statement, List<T> list) {
-        batchUpdateEntry(sqlSessionFactory, statement, list, segmentNumber);
+        batchUpdateEntry(sqlSessionFactory, statement, list, SEGMENT_NUMBER);
     }
 
     protected <T> void batchUpdateEntry(SqlSessionFactory sqlSessionFactory, String statement, List<T> list,
@@ -164,7 +162,7 @@ public abstract class AbstractGeneralService {
 
     protected <T> void batchDelEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz, List<T>
             list) {
-        batchDelEntry(sqlSessionFactory, clz, list, segmentNumber);
+        batchDelEntry(sqlSessionFactory, clz, list, SEGMENT_NUMBER);
     }
 
     protected <T> void batchDelEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz, List<T>
@@ -199,7 +197,7 @@ public abstract class AbstractGeneralService {
     }
 
     protected <T> void batchDelEntry(SqlSessionFactory sqlSessionFactory, String statement, List<T> list) {
-        batchDelEntry(sqlSessionFactory, statement, list, segmentNumber);
+        batchDelEntry(sqlSessionFactory, statement, list, SEGMENT_NUMBER);
     }
 
     protected <T> void batchDelEntry(SqlSessionFactory sqlSessionFactory, String statement, List<T> list, int size) {
@@ -231,7 +229,8 @@ public abstract class AbstractGeneralService {
         }
     }
 
-    protected <T extends Map<?, ?>, K, V> Map<K, V> queryForMap(SqlSessionFactory sqlSessionFactory, String statement, Object parameter,
+    protected <T extends Map<?, ?>, K, V> Map<K, V> queryForMap(SqlSessionFactory sqlSessionFactory, String statement
+            , Object parameter,
                                                                 MapResultHandler<T, K, V> handler) {
         SqlSession sqlSession = null;
         try {
@@ -247,7 +246,8 @@ public abstract class AbstractGeneralService {
         return handler.getMappedResults();
     }
 
-    protected <T extends Map<?, ?>, K, V> Map<K, V> queryForMap(SqlSessionFactory sqlSessionFactory, String statement, MapResultHandler<T, K,
+    protected <T extends Map<?, ?>, K, V> Map<K, V> queryForMap(SqlSessionFactory sqlSessionFactory, String statement
+            , MapResultHandler<T, K,
             V> handler) {
         return this.queryForMap(sqlSessionFactory, statement, null, handler);
     }

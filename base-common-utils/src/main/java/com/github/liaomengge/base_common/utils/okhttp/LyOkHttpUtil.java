@@ -24,12 +24,12 @@ public class LyOkHttpUtil {
     private static final int SOCKET_TIME_OUT = 5_000;//读写超时时间
 
     private static final int MAX_IDLE_CONNECTIONS = 30;// 空闲连接数
-    private static final long KEEP_ALLIVE_TIME = 60_000L;//保持连接时间
+    private static final long KEEP_ALIVE_TIME = 60_000L;//保持连接时间
 
     private static OkHttpClient okHttpClient;
 
     static {
-        ConnectionPool connectionPool = new ConnectionPool(MAX_IDLE_CONNECTIONS, KEEP_ALLIVE_TIME,
+        ConnectionPool connectionPool = new ConnectionPool(MAX_IDLE_CONNECTIONS, KEEP_ALIVE_TIME,
                 TimeUnit.MILLISECONDS);
         okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(CONNECTION_TIME_OUT, TimeUnit.MILLISECONDS)
@@ -154,8 +154,7 @@ public class LyOkHttpUtil {
     }
 
     private static String execute(Request request, String url) {
-        try {
-            Response response = okHttpClient.newCall(request).execute();
+        try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 return response.body().string();
             }

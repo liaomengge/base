@@ -31,6 +31,11 @@ public class LyResourceUtil {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
     }
 
+    public String getResourceAsString(String resourceName) {
+        InputStream inputStream = getResourceAsStream(resourceName);
+        return LyIOUtil.toString(inputStream);
+    }
+
     public Properties loadProperties(String resourceName) {
         Properties properties = new Properties();
         InputStream inputStream;

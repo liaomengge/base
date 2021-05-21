@@ -7,6 +7,7 @@ import com.github.liaomengge.base_common.dayu.guava.GuavaRateLimitProperties;
 import com.github.liaomengge.base_common.dayu.guava.callback.WebCallbackManager;
 import com.github.liaomengge.base_common.dayu.guava.domain.FlowRule;
 import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
+import com.github.liaomengge.base_common.utils.collection.LyMapUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.util.concurrent.RateLimiter;
@@ -58,7 +59,7 @@ public class GuavaRateLimitHandlerInterceptor extends HandlerInterceptorAdapter 
                     flowRules.stream().filter(val -> StringUtils.equalsIgnoreCase(uriTarget, val.getResource())).findFirst();
             if (flowRuleOptional.isPresent() && flowRuleOptional.get().getCount() > 0.0d) {
                 log.info("[Guava RateLimit Interceptor], Uri Path: {}", uriTarget);
-                RateLimiter rateLimiter = resourceLimiterMap.computeIfAbsent(uriTarget,
+                RateLimiter rateLimiter = LyMapUtil.computeIfAbsent(resourceLimiterMap, uriTarget,
                         key -> RateLimiter.create(flowRuleOptional.get().getCount()));
                 if (!rateLimiter.tryAcquire()) {
                     WebCallbackManager.getUrlRateLimitHandler().blocked(request, response);

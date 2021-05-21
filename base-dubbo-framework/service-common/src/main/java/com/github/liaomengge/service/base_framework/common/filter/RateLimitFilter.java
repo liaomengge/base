@@ -3,6 +3,7 @@ package com.github.liaomengge.service.base_framework.common.filter;
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.rpc.*;
 import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
+import com.github.liaomengge.base_common.utils.collection.LyMapUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogData;
 import com.github.liaomengge.base_common.utils.number.LyMoreNumberUtil;
@@ -50,7 +51,8 @@ public class RateLimitFilter extends AbstractFilter {
             log.warn("方法[{}],限流配置[{}],QPS配置不合法", methodName, rateLimitConfig);
             return invoker.invoke(invocation);
         }
-        RateLimiter rateLimiter = resourceLimiterMap.computeIfAbsent(methodName, key -> RateLimiter.create(qps));
+        RateLimiter rateLimiter = LyMapUtil.computeIfAbsent(resourceLimiterMap, methodName,
+                key -> RateLimiter.create(qps));
         if (rateLimiter.getRate() != qps) {
             log.info("methodName[{}], 老QPS[{}], 新QPS[{}]", methodName, rateLimiter.getRate(), qps);
             rateLimiter.setRate(qps);

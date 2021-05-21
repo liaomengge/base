@@ -1,5 +1,6 @@
 package com.github.liaomengge.base_common.utils.copy;
 
+import com.github.liaomengge.base_common.utils.collection.LyMapUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
@@ -44,8 +45,8 @@ public class LyBeanCopierUtil {
         Class<?> targetCls = target.getClass();
         String beanKey = generateKey(sourceCls, targetCls);
         try {
-            BeanCopier copier = beanCopierMap.computeIfAbsent(beanKey, s -> BeanCopier.create(sourceCls, targetCls,
-                    false));
+            BeanCopier copier = LyMapUtil.computeIfAbsent(beanCopierMap, beanKey,
+                    val -> BeanCopier.create(sourceCls, targetCls, false));
 
             copier.copy(source, target, null);
 
@@ -71,8 +72,8 @@ public class LyBeanCopierUtil {
         Class<?> targetCls = target.getClass();
         String beanKey = generateKey(sourceCls, targetCls);
         try {
-            BeanCopier copier = beanCopierMap.computeIfAbsent(beanKey, s -> BeanCopier.create(sourceCls, targetCls,
-                    false));
+            BeanCopier copier = LyMapUtil.computeIfAbsent(beanCopierMap, beanKey,
+                    val -> BeanCopier.create(sourceCls, targetCls, false));
 
             copier.copy(source, target, null);
 

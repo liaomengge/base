@@ -4,7 +4,6 @@ package com.github.liaomengge.base_common.framework.configuration.request.wrappe
 import com.github.liaomengge.base_common.utils.collection.LyListUtil;
 import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import com.google.common.collect.Lists;
-import org.apache.commons.collections4.EnumerationUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,7 +27,7 @@ public class MutableHttpServletRequestWrapper extends HttpServletRequestWrapper 
         super(request);
         this.requestURI = request.getRequestURI();
         this.requestURL = request.getRequestURL();
-        this.headerMap = LyWebUtil.getRequestListHeaders(request);
+        this.headerMap = new ConcurrentHashMap<>(LyWebUtil.getRequestListHeaders(request));
         this.attributeMap = new ConcurrentHashMap<>(LyWebUtil.getRequestAttributes(request));
     }
 
@@ -63,19 +62,26 @@ public class MutableHttpServletRequestWrapper extends HttpServletRequestWrapper 
         return Collections.enumeration(this.headerMap.keySet());
     }
 
+    public void addHeader(String name, String value) {
+        if (StringUtils.isNotBlank(name)) {
+            this.headerMap.put(name, Lists.newArrayList(value));
+        }
+    }
+
+    public void addHeader(String name, List<String> values) {
+        if (StringUtils.isNotBlank(name)) {
+            this.headerMap.put(name, values);
+        }
+    }
+
     @Override
     public Object getAttribute(String name) {
-        return MapUtils.getObject(this.attributeMap, name, super.getAttribute(name));
+        return MapUtils.getObject(this.attributeMap, name);
     }
 
     @Override
     public Enumeration<String> getAttributeNames() {
-        Set<String> attributeNames = this.attributeMap.keySet();
-        Enumeration<String> enumeration = super.getAttributeNames();
-        if (Objects.nonNull(enumeration)) {
-            attributeNames.addAll(EnumerationUtils.toList(enumeration));
-        }
-        return Collections.enumeration(attributeNames);
+        return Collections.enumeration(this.attributeMap.keySet());
     }
 
     @Override
@@ -83,6 +89,12 @@ public class MutableHttpServletRequestWrapper extends HttpServletRequestWrapper 
         if (Objects.nonNull(name) && Objects.nonNull(obj)) {
             this.attributeMap.put(name, obj);
         }
-        super.setAttribute(name, obj);
+    }
+
+    @Override
+    public void removeAttribute(String name) {
+        if (Objects.nonNull(name)) {
+            attributeMap.remove(name);
+        }
     }
 }

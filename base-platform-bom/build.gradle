@@ -44,7 +44,7 @@ def versions = [
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:${versions.springBoot}"
+        mavenBom "org.springframework.boot:sprFastJsonMessageConvertering-boot-dependencies:${versions.springBoot}"
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${versions.springCloud}"
         mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${versions.alibabaSpringCloud}"
     }
@@ -93,10 +93,10 @@ dependencyManagement {
         dependency "com.dyuproject.protostuff:protostuff-core:1.1.6"
         dependency "com.dyuproject.protostuff:protostuff-runtime:1.1.6"
 
-        dependency "com.lmax:disruptor:3.4.3"
+        dependency "com.lmax:disruptor:3.4.4"
         dependency "org.influxdb:influxdb-java:2.21"
 
-        dependency "com.thoughtworks.xstream:xstream:1.4.16"
+        dependency "com.thoughtworks.xstream:xstream:1.4.17"
 
         dependency "com.taobao.text:text-ui:0.0.2"
         dependency "com.alibaba:fastjson:1.2.76"
@@ -106,17 +106,17 @@ dependencyManagement {
         /*************************************************db依赖*******************************************************/
 
         dependency "tk.mybatis:mapper:4.1.5"
-        dependency "org.mybatis:mybatis:3.5.6"
+        dependency "org.mybatis:mybatis:3.5.7"
         dependency "org.mybatis:mybatis-spring:2.0.6"
         dependency "com.github.pagehelper:pagehelper:5.2.0"
-        dependency "com.alibaba:druid:1.2.5"
+        dependency "com.alibaba:druid:1.2.6"
         dependency "org.apache.shardingsphere:sharding-jdbc-core:4.1.1"
 
         /***********************************************middleware依赖**************************************************/
 
         dependency "org.apache.activemq:activemq-core:5.7.0"
 
-        dependency "org.redisson:redisson:3.15.4"
+        dependency "org.redisson:redisson:3.15.5"
 
         dependency "com.101tec:zkclient:0.11"
         dependency("org.apache.curator:curator-client:4.3.0") {
