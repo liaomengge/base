@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.nio.charset.Charset;
 import java.util.Enumeration;
+import java.util.Objects;
 
 /**
  * 基于Twitter的Snowflake算法实现分布式高效有序ID生产黑科技(sequence)——升级版Snowflake
@@ -82,6 +83,19 @@ public final class Snowflake {
 
     private final boolean clock;
     private final long timeOffset;
+
+    private static volatile Snowflake snowflake = null;
+
+    public static Snowflake getInstance() {
+        if (Objects.isNull(snowflake)) {
+            synchronized (Snowflake.class) {
+                if (Objects.isNull(snowflake)) {
+                    snowflake = new Snowflake();
+                }
+            }
+        }
+        return snowflake;
+    }
 
     public Snowflake() {
         this(getDataCenterId(getMachinePiece()));

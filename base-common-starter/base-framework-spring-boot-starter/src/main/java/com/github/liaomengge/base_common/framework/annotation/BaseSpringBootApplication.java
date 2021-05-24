@@ -2,6 +2,7 @@ package com.github.liaomengge.base_common.framework.annotation;
 
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.TypeExcludeFilter;
 import org.springframework.context.annotation.ComponentScan;
@@ -35,6 +36,12 @@ public @interface BaseSpringBootApplication {
 
     @AliasFor(annotation = EnableAutoConfiguration.class)
     String[] excludeName() default {};
+
+    @AliasFor(annotation = AutoConfigurationPackage.class)
+    String[] basePackages() default {};
+
+    @AliasFor(annotation = AutoConfigurationPackage.class)
+    Class<?>[] basePackageClasses() default {};
 
     @AliasFor(annotation = ComponentScan.class, attribute = "basePackages")
     String[] scanBasePackages() default {};

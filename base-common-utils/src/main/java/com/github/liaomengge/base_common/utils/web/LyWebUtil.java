@@ -33,7 +33,7 @@ import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.JO
 @UtilityClass
 public class LyWebUtil {
 
-    public final Logger log = LyLogger.getInstance(Charsets.class);
+    public final Logger log = LyLogger.getInstance(LyWebUtil.class);
 
     public Optional<ServletRequestAttributes> getRequestAttributes() {
         ServletRequestAttributes requestAttributes =

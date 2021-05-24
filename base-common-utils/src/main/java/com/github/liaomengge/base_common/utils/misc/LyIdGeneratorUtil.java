@@ -2,13 +2,11 @@ package com.github.liaomengge.base_common.utils.misc;
 
 import com.github.liaomengge.base_common.support.misc.micro.Snowflake;
 import com.github.liaomengge.base_common.utils.number.LyNumberUtil;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-
-import org.apache.commons.lang3.StringUtils;
-
-import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 17/11/25.
@@ -62,7 +60,7 @@ public class LyIdGeneratorUtil {
      * @return
      */
     public Long snowflakeId() {
-        return new Snowflake().nextId();
+        return Snowflake.getInstance().nextId();
     }
 
     /**
@@ -71,6 +69,6 @@ public class LyIdGeneratorUtil {
      * @return
      */
     public String snowflakeId2Str() {
-        return LyNumberUtil.getString(new Snowflake().nextId());
+        return LyNumberUtil.getString(snowflakeId());
     }
 }

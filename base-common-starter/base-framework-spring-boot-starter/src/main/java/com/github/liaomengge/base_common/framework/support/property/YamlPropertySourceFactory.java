@@ -13,8 +13,8 @@ import java.util.Properties;
 
 /**
  * Created by liaomengge on 2021/2/24.
- *
- * @PropertySource 加载指定的yml文件
+ * <p>
+ * {@link org.springframework.context.annotation.PropertySource} 指定factory加载yml文件
  */
 public class YamlPropertySourceFactory implements PropertySourceFactory {
 

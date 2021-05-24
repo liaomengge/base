@@ -1,12 +1,16 @@
 package com.github.liaomengge.base_common.framework.registry;
 
+import com.github.liaomengge.base_common.framework.util.FrameworkPackageUtil;
 import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
+
+import java.util.List;
 
 /**
  * Created by liaomengge on 2019/3/29.
@@ -26,5 +30,7 @@ public class FrameworkBeanDefinitionRegistry implements BeanDefinitionRegistryPo
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
+        List<String> basePackages = AutoConfigurationPackages.get(configurableListableBeanFactory);
+        FrameworkPackageUtil.setBasePackages(basePackages);
     }
 }

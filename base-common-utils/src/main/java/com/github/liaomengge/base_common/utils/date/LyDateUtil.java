@@ -1,38 +1,21 @@
 package com.github.liaomengge.base_common.utils.date;
 
+import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
+
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
-
-import lombok.experimental.UtilityClass;
+import static com.github.liaomengge.base_common.utils.date.consts.DateFormatConst.*;
 
 /**
  * Created by liaomengge on 17/11/8.
  */
 @UtilityClass
 public class LyDateUtil {
-
-    public final long INTERVAL_UNIT = 1000L;
-
-    public final long MILLISECONDS_SECOND = 1000L;
-    public final long MILLISECONDS_MINUTE = 60000L;
-    public final long MILLISECONDS_HOUR = 3600000L;
-    public final long MILLISECONDS_DAY = 86400000L;
-
-    public final String yyyy_MM_dd_HH_mm_ss_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
-    public final String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
-    public final String yyyy_MM_dd = "yyyy-MM-dd";
-    public final String yyyyMMdd = "yyyyMMdd";
-    public final String yyyy_MM = "yyyy-MM";
-    public final String yyyyMM = "yyyyMM";
-    public final String yyyy = "yyyy";
-    public final String HHmmssSSS = "HHmmssSSS";
-    public final String HHmmss = "HHmmss";
-    public final String HH_mm_ss = "HH:mm:ss";
 
     /********************************************************
      * Date to String

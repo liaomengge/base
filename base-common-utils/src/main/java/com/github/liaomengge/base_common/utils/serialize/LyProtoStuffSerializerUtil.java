@@ -1,27 +1,30 @@
 package com.github.liaomengge.base_common.utils.serialize;
 
-import com.github.liaomengge.base_common.utils.io.LyIOUtil;
-
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
+import com.github.liaomengge.base_common.utils.io.LyIOUtil;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
-
-import lombok.experimental.UtilityClass;
+import java.util.Objects;
 
 /**
  * Created by liaomengge on 17/11/7.
  */
 @UtilityClass
 public class LyProtoStuffSerializerUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(LyProtoStuffSerializerUtil.class);
 
     /**
      * 序列化对象
@@ -30,20 +33,22 @@ public class LyProtoStuffSerializerUtil {
      * @return
      */
     public <T> byte[] serialize(T obj) {
-        byte[] protostuff = null;
-        if (obj == null) {
-            return protostuff;
+        if (Objects.isNull(obj)) {
+            return null;
         }
         Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(obj.getClass());
-        LinkedBuffer buffer = LinkedBuffer.allocate(1024 * 1024);
+        LinkedBuffer buffer = null;
         try {
-            protostuff = ProtostuffIOUtil.toByteArray(obj, schema, buffer);
+            buffer = LinkedBuffer.allocate(1024 * 1024);
+            return ProtostuffIOUtil.toByteArray(obj, schema, buffer);
         } catch (Exception e) {
+            log.error("serialize fail", e);
             return null;
         } finally {
-            buffer.clear();
+            if (Objects.nonNull(buffer)) {
+                buffer.clear();
+            }
         }
-        return protostuff;
     }
 
     /**
@@ -54,19 +59,42 @@ public class LyProtoStuffSerializerUtil {
      * @return
      */
     public <T> T deserialize(byte[] paramArrayOfByte, Class<T> targetClass) {
-        T instance = null;
         if (ArrayUtils.isEmpty(paramArrayOfByte)) {
-            return instance;
-        }
-
-        try {
-            instance = targetClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }
-        Schema<T> schema = RuntimeSchema.getSchema(targetClass);
-        ProtostuffIOUtil.mergeFrom(paramArrayOfByte, instance, schema);
-        return instance;
+        try {
+            Schema<T> schema = RuntimeSchema.getSchema(targetClass);
+            T newInstance = schema.newMessage();
+            ProtostuffIOUtil.mergeFrom(paramArrayOfByte, newInstance, schema);
+            return newInstance;
+        } catch (Exception e) {
+            log.error("deserialize fail", e);
+            return null;
+        }
+    }
+
+    /**
+     * 反序列化对象
+     *
+     * @param input
+     * @param typeClass
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
+    public static <T> T deserialize(InputStream input, Class<T> typeClass) {
+        if (Objects.isNull(input)) {
+            return null;
+        }
+        try {
+            Schema<T> schema = RuntimeSchema.getSchema(typeClass);
+            T newInstance = schema.newMessage();
+            ProtostuffIOUtil.mergeFrom(input, newInstance, schema);
+            return newInstance;
+        } catch (Exception e) {
+            log.error("deserialize fail", e);
+            return null;
+        }
     }
 
     /**
@@ -76,26 +104,26 @@ public class LyProtoStuffSerializerUtil {
      * @return
      */
     public <T> byte[] serializeList(List<T> objList) {
-        byte[] protostuff = null;
         if (CollectionUtils.isEmpty(objList)) {
-            return protostuff;
+            return null;
         }
-
         Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(objList.get(0).getClass());
-        LinkedBuffer buffer = LinkedBuffer.allocate(1024 * 1024);
+        LinkedBuffer buffer = null;
         ByteArrayOutputStream bos = null;
         try {
+            buffer = LinkedBuffer.allocate(1024 * 1024);
             bos = new ByteArrayOutputStream();
             ProtostuffIOUtil.writeListTo(bos, objList, schema, buffer);
-            protostuff = bos.toByteArray();
+            return bos.toByteArray();
         } catch (Exception e) {
+            log.error("serialize fail", e);
             return null;
         } finally {
-            buffer.clear();
+            if (Objects.nonNull(buffer)) {
+                buffer.clear();
+            }
             LyIOUtil.closeQuietly(bos);
         }
-
-        return protostuff;
     }
 
     /**
@@ -106,18 +134,15 @@ public class LyProtoStuffSerializerUtil {
      * @return
      */
     public <T> List<T> deserializeList(byte[] paramArrayOfByte, Class<T> targetClass) {
-        List<T> result = null;
         if (ArrayUtils.isEmpty(paramArrayOfByte)) {
-            return result;
-        }
-
-        Schema<T> schema = RuntimeSchema.getSchema(targetClass);
-
-        try {
-            result = ProtostuffIOUtil.parseListFrom(new ByteArrayInputStream(paramArrayOfByte), schema);
-        } catch (IOException e) {
             return null;
         }
-        return result;
+        try {
+            Schema<T> schema = RuntimeSchema.getSchema(targetClass);
+            return ProtostuffIOUtil.parseListFrom(new ByteArrayInputStream(paramArrayOfByte), schema);
+        } catch (Exception e) {
+            log.error("deserialize fail", e);
+            return null;
+        }
     }
 }
