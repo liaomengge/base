@@ -12,11 +12,11 @@ import static com.github.liaomengge.base_common.helper.lock.distributed.consts.D
 /**
  * Created by liaomengge on 17/12/19.
  */
-public class RedisLocker implements DistributedLocker {
+public class RedissonLocker implements DistributedLocker {
 
     private final RedissonConfigManager redissonConfigManager;
 
-    public RedisLocker(RedissonConfigManager redissonConfigManager) {
+    public RedissonLocker(RedissonConfigManager redissonConfigManager) {
         this.redissonConfigManager = redissonConfigManager;
     }
 
@@ -105,7 +105,7 @@ public class RedisLocker implements DistributedLocker {
      * @return
      */
     public <T> T lock(String lockName, AcquiredLockCallback<T> callback) {
-        return lock(lockName, callback, DEFAULT_TIMEOUT, DEFAULT_TIME_UNIT);
+        return lock(lockName, DEFAULT_TIMEOUT, DEFAULT_TIME_UNIT, callback);
     }
 
     /**
@@ -113,13 +113,13 @@ public class RedisLocker implements DistributedLocker {
      * 锁不可用时,将一直等待
      *
      * @param lockName
-     * @param callback
      * @param leaseTime 锁超时时间, 超时后,自动释放
      * @param timeUnit
+     * @param callback
      * @param <T>
      * @return
      */
-    public <T> T lock(String lockName, AcquiredLockCallback<T> callback, long leaseTime, TimeUnit timeUnit) {
+    public <T> T lock(String lockName, long leaseTime, TimeUnit timeUnit, AcquiredLockCallback<T> callback) {
         RLock rLock = null;
         try {
             rLock = redissonConfigManager.getRedissonClient().getLock(REDIS_LOCKER_PREFIX + lockName);
@@ -142,7 +142,7 @@ public class RedisLocker implements DistributedLocker {
      * @return
      */
     public <T> T tryLock(String lockName, AcquiredLockCallback<T> callback) {
-        return tryLock(lockName, callback, 0, -1, DEFAULT_TIME_UNIT);
+        return tryLock(lockName, 0, -1, DEFAULT_TIME_UNIT, callback);
     }
 
     /**
@@ -150,28 +150,28 @@ public class RedisLocker implements DistributedLocker {
      * 自动设置释放锁的时间
      *
      * @param lockName
-     * @param callback
      * @param leaseTime
      * @param timeUnit
+     * @param callback
      * @param <T>
      * @return
      */
-    public <T> T tryLock(String lockName, AcquiredLockCallback<T> callback, long leaseTime, TimeUnit timeUnit) {
-        return tryLock(lockName, callback, 0, leaseTime, timeUnit);
+    public <T> T tryLock(String lockName, long leaseTime, TimeUnit timeUnit, AcquiredLockCallback<T> callback) {
+        return tryLock(lockName, 0, leaseTime, timeUnit, callback);
     }
 
     /**
      * 指定默认超时单位：秒
      *
      * @param lockName
-     * @param callback
      * @param waitTime
      * @param leaseTime
+     * @param callback
      * @param <T>
      * @return
      */
-    public <T> T tryLock(String lockName, AcquiredLockCallback<T> callback, long waitTime, long leaseTime) {
-        return tryLock(lockName, callback, waitTime, leaseTime, DEFAULT_TIME_UNIT);
+    public <T> T tryLock(String lockName, long waitTime, long leaseTime, AcquiredLockCallback<T> callback) {
+        return tryLock(lockName, waitTime, leaseTime, DEFAULT_TIME_UNIT, callback);
     }
 
     /**
@@ -179,15 +179,15 @@ public class RedisLocker implements DistributedLocker {
      * 指定锁超时时间
      *
      * @param lockName
-     * @param callback
      * @param waitTime  最多等待时间
      * @param leaseTime 上锁后自动释放锁时间
      * @param timeUnit
+     * @param callback
      * @param <T>
      * @return
      */
-    public <T> T tryLock(String lockName, AcquiredLockCallback<T> callback, long waitTime, long leaseTime,
-                         TimeUnit timeUnit) {
+    public <T> T tryLock(String lockName, long waitTime, long leaseTime, TimeUnit timeUnit,
+                         AcquiredLockCallback<T> callback) {
         RLock rLock = redissonConfigManager.getRedissonClient().getLock(REDIS_LOCKER_PREFIX + lockName);
         boolean isSuccess;
         try {

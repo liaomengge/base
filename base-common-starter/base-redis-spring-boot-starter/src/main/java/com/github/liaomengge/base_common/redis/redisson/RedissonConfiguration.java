@@ -1,7 +1,8 @@
 package com.github.liaomengge.base_common.redis.redisson;
 
-import com.github.liaomengge.base_common.helper.lock.distributed.redis.RedisLocker;
 import com.github.liaomengge.base_common.helper.lock.distributed.redis.RedissonConfigManager;
+import com.github.liaomengge.base_common.helper.lock.distributed.redis.RedissonLocker;
+import com.github.liaomengge.base_common.helper.lock.distributed.redis.aspect.RedissonAspectLocker;
 import com.github.liaomengge.base_common.helper.redis.RedissonHelper;
 import com.github.liaomengge.base_common.redis.RedissonProperties;
 import com.github.liaomengge.base_common.utils.io.LyIOUtil;
@@ -37,20 +38,26 @@ public class RedissonConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public RedisLocker redisLocker(RedissonConfigManager redissonConfigManager) {
-        return new RedisLocker(redissonConfigManager);
+    public RedissonAspectLocker redissonAspectLocker(RedissonLocker redissonLocker) {
+        return new RedissonAspectLocker(redissonLocker);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public RedissonConfigManager redissonConfigManager(RedissonClient redissonClient) {
-        return new RedissonConfigManager(redissonClient);
+    public RedissonLocker redissonLocker(RedissonConfigManager redissonConfigManager) {
+        return new RedissonLocker(redissonConfigManager);
     }
 
     @Bean
     @ConditionalOnMissingBean
     public RedissonHelper redissonHelper(RedissonClient redissonClient) {
         return new RedissonHelper(redissonClient);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RedissonConfigManager redissonConfigManager(RedissonClient redissonClient) {
+        return new RedissonConfigManager(redissonClient);
     }
 
     @Bean(destroyMethod = "shutdown")

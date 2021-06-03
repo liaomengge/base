@@ -39,6 +39,7 @@ dependencyManagement {
         dependency "com.github.liaomengge:base-retrofit-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-ribbon-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-sentinel-spring-boot-starter:${version}"
+        dependency "com.github.liaomengge:base-strategy-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-swagger-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-thread-pool-spring-boot-starter:${version}"
         dependency "com.github.liaomengge:base-tool-spring-boot-starter:${version}"

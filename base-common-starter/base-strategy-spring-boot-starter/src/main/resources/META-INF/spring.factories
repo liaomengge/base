@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.liaomengge.base_common.strategy.EventStrategyAutoConfiguration

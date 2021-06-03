@@ -6,4 +6,8 @@ package com.github.liaomengge.base_common.feign.consts;
 public interface FeignConst {
 
     String FEIGN_LOG_INFO_THREAD_CONTEXT = "feignLogInfoThreadContext";
+
+    interface EndpointConst {
+        String FEIGN_CLIENTS = "feignclients";
+    }
 }

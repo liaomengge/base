@@ -15,6 +15,7 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.ClassUtils;
 
 import javax.annotation.PostConstruct;
@@ -61,7 +62,7 @@ public class FeignClientManager implements BeanFactoryAware {
         Set<Class<?>> enableFeignClientsClassSet = reflections.getTypesAnnotatedWith(EnableFeignClients.class);
         if (CollectionUtils.isNotEmpty(enableFeignClientsClassSet)) {
             for (Class<?> clazz : enableFeignClientsClassSet) {
-                EnableFeignClients enableFeignClients = clazz.getDeclaredAnnotation(EnableFeignClients.class);
+                EnableFeignClients enableFeignClients = AnnotationUtils.findAnnotation(clazz, EnableFeignClients.class);
                 if (Objects.isNull(enableFeignClients)) {
                     continue;
                 }
@@ -87,7 +88,7 @@ public class FeignClientManager implements BeanFactoryAware {
             return;
         }
         for (Class<?> clazz : feignClientClassSet) {
-            FeignClient feignClient = clazz.getDeclaredAnnotation(FeignClient.class);
+            FeignClient feignClient = AnnotationUtils.findAnnotation(clazz, FeignClient.class);
             if (Objects.isNull(feignClient)) {
                 continue;
             }

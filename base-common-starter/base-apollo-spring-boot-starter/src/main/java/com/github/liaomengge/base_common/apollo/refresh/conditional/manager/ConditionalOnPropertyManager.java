@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.annotation.AnnotationUtils;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
@@ -50,7 +51,7 @@ public class ConditionalOnPropertyManager {
             try {
                 Class<?> clazz = ClassUtils.getClass(scanClassName);
                 Set<Method> methodSet = ReflectionUtils.getMethods(clazz,
-                        method -> Objects.nonNull(method.getDeclaredAnnotation(ConditionalOnProperty.class)));
+                        method -> Objects.nonNull(AnnotationUtils.findAnnotation(method, ConditionalOnProperty.class)));
                 List<BeanMethodConditionalProperties> convertBeanMethodConditionalProperties =
                         methodSet.stream().filter(Objects::nonNull).map(this::convertToBeanMethodConditionalProperties).collect(Collectors.toList());
                 List<BeanConditionalProperties> beanConditionalPropertiesList =
@@ -70,7 +71,7 @@ public class ConditionalOnPropertyManager {
                     Method method = beanMethodConditionalProperties.getMethod();
 
                     ConditionalOnProperty conditionalOnProperty =
-                            method.getDeclaredAnnotation(ConditionalOnProperty.class);
+                            AnnotationUtils.findAnnotation(method, ConditionalOnProperty.class);
 
                     ConditionalOnPropertyDomain conditionalOnPropertyDomain = new ConditionalOnPropertyDomain();
                     conditionalOnPropertyDomain.setBeanName(beanName);
