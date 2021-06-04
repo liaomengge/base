@@ -3,7 +3,9 @@ package com.github.liaomengge.base_common.strategy.handler;
 /**
  * Created by liaomengge on 2021/6/3.
  */
-public interface EventStrategyHandler<I, O> {
+public interface StrategyHandler<I, O> {
 
-    O doHandle(I i);
+    default O doHandle(I... i) {
+        return null;
+    }
 }
