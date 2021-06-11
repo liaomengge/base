@@ -1,6 +1,6 @@
-package com.github.liaomengge.base_common.strategy;
+package com.github.liaomengge.base_common.design.patterns.strategy;
 
-import com.github.liaomengge.base_common.strategy.factory.StrategyFactory;
+import com.github.liaomengge.base_common.design.patterns.strategy.factory.StrategyFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

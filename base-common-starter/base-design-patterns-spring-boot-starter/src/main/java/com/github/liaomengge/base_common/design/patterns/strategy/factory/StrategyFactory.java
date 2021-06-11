@@ -1,8 +1,8 @@
-package com.github.liaomengge.base_common.strategy.factory;
+package com.github.liaomengge.base_common.design.patterns.strategy.factory;
 
-import com.github.liaomengge.base_common.strategy.annotation.IStrategy;
-import com.github.liaomengge.base_common.strategy.annotation.StrategyType;
-import com.github.liaomengge.base_common.strategy.handler.StrategyHandler;
+import com.github.liaomengge.base_common.design.patterns.strategy.annotation.IStrategy;
+import com.github.liaomengge.base_common.design.patterns.strategy.annotation.StrategyType;
+import com.github.liaomengge.base_common.design.patterns.strategy.handler.StrategyHandler;
 import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -84,7 +84,10 @@ public class StrategyFactory implements ApplicationContextAware {
     }
 
     private String getStrategyTypeName(IStrategy iStrategy) {
-        return iStrategy.getCategory() + '#' + iStrategy.getValue();
+        if (Objects.nonNull(iStrategy.strategy())) {
+            return iStrategy.strategy().category() + '#' + iStrategy.strategy().value();
+        }
+        return iStrategy.category() + '#' + iStrategy.value();
     }
 
     @Data

@@ -1,4 +1,4 @@
-package com.github.liaomengge.base_common.strategy.annotation;
+package com.github.liaomengge.base_common.design.patterns.strategy.annotation;
 
 import java.lang.annotation.*;
 

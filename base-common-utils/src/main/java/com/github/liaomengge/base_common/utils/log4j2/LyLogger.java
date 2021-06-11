@@ -14,6 +14,8 @@ import java.util.IllegalFormatException;
 
 /**
  * Created by liaomengge on 17/11/17.
+ *
+ * @deprecated the next version deprecated
  */
 public class LyLogger implements Logger {
 
