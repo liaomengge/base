@@ -1,14 +1,13 @@
 package com.github.liaomengge.base_common.metric.web.undertow;
 
 import com.github.liaomengge.base_common.metric.consts.MetricsConst;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Maps;
 import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.binder.BaseUnits;
 import io.undertow.server.handlers.MetricsHandler;
 import io.undertow.servlet.api.MetricsCollector;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
 import org.xnio.Version;
@@ -29,10 +28,9 @@ import java.util.function.ToLongFunction;
  * <p>
  * link: https://github.com/micrometer-metrics/micrometer/pull/1575/files
  */
+@Slf4j
 public class UndertowMeterBinder implements MetricsCollector, ApplicationListener<ApplicationStartedEvent> {
-
-    private static final Logger log = LyLogger.getInstance(UndertowMeterBinder.class);
-
+    
     //可以查看NioXnio.register(XnioWorkerMXBean) - "org.xnio:type=Xnio,provider=\"nio\",worker=\"XNIO-1\""
     private static final String JMX_NAME = "org.xnio:type=Xnio,provider=\"nio\",worker=*";
 

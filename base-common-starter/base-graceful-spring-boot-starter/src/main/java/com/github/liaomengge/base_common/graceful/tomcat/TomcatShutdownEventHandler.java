@@ -2,9 +2,8 @@ package com.github.liaomengge.base_common.graceful.tomcat;
 
 import com.github.liaomengge.base_common.graceful.GracefulProperties;
 import com.github.liaomengge.base_common.graceful.consts.GracefulConst;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.connector.Connector;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.context.ApplicationListener;
@@ -20,11 +19,10 @@ import java.util.concurrent.TimeUnit;
  * 注：
  * {@link com.alibaba.cloud.nacos.registry.NacosServiceRegistry#close()}关闭时，未判断namingService是否为空，会出现NPE异常
  */
+@Slf4j
 public class TomcatShutdownEventHandler implements TomcatConnectorCustomizer,
         ApplicationListener<ContextClosedEvent> {
-
-    private static final Logger log = LyLogger.getInstance(TomcatShutdownEventHandler.class);
-
+    
     private volatile Connector connector;
 
     @Autowired

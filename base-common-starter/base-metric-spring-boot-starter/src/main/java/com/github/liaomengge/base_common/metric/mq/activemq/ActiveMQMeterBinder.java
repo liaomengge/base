@@ -2,14 +2,13 @@ package com.github.liaomengge.base_common.metric.mq.activemq;
 
 import com.github.liaomengge.base_common.mq.activemq.pool.MonitorPooledConnectionFactory;
 import com.github.liaomengge.base_common.mq.activemq.pool.MonitorPooledConnectionFactory.PoolMonitor;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.TimeGauge;
 import io.micrometer.core.instrument.binder.MeterBinder;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.pool.PooledConnectionFactory;
-import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -21,10 +20,9 @@ import static com.github.liaomengge.base_common.metric.consts.MetricsConst.ACTIV
 /**
  * Created by liaomengge on 2020/9/29.
  */
+@Slf4j
 public class ActiveMQMeterBinder implements MeterBinder {
-
-    private static final Logger log = LyLogger.getInstance(ActiveMQMeterBinder.class);
-
+    
     private final Iterable<Tag> tags;
     private final PooledConnectionFactory pooledConnectionFactory;
 

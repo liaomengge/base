@@ -10,22 +10,20 @@ import com.github.liaomengge.base_common.dayu.consts.DayuConst;
 import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
 import com.github.liaomengge.base_common.utils.error.LyExceptionUtil;
 import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 
 import java.util.Optional;
 
 /**
  * Created by liaomengge on 2019/10/30.
  */
+@Slf4j
 @AllArgsConstructor
 public class SentinelCircuitHandler {
-
-    private static final Logger log = LyLogger.getInstance(SentinelCircuitHandler.class);
 
     private MeterRegistry meterRegistry;
 

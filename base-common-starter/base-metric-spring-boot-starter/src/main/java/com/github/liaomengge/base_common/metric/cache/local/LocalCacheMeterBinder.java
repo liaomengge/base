@@ -3,11 +3,10 @@ package com.github.liaomengge.base_common.metric.cache.local;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.liaomengge.base_common.cache.CachePoolHelper;
 import com.github.liaomengge.base_common.cache.caffeine.CaffeineCache;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.binder.cache.CaffeineCacheMetrics;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -18,10 +17,9 @@ import java.util.Map;
 /**
  * Created by liaomengge on 2020/9/22.
  */
+@Slf4j
 public class LocalCacheMeterBinder implements ApplicationListener<ApplicationReadyEvent> {
-
-    private static final Logger log = LyLogger.getInstance(LocalCacheMeterBinder.class);
-
+    
     private final Iterable<Tag> tags;
 
     public LocalCacheMeterBinder() {

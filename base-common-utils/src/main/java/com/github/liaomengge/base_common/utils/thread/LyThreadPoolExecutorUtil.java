@@ -1,23 +1,19 @@
 package com.github.liaomengge.base_common.utils.thread;
 
 import com.github.liaomengge.base_common.helper.concurrent.LyThreadPoolExecutor;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 import java.util.concurrent.*;
 
-import org.slf4j.Logger;
-
-import lombok.experimental.UtilityClass;
-
 /**
  * Created by liaomengge on 18/1/2.
  */
+@Slf4j
 @UtilityClass
 public class LyThreadPoolExecutorUtil {
-
-    private final Logger log = LyLogger.getInstance(LyThreadPoolExecutorUtil.class);
-
+    
     public ThreadPoolExecutor buildThreadPool(int corePoolSize, int maximumPoolSize, String threadName,
                                               long keepAliveTime, TimeUnit unit,
                                               BlockingQueue<Runnable> workQueue,
@@ -217,7 +213,7 @@ public class LyThreadPoolExecutorUtil {
 
     /**
      * @param threadName              线程名
-     * @param executor      线程池
+     * @param executor                线程池
      * @param awaitTerminationSeconds 等待超时时间
      * @param checkInterval           check时间间隔
      */

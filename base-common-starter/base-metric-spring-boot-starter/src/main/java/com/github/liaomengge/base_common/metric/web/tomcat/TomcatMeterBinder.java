@@ -1,19 +1,17 @@
 package com.github.liaomengge.base_common.metric.web.tomcat;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.actuate.metrics.web.tomcat.TomcatMetricsBinder;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 
 /**
  * Created by liaomengge on 2020/9/16.
  */
+@Slf4j
 public class TomcatMeterBinder extends TomcatMetricsBinder {
-
-    private static final Logger log = LyLogger.getInstance(TomcatMeterBinder.class);
-
+    
     public TomcatMeterBinder(MeterRegistry registry) {
         super(registry);
     }

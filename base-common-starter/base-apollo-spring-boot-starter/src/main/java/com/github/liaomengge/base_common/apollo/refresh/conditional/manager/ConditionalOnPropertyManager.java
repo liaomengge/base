@@ -4,15 +4,14 @@ import com.github.liaomengge.base_common.apollo.ApolloProperties;
 import com.github.liaomengge.base_common.apollo.ApolloProperties.BeanConditionalProperties;
 import com.github.liaomengge.base_common.apollo.ApolloProperties.ClassConditionalProperties;
 import com.github.liaomengge.base_common.apollo.refresh.conditional.pojo.ConditionalOnPropertyDomain;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Maps;
 import lombok.Data;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.ReflectionUtils;
-import org.slf4j.Logger;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -29,10 +28,9 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 2021/1/29.
  */
+@Slf4j
 public class ConditionalOnPropertyManager {
-
-    private static final Logger log = LyLogger.getInstance(ConditionalOnPropertyManager.class);
-
+    
     @Getter
     public Map<ConditionalOnPropertyDomain, ConditionalOnProperty> conditionalBeanMap = Maps.newConcurrentMap();
 

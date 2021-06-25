@@ -3,11 +3,10 @@ package com.github.liaomengge.base_common.metric.threadpool;
 import com.github.liaomengge.base_common.helper.concurrent.LyThreadPoolTaskWrappedExecutor;
 import com.github.liaomengge.base_common.helper.concurrent.LyThreadPoolWrappedExecutor;
 import com.github.liaomengge.base_common.metric.consts.MetricsConst;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.binder.MeterBinder;
 import io.micrometer.core.instrument.internal.TimedExecutorService;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -27,9 +26,8 @@ import java.util.function.ToDoubleFunction;
 /**
  * Created by liaomengge on 2020/9/18.
  */
+@Slf4j
 public class ThreadPoolMetricsBinder implements MeterBinder, ApplicationContextAware {
-
-    private static final Logger log = LyLogger.getInstance(ThreadPoolMetricsBinder.class);
 
     private final Iterable<Tag> tags;
 
@@ -56,7 +54,7 @@ public class ThreadPoolMetricsBinder implements MeterBinder, ApplicationContextA
     public static ExecutorService monitor(MeterRegistry registry, Iterable<Tag> tags, String executorName,
                                           ExecutorService executorService) {
         new ThreadPoolMetricsBinder(tags).bindToExecutorService(executorName, executorService, registry);
-        return new TimedExecutorService(registry, executorService, executorName,"", tags);
+        return new TimedExecutorService(registry, executorService, executorName, "", tags);
     }
 
     public static void monitor(MeterRegistry registry, String executorName, AsyncTaskExecutor executor) {

@@ -1,23 +1,21 @@
 package com.github.liaomengge.base_common.helper.redis;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
+import redis.clients.jedis.Tuple;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.slf4j.Logger;
-
-import redis.clients.jedis.ScanParams;
-import redis.clients.jedis.ScanResult;
-import redis.clients.jedis.Tuple;
 
 /**
  * Created by liaomengge on 4/2/16.
  */
 public interface IRedisHelper {
 
-    Logger log = LyLogger.getInstance(IRedisHelper.class);
+    Logger log = LoggerFactory.getLogger(IRedisHelper.class);
 
     String LOCK_PREFIX = "lock:";
     String SET_IF_NOT_EXIST = "NX";

@@ -49,7 +49,7 @@ public class LyTraceLogUtil {
         return null;
     }
 
-    public void clearTrace() {
+    public void clear() {
         Map<String, String> map = BASE_TRACE_THREAD_LOCAL.get();
         if (Objects.nonNull(map)) {
             map.clear();

@@ -1,8 +1,5 @@
 //package com.github.liaomengge.base_common.dayu.sentinel.interceptor;
 //
-//import com.github.liaomengge.base_common.dayu.consts.DayuConst;
-//import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
-//import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 //import com.alibaba.csp.sentinel.EntryType;
 //import com.alibaba.csp.sentinel.SphU;
 //import com.alibaba.csp.sentinel.adapter.servlet.callback.RequestOriginParser;
@@ -12,11 +9,13 @@
 //import com.alibaba.csp.sentinel.context.ContextUtil;
 //import com.alibaba.csp.sentinel.slots.block.BlockException;
 //import com.alibaba.csp.sentinel.util.StringUtil;
+//import com.github.liaomengge.base_common.dayu.consts.DayuConst;
+//import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
 //import io.micrometer.core.instrument.Counter;
 //import io.micrometer.core.instrument.MeterRegistry;
 //import lombok.AllArgsConstructor;
+//import lombok.extern.slf4j.Slf4j;
 //import org.apache.commons.lang3.StringUtils;
-//import org.slf4j.Logger;
 //import org.springframework.web.servlet.HandlerMapping;
 //import org.springframework.web.servlet.ModelAndView;
 //import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -27,10 +26,9 @@
 ///**
 // * Created by liaomengge on 2019/8/12.
 // */
+//@Slf4j
 //@AllArgsConstructor
 //public class SentinelHandlerInterceptor extends HandlerInterceptorAdapter {
-//
-//    private static final Logger log = LyLogger.getInstance(SentinelHandlerInterceptor.class);
 //
 //    private static final String WEB_INTERCEPTOR_CONTEXT_NAME = "sentinel_web_interceptor_context";
 //
@@ -59,7 +57,7 @@
 //            WebCallbackManager.getUrlBlockHandler().blocked(request, response, ex);
 //            String finalUriTarget = uriTarget;
 //            _MeterRegistrys.counter(meterRegistry, DayuConst.METRIC_SENTINEL_BLOCKED_PREFIX + finalUriTarget)
-//            .ifPresent(Counter::increment);
+//                    .ifPresent(Counter::increment);
 //            return false;
 //        }
 //    }

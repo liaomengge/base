@@ -2,18 +2,16 @@ package com.github.liaomengge.base_common.utils.log;
 
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import lombok.experimental.UtilityClass;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 记录指定格式的日志,非统一规范的格式
  * Created by liaomengge on 18/1/8.
  */
+@Slf4j
 @UtilityClass
 public class LyMetricLogUtil {
-
-    private Logger log = LoggerFactory.getLogger(LyMetricLogUtil.class);
-
+    
     /**
      * 字符串填充形式log
      *

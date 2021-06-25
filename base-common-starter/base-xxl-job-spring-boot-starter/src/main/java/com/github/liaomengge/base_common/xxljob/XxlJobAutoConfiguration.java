@@ -1,10 +1,9 @@
 package com.github.liaomengge.base_common.xxljob;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.net.LyNetworkUtil;
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -18,13 +17,12 @@ import java.util.Objects;
 /**
  * Created by liaomengge on 2020/8/11.
  */
+@Slf4j
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(prefix = "base.xxl-job", name = "enabled")
 @ConditionalOnClass(XxlJobSpringExecutor.class)
 @EnableConfigurationProperties(XxlJobProperties.class)
 public class XxlJobAutoConfiguration {
-
-    private static final Logger log = LyLogger.getInstance(XxlJobAutoConfiguration.class);
 
     @Value("${spring.application.name}")
     private String appName;
@@ -42,7 +40,7 @@ public class XxlJobAutoConfiguration {
 
         XxlJobProperties.AdminProperties adminProperties = this.xxlJobProperties.getAdmin();
         XxlJobProperties.ExecutorProperties executorProperties = this.xxlJobProperties.getExecutor();
-        
+
         xxlJobSpringExecutor.setAppname(appName);
         xxlJobSpringExecutor.setAccessToken(xxlJobProperties.getAccessToken());
         xxlJobSpringExecutor.setAdminAddresses(adminProperties.getAddresses());

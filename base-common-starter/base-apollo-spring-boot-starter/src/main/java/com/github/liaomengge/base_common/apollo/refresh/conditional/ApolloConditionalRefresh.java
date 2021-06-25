@@ -9,11 +9,10 @@ import com.github.liaomengge.base_common.apollo.refresh.conditional.pojo.Conditi
 import com.github.liaomengge.base_common.support.spring.SpringUtils;
 import com.google.common.collect.Sets;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
@@ -28,10 +27,9 @@ import java.util.Set;
 /**
  * Created by liaomengge on 2021/1/29.
  */
+@Slf4j
 public class ApolloConditionalRefresh implements ApplicationContextAware {
-
-    private static final Logger log = LoggerFactory.getLogger(ApolloConditionalRefresh.class);
-
+    
     private ApplicationContext applicationContext;
 
     private final ConditionalOnPropertyManager conditionalOnPropertyManager;

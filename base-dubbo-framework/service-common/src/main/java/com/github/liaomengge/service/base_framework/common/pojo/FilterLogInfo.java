@@ -1,14 +1,14 @@
-package com.github.liaomengge.base_common.utils.log4j2;
-
-import java.util.List;
+package com.github.liaomengge.service.base_framework.common.pojo;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
- * Created by liaomengge on 17/11/8.
+ * Created by liaomengge on 16/11/9.
  */
 @Data
-public class LyLogData {
+public class FilterLogInfo {
     /**
      * 调用结果
      */

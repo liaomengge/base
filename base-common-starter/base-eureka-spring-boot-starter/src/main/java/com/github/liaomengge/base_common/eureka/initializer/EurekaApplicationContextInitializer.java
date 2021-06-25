@@ -5,9 +5,8 @@ import com.github.liaomengge.base_common.eureka.EurekaProperties;
 import com.github.liaomengge.base_common.eureka.consts.EurekaConst;
 import com.github.liaomengge.base_common.eureka.decorator.EurekaServiceRegistryDecorator;
 import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.netflix.appinfo.InstanceInfo;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.SpringBootVersion;
@@ -23,9 +22,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by liaomengge on 2020/8/15.
  */
+@Slf4j
 public class EurekaApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-
-    private static final Logger log = LyLogger.getInstance(EurekaApplicationContextInitializer.class);
 
     private AtomicBoolean switchTraffic = new AtomicBoolean(false);
 

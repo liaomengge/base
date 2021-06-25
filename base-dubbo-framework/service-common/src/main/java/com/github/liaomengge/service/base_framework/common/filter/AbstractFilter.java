@@ -1,7 +1,7 @@
 package com.github.liaomengge.service.base_framework.common.filter;
 
 import com.alibaba.dubbo.rpc.Filter;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import com.github.liaomengge.base_common.support.logger.JsonLogger;
 import com.github.liaomengge.service.base_framework.common.config.FilterConfig;
 import com.github.liaomengge.service.base_framework.common.config.ServiceConfig;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 public abstract class AbstractFilter implements Filter {
 
-    protected final static LyLogger log = LyLogger.getInstance(AbstractFilter.class);
+    protected final static JsonLogger log = JsonLogger.getInstance(AbstractFilter.class);
 
     protected static final String SKIP_METHOD = "ping";
 

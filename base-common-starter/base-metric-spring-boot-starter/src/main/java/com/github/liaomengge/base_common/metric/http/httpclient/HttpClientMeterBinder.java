@@ -3,18 +3,17 @@ package com.github.liaomengge.base_common.metric.http.httpclient;
 import com.github.liaomengge.base_common.metric.MetricProperties;
 import com.github.liaomengge.base_common.metric.consts.MetricsConst;
 import com.github.liaomengge.base_common.utils.collection.LyCollectionUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.binder.MeterBinder;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.pool.PoolStats;
-import org.slf4j.Logger;
 
 import java.util.*;
 import java.util.function.ToDoubleFunction;
@@ -22,10 +21,9 @@ import java.util.function.ToDoubleFunction;
 /**
  * Created by liaomengge on 2020/9/17.
  */
+@Slf4j
 public class HttpClientMeterBinder implements MeterBinder {
-
-    private static final Logger log = LyLogger.getInstance(HttpClientMeterBinder.class);
-
+    
     private final Iterable<Tag> tags;
     private final MetricProperties metricProperties;
     private final PoolingHttpClientConnectionManager poolConnManager;

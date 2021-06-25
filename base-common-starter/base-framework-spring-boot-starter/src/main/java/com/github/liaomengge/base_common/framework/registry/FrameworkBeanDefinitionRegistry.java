@@ -1,8 +1,7 @@
 package com.github.liaomengge.base_common.framework.registry;
 
 import com.github.liaomengge.base_common.framework.util.FrameworkPackageUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -15,10 +14,9 @@ import java.util.List;
 /**
  * Created by liaomengge on 2019/3/29.
  */
+@Slf4j
 public class FrameworkBeanDefinitionRegistry implements BeanDefinitionRegistryPostProcessor {
-
-    private static final Logger log = LyLogger.getInstance(FrameworkBeanDefinitionRegistry.class);
-
+    
     private static final String FRAMEWORK_PKG = "com.github.liaomengge.service.base_framework";
 
     @Override

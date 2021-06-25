@@ -7,13 +7,13 @@ import com.github.liaomengge.base_common.support.exception.AbstractAppException;
 import com.github.liaomengge.base_common.support.exception.AbstractAppRuntimeException;
 import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
-import com.github.liaomengge.base_common.utils.log.LyMDCUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogData;
+import com.github.liaomengge.base_common.utils.mdc.LyMDCUtil;
 import com.github.liaomengge.base_common.utils.net.LyNetworkUtil;
 import com.github.liaomengge.base_common.utils.trace.LyTraceLogUtil;
 import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import com.github.liaomengge.service.base_framework.base.DataResult;
 import com.github.liaomengge.service.base_framework.common.consts.ServiceConst;
+import com.github.liaomengge.service.base_framework.common.pojo.FilterLogInfo;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
@@ -49,19 +49,19 @@ public class ServiceFilter extends AbstractFilter {
         }
 
         long startTime = System.nanoTime();
-        LyLogData logData = new LyLogData();
+        FilterLogInfo logInfo = new FilterLogInfo();
 
         try {
             //1. log params info
             RpcContext rpcContext = RpcContext.getContext();
-            this.buildRequestLog(rpcContext, invocation, logData);
+            this.buildRequestLog(rpcContext, invocation, logInfo);
 
             //2. invoke
             Result result = invoker.invoke(invocation);
 
             long endTime = System.nanoTime();
             long elapsedNanoTime = endTime - startTime;
-            logData.setElapsedMilliseconds(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime));
+            logInfo.setElapsedMilliseconds(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime));
             LyMDCUtil.put(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME,
                     String.valueOf(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime)));
 
@@ -74,10 +74,10 @@ public class ServiceFilter extends AbstractFilter {
                     rpcResult.setValue(nullResult);
                     if (result.hasException()) {
                         hasException = true;
-                        logData.setErrorStack(LyThrowableUtil.getStackTrace(result.getException()));
+                        logInfo.setErrorStack(LyThrowableUtil.getStackTrace(result.getException()));
                         String errorCode = ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getCode();
                         String errorDesc = ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getMsg();
-                        String errorException = logData.getErrorStack();
+                        String errorException = logInfo.getErrorStack();
 
                         Throwable throwable = rpcResult.getException();
                         if (throwable instanceof AbstractAppException) {
@@ -98,12 +98,12 @@ public class ServiceFilter extends AbstractFilter {
                         rpcResult.setException(null);
                     }
                 }
-                this.handleException(logData, hasException);
+                this.handleException(logInfo, hasException);
                 return result;
             }
 
             //3. log result
-            logData.setResult(result.toString());
+            logInfo.setResult(result.toString());
 
             if (result.getValue() instanceof DataResult) {
                 DataResult dt = (DataResult) result.getValue();
@@ -113,12 +113,12 @@ public class ServiceFilter extends AbstractFilter {
                 }
             }
 
-            this.handleException(logData, hasException);
+            this.handleException(logInfo, hasException);
 
             return result;
 
         } catch (Exception e) {
-            logData.setErrorStack(LyThrowableUtil.getStackTrace(e));
+            logInfo.setErrorStack(LyThrowableUtil.getStackTrace(e));
             //其它未知异常处理
             DataResult dataResult = new DataResult(ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getCode(),
                     ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_ERROR.getMsg());
@@ -127,17 +127,17 @@ public class ServiceFilter extends AbstractFilter {
             }
             RpcResult result = new RpcResult(dataResult);
             result.setAttachments(invocation.getAttachments());
-            logData.setResult(result.toString());
+            logInfo.setResult(result.toString());
 
             long endTime = System.nanoTime();
             long elapsedNanoTime = endTime - startTime;
             LyMDCUtil.put(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME,
                     String.valueOf(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime)));
 
-            logData.setElapsedMilliseconds(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime));
+            logInfo.setElapsedMilliseconds(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime));
             dataResult.setElapsedMilliseconds(TimeUnit.NANOSECONDS.toMillis(elapsedNanoTime));
 
-            log.error(logData);
+            log.error(LyJsonUtil.toJson4Log(logInfo));
 
             return result;
         } finally {
@@ -145,7 +145,7 @@ public class ServiceFilter extends AbstractFilter {
             DBContext.clearDBKey();
 
             //5. clear trace thread local
-            LyTraceLogUtil.clearTrace();
+            LyTraceLogUtil.clear();
 
             //6. clean mdc
             LyMDCUtil.remove(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME);
@@ -153,19 +153,19 @@ public class ServiceFilter extends AbstractFilter {
 
     }
 
-    private void buildRequestLog(RpcContext rpcContext, Invocation invocation, LyLogData logData) {
+    private void buildRequestLog(RpcContext rpcContext, Invocation invocation, FilterLogInfo logInfo) {
         HttpServletRequest servletRequest = (HttpServletRequest) rpcContext.getRequest();
 
         //1. 获取nginx http的真实IP
         String realIp = servletRequest.getHeader("X-Real-IP");
-        if (!StringUtils.isBlank(realIp) && !realIp.equals(logData.getRemoteIp())) {
-            logData.setRemoteIp(realIp);
+        if (!StringUtils.isBlank(realIp) && !realIp.equals(logInfo.getRemoteIp())) {
+            logInfo.setRemoteIp(realIp);
         }
 
         //2. 获取请求的url&ip
-        logData.setRestUrl(servletRequest.getRequestURL().toString());
-        logData.setRemoteIp(rpcContext.getRemoteAddressString());
-        logData.setHostIp(rpcContext.getLocalAddressString());
+        logInfo.setRestUrl(servletRequest.getRequestURL().toString());
+        logInfo.setRemoteIp(rpcContext.getRemoteAddressString());
+        logInfo.setHostIp(rpcContext.getLocalAddressString());
 
         //3. 获取请求的参数
         if (this.isIgnoreLogMethod(invocation)) {
@@ -174,7 +174,7 @@ public class ServiceFilter extends AbstractFilter {
         String methodName = invocation.getMethodName();
         String method = servletRequest.getMethod();
         if (HttpMethod.POST.equalsIgnoreCase(method)) {
-            logData.setInvocation(invocation.toString());
+            logInfo.setInvocation(invocation.toString());
             String contentType = StringUtils.defaultString(servletRequest.getContentType());
             if (contentType.contains(MediaType.APPLICATION_JSON)) {
                 return;
@@ -182,16 +182,16 @@ public class ServiceFilter extends AbstractFilter {
             if (contentType.contains(MediaType.MULTIPART_FORM_DATA)) {
                 Map<String, Object> queryParamMap = this.getRequestParams(invocation);
                 if (MapUtils.isEmpty(queryParamMap)) {
-                    logData.setInvocation(invocation.toString());
+                    logInfo.setInvocation(invocation.toString());
                     return;
                 }
-                logData.setInvocation("RpcInvocation[methodName=" + methodName + "], arguments=" + queryParamMap.toString());
+                logInfo.setInvocation("RpcInvocation[methodName=" + methodName + "], arguments=" + queryParamMap.toString());
                 return;
             }
         }
 
         Map<String, String[]> queryParamMap = LyWebUtil.getRequestArrayParams(servletRequest);
-        logData.setInvocation("RpcInvocation[methodName=" + methodName + "], arguments=" + queryParamMap.toString());
+        logInfo.setInvocation("RpcInvocation[methodName=" + methodName + "], arguments=" + queryParamMap.toString());
     }
 
     private boolean isIgnoreLogMethod(Invocation invocation) {
@@ -228,15 +228,15 @@ public class ServiceFilter extends AbstractFilter {
         return paramMap;
     }
 
-    private void handleException(LyLogData logData, boolean hasException) {
+    private void handleException(FilterLogInfo logInfo, boolean hasException) {
         if (hasException) {
-            log.error(logData);
+            log.error(LyJsonUtil.toJson4Log(logInfo));
             if (serviceConfig.isSendEmail() && mailHelper != null) {
                 mailHelper.sendTextMail(LyNetworkUtil.getIpAddress() + "/" + LyNetworkUtil.getHostName() +
-                        "-[" + serviceConfig.getServiceName() + "] ERROR!", LyJsonUtil.toJson4Log(logData));
+                        "-[" + serviceConfig.getServiceName() + "] ERROR!", LyJsonUtil.toJson4Log(logInfo));
             }
             return;
         }
-        log.info(logData);
+        log.info(LyJsonUtil.toJson4Log(logInfo));
     }
 }

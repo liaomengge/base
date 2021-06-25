@@ -5,12 +5,11 @@ import com.github.liaomengge.base_common.helper.buffer.BatchBuffer.QueueStrategy
 import com.github.liaomengge.base_common.influx.InfluxDBConnection;
 import com.github.liaomengge.base_common.influx.InfluxDBProperties;
 import com.github.liaomengge.base_common.influx.consts.InfluxConst;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
-import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import java.time.Duration;
@@ -22,9 +21,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 2020/7/21.
  */
+@Slf4j
 public class InfluxBatchHandler {
-
-    private static final Logger log = LyLogger.getInstance(InfluxBatchHandler.class);
 
     private ExecutorService threadPoolExecutor;
     private BatchBuffer<Point> batchBuffer;

@@ -5,13 +5,12 @@ import com.github.liaomengge.base_common.utils.collection.LyListUtil;
 import com.github.liaomengge.base_common.utils.collection.LyMoreCollectionUtil;
 import com.github.liaomengge.base_common.utils.io.LyIOUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Maps;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.EnumerationUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -30,11 +29,10 @@ import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.JO
 /**
  * Created by liaomengge on 17/11/7.
  */
+@Slf4j
 @UtilityClass
 public class LyWebUtil {
-
-    public final Logger log = LyLogger.getInstance(LyWebUtil.class);
-
+    
     public Optional<ServletRequestAttributes> getRequestAttributes() {
         ServletRequestAttributes requestAttributes =
                 (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

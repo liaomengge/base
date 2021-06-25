@@ -1,9 +1,8 @@
 package com.github.liaomengge.base_common.utils.properties;
 
 import com.github.liaomengge.base_common.utils.io.LyIOUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import lombok.experimental.UtilityClass;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -18,11 +17,10 @@ import java.util.Properties;
 /**
  * Created by liaomengge on 2020/8/1.
  */
+@Slf4j
 @UtilityClass
 public class LyResourceUtil {
-
-    private final Logger log = LyLogger.getInstance(LyResourceUtil.class);
-
+    
     public URL getResource(String resourceName) {
         return Thread.currentThread().getContextClassLoader().getResource(resourceName);
     }

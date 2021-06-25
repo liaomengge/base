@@ -4,8 +4,7 @@ import com.ctrip.framework.apollo.ConfigChangeListener;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.github.liaomengge.base_common.apollo.refresh.ApolloRefresher;
 import com.github.liaomengge.base_common.apollo.refresh.conditional.ApolloConditionalRefresh;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
@@ -15,10 +14,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by liaomengge on 2020/8/1.
  */
+@Slf4j
 public class ApolloRefreshListener implements ConfigChangeListener {
-
-    private static final Logger log = LyLogger.getInstance(ApolloRefreshListener.class);
-
+    
     private AtomicBoolean isReady = new AtomicBoolean(false);
     private AtomicBoolean isRefresh = new AtomicBoolean(false);
 

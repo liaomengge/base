@@ -13,13 +13,12 @@ import com.alibaba.csp.sentinel.context.ContextUtil;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.github.liaomengge.base_common.dayu.consts.DayuConst;
 import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 
@@ -34,10 +33,9 @@ import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.SP
 /**
  * Created by liaomengge on 2019/11/7.
  */
+@Slf4j
 public class SentinelFilter implements Filter, EnvironmentAware {
-
-    private static final Logger log = LyLogger.getInstance(SentinelFilter.class);
-
+    
     private static final String FRAMEWORK_SENTINEL_ENABLED = "base.framework.sentinel.enabled";
 
     private List<String> excludedUris;

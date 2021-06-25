@@ -5,21 +5,19 @@ import com.github.liaomengge.base_common.helper.lock.distributed.consts.Distribu
 import com.github.liaomengge.base_common.helper.lock.distributed.redis.RedissonLocker;
 import com.github.liaomengge.base_common.helper.lock.distributed.redis.aspect.annotation.RedissionLock;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 
 /**
  * Created by liaomengge on 2021/6/2.
  */
+@Slf4j
 @Async
 @AllArgsConstructor
 public class RedissonAspectLocker {
-
-    private static final Logger log = LoggerFactory.getLogger(RedissonAspectLocker.class);
-
+    
     private final RedissonLocker redissonLocker;
 
     @Around("@annotation(redissionLock)")

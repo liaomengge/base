@@ -6,10 +6,9 @@ import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
 import com.github.liaomengge.base_common.utils.io.LyIOUtil;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,10 +20,9 @@ import java.util.Objects;
 /**
  * Created by liaomengge on 17/11/7.
  */
+@Slf4j
 @UtilityClass
 public class LyProtoStuffSerializerUtil {
-
-    private static final Logger log = LoggerFactory.getLogger(LyProtoStuffSerializerUtil.class);
 
     /**
      * 序列化对象

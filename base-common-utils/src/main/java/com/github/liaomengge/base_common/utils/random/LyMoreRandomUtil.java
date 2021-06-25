@@ -1,23 +1,19 @@
 package com.github.liaomengge.base_common.utils.random;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.number.LyNumberUtil;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-
-import lombok.experimental.UtilityClass;
-
 /**
  * Created by liaomengge on 2019/11/20.
  */
+@Slf4j
 @UtilityClass
 public class LyMoreRandomUtil {
-
-    private Logger log = LyLogger.getInstance(LyMoreRandomUtil.class);
-
+    
     private final double DOUBLE = 3.14d;
 
     private final Map<Integer, Long> PRIME_NUMBER_MAP = new HashMap<Integer, Long>(24) {

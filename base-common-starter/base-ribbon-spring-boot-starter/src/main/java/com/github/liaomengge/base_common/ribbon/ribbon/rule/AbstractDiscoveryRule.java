@@ -2,7 +2,6 @@ package com.github.liaomengge.base_common.ribbon.ribbon.rule;
 
 import com.github.liaomengge.base_common.ribbon.ribbon.filter.ServerFilter;
 import com.github.liaomengge.base_common.ribbon.ribbon.predicate.AbstractDiscoveryPredicate;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.base.Optional;
 import com.netflix.client.config.IClientConfig;
 import com.netflix.loadbalancer.*;
@@ -11,6 +10,7 @@ import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public abstract class AbstractDiscoveryRule extends PredicateBasedRule {
 
-    protected static final Logger log = LyLogger.getInstance(AbstractDiscoveryRule.class);
+    protected static final Logger log = LoggerFactory.getLogger(AbstractDiscoveryRule.class);
 
     @Getter
     private IClientConfig clientConfig;

@@ -1,11 +1,11 @@
 package com.github.liaomengge.base_common.helper.rest.async;
 
 import com.github.liaomengge.base_common.helper.rest.data.BaseRequest;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.string.LyStringUtil;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -19,7 +19,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public abstract class CustomListenableCallBack<T> implements ListenableFutureCallback<T> {
 
-    protected static final Logger log = LyLogger.getInstance(CustomListenableCallBack.class);
+    protected static final Logger log = LoggerFactory.getLogger(CustomListenableCallBack.class);
 
     private BaseRequest baseRequest;
 

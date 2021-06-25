@@ -1,6 +1,6 @@
 package com.github.liaomengge.service.base_framework.common.filter;
 
-import com.github.liaomengge.base_common.utils.trace.LyTraceLogUtil;
+import com.github.liaomengge.base_common.utils.mdc.LyMDCUtil;
 import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import com.github.liaomengge.service.base_framework.common.filter.chain.FilterChain;
 import org.aopalliance.intercept.MethodInvocation;
@@ -20,7 +20,7 @@ public class TraceFilter extends AbstractFilter {
         LyWebUtil.getHttpServletRequest().ifPresent(request -> {
             String traceId = StringUtils.defaultIfBlank(request.getHeader(TRACE_ID),
                     generateRandomSed(generateDefaultTraceLogIdPrefix()));
-            LyTraceLogUtil.put(traceId);
+            LyMDCUtil.put(LyMDCUtil.MDC_TRACE_ID, traceId);
         });
         return chain.doFilter(invocation, chain);
     }

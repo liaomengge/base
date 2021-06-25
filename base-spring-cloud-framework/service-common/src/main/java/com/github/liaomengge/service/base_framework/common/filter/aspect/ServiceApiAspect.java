@@ -1,12 +1,11 @@
 package com.github.liaomengge.service.base_framework.common.filter.aspect;
 
 import com.github.liaomengge.base_common.support.datasource.DBContext;
+import com.github.liaomengge.base_common.support.logger.JsonLogger;
 import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
-import com.github.liaomengge.base_common.utils.log.LyMDCUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import com.github.liaomengge.base_common.utils.mdc.LyMDCUtil;
 import com.github.liaomengge.base_common.utils.net.LyNetworkUtil;
-import com.github.liaomengge.base_common.utils.trace.LyTraceLogUtil;
 import com.github.liaomengge.base_common.utils.web.LyWebAopUtil;
 import com.github.liaomengge.base_common.utils.web.LyWebUtil;
 import com.github.liaomengge.service.base_framework.base.DataResult;
@@ -22,7 +21,6 @@ import lombok.Setter;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 
@@ -37,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ServiceApiAspect implements MethodInterceptor, Ordered {
 
-    private static final Logger log = LyLogger.getInstance(ServiceApiAspect.class);
+    private static final JsonLogger log = JsonLogger.getInstance(ServiceApiAspect.class);
 
     @Getter
     private FilterChain defaultFilterChain;
@@ -72,8 +70,7 @@ public class ServiceApiAspect implements MethodInterceptor, Ordered {
 
             DBContext.clearDBKey();
 
-            LyTraceLogUtil.clearTrace();
-
+            LyMDCUtil.remove(LyMDCUtil.MDC_TRACE_ID);
             LyMDCUtil.remove(LyMDCUtil.MDC_API_REMOTE_IP);
             LyMDCUtil.remove(LyMDCUtil.MDC_API_URI);
             LyMDCUtil.remove(LyMDCUtil.MDC_API_ELAPSED_MILLI_TIME);

@@ -4,9 +4,8 @@ import com.github.liaomengge.base_common.graceful.GracefulProperties;
 import com.github.liaomengge.base_common.graceful.consts.GracefulConst;
 import com.github.liaomengge.base_common.graceful.undertow.handler.GracefulShutdownWrapper;
 import com.github.liaomengge.base_common.utils.collection.LyCollectionUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.undertow.Undertow;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServer;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
@@ -24,10 +23,9 @@ import java.util.concurrent.TimeUnit;
  * {@link com.alibaba.cloud.nacos.discovery.NacosWatch#stop()在undertow关闭后，在获取上下文环境env的propertyName
  * ，拿不到当前的DeploymentInfo信息，故会throw异常}
  */
+@Slf4j
 public class UndertowShutdownEventHandler implements ApplicationListener<ContextClosedEvent> {
-
-    private static final Logger log = LyLogger.getInstance(UndertowShutdownEventHandler.class);
-
+    
     @Autowired
     private GracefulProperties gracefulProperties;
 

@@ -89,7 +89,7 @@ public abstract class RetryMQMessageListener<T extends MQMessage> extends BaseMQ
             endTime = LyJdk8DateUtil.getMilliSecondsTime();
             mqMonitor.monitorTime(MetricsConst.RECEIVE_2_HANDLE_EXEC_TIME + "." + queueConfig.getExchangeName(),
                     endTime - startTime);
-            LyTraceLogUtil.clearTrace();
+            LyTraceLogUtil.clear();
         }
     }
 }

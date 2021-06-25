@@ -12,7 +12,7 @@
 
         <!--==========================================Service Property==============================================-->
 
-        <Property name="SERVICE_LOG_PATTERN_LAYOUT">{"service":"${APPLICATION_NAME}","time":"%d","level":"%-5p","thread":"%t","data":"%m"}%n</Property>
+        <Property name="SERVICE_LOG_PATTERN_LAYOUT">{"traceId":"%X{MDC_TRACE_ID}","service":"${APPLICATION_NAME}","time":"%d","level":"%-5p","thread":"%t","data":"%m"}%n</Property>
 
         <Property name="SERVICE_INFO_LOG_NAME">${LOG_FILE_PATH}/service_info.log</Property>
         <Property name="SERVICE_INFO_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_info_%d{yyyy-MM-dd}_%i.log.gz</Property>
@@ -25,7 +25,7 @@
 
         <!--=========================================Service Api Property============================================-->
 
-        <Property name="SERVICE_API_LOG_PATTERN_LAYOUT">{"service":"${APPLICATION_NAME}","time":"%d", "level":"%-5p","thread":"%t","data":"%m","elapsedMilliSeconds":"%X{MDC_API_ELAPSED_MILLI_TIME}","remoteIp":"%X{MDC_API_REMOTE_IP}","uri":"%X{MDC_API_URI}"}%n</Property>
+        <Property name="SERVICE_API_LOG_PATTERN_LAYOUT">{"traceId":"%X{MDC_TRACE_ID}","service":"${APPLICATION_NAME}","time":"%d", "level":"%-5p","thread":"%t","data":"%m","elapsedMilliSeconds":"%X{MDC_API_ELAPSED_MILLI_TIME}","remoteIp":"%X{MDC_API_REMOTE_IP}","uri":"%X{MDC_API_URI}"}%n</Property>
 
         <Property name="SERVICE_API_INFO_LOG_NAME">${LOG_FILE_PATH}/service_api_info.log</Property>
         <Property name="SERVICE_API_INFO_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_api_info_%d{yyyy-MM-dd}_%i.log.gz</Property>
@@ -38,7 +38,7 @@
 
         <!--=========================================Service Client Property=========================================-->
 
-        <Property name="SERVICE_CLIENT_LOG_PATTERN_LAYOUT">{"service":"${APPLICATION_NAME}","time":"%d", "level":"%-5p","thread":"%t","data":"%m", "elapsedMilliSeconds":"%X{MDC_CLIENT_ELAPSED_MILLI_TIME}"}%n</Property>
+        <Property name="SERVICE_CLIENT_LOG_PATTERN_LAYOUT">{"traceId":"%X{MDC_TRACE_ID}","service":"${APPLICATION_NAME}","time":"%d", "level":"%-5p","thread":"%t","data":"%m", "elapsedMilliSeconds":"%X{MDC_CLIENT_ELAPSED_MILLI_TIME}"}%n</Property>
 
         <Property name="SERVICE_CLIENT_INFO_LOG_NAME">${LOG_FILE_PATH}/service_client_info.log</Property>
         <Property name="SERVICE_CLIENT_INFO_LOG_PATTERN">${LOG_FILE_PATH}/$${date:yyyy-MM}/service_client_info_%d{yyyy-MM-dd}_%i.log.gz</Property>

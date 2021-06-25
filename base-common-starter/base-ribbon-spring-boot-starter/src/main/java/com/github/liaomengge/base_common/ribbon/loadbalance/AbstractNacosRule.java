@@ -7,7 +7,6 @@ import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.github.liaomengge.base_common.ribbon.RibbonProperties;
 import com.github.liaomengge.base_common.ribbon.loadbalance.filter.InstanceFilter;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -19,6 +18,7 @@ import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractNacosRule extends AbstractPredicateRule {
 
-    protected static final Logger log = LyLogger.getInstance(AbstractNacosRule.class);
+    protected static final Logger log = LoggerFactory.getLogger(AbstractNacosRule.class);
 
     @Getter
     private IClientConfig clientConfig;

@@ -3,10 +3,11 @@ package com.github.liaomengge.service.base_framework.common.filter;
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.rpc.*;
 import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogData;
+import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import com.github.liaomengge.service.base_framework.base.DataResult;
 import com.github.liaomengge.service.base_framework.common.consts.MetricsConst;
 import com.github.liaomengge.service.base_framework.common.consts.ServiceConst;
+import com.github.liaomengge.service.base_framework.common.pojo.FilterLogInfo;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
@@ -27,16 +28,17 @@ public class FailFastFilter extends AbstractFilter {
             return invoker.invoke(invocation);
         }
         String methodName = invocation.getMethodName();
-        Iterable<String> iterable = Splitter.on(",").omitEmptyStrings().trimResults().omitEmptyStrings().split(failFastMethodName);
+        Iterable<String> iterable =
+                Splitter.on(",").omitEmptyStrings().trimResults().omitEmptyStrings().split(failFastMethodName);
         if (!Iterables.contains(iterable, methodName)) {
             return invoker.invoke(invocation);
         }
-        LyLogData logData = new LyLogData();
-        logData.setInvocation(invocation.toString());
+        FilterLogInfo logInfo = new FilterLogInfo();
+        logInfo.setInvocation(invocation.toString());
 
         RpcContext rpcContext = RpcContext.getContext();
-        logData.setRemoteIp(rpcContext.getRemoteAddressString());
-        logData.setHostIp(rpcContext.getLocalAddressString());
+        logInfo.setRemoteIp(rpcContext.getRemoteAddressString());
+        logInfo.setHostIp(rpcContext.getLocalAddressString());
 
         Map<String, Object> rpcResponseMap = Maps.newHashMap();
         rpcResponseMap.put("code", ServiceConst.ResponseStatus.ErrorCodeEnum.FAIL_FAST_ERROR.getCode());
@@ -50,9 +52,9 @@ public class FailFastFilter extends AbstractFilter {
         String prefix = super.getMetricsPrefixName() + "." + methodName;
         _MeterRegistrys.counter(meterRegistry, prefix + MetricsConst.FAIL_FAST_EXE_FAIL, PROTOCOL_TAG, protocol).ifPresent(Counter::increment);
 
-        logData.setResult(result.getValue());
-        logData.setRestUrl(url.getAbsolutePath());
-        log.info(logData);
+        logInfo.setResult(result.getValue());
+        logInfo.setRestUrl(url.getAbsolutePath());
+        log.info(LyJsonUtil.toJson4Log(logInfo));
 
         return result;
     }

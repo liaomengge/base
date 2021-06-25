@@ -2,14 +2,13 @@ package com.github.liaomengge.base_common.metric.cache.redis;
 
 import com.github.liaomengge.base_common.redis.JedisClusterProperties;
 import com.github.liaomengge.base_common.redis.SpringDataProperties;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.micrometer.core.instrument.FunctionCounter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.binder.MeterBinder;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.slf4j.Logger;
 import redis.clients.jedis.JedisPoolConfig;
 
 import javax.annotation.PostConstruct;
@@ -26,10 +25,9 @@ import static com.github.liaomengge.base_common.metric.consts.MetricsConst.REDIS
 /**
  * Created by liaomengge on 2020/9/22.
  */
+@Slf4j
 public class RedisCacheMeterBinder implements MeterBinder {
-
-    private static final Logger log = LyLogger.getInstance(RedisCacheMeterBinder.class);
-
+    
     private static final String JMX_NAME = "org.apache.commons.pool2:type=GenericObjectPool,name=";
 
     private final Iterable<Tag> tags;

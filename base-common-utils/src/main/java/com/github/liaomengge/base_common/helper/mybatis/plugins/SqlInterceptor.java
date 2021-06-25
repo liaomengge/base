@@ -2,10 +2,10 @@ package com.github.liaomengge.base_common.helper.mybatis.plugins;
 
 import com.github.liaomengge.base_common.utils.date.LyDateUtil;
 import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.number.LyMoreNumberUtil;
 import com.github.liaomengge.base_common.utils.properties.LyPropertiesUtil;
 import com.github.liaomengge.base_common.utils.string.LyStringUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.cache.CacheKey;
@@ -20,7 +20,6 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.TypeHandlerRegistry;
-import org.slf4j.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,6 +34,7 @@ import java.util.concurrent.TimeUnit;
  * 注：获取不到分页的sql(PageHelper处理的)
  * Created by liaomengge on 17/10/15.
  */
+@Slf4j
 @Intercepts({
         @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class,
                 RowBounds.class, ResultHandler.class}),
@@ -43,9 +43,7 @@ import java.util.concurrent.TimeUnit;
         @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})}
 )
 public class SqlInterceptor implements Interceptor {
-
-    private static final Logger log = LyLogger.getInstance(SqlInterceptor.class);
-
+    
     private Boolean isEnableSqlLog = Boolean.FALSE;
 
     @Override

@@ -4,13 +4,12 @@ import com.github.liaomengge.base_common.quartz.QuartzProperties;
 import com.github.liaomengge.base_common.quartz.listener.util.TriggerUtil;
 import com.github.liaomengge.base_common.utils.binder.LyBinderUtil;
 import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.Scheduler;
 import org.quartz.TriggerKey;
 import org.quartz.impl.triggers.CronTriggerImpl;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.ApplicationListener;
@@ -28,10 +27,9 @@ import java.util.Optional;
 /**
  * Created by liaomengge on 2019/7/18.
  */
+@Slf4j
 public class QuartzListener implements EnvironmentAware, ApplicationListener<EnvironmentChangeEvent>, Ordered {
-
-    private static final Logger log = LyLogger.getInstance(QuartzListener.class);
-
+    
     private Environment environment;
 
     @Autowired

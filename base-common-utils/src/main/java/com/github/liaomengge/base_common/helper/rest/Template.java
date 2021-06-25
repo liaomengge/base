@@ -2,7 +2,7 @@ package com.github.liaomengge.base_common.helper.rest;
 
 import com.github.liaomengge.base_common.helper.rest.consts.ReqMetricsConst;
 import com.github.liaomengge.base_common.helper.rest.data.BaseRequest;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import com.github.liaomengge.base_common.support.logger.JsonLogger;
 import com.github.liaomengge.base_common.utils.url.LyMoreUrlUtil;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
@@ -10,7 +10,6 @@ import io.micrometer.core.instrument.MeterRegistry;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
 
@@ -23,7 +22,7 @@ import java.util.Optional;
  */
 public interface Template {
 
-    Logger log = LyLogger.getInstance(Template.class);
+    JsonLogger log = JsonLogger.getInstance(Template.class);
 
     @NoArgsConstructor
     abstract class Sync implements Template {

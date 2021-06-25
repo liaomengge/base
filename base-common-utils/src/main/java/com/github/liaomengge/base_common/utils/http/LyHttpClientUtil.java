@@ -4,7 +4,7 @@ import com.github.liaomengge.base_common.helper.rest.sync.interceptor.HttpHeader
 import com.github.liaomengge.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import com.github.liaomengge.base_common.support.exception.CommunicationException;
 import com.github.liaomengge.base_common.utils.log.LyAlarmLogUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Consts;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -21,7 +21,6 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,10 +33,9 @@ import java.util.Objects;
  * 高并发调用时, 不建议使用
  * Created by liaomengge on 16/12/13.
  */
+@Slf4j
 public class LyHttpClientUtil {
-
-    private static final Logger log = LyLogger.getInstance(LyHttpClientUtil.class);
-
+    
     private static final String DEFAULT_ENCODING = "UTF-8";
     private static final String DEFAULT_MEDIA_TYPE_JSON = "application/json";
     private static final String DEFAULT_MEDIA_TYPE_FORM = "application/x-www-form-urlencoded";

@@ -5,9 +5,8 @@ import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.github.liaomengge.base_common.apollo.ApolloProperties;
 import com.github.liaomengge.base_common.apollo.consts.ApolloConst;
 import com.github.liaomengge.base_common.apollo.enums.RefreshTypeEnum;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.cloud.context.scope.refresh.RefreshScope;
@@ -20,9 +19,8 @@ import java.util.Set;
 /**
  * Created by liaomengge on 2020/8/1.
  */
+@Slf4j
 public class ApolloRefresher implements ApplicationContextAware {
-
-    private static final Logger log = LyLogger.getInstance(ApolloRefresher.class);
 
     private ApplicationContext applicationContext;
 

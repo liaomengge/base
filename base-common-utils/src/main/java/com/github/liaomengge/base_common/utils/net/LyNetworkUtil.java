@@ -1,9 +1,8 @@
 package com.github.liaomengge.base_common.utils.net;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.*;
@@ -13,11 +12,10 @@ import java.util.Objects;
 /**
  * Created by liaomengge on 17/10/10.
  */
+@Slf4j
 @UtilityClass
 public class LyNetworkUtil {
-
-    private static final Logger log = LyLogger.getInstance(LyNetworkUtil.class);
-
+    
     /**
      * 获取请求主机IP地址,如果通过代理进来, 则透过防火墙获取真实IP地址;
      * X-Forwarded-For：Squid 服务代理

@@ -1,28 +1,25 @@
 package com.github.liaomengge.base_common.helper.concurrent;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.thread.LyThreadFactoryBuilderUtil;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by liaomengge on 18/1/2.
  */
+@Slf4j
 @Getter
 @Setter
 public class LyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
 
-    private static final Logger log = LyLogger.getInstance(LyThreadPoolTaskExecutor.class);
     private static final long serialVersionUID = 1180516546843511746L;
 
     private final Object poolSizeMonitor = new Object();

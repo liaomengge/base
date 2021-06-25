@@ -5,11 +5,12 @@ import com.alibaba.dubbo.rpc.*;
 import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
 import com.github.liaomengge.base_common.utils.collection.LyMapUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogData;
+import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import com.github.liaomengge.base_common.utils.number.LyMoreNumberUtil;
 import com.github.liaomengge.service.base_framework.base.DataResult;
 import com.github.liaomengge.service.base_framework.common.consts.MetricsConst;
 import com.github.liaomengge.service.base_framework.common.consts.ServiceConst;
+import com.github.liaomengge.service.base_framework.common.pojo.FilterLogInfo;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.RateLimiter;
 import io.micrometer.core.instrument.Counter;
@@ -62,12 +63,12 @@ public class RateLimitFilter extends AbstractFilter {
             return invoker.invoke(invocation);
         }
 
-        LyLogData logData = new LyLogData();
-        logData.setInvocation(invocation.toString());
+        FilterLogInfo logInfo = new FilterLogInfo();
+        logInfo.setInvocation(invocation.toString());
 
         RpcContext rpcContext = RpcContext.getContext();
-        logData.setRemoteIp(rpcContext.getRemoteAddressString());
-        logData.setHostIp(rpcContext.getLocalAddressString());
+        logInfo.setRemoteIp(rpcContext.getRemoteAddressString());
+        logInfo.setHostIp(rpcContext.getLocalAddressString());
 
         Map<String, Object> rpcResponseMap = Maps.newHashMap();
         rpcResponseMap.put("code", ServiceConst.ResponseStatus.ErrorCodeEnum.SERVER_BUSY_ERROR.getCode());
@@ -81,9 +82,9 @@ public class RateLimitFilter extends AbstractFilter {
         String prefix = super.getMetricsPrefixName() + "." + methodName;
         _MeterRegistrys.counter(meterRegistry, prefix + MetricsConst.REQ_EXE_BUSY, PROTOCOL_TAG, protocol).ifPresent(Counter::increment);
 
-        logData.setResult(result.getValue());
-        logData.setRestUrl(url.getAbsolutePath());
-        log.info(logData);
+        logInfo.setResult(result.getValue());
+        logInfo.setRestUrl(url.getAbsolutePath());
+        log.info(LyJsonUtil.toJson4Log(logInfo));
 
         return result;
     }

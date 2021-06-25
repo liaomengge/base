@@ -1,9 +1,8 @@
 package com.github.liaomengge.base_common.utils.okhttp;
 
 import com.github.liaomengge.base_common.support.exception.CommunicationException;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
-import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,10 +11,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 2020/8/6.
  */
+@Slf4j
 public class LyOkHttpUtil {
-
-    private static final Logger log = LyLogger.getInstance(LyOkHttpUtil.class);
-
+    
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
     private static final int RETRY_TIME = 2;//重试次数

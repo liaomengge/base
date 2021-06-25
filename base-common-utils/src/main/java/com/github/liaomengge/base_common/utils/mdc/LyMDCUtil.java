@@ -1,4 +1,4 @@
-package com.github.liaomengge.base_common.utils.log;
+package com.github.liaomengge.base_common.utils.mdc;
 
 import com.google.common.io.Closer;
 import lombok.experimental.UtilityClass;
@@ -13,6 +13,7 @@ import java.util.Map;
 @UtilityClass
 public class LyMDCUtil {
 
+    public final String MDC_TRACE_ID = "MDC_TRACE_ID";
     public final String MDC_API_URI = "MDC_API_URI";
     public final String MDC_API_REMOTE_IP = "MDC_API_REMOTE_IP";
     public final String MDC_API_ELAPSED_MILLI_TIME = "MDC_API_ELAPSED_MILLI_TIME";
@@ -52,10 +53,6 @@ public class LyMDCUtil {
 
     public void remove(String key) {
         MDC.remove(key);
-    }
-
-    public void remove() {
-        remove(MDC_API_ELAPSED_MILLI_TIME);
     }
 
     public void clear() {

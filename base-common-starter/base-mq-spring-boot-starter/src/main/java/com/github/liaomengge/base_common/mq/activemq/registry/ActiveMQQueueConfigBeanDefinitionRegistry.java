@@ -3,8 +3,7 @@ package com.github.liaomengge.base_common.mq.activemq.registry;
 import com.github.liaomengge.base_common.mq.activemq.ActiveMQProperties;
 import com.github.liaomengge.base_common.mq.activemq.domain.QueueConfig;
 import com.github.liaomengge.base_common.utils.binder.LyBinderUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -25,11 +24,10 @@ import java.util.Optional;
 /**
  * Created by liaomengge on 2019/5/23.
  */
+@Slf4j
 public class ActiveMQQueueConfigBeanDefinitionRegistry implements EnvironmentAware,
         BeanDefinitionRegistryPostProcessor {
-
-    private static final Logger log = LyLogger.getInstance(ActiveMQQueueConfigBeanDefinitionRegistry.class);
-
+    
     private final ScopeMetadataResolver scopeMetadataResolver = new AnnotationScopeMetadataResolver();
 
     private Environment environment;

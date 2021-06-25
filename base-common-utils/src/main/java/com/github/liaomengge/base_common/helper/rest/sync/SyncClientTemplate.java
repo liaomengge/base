@@ -8,7 +8,7 @@ import com.github.liaomengge.base_common.support.exception.CommunicationExceptio
 import com.github.liaomengge.base_common.utils.error.LyExceptionUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
 import com.github.liaomengge.base_common.utils.log.LyAlarmLogUtil;
-import com.github.liaomengge.base_common.utils.log.LyMDCUtil;
+import com.github.liaomengge.base_common.utils.mdc.LyMDCUtil;
 import com.github.liaomengge.base_common.utils.url.LyUrlUtil;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

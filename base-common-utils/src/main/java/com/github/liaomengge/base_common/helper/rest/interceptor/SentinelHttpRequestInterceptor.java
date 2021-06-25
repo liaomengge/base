@@ -1,20 +1,19 @@
 package com.github.liaomengge.base_common.helper.rest.interceptor;
 
-import com.github.liaomengge.base_common.helper.rest.consts.ReqMetricsConst;
-import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
-import com.github.liaomengge.base_common.utils.error.LyExceptionUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-import com.github.liaomengge.base_common.utils.url.LyMoreUrlUtil;
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.github.liaomengge.base_common.helper.rest.consts.ReqMetricsConst;
+import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
+import com.github.liaomengge.base_common.utils.error.LyExceptionUtil;
+import com.github.liaomengge.base_common.utils.url.LyMoreUrlUtil;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -26,11 +25,10 @@ import java.net.URI;
 /**
  * Created by liaomengge on 2019/11/5.
  */
+@Slf4j
 @AllArgsConstructor
 public class SentinelHttpRequestInterceptor implements ClientHttpRequestInterceptor {
-
-    private static final Logger log = LyLogger.getInstance(SentinelHttpRequestInterceptor.class);
-
+    
     private MeterRegistry meterRegistry;
 
     @Override

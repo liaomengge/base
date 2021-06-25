@@ -9,11 +9,11 @@ import com.github.liaomengge.base_common.helper.rest.sync.SyncClientTemplate;
 import com.github.liaomengge.base_common.helper.rest.sync.interceptor.HttpHeaderInterceptor;
 import com.github.liaomengge.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import io.micrometer.core.instrument.MeterRegistry;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.http.HttpHost;
@@ -22,7 +22,6 @@ import org.apache.http.config.SocketConfig;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -53,13 +52,12 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 2018/11/1.
  */
+@Slf4j
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(SyncClientTemplate.class)
 @EnableConfigurationProperties(RestTemplateProperties.class)
 public class RestTemplateAutoConfiguration {
-
-    private static final Logger log = LyLogger.getInstance(RestTemplateAutoConfiguration.class);
-
+    
     private static final String DAYU_SENTINEL_ENABLED = "base.dayu.sentinel.enabled";
     private static final String SPRING_APPLICATION_NAME = "spring.application.name";
 

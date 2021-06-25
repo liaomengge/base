@@ -1,22 +1,18 @@
 package com.github.liaomengge.base_common.utils.io;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.nio.charset.Charset;
 
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-
-import lombok.experimental.UtilityClass;
-
 /**
  * Created by liaomengge on 16/12/6.
  */
+@Slf4j
 @UtilityClass
 public class LyIOUtil {
-
-    private final Logger log = LyLogger.getInstance(LyIOUtil.class);
 
     public final byte[] toByteArray(InputStream inputStream) {
         try {

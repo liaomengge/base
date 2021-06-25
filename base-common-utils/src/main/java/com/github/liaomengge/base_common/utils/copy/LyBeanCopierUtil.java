@@ -1,9 +1,8 @@
 package com.github.liaomengge.base_common.utils.copy;
 
 import com.github.liaomengge.base_common.utils.collection.LyMapUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import lombok.experimental.UtilityClass;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -14,11 +13,10 @@ import java.util.function.BiConsumer;
 /**
  * Created by liaomengge on 16/7/28.
  */
+@Slf4j
 @UtilityClass
 public class LyBeanCopierUtil {
-
-    private final Logger log = LyLogger.getInstance(LyBeanCopierUtil.class);
-
+    
     private final Map<String, BeanCopier> beanCopierMap = new ConcurrentHashMap<>(16);
 
     /**

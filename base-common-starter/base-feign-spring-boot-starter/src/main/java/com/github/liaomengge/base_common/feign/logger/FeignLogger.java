@@ -3,17 +3,16 @@ package com.github.liaomengge.base_common.feign.logger;
 import com.github.liaomengge.base_common.feign.FeignProperties;
 import com.github.liaomengge.base_common.feign.pojo.FeignLogInfo;
 import com.github.liaomengge.base_common.feign.util.FeignLogUtil;
+import com.github.liaomengge.base_common.support.logger.JsonLogger;
 import com.github.liaomengge.base_common.support.misc.Symbols;
 import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
-import com.github.liaomengge.base_common.utils.log.LyMDCUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import com.github.liaomengge.base_common.utils.mdc.LyMDCUtil;
 import feign.Request;
 import feign.RequestTemplate;
 import feign.Response;
 import feign.Util;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -30,7 +29,7 @@ import static feign.Util.decodeOrDefault;
  */
 public class FeignLogger extends feign.Logger {
 
-    private final Logger log;
+    private final JsonLogger log;
     private FeignProperties feignProperties;
 
     public FeignLogger(FeignProperties feignProperties) {
@@ -38,12 +37,7 @@ public class FeignLogger extends feign.Logger {
     }
 
     public FeignLogger(Class<?> clazz, FeignProperties feignProperties) {
-        this.log = LyLogger.getInstance(clazz);
-        this.feignProperties = feignProperties;
-    }
-
-    public FeignLogger(Logger log, FeignProperties feignProperties) {
-        this.log = log;
+        this.log = JsonLogger.getInstance(clazz);
         this.feignProperties = feignProperties;
     }
 

@@ -2,7 +2,7 @@ package com.github.liaomengge.base_common.feign.fallback;
 
 import com.github.liaomengge.base_common.feign.fallback.annotation.FallbackReturn;
 import com.github.liaomengge.base_common.feign.fallback.handler.FallbackReturnHandler;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import com.github.liaomengge.base_common.support.logger.JsonLogger;
 import com.github.liaomengge.base_common.utils.reflect.LyClassUtil;
 import feign.Feign;
 import feign.Target;
@@ -10,7 +10,6 @@ import feign.hystrix.FallbackFactory;
 import lombok.AllArgsConstructor;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.ReflectionUtils;
@@ -34,7 +33,7 @@ public class FeignFallbackFactory<T> implements FallbackFactory<T> {
     @AllArgsConstructor
     protected static class FeignFallbackInterceptor<T> implements MethodInterceptor {
 
-        private static final Logger log = LyLogger.getInstance(FeignFallbackInterceptor.class);
+        private static final JsonLogger log = JsonLogger.getInstance(FeignFallbackInterceptor.class);
 
         private final Target<T> target;
         private final Throwable cause;

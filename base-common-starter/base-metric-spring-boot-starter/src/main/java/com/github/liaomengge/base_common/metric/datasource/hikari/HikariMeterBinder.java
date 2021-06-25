@@ -1,7 +1,6 @@
 package com.github.liaomengge.base_common.metric.datasource.hikari;
 
 import com.github.liaomengge.base_common.metric.consts.MetricsConst;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.zaxxer.hikari.HikariConfigMXBean;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.HikariPoolMXBean;
@@ -10,7 +9,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.binder.MeterBinder;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.jdbc.DataSourceUnwrapper;
 
 import javax.sql.DataSource;
@@ -23,9 +22,8 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 2020/9/17.
  */
+@Slf4j
 public class HikariMeterBinder implements MeterBinder {
-
-    private static final Logger log = LyLogger.getInstance(HikariMeterBinder.class);
 
     private final Iterable<Tag> tags;
     private final List<DataSource> dataSources;

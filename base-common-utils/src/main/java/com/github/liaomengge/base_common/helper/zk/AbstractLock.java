@@ -2,13 +2,13 @@ package com.github.liaomengge.base_common.helper.zk;
 
 import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.net.LyNetworkUtil;
 import com.github.liaomengge.base_common.utils.thread.LyThreadFactoryBuilderUtil;
 import org.I0Itec.zkclient.ZkClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class AbstractLock {
 
-    protected final Logger log = LyLogger.getInstance(AbstractLock.class);
+    protected final Logger log = LoggerFactory.getLogger(AbstractLock.class);
 
     private int lockNumber = 1; //允许获取的锁数量(默认为1,即最小节点=自身时, 认为获得锁)
     private ZkClient zk = null;

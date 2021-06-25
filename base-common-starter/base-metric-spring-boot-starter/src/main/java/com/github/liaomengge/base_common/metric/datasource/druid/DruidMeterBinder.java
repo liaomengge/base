@@ -2,10 +2,9 @@ package com.github.liaomengge.base_common.metric.datasource.druid;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.github.liaomengge.base_common.metric.consts.MetricsConst;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.binder.MeterBinder;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.jdbc.DataSourceUnwrapper;
 
 import javax.sql.DataSource;
@@ -19,10 +18,9 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 2020/9/17.
  */
+@Slf4j
 public class DruidMeterBinder implements MeterBinder {
-
-    private static final Logger log = LyLogger.getInstance(DruidMeterBinder.class);
-
+    
     private final Iterable<Tag> tags;
     private final List<DataSource> dataSources;
 
@@ -81,23 +79,31 @@ public class DruidMeterBinder implements MeterBinder {
             //最大空闲数
             bindGauge(registry, MetricsConst.DRUID_PREFIX + "max.idle", druidDataSource, DruidDataSource::getMaxIdle);
             //最大活跃数
-            bindGauge(registry, MetricsConst.DRUID_PREFIX + "max.active", druidDataSource, DruidDataSource::getMaxActive);
+            bindGauge(registry, MetricsConst.DRUID_PREFIX + "max.active", druidDataSource,
+                    DruidDataSource::getMaxActive);
 
             //当前连接池数
-            bindGauge(registry, MetricsConst.DRUID_PREFIX + "pooling.count", druidDataSource, DruidDataSource::getPoolingCount);
+            bindGauge(registry, MetricsConst.DRUID_PREFIX + "pooling.count", druidDataSource,
+                    DruidDataSource::getPoolingCount);
             //连接池峰值
-            bindGauge(registry, MetricsConst.DRUID_PREFIX + "pooling.peak", druidDataSource, DruidDataSource::getPoolingPeak);
+            bindGauge(registry, MetricsConst.DRUID_PREFIX + "pooling.peak", druidDataSource,
+                    DruidDataSource::getPoolingPeak);
             //当前活跃连接数
-            bindGauge(registry, MetricsConst.DRUID_PREFIX + "active.count", druidDataSource, DruidDataSource::getActiveCount);
+            bindGauge(registry, MetricsConst.DRUID_PREFIX + "active.count", druidDataSource,
+                    DruidDataSource::getActiveCount);
             //活跃数峰值
-            bindGauge(registry, MetricsConst.DRUID_PREFIX + "active.peak", druidDataSource, DruidDataSource::getActivePeak);
+            bindGauge(registry, MetricsConst.DRUID_PREFIX + "active.peak", druidDataSource,
+                    DruidDataSource::getActivePeak);
 
             //执行数
-            bindCounter(registry, MetricsConst.DRUID_PREFIX + "execute.count", druidDataSource, DruidDataSource::getExecuteCount);
+            bindCounter(registry, MetricsConst.DRUID_PREFIX + "execute.count", druidDataSource,
+                    DruidDataSource::getExecuteCount);
             //错误数
-            bindCounter(registry, MetricsConst.DRUID_PREFIX + "error.count", druidDataSource, DruidDataSource::getErrorCount);
+            bindCounter(registry, MetricsConst.DRUID_PREFIX + "error.count", druidDataSource,
+                    DruidDataSource::getErrorCount);
             //回滚数
-            bindCounter(registry, MetricsConst.DRUID_PREFIX + "rollback.count", druidDataSource, DruidDataSource::getRollbackCount);
+            bindCounter(registry, MetricsConst.DRUID_PREFIX + "rollback.count", druidDataSource,
+                    DruidDataSource::getRollbackCount);
         });
     }
 

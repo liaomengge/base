@@ -2,13 +2,12 @@ package com.github.liaomengge.base_common.feign.interceptor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import feign.Util;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 
@@ -18,11 +17,10 @@ import java.util.*;
 /**
  * Created by liaomengge on 2020/8/25.
  */
+@Slf4j
 @AllArgsConstructor
 public class GetPojoRequestInterceptor implements RequestInterceptor, Ordered {
-
-    private static final Logger log = LyLogger.getInstance(GetPojoRequestInterceptor.class);
-
+    
     private final ObjectMapper objectMapper;
 
     @Override

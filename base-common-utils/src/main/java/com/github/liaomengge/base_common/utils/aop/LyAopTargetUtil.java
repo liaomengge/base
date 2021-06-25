@@ -1,25 +1,21 @@
 package com.github.liaomengge.base_common.utils.aop;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-
-import java.lang.reflect.Field;
-
-import org.slf4j.Logger;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.aop.framework.AopProxy;
 import org.springframework.aop.support.AopUtils;
 
-import lombok.experimental.UtilityClass;
+import java.lang.reflect.Field;
 
 /**
  * Created by liaomengge on 6/6/16.
  */
+@Slf4j
 @UtilityClass
 public class LyAopTargetUtil {
-
-    private final Logger log = LyLogger.getInstance(LyAopTargetUtil.class);
-
+    
     /**
      * 通过cglib获取代理对象(必须开启exposeProxy=true)
      *

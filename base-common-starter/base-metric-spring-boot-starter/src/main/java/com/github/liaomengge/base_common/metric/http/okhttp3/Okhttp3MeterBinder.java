@@ -1,14 +1,13 @@
 package com.github.liaomengge.base_common.metric.http.okhttp3;
 
 import com.github.liaomengge.base_common.metric.consts.MetricsConst;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.binder.MeterBinder;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
-import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -17,10 +16,9 @@ import java.util.function.ToDoubleFunction;
 /**
  * Created by liaomengge on 2020/9/17.
  */
+@Slf4j
 public class Okhttp3MeterBinder implements MeterBinder {
-
-    private static final Logger log = LyLogger.getInstance(Okhttp3MeterBinder.class);
-
+    
     private final Iterable<Tag> tags;
     private final ConnectionPool connectionPool;
 

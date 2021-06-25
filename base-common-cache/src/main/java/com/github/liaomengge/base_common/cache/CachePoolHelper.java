@@ -9,10 +9,9 @@ import com.github.liaomengge.base_common.cache.enums.NotifyTypeEnum;
 import com.github.liaomengge.base_common.cache.redis.RedisCache;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
@@ -21,9 +20,8 @@ import java.util.Objects;
 /**
  * Created by liaomengge on 2019/3/19.
  */
+@Slf4j
 public class CachePoolHelper {
-
-    private static final Logger log = LyLogger.getInstance(CachePoolHelper.class);
 
     private final CaffeineCacheManager caffeineCacheManager;
 
@@ -305,7 +303,7 @@ public class CachePoolHelper {
     }
 
     private void sendPubCmd(CacheDomain cacheDomain) {
-        channel.doPubChannel(LyJsonUtil.toJson4Log(cacheDomain));
+        channel.doPubChannel(LyJsonUtil.toJson(cacheDomain));
     }
 
     @PostConstruct

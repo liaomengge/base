@@ -1,7 +1,6 @@
 package com.github.liaomengge.base_common.support.extension;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.OrderUtils;
 
@@ -23,10 +22,9 @@ import java.util.stream.Collectors;
  * <p>
  * Created by liaomengge on 2019/10/15.
  */
+@Slf4j
 public class ExtensionLoader<T> {
-
-    private static final Logger log = LyLogger.getInstance(ExtensionLoader.class);
-
+    
     private static final String PREFIX_DEFAULT = "META-INF/";
     private static final String PREFIX_SERVICES = PREFIX_DEFAULT + "services/";
 

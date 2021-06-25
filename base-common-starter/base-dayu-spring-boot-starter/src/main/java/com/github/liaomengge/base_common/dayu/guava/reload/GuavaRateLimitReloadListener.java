@@ -5,11 +5,10 @@ import com.github.liaomengge.base_common.dayu.guava.consts.GuavaRateLimitConst;
 import com.github.liaomengge.base_common.dayu.guava.domain.FlowRule;
 import com.github.liaomengge.base_common.dayu.guava.interceptor.GuavaRateLimitHandlerInterceptor;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.util.concurrent.RateLimiter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.EnvironmentAware;
@@ -24,10 +23,9 @@ import java.util.stream.Collectors;
 /**
  * Created by liaomengge on 2019/8/12.
  */
+@Slf4j
 public class GuavaRateLimitReloadListener implements EnvironmentAware, ApplicationListener<EnvironmentChangeEvent> {
-
-    private static final Logger log = LyLogger.getInstance(GuavaRateLimitReloadListener.class);
-
+    
     private Environment environment;
 
     @Override

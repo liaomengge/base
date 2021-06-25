@@ -1,7 +1,7 @@
 package com.github.liaomengge.base_common.mq.activemq;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.MessagePostProcessor;
 
 /**
@@ -9,7 +9,7 @@ import org.springframework.jms.core.MessagePostProcessor;
  */
 public abstract class AbstractMQSender {
 
-    protected static final Logger log = LyLogger.getInstance(AbstractMQSender.class);
+    protected static final Logger log = LoggerFactory.getLogger(AbstractMQSender.class);
 
     public abstract void convertAndSend(String queueName, Object message);
 

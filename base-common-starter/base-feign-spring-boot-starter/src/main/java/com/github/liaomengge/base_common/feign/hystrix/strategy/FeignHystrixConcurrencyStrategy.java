@@ -1,7 +1,6 @@
 package com.github.liaomengge.base_common.feign.hystrix.strategy;
 
 import com.github.liaomengge.base_common.helper.concurrent.threadlocal.request.RequestContextCallable;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.netflix.hystrix.HystrixThreadPoolKey;
 import com.netflix.hystrix.HystrixThreadPoolProperties;
 import com.netflix.hystrix.strategy.HystrixPlugins;
@@ -13,7 +12,7 @@ import com.netflix.hystrix.strategy.executionhook.HystrixCommandExecutionHook;
 import com.netflix.hystrix.strategy.metrics.HystrixMetricsPublisher;
 import com.netflix.hystrix.strategy.properties.HystrixPropertiesStrategy;
 import com.netflix.hystrix.strategy.properties.HystrixProperty;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
@@ -25,10 +24,9 @@ import java.util.concurrent.TimeUnit;
  * 针对单层异步，可以解决丢失问题；
  * 针对双层异步@Async(或者线程池) + Hystrix(Thread Strategy)，需要配合设置RequestAttributes，否则，也会丢失
  */
+@Slf4j
 public class FeignHystrixConcurrencyStrategy extends HystrixConcurrencyStrategy {
-
-    private static final Logger log = LyLogger.getInstance(FeignHystrixConcurrencyStrategy.class);
-
+    
     private HystrixConcurrencyStrategy delegate;
 
     public FeignHystrixConcurrencyStrategy() {

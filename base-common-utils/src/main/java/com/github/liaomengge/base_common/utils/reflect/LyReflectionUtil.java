@@ -1,9 +1,8 @@
 package com.github.liaomengge.base_common.utils.reflect;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -14,11 +13,10 @@ import java.util.Objects;
 /**
  * Created by liaomengge on 17/5/12.
  */
+@Slf4j
 @UtilityClass
 public class LyReflectionUtil {
-
-    private static final Logger log = LyLogger.getInstance(LyReflectionUtil.class);
-
+    
     public Object getFieldValue(Object obj, String fieldName) {
         if (StringUtils.isBlank(fieldName)) {
             return null;

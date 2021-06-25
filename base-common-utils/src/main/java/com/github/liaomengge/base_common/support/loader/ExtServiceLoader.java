@@ -1,6 +1,7 @@
 package com.github.liaomengge.base_common.support.loader;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,17 +15,12 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.slf4j.Logger;
-
-import lombok.Getter;
-
 /**
  * Created by liaomengge on 2019/10/16.
  */
+@Slf4j
 public class ExtServiceLoader<T> {
-
-    private static final Logger log = LyLogger.getInstance(ExtServiceLoader.class);
-
+    
     private static final String PREFIX_DEFAULT = "META-INF/";
     private static final String PREFIX_SERVICES = PREFIX_DEFAULT + "services/";
 

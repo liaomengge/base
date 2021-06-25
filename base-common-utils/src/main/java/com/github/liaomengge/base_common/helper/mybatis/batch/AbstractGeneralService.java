@@ -1,12 +1,12 @@
 package com.github.liaomengge.base_common.helper.mybatis.batch;
 
 import com.github.liaomengge.base_common.helper.mybatis.extension.MapResultHandler;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public abstract class AbstractGeneralService {
 
-    protected final Logger log = LyLogger.getInstance(AbstractGeneralService.class);
+    protected final Logger log = LoggerFactory.getLogger(AbstractGeneralService.class);
 
     protected final int SEGMENT_NUMBER = 500;
 

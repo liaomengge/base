@@ -1,12 +1,11 @@
 package com.github.liaomengge.base_common.quartz.registry;
 
 import com.github.liaomengge.base_common.quartz.domain.AbstractBaseJob;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -30,10 +29,9 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 /**
  * Created by liaomengge on 2019/1/29.
  */
+@Slf4j
 public class QuartzBeanDefinitionRegistry implements EnvironmentAware, ApplicationContextAware,
         BeanDefinitionRegistryPostProcessor {
-
-    private static final Logger log = LyLogger.getInstance(QuartzBeanDefinitionRegistry.class);
 
     private static final String JOB_PKG = "base.quartz.basePackage";
 

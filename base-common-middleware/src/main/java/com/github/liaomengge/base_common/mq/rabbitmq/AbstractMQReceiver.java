@@ -1,9 +1,9 @@
 package com.github.liaomengge.base_common.mq.rabbitmq;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.shutdown.LyShutdownUtil;
 import lombok.Setter;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer;
 import org.springframework.beans.factory.DisposableBean;
 
@@ -14,7 +14,7 @@ import java.util.concurrent.Executor;
  */
 public abstract class AbstractMQReceiver implements DisposableBean {
 
-    protected static final Logger log = LyLogger.getInstance(AbstractMQReceiver.class);
+    protected static final Logger log = LoggerFactory.getLogger(AbstractMQReceiver.class);
 
     public abstract void start();
 

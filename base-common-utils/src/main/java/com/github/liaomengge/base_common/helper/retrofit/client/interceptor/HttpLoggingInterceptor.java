@@ -1,12 +1,12 @@
 package com.github.liaomengge.base_common.helper.retrofit.client.interceptor;
 
 import com.github.liaomengge.base_common.helper.retrofit.consts.RetrofitMetricsConst;
+import com.github.liaomengge.base_common.support.logger.JsonLogger;
 import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
 import com.github.liaomengge.base_common.support.misc.Charsets;
 import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
 import com.github.liaomengge.base_common.utils.log.LyAlarmLogUtil;
-import com.github.liaomengge.base_common.utils.log.LyMDCUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import com.github.liaomengge.base_common.utils.mdc.LyMDCUtil;
 import com.github.liaomengge.base_common.utils.url.LyMoreUrlUtil;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
@@ -18,7 +18,6 @@ import okhttp3.internal.http.HttpHeaders;
 import okio.Buffer;
 import okio.BufferedSource;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -32,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class HttpLoggingInterceptor implements Interceptor {
 
-    private static final Logger log = LyLogger.getInstance(HttpLoggingInterceptor.class);
+    private static final JsonLogger log = JsonLogger.getInstance(HttpLoggingInterceptor.class);
 
     private final String projName;
 

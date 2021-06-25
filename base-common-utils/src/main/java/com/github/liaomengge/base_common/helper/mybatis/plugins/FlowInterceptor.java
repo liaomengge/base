@@ -1,24 +1,14 @@
 package com.github.liaomengge.base_common.helper.mybatis.plugins;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.liaomengge.base_common.utils.date.LyDateUtil;
 import com.github.liaomengge.base_common.utils.date.LyJdk8DateUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.properties.LyPropertiesUtil;
 import com.github.liaomengge.base_common.utils.string.LyStringUtil;
-
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
-
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
-
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -31,13 +21,20 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.slf4j.Logger;
 
-import lombok.Data;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Properties;
 
 /**
  * Created by liaomengge on 2019/9/20.
  */
+@Slf4j
 @Intercepts({
         @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class,
                 RowBounds.class, ResultHandler.class}),
@@ -45,8 +42,6 @@ import lombok.Data;
                 RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class})}
 )
 public class FlowInterceptor implements Interceptor {
-
-    private static final Logger log = LyLogger.getInstance(FlowInterceptor.class);
 
     private Boolean isEnableFailFast = Boolean.FALSE;
     private List<FlowConfig> flowConfigs = Lists.newArrayList();

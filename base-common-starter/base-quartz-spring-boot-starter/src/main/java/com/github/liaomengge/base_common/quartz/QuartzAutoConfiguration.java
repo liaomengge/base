@@ -5,13 +5,12 @@ import com.github.liaomengge.base_common.helper.concurrent.LyThreadPoolTaskWrapp
 import com.github.liaomengge.base_common.quartz.listener.QuartzListener;
 import com.github.liaomengge.base_common.quartz.registry.QuartzBeanDefinitionRegistry;
 import com.github.liaomengge.base_common.quartz.registry.QuartzBeanRegistryConfiguration;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.impl.JobDetailImpl;
-import org.slf4j.Logger;
 import org.springframework.beans.BeanInstantiationException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -31,14 +30,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Created by liaomengge on 2019/1/29.
  */
+@Slf4j
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(QuartzProperties.class)
 @ConditionalOnClass({JobDetail.class, CronTrigger.class, SchedulerFactoryBean.class})
 @Import(QuartzBeanRegistryConfiguration.class)
 public class QuartzAutoConfiguration {
-
-    private static final Logger log = LyLogger.getInstance(QuartzAutoConfiguration.class);
-
+    
     private final CopyOnWriteArrayList triggerKeyList = Lists.newCopyOnWriteArrayList();
 
     private final QuartzProperties quartzProperties;

@@ -1,28 +1,24 @@
 package com.github.liaomengge.base_common.helper.concurrent;
 
 import com.github.liaomengge.base_common.utils.error.LyThrowableUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-
-import org.slf4j.Logger;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.core.task.AsyncListenableTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 /**
  * Created by liaomengge on 2019/1/7.
  */
+@Slf4j
 @AllArgsConstructor
 public class LyThreadPoolTaskWrappedExecutor implements AsyncListenableTaskExecutor, LyThreadHelper, DisposableBean {
-
-    private static final Logger log = LyLogger.getInstance(LyThreadPoolTaskWrappedExecutor.class);
-
+    
     @Getter
     private final ThreadPoolTaskExecutor threadPoolTaskExecutor;
 

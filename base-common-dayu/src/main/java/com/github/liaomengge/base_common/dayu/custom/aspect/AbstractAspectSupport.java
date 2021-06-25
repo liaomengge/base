@@ -2,10 +2,10 @@ package com.github.liaomengge.base_common.dayu.custom.aspect;
 
 import com.github.liaomengge.base_common.dayu.custom.annotation.CircuitBreakerResource;
 import com.github.liaomengge.base_common.support.exception.CircuitBreakerException;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public abstract class AbstractAspectSupport {
 
-    protected static final Logger log = LyLogger.getInstance(AbstractAspectSupport.class);
+    protected static final Logger log = LoggerFactory.getLogger(AbstractAspectSupport.class);
 
     protected Object handleFallback(ProceedingJoinPoint pjp, CircuitBreakerResource circuitBreakerResource) throws Throwable {
         String fallback = circuitBreakerResource.fallback();

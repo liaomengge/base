@@ -4,11 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.liaomengge.base_common.mq.consts.MQConst;
 import com.github.liaomengge.base_common.mq.domain.MQMessage;
 import com.github.liaomengge.base_common.mq.domain.MessageHeader;
+import com.github.liaomengge.base_common.support.logger.JsonLogger;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
@@ -21,7 +20,7 @@ import java.util.Objects;
  */
 public abstract class AbstractMQMessageListener<T extends MQMessage> implements ChannelAwareMessageListener {
 
-    protected static final Logger log = LyLogger.getInstance(AbstractMQMessageListener.class);
+    protected static final JsonLogger log = JsonLogger.getInstance(AbstractMQMessageListener.class);
 
     protected T parseMessage(Message message) {
         String receiveMsg = new String(message.getBody(), Charset.forName(MQConst.DEFAULT_CHARSET));

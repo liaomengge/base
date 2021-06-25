@@ -2,9 +2,8 @@ package com.github.liaomengge.base_common.graceful.context;
 
 import com.github.liaomengge.base_common.graceful.GracefulProperties;
 import com.github.liaomengge.base_common.graceful.consts.GracefulConst;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
-import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -20,10 +19,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liaomengge on 2019/2/22.
  */
+@Slf4j
 public class ContextShutdown implements ApplicationListener<ContextClosedEvent>, ApplicationContextAware {
-
-    private static final Logger log = LyLogger.getInstance(ContextShutdown.class);
-
+    
     private ApplicationContext applicationContext;
     private GracefulProperties gracefulProperties;
 

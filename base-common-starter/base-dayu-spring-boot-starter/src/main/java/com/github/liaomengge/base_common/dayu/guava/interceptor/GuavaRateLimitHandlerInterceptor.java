@@ -9,16 +9,15 @@ import com.github.liaomengge.base_common.dayu.guava.domain.FlowRule;
 import com.github.liaomengge.base_common.support.meter._MeterRegistrys;
 import com.github.liaomengge.base_common.utils.collection.LyMapUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.util.concurrent.RateLimiter;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.shaded.com.google.common.collect.Maps;
-import org.slf4j.Logger;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -31,11 +30,10 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Created by liaomengge on 2019/8/12.
  */
+@Slf4j
 @AllArgsConstructor
 public class GuavaRateLimitHandlerInterceptor extends HandlerInterceptorAdapter {
-
-    private static final Logger log = LyLogger.getInstance(GuavaRateLimitHandlerInterceptor.class);
-
+    
     @Getter
     private static final ConcurrentMap<String, RateLimiter> resourceLimiterMap = Maps.newConcurrentMap();
 

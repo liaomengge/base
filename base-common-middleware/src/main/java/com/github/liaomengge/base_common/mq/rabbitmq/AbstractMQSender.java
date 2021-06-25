@@ -1,14 +1,14 @@
 package com.github.liaomengge.base_common.mq.rabbitmq;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by liaomengge on 17/1/4.
  */
 public abstract class AbstractMQSender {
 
-    protected static final Logger log = LyLogger.getInstance(AbstractMQSender.class);
+    protected static final Logger log = LoggerFactory.getLogger(AbstractMQSender.class);
 
     public abstract void convertAndSend(int routeKeyHash, Object object);
 

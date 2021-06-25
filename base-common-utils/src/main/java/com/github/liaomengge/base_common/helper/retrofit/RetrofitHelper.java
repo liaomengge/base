@@ -1,33 +1,28 @@
 package com.github.liaomengge.base_common.helper.retrofit;
 
+import com.alibaba.csp.sentinel.slots.block.AbstractRule;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.github.liaomengge.base_common.support.exception.CommunicationException;
 import com.github.liaomengge.base_common.utils.error.LyExceptionUtil;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
-
-import com.alibaba.csp.sentinel.slots.block.AbstractRule;
-import com.alibaba.csp.sentinel.slots.block.BlockException;
-
-import java.io.IOException;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.springframework.retry.support.RetryTemplate;
-
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.ResponseBody;
+import org.springframework.retry.support.RetryTemplate;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.io.IOException;
+import java.util.Optional;
+
 /**
  * Created by liaomengge on 2019/3/6.
  */
+@Slf4j
 @AllArgsConstructor
 public class RetrofitHelper {
-
-    private static final Logger log = LyLogger.getInstance(RetrofitHelper.class);
-
+    
     private final RetryTemplate retryTemplate;
 
     public <T> T execute(Call<T> call) {

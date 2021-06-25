@@ -65,7 +65,7 @@ public abstract class BaseMQMessageAsyncListener<T extends MQMessage> extends Ab
                 endTime = LyJdk8DateUtil.getMilliSecondsTime();
                 mqMonitor.monitorTime(MetricsConst.RECEIVE_2_HANDLE_EXEC_TIME + "." + queueConfig.getExchangeName(),
                         endTime - startTime);
-                LyTraceLogUtil.clearTrace();
+                LyTraceLogUtil.clear();
             }
         });
     }

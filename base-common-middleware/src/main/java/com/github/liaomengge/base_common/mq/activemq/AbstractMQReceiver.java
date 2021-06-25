@@ -1,11 +1,11 @@
 package com.github.liaomengge.base_common.mq.activemq;
 
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.github.liaomengge.base_common.utils.shutdown.LyShutdownUtil;
 import com.github.liaomengge.base_common.utils.thread.LyThreadPoolExecutorUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.jms.listener.SimpleMessageListenerContainer;
 
@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public abstract class AbstractMQReceiver implements DisposableBean {
 
-    protected static final Logger log = LyLogger.getInstance(AbstractMQReceiver.class);
+    protected static final Logger log = LoggerFactory.getLogger(AbstractMQReceiver.class);
 
     @Setter
     protected boolean asyncExec = false;//非异步执行

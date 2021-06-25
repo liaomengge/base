@@ -1,9 +1,8 @@
 package com.github.liaomengge.base_common.mq.rabbitmq.callback;
 
+import com.github.liaomengge.base_common.support.logger.JsonLogger;
 import com.github.liaomengge.base_common.utils.json.LyJsonUtil;
-import com.github.liaomengge.base_common.utils.log4j2.LyLogger;
 import com.google.common.collect.Maps;
-import org.slf4j.Logger;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
@@ -14,7 +13,7 @@ import java.util.Map;
  */
 public class MQReturnCallback implements RabbitTemplate.ReturnCallback {
 
-    private static final Logger log = LyLogger.getInstance(MQReturnCallback.class);
+    private static final JsonLogger log = JsonLogger.getInstance(MQReturnCallback.class);
 
     @Override
     public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
