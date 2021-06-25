@@ -26,11 +26,11 @@ public class SpringUtils implements ApplicationContextAware {
         staticApplicationContext = applicationContext;
     }
 
-    public static <T> T getBean(Class<T> clz) {
+    public static <T> T getBean(Class<T> clazz) {
         if (staticApplicationContext == null) {
             return null;
         }
-        return staticApplicationContext.getBean(clz);
+        return staticApplicationContext.getBean(clazz);
     }
 
     public static <T> T getBean(String beanName) {
@@ -40,18 +40,18 @@ public class SpringUtils implements ApplicationContextAware {
         return (T) staticApplicationContext.getBean(beanName);
     }
 
-    public static <T> T getBean(String beanName, Class<T> clz) {
+    public static <T> T getBean(String beanName, Class<T> clazz) {
         if (staticApplicationContext == null) {
             return null;
         }
-        return staticApplicationContext.getBean(beanName, clz);
+        return staticApplicationContext.getBean(beanName, clazz);
     }
 
-    public static <T> ObjectProvider<T> getBeanProvider(Class<T> clz) {
+    public static <T> ObjectProvider<T> getBeanProvider(Class<T> clazz) {
         if (staticApplicationContext == null) {
             return null;
         }
-        return staticApplicationContext.getBeanProvider(clz);
+        return staticApplicationContext.getBeanProvider(clazz);
     }
 
     public static void registerBean(String beanName, String beanClassName) {

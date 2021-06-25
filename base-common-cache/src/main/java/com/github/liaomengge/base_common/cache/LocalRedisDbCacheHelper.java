@@ -45,25 +45,25 @@ public class LocalRedisDbCacheHelper {
      * L1 + L2 + DB + Generic
      *
      * @param key
-     * @param clz
+     * @param clazz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGeneric(String key, Class<T> clz, Supplier<T> supplier) {
+    public <T> T invokeGeneric(String key, Class<T> clazz, Supplier<T> supplier) {
         String json = cachePoolHelper.get(key);
         if (StringUtils.isBlank(json)) {
             synchronized (getSynchronizedKey(key)) {
                 json = cachePoolHelper.get(key);
                 if (StringUtils.isNotBlank(json)) {
-                    return LyJacksonUtil.fromJson(json, clz);
+                    return LyJacksonUtil.fromJson(json, clazz);
                 }
                 T t = supplier.get();
                 cachePoolHelper.set(key, t);
                 return t;
             }
         }
-        return LyJacksonUtil.fromJson(json, clz);
+        return LyJacksonUtil.fromJson(json, clazz);
     }
 
     /**
@@ -97,19 +97,19 @@ public class LocalRedisDbCacheHelper {
      *
      * @param key
      * @param redisExpiresInSeconds
-     * @param clz
+     * @param clazz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGeneric(String key, int redisExpiresInSeconds, Class<T> clz, Supplier<T> supplier) {
+    public <T> T invokeGeneric(String key, int redisExpiresInSeconds, Class<T> clazz, Supplier<T> supplier) {
         String json = cachePoolHelper.get(key);
         if (StringUtils.isBlank(json)) {
             String lockKey = key;
             synchronized (getSynchronizedKey(key)) {
                 json = cachePoolHelper.get(key);
                 if (StringUtils.isNotBlank(json)) {
-                    return LyJacksonUtil.fromJson(json, clz);
+                    return LyJacksonUtil.fromJson(json, clazz);
                 }
                 T t = supplier.get();
                 if (redisExpiresInSeconds > 0) {
@@ -118,7 +118,7 @@ public class LocalRedisDbCacheHelper {
                 return t;
             }
         }
-        return LyJacksonUtil.fromJson(json, clz);
+        return LyJacksonUtil.fromJson(json, clazz);
     }
 
     /**
@@ -183,26 +183,26 @@ public class LocalRedisDbCacheHelper {
      *
      * @param region
      * @param key
-     * @param clz
+     * @param clazz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGeneric(String region, String key, Class<T> clz, Supplier<T> supplier) {
+    public <T> T invokeGeneric(String region, String key, Class<T> clazz, Supplier<T> supplier) {
         String json = cachePoolHelper.get(region, key);
         if (StringUtils.isBlank(json)) {
             String synchronizedKey = region + ':' + key;
             synchronized (getSynchronizedKey(synchronizedKey)) {
                 json = cachePoolHelper.get(region, key);
                 if (StringUtils.isNotBlank(json)) {
-                    return LyJacksonUtil.fromJson(json, clz);
+                    return LyJacksonUtil.fromJson(json, clazz);
                 }
                 T t = supplier.get();
                 cachePoolHelper.set(region, key, t);
                 return t;
             }
         }
-        return LyJacksonUtil.fromJson(json, clz);
+        return LyJacksonUtil.fromJson(json, clazz);
     }
 
     /**
@@ -239,12 +239,12 @@ public class LocalRedisDbCacheHelper {
      * @param region
      * @param key
      * @param redisExpiresInSeconds
-     * @param clz
+     * @param clazz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGeneric(String region, String key, int redisExpiresInSeconds, Class<T> clz,
+    public <T> T invokeGeneric(String region, String key, int redisExpiresInSeconds, Class<T> clazz,
                                Supplier<T> supplier) {
         String json = cachePoolHelper.get(region, key);
         if (StringUtils.isBlank(json)) {
@@ -252,7 +252,7 @@ public class LocalRedisDbCacheHelper {
             synchronized (getSynchronizedKey(synchronizedKey)) {
                 json = cachePoolHelper.get(region, key);
                 if (StringUtils.isNotBlank(json)) {
-                    return LyJacksonUtil.fromJson(json, clz);
+                    return LyJacksonUtil.fromJson(json, clazz);
                 }
                 T t = supplier.get();
                 if (redisExpiresInSeconds > 0) {
@@ -261,7 +261,7 @@ public class LocalRedisDbCacheHelper {
                 return t;
             }
         }
-        return LyJacksonUtil.fromJson(json, clz);
+        return LyJacksonUtil.fromJson(json, clazz);
     }
 
     /**
@@ -325,25 +325,25 @@ public class LocalRedisDbCacheHelper {
      * L2 + DB + Generic
      *
      * @param key
-     * @param clz
+     * @param clazz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGenericFromLevel2(String key, Class<T> clz, Supplier<T> supplier) {
+    public <T> T invokeGenericFromLevel2(String key, Class<T> clazz, Supplier<T> supplier) {
         String level2Json = cachePoolHelper.getFromLevel2(key);
         if (StringUtils.isBlank(level2Json)) {
             synchronized (getSynchronizedKey(key)) {
                 level2Json = cachePoolHelper.getFromLevel2(key);
                 if (StringUtils.isNotBlank(level2Json)) {
-                    return LyJacksonUtil.fromJson(level2Json, clz);
+                    return LyJacksonUtil.fromJson(level2Json, clazz);
                 }
                 T t = supplier.get();
                 cachePoolHelper.setToLevel2(key, t);
                 return t;
             }
         }
-        return LyJacksonUtil.fromJson(level2Json, clz);
+        return LyJacksonUtil.fromJson(level2Json, clazz);
     }
 
     /**
@@ -376,18 +376,18 @@ public class LocalRedisDbCacheHelper {
      *
      * @param key
      * @param redisExpiresInSeconds
-     * @param clz
+     * @param clazz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGenericFromLevel2(String key, int redisExpiresInSeconds, Class<T> clz, Supplier<T> supplier) {
+    public <T> T invokeGenericFromLevel2(String key, int redisExpiresInSeconds, Class<T> clazz, Supplier<T> supplier) {
         String level2Json = cachePoolHelper.getFromLevel2(key);
         if (StringUtils.isBlank(level2Json)) {
             synchronized (getSynchronizedKey(key)) {
                 level2Json = cachePoolHelper.getFromLevel2(key);
                 if (StringUtils.isNotBlank(level2Json)) {
-                    return LyJacksonUtil.fromJson(level2Json, clz);
+                    return LyJacksonUtil.fromJson(level2Json, clazz);
                 }
                 T t = supplier.get();
                 if (redisExpiresInSeconds > 0) {
@@ -396,7 +396,7 @@ public class LocalRedisDbCacheHelper {
                 return t;
             }
         }
-        return LyJacksonUtil.fromJson(level2Json, clz);
+        return LyJacksonUtil.fromJson(level2Json, clazz);
     }
 
     /**

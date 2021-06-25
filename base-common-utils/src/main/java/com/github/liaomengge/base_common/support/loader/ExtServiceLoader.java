@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 @Slf4j
 public class ExtServiceLoader<T> {
-    
+
     private static final String PREFIX_DEFAULT = "META-INF/";
     private static final String PREFIX_SERVICES = PREFIX_DEFAULT + "services/";
 
@@ -42,12 +42,12 @@ public class ExtServiceLoader<T> {
         this.singletonInstances = new ConcurrentHashMap<>();
     }
 
-    public T getInstance(Class<T> clz) {
-        return getInstance(clz, true);
+    public T getInstance(Class<T> clazz) {
+        return getInstance(clazz, true);
     }
 
-    public T getInstance(Class<T> clz, boolean single) {
-        return getInstance(clz.getName(), single);
+    public T getInstance(Class<T> clazz, boolean single) {
+        return getInstance(clazz.getName(), single);
     }
 
     public T getInstance(String serviceName) {
@@ -55,13 +55,13 @@ public class ExtServiceLoader<T> {
     }
 
     public T getInstance(String serviceName, boolean single) {
-        Class<T> clz = extensionClasses.get(serviceName);
-        if (clz != null) {
+        Class<T> clazz = extensionClasses.get(serviceName);
+        if (clazz != null) {
             try {
                 if (single) {
-                    return this.getSingletonInstance(clz, serviceName);
+                    return this.getSingletonInstance(clazz, serviceName);
                 }
-                return clz.newInstance();
+                return clazz.newInstance();
             } catch (Exception e) {
                 throw new RuntimeException(serviceType.getName() + ": Error when getExtension ", e);
             }
@@ -69,12 +69,12 @@ public class ExtServiceLoader<T> {
         return null;
     }
 
-    private T getSingletonInstance(Class<T> clz, String serviceName) throws InstantiationException,
+    private T getSingletonInstance(Class<T> clazz, String serviceName) throws InstantiationException,
             IllegalAccessException {
         synchronized (singletonInstances) {
             T singleton = singletonInstances.get(serviceName);
             if (singleton == null) {
-                singleton = clz.newInstance();
+                singleton = clazz.newInstance();
                 singletonInstances.put(serviceName, singleton);
             }
             return singleton;
@@ -142,15 +142,15 @@ public class ExtServiceLoader<T> {
         ConcurrentMap<String, Class<T>> classMap = new ConcurrentHashMap<>();
         for (String className : classNames) {
             try {
-                Class<T> clz;
+                Class<T> clazz;
                 if (classLoader == null) {
-                    clz = (Class<T>) Class.forName(className);
+                    clazz = (Class<T>) Class.forName(className);
                 } else {
-                    clz = (Class<T>) Class.forName(className, false, classLoader);
+                    clazz = (Class<T>) Class.forName(className, false, classLoader);
                 }
 
-                this.checkExtensionType(clz);
-                classMap.putIfAbsent(className, clz);
+                this.checkExtensionType(clazz);
+                classMap.putIfAbsent(className, clazz);
             } catch (Exception e) {
                 log.error(serviceType.getName() + ": Error load extension class", e);
             }
@@ -160,30 +160,30 @@ public class ExtServiceLoader<T> {
 
     }
 
-    private void checkExtensionType(Class<?> clz) {
+    private void checkExtensionType(Class<?> clazz) {
         // 1) is public class
-        if (!serviceType.isAssignableFrom(clz)) {
-            throw new RuntimeException(clz.getName() + ": Error is not instanceof " + serviceType.getName());
+        if (!serviceType.isAssignableFrom(clazz)) {
+            throw new RuntimeException(clazz.getName() + ": Error is not instanceof " + serviceType.getName());
         }
 
         // 2) contain public constructor and has not-args constructor
-        Constructor<?>[] constructors = clz.getConstructors();
+        Constructor<?>[] constructors = clazz.getConstructors();
         if (constructors == null || constructors.length == 0) {
-            throw new RuntimeException(clz.getName() + ": Error has no public no-args constructor");
+            throw new RuntimeException(clazz.getName() + ": Error has no public no-args constructor");
         }
 
         for (Constructor<?> constructor : constructors) {
             if (Modifier.isPublic(constructor.getModifiers()) && constructor.getParameterTypes().length == 0) {
-                // 3) check extension clz instanceof Type.class
-                if (!serviceType.isAssignableFrom(clz)) {
-                    throw new RuntimeException(clz.getName() + ": Error is not instanceof " + serviceType.getName());
+                // 3) check extension clazz instanceof Type.class
+                if (!serviceType.isAssignableFrom(clazz)) {
+                    throw new RuntimeException(clazz.getName() + ": Error is not instanceof " + serviceType.getName());
                 }
 
                 return;
             }
         }
 
-        throw new RuntimeException(clz.getName() + ": Error has no public no-args constructor");
+        throw new RuntimeException(clazz.getName() + ": Error has no public no-args constructor");
     }
 
     private void parseUrl(Class<?> serviceType, URL url, List<String> classNames) throws ServiceConfigurationError {

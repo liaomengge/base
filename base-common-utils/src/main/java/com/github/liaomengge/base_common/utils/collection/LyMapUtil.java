@@ -272,16 +272,16 @@ public class LyMapUtil {
      * Map 2 Bean 依据指定类型转换
      *
      * @param map
-     * @param clz
+     * @param clazz
      * @param <T>
      * @return
      */
-    public <T> T map2Bean(Map<String, Object> map, Class<T> clz) {
+    public <T> T map2Bean(Map<String, Object> map, Class<T> clazz) {
         if (null == map) {
             return null;
         }
 
-        return LyJacksonUtil.obj2Bean(map, clz);
+        return LyJacksonUtil.obj2Bean(map, clazz);
     }
 
     /**

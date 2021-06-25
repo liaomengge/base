@@ -1,16 +1,13 @@
 package com.github.liaomengge.base_common.helper.cache;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.liaomengge.base_common.helper.redis.IRedisHelper;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
-
-import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 import java.util.function.Supplier;
-
-import org.apache.commons.lang3.StringUtils;
-
-import lombok.Setter;
 
 /**
  * Created by liaomengge on 2019/7/9.
@@ -133,12 +130,12 @@ public class RedisDbCacheHelper {
      * Redis缓存(L2) + 泛型化(Generic) + synchronized
      *
      * @param key
-     * @param clz
+     * @param clazz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGenericSync2(String key, Class<T> clz, Supplier<T> supplier) {
+    public <T> T invokeGenericSync2(String key, Class<T> clazz, Supplier<T> supplier) {
         String value = iRedisHelper.get(key);
         if (StringUtils.isBlank(value)) {
             synchronized (getSynchronizedKey(key)) {
@@ -153,7 +150,7 @@ public class RedisDbCacheHelper {
             }
         }
 
-        return LyJacksonUtil.fromJson(value, clz);
+        return LyJacksonUtil.fromJson(value, clazz);
     }
 
     /**
@@ -223,12 +220,12 @@ public class RedisDbCacheHelper {
      *
      * @param key
      * @param redisExpiresInSeconds
-     * @param clz
+     * @param clazz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGeneric2(String key, int redisExpiresInSeconds, Class<T> clz, Supplier<T> supplier) {
+    public <T> T invokeGeneric2(String key, int redisExpiresInSeconds, Class<T> clazz, Supplier<T> supplier) {
         String value = iRedisHelper.get(key);
         if (StringUtils.isBlank(value)) {
             synchronized (getSynchronizedKey(key)) {
@@ -243,7 +240,7 @@ public class RedisDbCacheHelper {
             }
         }
 
-        return LyJacksonUtil.fromJson(value, clz);
+        return LyJacksonUtil.fromJson(value, clazz);
     }
 
     /**
@@ -252,12 +249,12 @@ public class RedisDbCacheHelper {
      *
      * @param key
      * @param redisExpiresInSeconds
-     * @param clz
+     * @param clazz
      * @param supplier
      * @param <T>
      * @return
      */
-    public <T> T invokeGeneric2(String key, int redisExpiresInSeconds, T defaultNullValue, Class<T> clz,
+    public <T> T invokeGeneric2(String key, int redisExpiresInSeconds, T defaultNullValue, Class<T> clazz,
                                 Supplier<T> supplier) {
         String value = iRedisHelper.get(key);
         if (StringUtils.isBlank(value)) {
@@ -276,7 +273,7 @@ public class RedisDbCacheHelper {
             }
         }
 
-        return LyJacksonUtil.fromJson(value, clz);
+        return LyJacksonUtil.fromJson(value, clazz);
     }
 
     private String getSynchronizedKey(String key) {

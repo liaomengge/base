@@ -13,38 +13,38 @@ import java.lang.reflect.Type;
 @UtilityClass
 public class LyGenericUtil {
 
-    public <T> Class<T> getActualTypeArguments4GenericInterface(Class<?> clz) {
-        return getActualTypeArguments4GenericInterface(clz, 0);
+    public <T> Class<T> getActualTypeArguments4GenericInterface(Class<?> clazz) {
+        return getActualTypeArguments4GenericInterface(clazz, 0);
     }
 
     /**
      * 获取父接口泛型类型
      *
-     * @param clz
+     * @param clazz
      * @param <T>
      * @return
      */
-    public <T> Class<T> getActualTypeArguments4GenericInterface(Class<?> clz, int i) {
-        Type[] types = clz.getGenericInterfaces();
+    public <T> Class<T> getActualTypeArguments4GenericInterface(Class<?> clazz, int i) {
+        Type[] types = clazz.getGenericInterfaces();
         if (types[i] instanceof ParameterizedType) {
             return getGenericClass((ParameterizedType) types[i], i);
         }
         return (Class<T>) types[i];
     }
 
-    public <T> Class<T> getActualTypeArguments4GenericClass(Class<?> clz) {
-        return getActualTypeArguments4GenericClass(clz, 0);
+    public <T> Class<T> getActualTypeArguments4GenericClass(Class<?> clazz) {
+        return getActualTypeArguments4GenericClass(clazz, 0);
     }
 
     /**
      * 获取父类泛型类型
      *
-     * @param clz
+     * @param clazz
      * @param <T>
      * @return
      */
-    public <T> Class<T> getActualTypeArguments4GenericClass(Class<?> clz, int i) {
-        Type type = clz.getGenericSuperclass();
+    public <T> Class<T> getActualTypeArguments4GenericClass(Class<?> clazz, int i) {
+        Type type = clazz.getGenericSuperclass();
         if (type instanceof ParameterizedType) {
             return getGenericClass((ParameterizedType) type, i);
         }

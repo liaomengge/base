@@ -21,12 +21,12 @@ public abstract class AbstractGeneralService {
 
     protected final int SEGMENT_NUMBER = 500;
 
-    protected <T> void batchInsertEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz,
+    protected <T> void batchInsertEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clazz,
                                         List<T> list) {
-        batchInsertEntry(sqlSessionFactory, clz, list, SEGMENT_NUMBER);
+        batchInsertEntry(sqlSessionFactory, clazz, list, SEGMENT_NUMBER);
     }
 
-    protected <T> void batchInsertEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz,
+    protected <T> void batchInsertEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clazz,
                                         List<T> list, int size) {
         if (CollectionUtils.isEmpty(list) || size <= 0) {
             return;
@@ -34,7 +34,7 @@ public abstract class AbstractGeneralService {
         SqlSession sqlSession = null;
         try {
             sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, Boolean.FALSE);
-            Mapper<T> mapper = sqlSession.getMapper(clz);
+            Mapper<T> mapper = sqlSession.getMapper(clazz);
             for (int i = 0, maxSize = list.size(); i < maxSize; i++) {
                 T t = list.get(i);
                 mapper.insertSelective(t);
@@ -90,12 +90,12 @@ public abstract class AbstractGeneralService {
         }
     }
 
-    protected <T> void batchUpdateEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz,
+    protected <T> void batchUpdateEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clazz,
                                         List<T> list) {
-        batchUpdateEntry(sqlSessionFactory, clz, list, SEGMENT_NUMBER);
+        batchUpdateEntry(sqlSessionFactory, clazz, list, SEGMENT_NUMBER);
     }
 
-    protected <T> void batchUpdateEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz,
+    protected <T> void batchUpdateEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clazz,
                                         List<T> list, int size) {
         if (CollectionUtils.isEmpty(list) || size <= 0) {
             return;
@@ -103,7 +103,7 @@ public abstract class AbstractGeneralService {
         SqlSession sqlSession = null;
         try {
             sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, Boolean.FALSE);
-            Mapper<T> mapper = sqlSession.getMapper(clz);
+            Mapper<T> mapper = sqlSession.getMapper(clazz);
             for (int i = 0, maxSize = list.size(); i < maxSize; i++) {
                 T t = list.get(i);
                 mapper.updateByPrimaryKeySelective(t);
@@ -160,12 +160,12 @@ public abstract class AbstractGeneralService {
         }
     }
 
-    protected <T> void batchDelEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz, List<T>
+    protected <T> void batchDelEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clazz, List<T>
             list) {
-        batchDelEntry(sqlSessionFactory, clz, list, SEGMENT_NUMBER);
+        batchDelEntry(sqlSessionFactory, clazz, list, SEGMENT_NUMBER);
     }
 
-    protected <T> void batchDelEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clz, List<T>
+    protected <T> void batchDelEntry(SqlSessionFactory sqlSessionFactory, Class<? extends Mapper<T>> clazz, List<T>
             list, int size) {
         if (CollectionUtils.isEmpty(list) || size <= 0) {
             return;
@@ -173,7 +173,7 @@ public abstract class AbstractGeneralService {
         SqlSession sqlSession = null;
         try {
             sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, Boolean.FALSE);
-            Mapper<T> mapper = sqlSession.getMapper(clz);
+            Mapper<T> mapper = sqlSession.getMapper(clazz);
             for (int i = 0, maxSize = list.size(); i < maxSize; i++) {
                 T t = list.get(i);
                 mapper.deleteByPrimaryKey(t);

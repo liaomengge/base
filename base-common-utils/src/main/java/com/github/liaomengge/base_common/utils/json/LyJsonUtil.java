@@ -1,23 +1,20 @@
 package com.github.liaomengge.base_common.utils.json;
 
-import com.github.liaomengge.base_common.utils.date.LyDateUtil;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.NameFilter;
 import com.alibaba.fastjson.serializer.PropertyFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
-
-import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
-
+import com.github.liaomengge.base_common.utils.date.LyDateUtil;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import lombok.experimental.UtilityClass;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by liaomengge on 17/11/8.
@@ -202,14 +199,14 @@ public class LyJsonUtil {
         return JSON.parse(jsonStr);
     }
 
-    public <T> T fromJson(String jsonStr, Class<T> clz) {
+    public <T> T fromJson(String jsonStr, Class<T> clazz) {
         if (StringUtils.isBlank(jsonStr)) {
             return null;
         }
-        if (clz == String.class) {
+        if (clazz == String.class) {
             return (T) jsonStr;
         }
-        return JSON.parseObject(jsonStr, clz);
+        return JSON.parseObject(jsonStr, clazz);
     }
 
     public <T> T fromJson(String jsonStr, TypeReference<T> typeReference) {

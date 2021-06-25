@@ -29,9 +29,9 @@ public abstract class AbstractMQMessageListener<T extends MQMessage> implements 
             return null;
         }
 
-        Class<T> clz = this.getEntityClass();
-        if (Objects.nonNull(clz)) {
-            return LyJacksonUtil.fromJson(receiveMsg, clz);
+        Class<T> clazz = this.getEntityClass();
+        if (Objects.nonNull(clazz)) {
+            return LyJacksonUtil.fromJson(receiveMsg, clazz);
         }
         TypeReference<T> typeReference = this.getTypeReference();
         if (Objects.nonNull(typeReference)) {

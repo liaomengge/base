@@ -70,14 +70,14 @@ public class LyJacksonUtil {
     }
 
     @SneakyThrows
-    public <T> T json2Bean(String jsonStr, Class<T> clz) {
+    public <T> T json2Bean(String jsonStr, Class<T> clazz) {
         if (StringUtils.isBlank(jsonStr)) {
             return null;
         }
-        if (clz == String.class) {
+        if (clazz == String.class) {
             return (T) jsonStr;
         }
-        return objectMapper.readValue(jsonStr, clz);
+        return objectMapper.readValue(jsonStr, clazz);
     }
 
     @SneakyThrows
@@ -91,8 +91,8 @@ public class LyJacksonUtil {
         return objectMapper.readValue(jsonStr, typeReference);
     }
 
-    public <T> T obj2Bean(Object obj, Class<T> clz) {
-        return objectMapper.convertValue(obj, clz);
+    public <T> T obj2Bean(Object obj, Class<T> clazz) {
+        return objectMapper.convertValue(obj, clazz);
     }
 
     public <T> T obj2Bean(Object obj, TypeReference<T> typeReference) {
@@ -121,8 +121,8 @@ public class LyJacksonUtil {
         return json2Bean(jsonStr, Object.class);
     }
 
-    public <T> T fromJson(String jsonStr, Class<T> clz) {
-        return json2Bean(jsonStr, clz);
+    public <T> T fromJson(String jsonStr, Class<T> clazz) {
+        return json2Bean(jsonStr, clazz);
     }
 
     public <T> T fromJson(String jsonStr, TypeReference<T> typeReference) {

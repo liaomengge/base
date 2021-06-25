@@ -70,16 +70,16 @@ public class CachePoolHelper {
         return caffeineCacheManager.getCache(region).get(key);
     }
 
-    public <T> T getFromLevel1(String key, Class<T> clz) {
-        return getFromLevel1(caffeineCacheManager.getDefaultRegion(), key, clz);
+    public <T> T getFromLevel1(String key, Class<T> clazz) {
+        return getFromLevel1(caffeineCacheManager.getDefaultRegion(), key, clazz);
     }
 
-    public <T> T getFromLevel1(String region, String key, Class<T> clz) {
+    public <T> T getFromLevel1(String region, String key, Class<T> clazz) {
         String level1Json = getFromLevel1(region, key);
         if (StringUtils.isBlank(level1Json)) {
             return null;
         }
-        return LyJacksonUtil.fromJson(level1Json, clz);
+        return LyJacksonUtil.fromJson(level1Json, clazz);
     }
 
     public String getFromLevel2(String key) {
@@ -89,12 +89,12 @@ public class CachePoolHelper {
         return redisCache.get(key);
     }
 
-    public <T> T getFromLevel2(String key, Class<T> clz) {
+    public <T> T getFromLevel2(String key, Class<T> clazz) {
         String level2Json = getFromLevel2(key);
         if (StringUtils.isBlank(level2Json)) {
             return null;
         }
-        return LyJacksonUtil.fromJson(level2Json, clz);
+        return LyJacksonUtil.fromJson(level2Json, clazz);
     }
 
     public String get(String key) {
@@ -130,16 +130,16 @@ public class CachePoolHelper {
         return level1Json;
     }
 
-    public <T> T get(String key, Class<T> clz) {
-        return get(caffeineCacheManager.getDefaultRegion(), key, clz);
+    public <T> T get(String key, Class<T> clazz) {
+        return get(caffeineCacheManager.getDefaultRegion(), key, clazz);
     }
 
-    public <T> T get(String region, String key, Class<T> clz) {
+    public <T> T get(String region, String key, Class<T> clazz) {
         String json = get(region, key);
         if (StringUtils.isBlank(json)) {
             return null;
         }
-        return LyJacksonUtil.fromJson(json, clz);
+        return LyJacksonUtil.fromJson(json, clazz);
     }
 
     public void setToLevel1(String region, String key, String value) {

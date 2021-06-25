@@ -20,13 +20,13 @@ public class JsonLogger {
 
     private final Logger log;
 
-    private Class<?> clz;
+    private Class<?> clazz;
 
     private String name;
 
-    public JsonLogger(Class clz) {
-        this.clz = clz;
-        log = LoggerFactory.getLogger(this.clz);
+    public JsonLogger(Class clazz) {
+        this.clazz = clazz;
+        log = LoggerFactory.getLogger(this.clazz);
     }
 
     public JsonLogger(String name) {
@@ -34,8 +34,8 @@ public class JsonLogger {
         log = LoggerFactory.getLogger(this.name);
     }
 
-    public static JsonLogger getInstance(Class<?> clz) {
-        return new JsonLogger(clz);
+    public static JsonLogger getInstance(Class<?> clazz) {
+        return new JsonLogger(clazz);
     }
 
     public static JsonLogger getInstance(String name) {

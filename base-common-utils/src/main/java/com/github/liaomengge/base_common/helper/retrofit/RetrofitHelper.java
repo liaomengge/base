@@ -22,7 +22,7 @@ import java.util.Optional;
 @Slf4j
 @AllArgsConstructor
 public class RetrofitHelper {
-    
+
     private final RetryTemplate retryTemplate;
 
     public <T> T execute(Call<T> call) {
@@ -85,8 +85,8 @@ public class RetrofitHelper {
         return response.errorBody().string();
     }
 
-    private <T> T extract2(Response<ResponseBody> response, Class<T> clz) throws IOException {
-        return LyJacksonUtil.fromJson(extract2(response), clz);
+    private <T> T extract2(Response<ResponseBody> response, Class<T> clazz) throws IOException {
+        return LyJacksonUtil.fromJson(extract2(response), clazz);
     }
 
     /************************************************华丽的分割线*******************************************************/
