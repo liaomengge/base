@@ -64,10 +64,10 @@ public class ApolloRefresher implements ApplicationContextAware {
         if (CollectionUtils.containsAny(changeKeys, ApolloConst.REFRESH_TYPE_KEY)) {
             ConfigChange configChange = changeEvent.getChange(ApolloConst.REFRESH_TYPE_KEY);
             return Optional.ofNullable(configChange).map(ConfigChange::getNewValue)
-                    .map(RefreshTypeEnum::getRefreshTypeEnum).orElse(RefreshTypeEnum.PROPERTIES);
+                    .map(RefreshTypeEnum::getInstance).orElse(RefreshTypeEnum.PROPERTIES);
         }
 
-        return RefreshTypeEnum.getRefreshTypeEnum(applicationContext.getEnvironment().getProperty(ApolloConst.REFRESH_TYPE_KEY));
+        return RefreshTypeEnum.getInstance(applicationContext.getEnvironment().getProperty(ApolloConst.REFRESH_TYPE_KEY));
     }
 
     private void refreshProperties(ConfigChangeEvent changeEvent) {

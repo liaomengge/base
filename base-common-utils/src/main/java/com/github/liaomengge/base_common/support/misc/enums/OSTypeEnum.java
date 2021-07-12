@@ -1,8 +1,11 @@
 package com.github.liaomengge.base_common.support.misc.enums;
 
+import lombok.AllArgsConstructor;
+
 /**
  * 操作系统枚举类
  */
+@AllArgsConstructor
 public enum OSTypeEnum {
 
     Any("any"),
@@ -24,15 +27,6 @@ public enum OSTypeEnum {
     OSF1("OSF1"),
     OpenVMS("OpenVMS"),
     Others("Others");
-
-    OSTypeEnum(String desc) {
-        this.description = desc;
-    }
-
-    @Override
-    public String toString() {
-        return description;
-    }
 
     private String description;
 }

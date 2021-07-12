@@ -13,7 +13,7 @@ public enum RefreshTypeEnum {
     SCOPE,
     ALL;
 
-    public static RefreshTypeEnum getRefreshTypeEnum(String name) {
+    public static RefreshTypeEnum getInstance(String name) {
         return Arrays.stream(values())
                 .filter(val -> StringUtils.equalsIgnoreCase(val.name(), name))
                 .findFirst().orElse(RefreshTypeEnum.PROPERTIES);

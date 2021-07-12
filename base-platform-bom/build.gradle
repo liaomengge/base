@@ -37,9 +37,9 @@ apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
 apply from: "${rootProject.projectDir}/gradle/publish-bom.gradle"
 
 def versions = [
-        springBoot        : '2.3.9.RELEASE',
-        springCloud       : 'Hoxton.SR9',
-        alibabaSpringCloud: '2.2.5.RELEASE'
+        springBoot        : '2.3.12.RELEASE',
+        springCloud       : 'Hoxton.SR12',
+        alibabaSpringCloud: '2.2.6.RELEASE'
 ]
 
 dependencyManagement {
@@ -116,7 +116,7 @@ dependencyManagement {
 
         dependency "org.apache.activemq:activemq-core:5.7.0"
 
-        dependency "org.redisson:redisson:3.15.5"
+        dependency "org.redisson:redisson:3.16.0"
 
         dependency "com.101tec:zkclient:0.11"
         dependency("org.apache.curator:curator-client:4.3.0") {
@@ -147,8 +147,8 @@ dependencyManagement {
 
         dependency "io.springfox:springfox-swagger2:2.10.5"
         dependency "io.springfox:springfox-swagger-ui:2.10.5"
-        dependency "com.github.xiaoymin:knife4j-spring:2.0.8"
-        dependency "com.github.xiaoymin:knife4j-spring-ui:2.0.8"
+        dependency "com.github.xiaoymin:knife4j-spring:2.0.9"
+        dependency "com.github.xiaoymin:knife4j-spring-ui:2.0.9"
 
         dependency "io.github.openfeign.form:feign-form:3.8.0"
         dependency "io.github.openfeign.form:feign-form-spring:3.8.0"

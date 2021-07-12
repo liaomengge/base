@@ -6,6 +6,7 @@ import okhttp3.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class LyOkHttpUtil {
-    
+
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
     private static final int RETRY_TIME = 2;//重试次数
@@ -153,7 +154,7 @@ public class LyOkHttpUtil {
 
     private static String execute(Request request, String url) {
         try (Response response = okHttpClient.newCall(request).execute()) {
-            if (response.isSuccessful()) {
+            if (response.isSuccessful() && Objects.nonNull(response.body())) {
                 return response.body().string();
             }
             log.warn("http call fail, [url={}, errorCode = {}, message = {}]", url, response.code(),

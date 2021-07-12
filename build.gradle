@@ -1,7 +1,7 @@
 plugins {
-    id 'se.patrikerdes.use-latest-versions' version '0.2.16' apply false
-    id 'com.github.ben-manes.versions' version '0.38.0' apply false
-    id 'com.github.spotbugs' version '4.7.0' apply false
+    id 'se.patrikerdes.use-latest-versions' version '0.2.17' apply false
+    id 'com.github.ben-manes.versions' version '0.39.0' apply false
+    id 'com.github.spotbugs' version '4.7.2' apply false
     id 'com.diffplug.spotless' version '5.12.4' apply false
     id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 }
