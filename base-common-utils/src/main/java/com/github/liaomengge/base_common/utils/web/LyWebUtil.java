@@ -32,7 +32,7 @@ import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.JO
 @Slf4j
 @UtilityClass
 public class LyWebUtil {
-    
+
     public Optional<ServletRequestAttributes> getRequestAttributes() {
         ServletRequestAttributes requestAttributes =
                 (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -178,7 +178,7 @@ public class LyWebUtil {
         try {
             request.setCharacterEncoding(contentType);
         } catch (UnsupportedEncodingException e) {
-            log.warn("unsupported contentType[" + contentType + "]", e);
+            log.warn("unsupported contentType[{}]", contentType, e);
         }
         try {
             return LyIOUtil.toString(request.getReader());

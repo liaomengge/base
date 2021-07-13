@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class GuavaRateLimitReloadListener implements EnvironmentAware, ApplicationListener<EnvironmentChangeEvent> {
-    
+
     private Environment environment;
 
     @Override
@@ -64,7 +64,7 @@ public class GuavaRateLimitReloadListener implements EnvironmentAware, Applicati
                     rateLimiterMap.clear();
                     flowRuleList.stream().forEach(flowRule -> rateLimiterMap.put(flowRule.getResource(),
                             RateLimiter.create(flowRule.getCount())));
-                    log.info("[Guava RateLimit], [flow] rule config be updated to: " + flowRuleList.toString());
+                    log.info("[Guava RateLimit], [flow] rule config be updated to => {}", flowRuleList.toString());
                 }
             }
         }

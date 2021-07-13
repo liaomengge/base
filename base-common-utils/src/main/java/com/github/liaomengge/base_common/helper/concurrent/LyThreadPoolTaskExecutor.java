@@ -65,12 +65,12 @@ public class LyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
                                 break;
                             }
                         } catch (InterruptedException e) {
-                            log.warn("Interrupted while waiting for executor [" + threadName + "] to terminate");
+                            log.warn("Interrupted while waiting for executor [{}] to terminate", threadName);
                             Thread.currentThread().interrupt();
                         }
                     }
                 } catch (Exception e) {
-                    log.info("thread pool[" + threadName + "] shutdown exception", e);
+                    log.info("thread pool[{}] shutdown exception", threadName, e);
                 }
             }
             log.info("thread pool[{}] shutdown end...", threadName);

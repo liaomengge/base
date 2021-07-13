@@ -24,7 +24,7 @@ import java.net.UnknownHostException;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HttpRetryHandler implements HttpRequestRetryHandler {
-    
+
     private int reTryTimes = 3;//默认重试3次
 
     @Override
@@ -43,14 +43,14 @@ public class HttpRetryHandler implements HttpRequestRetryHandler {
         }
         if (exception instanceof InterruptedIOException || exception instanceof NoHttpResponseException) {
             // Timeout OR 服务端断开连接
-            log.info("retry times: " + executionCount);
+            log.info("retry times: {}", executionCount);
             return true;
         }
         HttpClientContext clientContext = HttpClientContext.adapt(httpContext);
         HttpRequest request = clientContext.getRequest();
         // 如果请求是幂等的, 就再次尝试
         if (!(request instanceof HttpEntityEnclosingRequest)) {
-            log.info("retry times: " + executionCount);
+            log.info("retry times: {}", executionCount);
             return true;
         }
         return false;

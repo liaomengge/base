@@ -20,7 +20,7 @@ public abstract class AbstractBaseJob {
 
     protected void init() {
         //初始化动作
-        log.info("[" + getClass().getSimpleName() + "]开始执行...");
+        log.info("[{}]开始执行...", getClass().getSimpleName());
     }
 
     public abstract void work();
@@ -33,7 +33,7 @@ public abstract class AbstractBaseJob {
         try {
             work();
         } catch (Exception e) {
-            log.error("执行[" + getClass().getSimpleName() + "]异常", e);
+            log.error("执行[{}]异常", getClass().getSimpleName(), e);
         }
 
         long endTime = System.nanoTime();

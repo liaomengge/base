@@ -160,7 +160,7 @@ public class LyOkHttpUtil {
             log.warn("http call fail, [url={}, errorCode = {}, message = {}]", url, response.code(),
                     response.message());
         } catch (Throwable t) {
-            log.warn("http call fail, url=> " + url, t);
+            log.warn("http call fail, url=> {}", url, t);
             throw new CommunicationException("http call fail, url=> " + url, t);
         }
         return null;

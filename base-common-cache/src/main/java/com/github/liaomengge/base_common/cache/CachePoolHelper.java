@@ -122,7 +122,7 @@ public class CachePoolHelper {
                     }
                     return level2Json;
                 } catch (Exception e) {
-                    log.error("获取一二级缓存region[" + region + "],key[" + key + "]失败", e);
+                    log.error("获取一二级缓存region[{}],key[{}]失败", region, key, e);
                 }
             }
 
@@ -198,7 +198,7 @@ public class CachePoolHelper {
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.PUT).region(region).key(key).value(value).build();
             sendPubCmd(cacheDomain);
         } catch (Exception e) {
-            log.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
+            log.error("设置一二级缓存region[{}],key[{}]失败", region, key, e);
         }
     }
 
@@ -217,7 +217,7 @@ public class CachePoolHelper {
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.PUT).region(region).key(key).value(json).build();
             sendPubCmd(cacheDomain);
         } catch (Exception e) {
-            log.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
+            log.error("设置一二级缓存region[{}],key[{}]失败", region, key, e);
         }
     }
 
@@ -235,7 +235,7 @@ public class CachePoolHelper {
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.PUT).region(region).key(key).value(value).build();
             sendPubCmd(cacheDomain);
         } catch (Exception e) {
-            log.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
+            log.error("设置一二级缓存region[{}],key[{}]失败", region, key, e);
         }
     }
 
@@ -254,7 +254,7 @@ public class CachePoolHelper {
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.PUT).region(region).key(key).value(json).build();
             sendPubCmd(cacheDomain);
         } catch (Exception e) {
-            log.error("设置一二级缓存region[" + region + "],key[" + key + "]失败", e);
+            log.error("设置一二级缓存region[{}],key[{}]失败", region, key, e);
         }
     }
 
@@ -290,7 +290,7 @@ public class CachePoolHelper {
                     CacheDomain.builder().notifyTypeEnum(NotifyTypeEnum.DEL).region(region).key(key).build();
             sendPubCmd(cacheDomain);
         } catch (Exception e) {
-            log.error("删除一二级缓存region[" + region + "],key[" + key + "]失败", e);
+            log.error("删除一二级缓存region[{}],key[{}]失败", region, key, e);
         }
     }
 

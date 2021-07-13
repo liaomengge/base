@@ -36,7 +36,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @ConditionalOnClass({JobDetail.class, CronTrigger.class, SchedulerFactoryBean.class})
 @Import(QuartzBeanRegistryConfiguration.class)
 public class QuartzAutoConfiguration {
-    
+
     private final CopyOnWriteArrayList triggerKeyList = Lists.newCopyOnWriteArrayList();
 
     private final QuartzProperties quartzProperties;
@@ -97,7 +97,7 @@ public class QuartzAutoConfiguration {
                 cronTriggerList.add(cronTrigger);
                 triggerKeyList.add(cronTrigger.getKey());
             } catch (Exception e) {
-                log.warn("load job trigger class[" + triggerName + "]fail!!!", e);
+                log.warn("load job trigger class[{}] fail!!!", triggerName, e);
             }
         }
         log.info("load job trigger(" + cronTriggerList.size() + ") ===> [" +
@@ -109,8 +109,8 @@ public class QuartzAutoConfiguration {
         List<JobDetailImpl> jobDetailList = Lists.newArrayList();
         Map<String, Object> beanMap = QuartzBeanDefinitionRegistry.getJobBeanMap();
         if (beanMap.isEmpty()) {
-            log.warn("the package[" + this.quartzProperties.getBasePackage() + "]'s class don't exist or not " +
-                    "inherit AbstractBaseJob");
+            log.warn("the package[{}]'s class don't exist or not inherit AbstractBaseJob",
+                    this.quartzProperties.getBasePackage());
             return jobDetailList;
         }
         List<QuartzProperties.JobInfo> jobInfoList = this.quartzProperties.getJobs();
@@ -133,7 +133,7 @@ public class QuartzAutoConfiguration {
                 JobDetailImpl jobDetail = (JobDetailImpl) methodInvokingJobDetailFactoryBean.getObject();
                 jobDetailList.add(jobDetail);
             } catch (Exception e) {
-                log.warn("load job detail class[" + pkgClassName + "]fail!!!", e);
+                log.warn("load job detail class[{}] fail!!!", pkgClassName, e);
             }
         }
         return jobDetailList;

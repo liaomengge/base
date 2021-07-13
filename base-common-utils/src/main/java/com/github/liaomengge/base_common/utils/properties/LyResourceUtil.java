@@ -20,7 +20,7 @@ import java.util.Properties;
 @Slf4j
 @UtilityClass
 public class LyResourceUtil {
-    
+
     public URL getResource(String resourceName) {
         return Thread.currentThread().getContextClassLoader().getResource(resourceName);
     }
@@ -43,7 +43,7 @@ public class LyResourceUtil {
             inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             properties.load(inputStreamReader);
         } catch (Exception e) {
-            log.warn("load file [" + resourceName + "] fail", e);
+            log.warn("load file[{}] fail", resourceName, e);
         } finally {
             LyIOUtil.closeQuietly(inputStreamReader);
         }

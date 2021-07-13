@@ -35,7 +35,7 @@ import static com.github.liaomengge.base_common.support.misc.consts.ToolConst.SP
  */
 @Slf4j
 public class SentinelFilter implements Filter, EnvironmentAware {
-    
+
     private static final String FRAMEWORK_SENTINEL_ENABLED = "base.framework.sentinel.enabled";
 
     private List<String> excludedUris;
@@ -86,7 +86,7 @@ public class SentinelFilter implements Filter, EnvironmentAware {
             }
             filterChain.doFilter(request, response);
         } catch (BlockException e) {
-            log.warn("[Sentinel Filter] Block Exception when Origin: " + origin + " enter fall back uri: " + uriTarget, e);
+            log.warn("[Sentinel Filter] Block Exception when Origin: {} enter fall back uri: {}", origin, uriTarget, e);
             WebCallbackManager.getUrlBlockHandler().blocked(httpServletRequest, httpServletResponse, e);
             String finalUriTarget = uriTarget;
             _MeterRegistrys.counter(meterRegistry, DayuConst.METRIC_SENTINEL_BLOCKED_PREFIX + finalUriTarget).ifPresent(Counter::increment);

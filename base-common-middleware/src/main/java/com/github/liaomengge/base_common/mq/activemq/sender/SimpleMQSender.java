@@ -45,7 +45,7 @@ public class SimpleMQSender extends BaseMQSender {
     public void convertAndSend(int queueHash, Object message, MessagePostProcessor messagePostProcessor) {
         String queueName = queueConfig.buildQueueName(queueHash);
         if (StringUtils.isBlank(queueName)) {
-            log.error("目标队列为空, 无法发送, 请检查配置！message => " + message.toString());
+            log.error("目标队列为空, 无法发送, 请检查配置！message => {}", message.toString());
             return;
         }
         jmsTemplate.convertAndSend(queueName, message, messagePostProcessor);
@@ -63,7 +63,7 @@ public class SimpleMQSender extends BaseMQSender {
     @Override
     public void convertAndSend(String queueName, Object message, MessagePostProcessor messagePostProcessor) {
         if (StringUtils.isBlank(queueName)) {
-            log.error("目标队列为空, 无法发送, 请检查配置！message => " + message.toString());
+            log.error("目标队列为空, 无法发送, 请检查配置！message => {}", message.toString());
             return;
         }
         jmsTemplate.convertAndSend(queueName, message, messagePostProcessor);

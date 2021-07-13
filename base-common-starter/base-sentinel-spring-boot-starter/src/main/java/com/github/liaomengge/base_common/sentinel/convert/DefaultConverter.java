@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DefaultConverter<T> implements Converter<String, T> {
-    
+
     private T defaultValue = null;
 
     @Override
@@ -23,7 +23,7 @@ public class DefaultConverter<T> implements Converter<String, T> {
             return LyJacksonUtil.fromJson(source, new TypeReference<T>() {
             });
         } catch (Exception e) {
-            log.error("convert source[" + source + "] fail", e);
+            log.error("convert source[{}] fail", source, e);
             return defaultValue;
         }
     }

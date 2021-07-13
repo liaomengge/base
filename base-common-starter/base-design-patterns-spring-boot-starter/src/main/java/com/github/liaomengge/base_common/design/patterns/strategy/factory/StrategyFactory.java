@@ -21,9 +21,9 @@ import java.util.Objects;
  */
 public class StrategyFactory implements ApplicationContextAware {
 
-    private ApplicationContext applicationContext;
+    public Map<String, StrategyHandlerSpec> strategyHandlerClassMap = Maps.newConcurrentMap();
 
-    public static Map<String, StrategyHandlerSpec> strategyHandlerClassMap = Maps.newConcurrentMap();
+    private ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

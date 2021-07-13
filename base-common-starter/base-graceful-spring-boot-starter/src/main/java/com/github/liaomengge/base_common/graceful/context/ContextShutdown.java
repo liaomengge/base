@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class ContextShutdown implements ApplicationListener<ContextClosedEvent>, ApplicationContextAware {
-    
+
     private ApplicationContext applicationContext;
     private GracefulProperties gracefulProperties;
 
@@ -80,14 +80,14 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
                             break;
                         }
                     } catch (InterruptedException e) {
-                        log.warn("Interrupted while waiting for executor [" + threadName + "] to terminate");
+                        log.warn("Interrupted while waiting for executor [{}] to terminate", threadName);
                         Thread.currentThread().interrupt();
                     }
                     log.info("thread pool task executor[{}], {} thread(s) active, {} seconds remaining",
                             threadName, taskExecutor.getThreadPoolExecutor().getActiveCount(), remaining);
                 }
             } catch (Exception e) {
-                log.info("thread pool task executor[" + threadName + "] shutdown exception", e);
+                log.info("thread pool task executor[{}] shutdown exception", threadName, e);
             }
         }
         log.info("thread pool task executor[{}] shutdown end...", threadName);
@@ -105,14 +105,14 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
                             break;
                         }
                     } catch (InterruptedException e) {
-                        log.warn("Interrupted while waiting for executor [" + threadName + "] to terminate");
+                        log.warn("Interrupted while waiting for executor [{}] to terminate", threadName);
                         Thread.currentThread().interrupt();
                     }
                     log.info("thread pool task scheduler[{}], {} thread(s) active, {} seconds remaining",
                             threadName, taskScheduler.getScheduledThreadPoolExecutor().getActiveCount(), remaining);
                 }
             } catch (Exception e) {
-                log.info("thread pool task scheduler[" + threadName + "] shutdown exception", e);
+                log.info("thread pool task scheduler[{}] shutdown exception", threadName, e);
             }
         }
         log.info("thread pool task scheduler[{}] shutdown end...", threadName);
@@ -130,14 +130,14 @@ public class ContextShutdown implements ApplicationListener<ContextClosedEvent>,
                             break;
                         }
                     } catch (InterruptedException e) {
-                        log.warn("Interrupted while waiting for executor [" + threadName + "] to terminate");
+                        log.warn("Interrupted while waiting for executor [{}] to terminate", threadName);
                         Thread.currentThread().interrupt();
                     }
                     log.info("thread pool task scheduler[{}], {} thread(s) active, {} seconds remaining",
                             threadName, executor.getActiveCount(), remaining);
                 }
             } catch (Exception e) {
-                log.info("thread pool executor[" + threadName + "] shutdown exception", e);
+                log.info("thread pool executor[{}] shutdown exception", threadName, e);
             }
         }
         log.info("thread pool executor[{}] shutdown end...", threadName);

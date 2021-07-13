@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @UtilityClass
 public class LyIdempotentUtil {
-    
+
     private final int RETRY_NUM = 3;
 
     public void process(IdempotentHelper helper) {
@@ -30,7 +30,7 @@ public class LyIdempotentUtil {
         }
 
         if (reTry < 0) {
-            log.error("重试" + RETRY_NUM + "次,仍执行失败");
+            log.error("重试{}次,仍执行失败", RETRY_NUM);
             helper.doRetryOver();
         }
     }

@@ -15,13 +15,13 @@ import java.nio.charset.Charset;
 @Slf4j
 @UtilityClass
 public class LyMoreIOUtil {
-    
+
     public String loadScript(String fileName) {
         try (Reader reader =
                      new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName), Charset.defaultCharset())) {
             return CharStreams.toString(reader);
         } catch (IOException e) {
-            log.error("加载文件[" + fileName + "]失败", e);
+            log.error("加载文件[{}]失败", fileName, e);
         }
 
         return null;

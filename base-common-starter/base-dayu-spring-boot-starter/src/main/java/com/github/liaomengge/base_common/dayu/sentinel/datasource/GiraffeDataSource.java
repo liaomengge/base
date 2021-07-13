@@ -63,10 +63,10 @@ public class GiraffeDataSource<T> extends AbstractDataSource<String, T> implemen
                         "source", this.rule);
             }
             if (getProperty().updateValue(newValue)) {
-                log.info("[DynamicSentinelProperty] [" + this.rule + "] rule config be updated to: " + newValue);
+                log.info("[DynamicSentinelProperty] [{}] rule config be updated to: {}", this.rule, newValue);
             }
         } catch (Throwable ex) {
-            log.warn("[GiraffeDataSource] Error when loading [" + this.rule + "] rule config", ex);
+            log.warn("[GiraffeDataSource] Error when loading [{}] rule config", this.rule, ex);
         }
     }
 

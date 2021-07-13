@@ -1,7 +1,6 @@
 package com.github.liaomengge.base_common.mq.activemq.listener;
 
 
-import com.github.liaomengge.base_common.mq.activemq.AbstractMQMessageListener;
 import com.github.liaomengge.base_common.mq.activemq.domain.QueueConfig;
 import com.github.liaomengge.base_common.mq.activemq.monitor.DefaultMQMonitor;
 import com.github.liaomengge.base_common.mq.consts.MetricsConst;
@@ -28,7 +27,7 @@ public abstract class SimpleMQMessageListener2<T extends MQMessage> extends Base
                 message.acknowledge();
             } catch (JMSException e) {
                 mqMonitor.monitorCount(MetricsConst.EXEC_ACK_EXCEPTION + "." + this.queueConfig.getBaseQueueName());
-                AbstractMQMessageListener.log.error("Enq Message[" + message.toString() + "], Ack Exception ===> ", e);
+                log.error("Enq Message[" + message.toString() + "], Ack Exception ===> ", e);
             }
         }
     }

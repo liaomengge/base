@@ -14,7 +14,7 @@ public abstract class AbstractSentinelHandler {
         try {
             doInit();
         } catch (Exception e) {
-            log.error("[" + this.getClass().getSimpleName() + "] handler doInit fail", e);
+            log.error("[{}] handler doInit fail", this.getClass().getSimpleName(), e);
         }
     }
 

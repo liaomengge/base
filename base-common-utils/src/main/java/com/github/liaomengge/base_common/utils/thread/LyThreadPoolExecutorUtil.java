@@ -13,7 +13,7 @@ import java.util.concurrent.*;
 @Slf4j
 @UtilityClass
 public class LyThreadPoolExecutorUtil {
-    
+
     public ThreadPoolExecutor buildThreadPool(int corePoolSize, int maximumPoolSize, String threadName,
                                               long keepAliveTime, TimeUnit unit,
                                               BlockingQueue<Runnable> workQueue,
@@ -231,12 +231,12 @@ public class LyThreadPoolExecutorUtil {
                                 break;
                             }
                         } catch (InterruptedException e) {
-                            log.warn("Interrupted while waiting for executor [" + threadName + "] to terminate");
+                            log.warn("Interrupted while waiting for executor [{}] to terminate", threadName);
                             Thread.currentThread().interrupt();
                         }
                     }
                 } catch (Exception e) {
-                    log.info("thread pool[" + executor + "] shutdown exception", e);
+                    log.info("thread pool[{}] shutdown exception", executor, e);
                 }
             }
             log.info("thread pool[{}] shutdown end...", executor);

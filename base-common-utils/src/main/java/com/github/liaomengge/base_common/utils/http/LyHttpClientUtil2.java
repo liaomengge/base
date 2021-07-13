@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class LyHttpClientUtil2 {
-    
+
     private static final String DEFAULT_ENCODING = "UTF-8";
     private static final String DEFAULT_MEDIA_TYPE_JSON = "application/json";
     private static final String DEFAULT_MEDIA_TYPE_FORM = "application/x-www-form-urlencoded";
@@ -235,7 +235,7 @@ public class LyHttpClientUtil2 {
         } else {
             LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
         }
-        log.warn("call service fail, url: " + url, t);
+        log.warn("call service fail, url: {}", url, t);
         throw new CommunicationException("http call fail, url=> " + url, t);
     }
 

@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class LyHttpClientUtil3 {
-    
+
     private static final String DEFAULT_HTTPCLIENT_FILE = "classpath:httpclient.properties";
 
     private static final String DEFAULT_ENCODING = "UTF-8";
@@ -303,7 +303,7 @@ public class LyHttpClientUtil3 {
         } else {
             LyAlarmLogUtil.ClientProjEnum.BASE_PREFIX_CALLER_BIZ.error(t);
         }
-        log.warn("call service fail, url: " + url, t);
+        log.warn("call service fail, url: {}", url, t);
         throw new CommunicationException("http call fail, url=> " + url, t);
     }
 

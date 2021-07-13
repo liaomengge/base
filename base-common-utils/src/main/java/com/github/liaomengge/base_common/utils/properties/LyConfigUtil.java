@@ -21,7 +21,7 @@ import java.util.Properties;
 @Slf4j
 @UtilityClass
 public class LyConfigUtil {
-    
+
     public final String CLASSPATH_FILE_FLAG = "classpath:";
 
     public Properties loadProperties(String fileName) {
@@ -52,7 +52,7 @@ public class LyConfigUtil {
                 properties.load(bufferedReader);
             }
         } catch (Throwable e) {
-            log.warn("load file[" + fileName + "] fail", e);
+            log.warn("load file[{}] fail", fileName, e);
         }
         return properties;
     }
@@ -78,7 +78,7 @@ public class LyConfigUtil {
                 list.add(urls.nextElement());
             }
         } catch (Throwable e) {
-            log.warn("load file[" + fileName + "] fail", e);
+            log.warn("load file[{}] fail", fileName, e);
         }
 
         if (list.isEmpty()) {
@@ -93,7 +93,7 @@ public class LyConfigUtil {
                 p.load(bufferedReader);
                 properties.putAll(p);
             } catch (Throwable e) {
-                log.warn("load file[" + fileName + "] fail", e);
+                log.warn("load file[{}] fail", fileName, e);
             }
         }
         return properties;

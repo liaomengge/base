@@ -28,10 +28,10 @@ public abstract class RedisMessageSubscribe implements MessageListener {
         if (this.isSubscribe() && message != null) {
             String subscribeMessage = message.toString();
             if (StringUtils.isBlank(subscribeMessage) || containSpecialChar(subscribeMessage) || overMaxLength(subscribeMessage)) {
-                log.warn("发布的消息[" + subscribeMessage + "]不合法!");
+                log.warn("发布的消息[{}]不合法!", subscribeMessage);
                 return;
             }
-            log.info("发布的消息 ===> " + subscribeMessage);
+            log.info("发布的消息 ===> {}", subscribeMessage);
 
             this.doHandle(subscribeMessage);
         }
