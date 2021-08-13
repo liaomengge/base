@@ -41,7 +41,7 @@ subprojects {
     apply plugin: "io.spring.dependency-management"
 
     group = 'com.github.liaomengge'
-    version = '3.0.1-SNAPSHOT'
+    version = '3.2.0-SNAPSHOT'
 
     apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
     apply from: "${rootProject.projectDir}/gradle/publish-jar.gradle"
