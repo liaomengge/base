@@ -75,7 +75,7 @@ public class DefaultFilterChain<T, R> implements FilterChain<T, R> {
     }
 
     @Override
-    public R doFilter(T t) throws Throwable {
+    public R filter(T t) throws Throwable {
         if (hasNextFilter()) {
             Filter<T, R> filter = filters.get(pos++);
             if (filter.skip(t)) {
@@ -83,7 +83,7 @@ public class DefaultFilterChain<T, R> implements FilterChain<T, R> {
             }
             return filter.doFilter(t, this);
         }
-        return apply(t);
+        return this.doFilter(t);
     }
 
 }

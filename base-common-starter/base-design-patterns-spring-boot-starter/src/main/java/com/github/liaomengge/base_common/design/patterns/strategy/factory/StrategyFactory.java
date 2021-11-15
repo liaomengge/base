@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 public class StrategyFactory implements ApplicationContextAware {
 
-    public Map<String, StrategyHandlerSpec> strategyHandlerClassMap = Maps.newConcurrentMap();
+    protected final Map<String, StrategyHandlerSpec> strategyHandlerClassMap = Maps.newConcurrentMap();
 
     private ApplicationContext applicationContext;
 

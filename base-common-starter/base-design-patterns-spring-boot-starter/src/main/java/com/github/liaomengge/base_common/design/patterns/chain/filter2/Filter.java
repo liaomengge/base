@@ -12,18 +12,19 @@ public abstract class Filter<T, R> {
     @Getter
     private Filter<T, R> nextFilter;
 
-    public R doFilter(T t) throws Throwable {
+    public R filter(T t) throws Throwable {
+        R result = null;
         if (isOwn(t)) {
-            return this.apply(t);
+            result = this.doFilter(t);
         }
         Filter<T, R> nextFilter = this.getNextFilter();
         if (Objects.nonNull(nextFilter)) {
-            return nextFilter.doFilter(t);
+            return nextFilter.filter(t);
         }
-        return null;
+        return result;
     }
 
-    protected abstract R apply(T t) throws Throwable;
+    protected abstract R doFilter(T t) throws Throwable;
 
     protected abstract boolean isOwn(T t);
 

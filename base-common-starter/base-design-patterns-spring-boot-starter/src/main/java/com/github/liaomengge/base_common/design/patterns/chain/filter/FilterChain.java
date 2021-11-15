@@ -5,9 +5,9 @@ package com.github.liaomengge.base_common.design.patterns.chain.filter;
  */
 public interface FilterChain<T, R> {
 
-    R doFilter(T t) throws Throwable;
+    R filter(T t) throws Throwable;
 
-    default R apply(T t) throws Throwable {
+    default R doFilter(T t) throws Throwable {
         return null;
     }
 }

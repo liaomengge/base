@@ -17,6 +17,10 @@ public class _Objects {
         return Objects.isNull(t) ? defaultValue : t;
     }
 
+    public <T, R> R defaultIfNull(T t, Function<T, R> function) {
+        return Optional.ofNullable(t).map(function).orElse(null);
+    }
+
     public <T, R> R defaultIfNull(T t, Function<T, R> function, R defaultValue) {
         return Optional.ofNullable(t).map(function).orElse(defaultValue);
     }

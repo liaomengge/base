@@ -15,7 +15,7 @@ public class TestFilterMain {
         list.add(new B());
         list.add(new C());
         StringDefaultFilterChain defaultFilterChain = new StringDefaultFilterChain(list);
-        String result = defaultFilterChain.doFilter("x");
+        String result = defaultFilterChain.filter("x");
         System.out.println("result ==> " + result);
     }
 
@@ -24,7 +24,7 @@ public class TestFilterMain {
         @Override
         public String doFilter(String s, FilterChain<String, String> filterChain) throws Throwable {
             System.out.println("A.doFilter ===> " + s);
-            return filterChain.doFilter(s);
+            return filterChain.filter(s);
         }
 
         @Override
@@ -38,7 +38,7 @@ public class TestFilterMain {
         @Override
         public String doFilter(String s, FilterChain<String, String> filterChain) throws Throwable {
             System.out.println("B.doFilter ===> " + s);
-            return filterChain.doFilter(s);
+            return filterChain.filter(s);
         }
 
         @Override
@@ -52,7 +52,7 @@ public class TestFilterMain {
         @Override
         public String doFilter(String s, FilterChain<String, String> filterChain) throws Throwable {
             System.out.println("C.doFilter ===> " + s);
-            return filterChain.doFilter(s);
+            return filterChain.filter(s);
         }
 
         @Override
@@ -68,7 +68,7 @@ public class TestFilterMain {
         }
 
         @Override
-        public String apply(String s) throws Throwable {
+        public String doFilter(String s) throws Throwable {
             return s + " => default";
         }
     }
