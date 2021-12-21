@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 @Slf4j
 public class NacosApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-    
+
     private AtomicBoolean switchTraffic = new AtomicBoolean(false);
 
     @Override
@@ -36,14 +36,14 @@ public class NacosApplicationContextInitializer implements ApplicationContextIni
                         nacosDiscoveryProperties.setInstanceEnabled(false);
                         log.info("set init instance enabled[false]...");
                     }
-                    Map<String, String> metaMap = nacosDiscoveryProperties.getMetadata();
-                    metaMap.put(NacosConst.MetadataConst.SPRING_BOOT_VERSION,
+                    Map<String, String> metadataMap = nacosDiscoveryProperties.getMetadata();
+                    metadataMap.put(NacosConst.MetadataConst.SPRING_BOOT_VERSION,
                             SpringBootVersion.getVersion());
-                    metaMap.put(NacosConst.MetadataConst.SPRING_APPLICATION_NAME,
+                    metadataMap.put(NacosConst.MetadataConst.SPRING_APPLICATION_NAME,
                             environment.getProperty(NacosConst.MetadataConst.SPRING_APPLICATION_NAME));
-                    metaMap.put(NacosConst.MetadataConst.APPLICATION_CONTEXT_PATH,
+                    metadataMap.put(NacosConst.MetadataConst.APPLICATION_CONTEXT_PATH,
                             environment.getProperty(NacosConst.MetadataConst.APPLICATION_CONTEXT_PATH, "/"));
-                    metaMap.put(NacosConst.MetadataConst.APPLICATION_SERVER_PORT,
+                    metadataMap.put(NacosConst.MetadataConst.APPLICATION_SERVER_PORT,
                             environment.getProperty(NacosConst.MetadataConst.APPLICATION_SERVER_PORT));
                 }
                 return bean;

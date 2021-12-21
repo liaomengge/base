@@ -10,6 +10,7 @@ import com.github.liaomengge.base_common.utils.date.LyDateUtil;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
@@ -55,6 +56,9 @@ public class LyJsonUtil {
         if (object instanceof String) {
             return (String) object;
         }
+        if (ClassUtils.isPrimitiveOrWrapper(object.getClass())) {
+            return String.valueOf(object);
+        }
         return JSON.toJSONString(object);
     }
 
@@ -72,6 +76,9 @@ public class LyJsonUtil {
         }
         if (object instanceof String) {
             return (String) object;
+        }
+        if (ClassUtils.isPrimitiveOrWrapper(object.getClass())) {
+            return String.valueOf(object);
         }
         return JSON.toJSONString(object, SerializerFeature.DisableCircularReferenceDetect);
     }
@@ -91,6 +98,9 @@ public class LyJsonUtil {
         }
         if (object instanceof String) {
             return (String) object;
+        }
+        if (ClassUtils.isPrimitiveOrWrapper(object.getClass())) {
+            return String.valueOf(object);
         }
         return JSON.toJSONString(object, features);
     }

@@ -26,6 +26,7 @@ public class RestTemplateProperties {
         private int maxTotal = 256;
         private int defaultMaxPerRoute = 128;
         private boolean enabledTraceHeader = true;
+        private int keepAliveTime = DEFAULT_TIMEOUT_MILLIS;
         private int connectionTimeout = DEFAULT_TIMEOUT_MILLIS;
         private int readTimeout = DEFAULT_TIMEOUT_MILLIS;
         private int connectionRequestTimeout = DEFAULT_TIMEOUT_MILLIS;

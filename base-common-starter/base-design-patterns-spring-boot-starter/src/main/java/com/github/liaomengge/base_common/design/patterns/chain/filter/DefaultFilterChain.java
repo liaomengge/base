@@ -79,7 +79,7 @@ public class DefaultFilterChain<T, R> implements FilterChain<T, R> {
         if (hasNextFilter()) {
             Filter<T, R> filter = filters.get(pos++);
             if (filter.skip(t)) {
-                return this.doFilter(t);
+                return this.filter(t);
             }
             return filter.doFilter(t, this);
         }

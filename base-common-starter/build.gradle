@@ -10,10 +10,10 @@ buildscript {
 }
 
 plugins {
-    id 'se.patrikerdes.use-latest-versions' version '0.2.17'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.18'
     id 'com.github.ben-manes.versions' version '0.39.0'
-    id 'com.github.spotbugs' version '4.7.2'
-    id 'com.diffplug.spotless' version '5.12.4'
+    id 'com.github.spotbugs' version '4.7.10'
+    id 'com.diffplug.spotless' version '5.12.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
@@ -41,7 +41,7 @@ subprojects {
     apply plugin: "io.spring.dependency-management"
 
     group = 'com.github.liaomengge'
-    version = '3.1.0.RELEASE'
+    version = '3.1.1-SNAPSHOT'
 
     apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
     apply from: "${rootProject.projectDir}/gradle/publish-jar.gradle"

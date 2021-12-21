@@ -45,9 +45,13 @@ public class QuartzBeanDefinitionRegistry implements EnvironmentAware, Applicati
         this.environment = environment;
     }
 
+    private static void setStaticApplicationContext(ApplicationContext applicationContext) {
+        staticApplicationContext = applicationContext;
+    }
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        QuartzBeanDefinitionRegistry.staticApplicationContext = applicationContext;
+        setStaticApplicationContext(applicationContext);
     }
 
     public static ApplicationContext getApplicationContext() {

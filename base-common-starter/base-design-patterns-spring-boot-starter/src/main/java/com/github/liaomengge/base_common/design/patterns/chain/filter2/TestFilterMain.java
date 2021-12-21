@@ -48,10 +48,10 @@ public class TestFilterMain {
             return s + 'A';
         }
 
-        @Override
-        public boolean isOwn(String s) {
-            return s.length() == 1;
-        }
+        //@Override
+        //public boolean skip(String s) {
+        //    return s.length() == 1;
+        //}
     }
 
     public static class B extends Filter<String, String> {
@@ -62,10 +62,10 @@ public class TestFilterMain {
             return s + 'B';
         }
 
-        @Override
-        public boolean isOwn(String s) {
-            return s.length() == 1;
-        }
+        //@Override
+        //public boolean skip(String s) {
+        //    return s.length() == 1;
+        //}
     }
 
     public static class C extends Filter<String, String> {
@@ -76,9 +76,9 @@ public class TestFilterMain {
             return s + 'C';
         }
 
-        @Override
-        public boolean isOwn(String s) {
-            return s.length() == 1;
-        }
+        //@Override
+        //public boolean skip(String s) {
+        //    return s.length() == 1;
+        //}
     }
 }

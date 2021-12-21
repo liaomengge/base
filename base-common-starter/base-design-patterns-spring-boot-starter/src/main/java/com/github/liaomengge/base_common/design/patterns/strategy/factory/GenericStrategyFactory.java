@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public abstract class GenericStrategyFactory<K, V> implements ApplicationContextAware {
 
-    protected final Map<K, V> strategyHandlerMap = Maps.newConcurrentMap();
+    private final Map<K, V> strategyHandlerMap = Maps.newConcurrentMap();
 
     private ApplicationContext applicationContext;
 
@@ -31,5 +31,9 @@ public abstract class GenericStrategyFactory<K, V> implements ApplicationContext
         Class<V> clazz = LyGenericUtil.getActualTypeArguments4GenericInterface(this.getClass(), 1);
         Map<String, V> tMap = this.applicationContext.getBeansOfType(clazz);
         tMap.forEach((key, value) -> strategyHandlerMap.put(this.getStrategyTypeName(value), value));
+    }
+
+    public V getInstance(K key) {
+        return strategyHandlerMap.get(key);
     }
 }

@@ -7,6 +7,7 @@ import com.github.liaomengge.base_common.helper.rest.interceptor.HeaderHttpReque
 import com.github.liaomengge.base_common.helper.rest.interceptor.SentinelHttpRequestInterceptor;
 import com.github.liaomengge.base_common.helper.rest.sync.SyncClientTemplate;
 import com.github.liaomengge.base_common.helper.rest.sync.interceptor.HttpHeaderInterceptor;
+import com.github.liaomengge.base_common.helper.rest.sync.keepalive.HttpConnectionKeepAliveStrategy;
 import com.github.liaomengge.base_common.helper.rest.sync.retry.HttpRetryHandler;
 import com.github.liaomengge.base_common.utils.json.LyJacksonUtil;
 import com.github.liaomengge.base_common.utils.thread.LyThreadFactoryBuilderUtil;
@@ -57,7 +58,7 @@ import java.util.concurrent.TimeUnit;
 @ConditionalOnClass(SyncClientTemplate.class)
 @EnableConfigurationProperties(RestTemplateProperties.class)
 public class RestTemplateAutoConfiguration {
-    
+
     private static final String DAYU_SENTINEL_ENABLED = "base.dayu.sentinel.enabled";
     private static final String SPRING_APPLICATION_NAME = "spring.application.name";
 
@@ -81,6 +82,13 @@ public class RestTemplateAutoConfiguration {
     @ConditionalOnClass(MeterRegistry.class)
     public SentinelHttpRequestInterceptor sentinelHttpRequestInterceptor(MeterRegistry meterRegistry) {
         return new SentinelHttpRequestInterceptor(meterRegistry);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public HttpConnectionKeepAliveStrategy httpConnectionKeepAliveStrategy() {
+        RestTemplateProperties.HttpClientProperties httpClientProperties = this.restTemplateProperties.getHttp();
+        return new HttpConnectionKeepAliveStrategy(httpClientProperties.getKeepAliveTime());
     }
 
     @Bean
@@ -123,7 +131,8 @@ public class RestTemplateAutoConfiguration {
     @ConditionalOnMissingBean
     public RestTemplate restTemplate(PoolingHttpClientConnectionManager poolingHttpClientConnectionManager,
                                      HeaderHttpRequestInterceptor headerHttpRequestInterceptor,
-                                     SentinelHttpRequestInterceptor sentinelHttpRequestInterceptor) {
+                                     SentinelHttpRequestInterceptor sentinelHttpRequestInterceptor,
+                                     HttpConnectionKeepAliveStrategy httpConnectionKeepAliveStrategy) {
         RestTemplateProperties.HttpClientProperties httpClientProperties = this.restTemplateProperties.getHttp();
         RestTemplate restTemplate = new RestTemplate();
 
@@ -131,6 +140,7 @@ public class RestTemplateAutoConfiguration {
 
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
         httpClientBuilder.setConnectionManager(poolingHttpClientConnectionManager);
+        httpClientBuilder.setKeepAliveStrategy(httpConnectionKeepAliveStrategy);
         httpClientBuilder.setRetryHandler(retryHandler);
         if (httpClientProperties.isEnabledTraceHeader()) {
             httpClientBuilder.addInterceptorFirst(new HttpHeaderInterceptor());

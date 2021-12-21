@@ -1,6 +1,7 @@
 package com.github.liaomengge.base_common.utils.thread;
 
 import com.github.liaomengge.base_common.helper.concurrent.LyThreadPoolExecutor;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -190,6 +191,14 @@ public class LyThreadPoolExecutorUtil {
 
     public ThreadPoolExecutor buildCpuCoreThreadPool(String threadName, int queueCapacity) {
         return buildCpuCoreThreadPool(threadName, new LinkedBlockingQueue<>(queueCapacity));
+    }
+
+    public ScheduledExecutorService newScheduledThreadPool(int corePoolSize, ThreadFactory threadFactory) {
+        return Executors.newScheduledThreadPool(corePoolSize, threadFactory);
+    }
+
+    public ScheduledExecutorService newScheduledThreadPool(int corePoolSize, String threadNameFormat) {
+        return newScheduledThreadPool(corePoolSize, new ThreadFactoryBuilder().setNameFormat(threadNameFormat).build());
     }
 
     public void awaitShutdown(ThreadPoolExecutor executor) {

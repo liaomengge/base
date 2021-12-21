@@ -13,6 +13,7 @@ public class LyToStringUtil {
 
     /**
      * 打印出子类和父类的属性, 效率略低
+     * 或者@ToString(callSuper = true)
      *
      * @param object
      * @return
@@ -27,7 +28,7 @@ public class LyToStringUtil {
      * @param object
      * @return
      */
-    public String toString2(Object object) {
+    public String toGuavaString(Object object) {
         return MoreObjects.toStringHelper(object.getClass().getSimpleName()).omitNullValues().addValue(object).toString();
     }
 

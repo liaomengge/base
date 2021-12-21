@@ -48,45 +48,45 @@ public class RetrofitHelper {
 
     /************************************************华丽的分割线*******************************************************/
 
-    public String execute2(Call<ResponseBody> call) {
-        return execute2(call, true);
+    public String executeToString(Call<ResponseBody> call) {
+        return executeToString(call, true);
     }
 
-    public String execute2(Call<ResponseBody> call, boolean retry) {
+    public String executeToString(Call<ResponseBody> call, boolean retry) {
         try {
             Response<ResponseBody> response = retry ? retryTemplate.execute(context -> call.clone().execute()) :
                     call.execute();
-            return extract2(response);
+            return extractToString(response);
         } catch (Throwable t) {
             this.handleThrowable(t);
         }
         return null;
     }
 
-    public <T> T execute2(Call<ResponseBody> call, Class<T> respClass) {
-        return execute2(call, respClass, true);
+    public <T> T executeToString(Call<ResponseBody> call, Class<T> respClass) {
+        return executeToString(call, respClass, true);
     }
 
-    public <T> T execute2(Call<ResponseBody> call, Class<T> respClass, boolean retry) {
+    public <T> T executeToString(Call<ResponseBody> call, Class<T> respClass, boolean retry) {
         try {
             Response<ResponseBody> response = retry ? retryTemplate.execute(context -> call.clone().execute()) :
                     call.execute();
-            return extract2(response, respClass);
+            return extractToString(response, respClass);
         } catch (Throwable t) {
             this.handleThrowable(t);
         }
         return null;
     }
 
-    private String extract2(Response<ResponseBody> response) throws IOException {
+    private String extractToString(Response<ResponseBody> response) throws IOException {
         if (response.isSuccessful()) {
             return response.body().string();
         }
         return response.errorBody().string();
     }
 
-    private <T> T extract2(Response<ResponseBody> response, Class<T> clazz) throws IOException {
-        return LyJacksonUtil.fromJson(extract2(response), clazz);
+    private <T> T extractToString(Response<ResponseBody> response, Class<T> clazz) throws IOException {
+        return LyJacksonUtil.fromJson(extractToString(response), clazz);
     }
 
     /************************************************华丽的分割线*******************************************************/

@@ -46,17 +46,18 @@ public class EurekaApplicationContextInitializer implements ApplicationContextIn
                         log.info("set init status[OUT_OF_SERVICE]...");
                     }
 
-                    Map<String, String> metaMap = instanceConfigBean.getMetadataMap();
-                    metaMap.put(EurekaConst.MetadataConst.SPRING_BOOT_VERSION,
+                    Map<String, String> metadataMap = instanceConfigBean.getMetadataMap();
+                    metadataMap.put(EurekaConst.MetadataConst.SPRING_BOOT_VERSION,
                             SpringBootVersion.getVersion());
-                    metaMap.put(EurekaConst.MetadataConst.SPRING_APPLICATION_NAME,
+                    metadataMap.put(EurekaConst.MetadataConst.SPRING_APPLICATION_NAME,
                             environment.getProperty(EurekaConst.MetadataConst.SPRING_APPLICATION_NAME));
-                    metaMap.put(EurekaConst.MetadataConst.APPLICATION_CONTEXT_PATH,
+                    metadataMap.put(EurekaConst.MetadataConst.APPLICATION_CONTEXT_PATH,
                             environment.getProperty(EurekaConst.MetadataConst.APPLICATION_CONTEXT_PATH, "/"));
-                    metaMap.put(EurekaConst.MetadataConst.APPLICATION_SERVER_PORT,
+                    metadataMap.put(EurekaConst.MetadataConst.APPLICATION_SERVER_PORT,
                             environment.getProperty(EurekaConst.MetadataConst.APPLICATION_SERVER_PORT));
-                    metaMap.put(EurekaConst.MetadataConst.PRESERVED_REGISTER_TIME, LyJdk8DateUtil.getNowDate2String());
-                    metaMap.put(BaseConst.BASE_FRAMEWORK_VERSION_NAME, BaseConst.BASE_FRAMEWORK_VERSION_VALUE);
+                    metadataMap.put(EurekaConst.MetadataConst.PRESERVED_REGISTER_TIME,
+                            LyJdk8DateUtil.getNowDate2String());
+                    metadataMap.put(BaseConst.BASE_FRAMEWORK_VERSION_NAME, BaseConst.BASE_FRAMEWORK_VERSION_VALUE);
                 }
                 return bean;
             }

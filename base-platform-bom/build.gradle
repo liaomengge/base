@@ -31,7 +31,7 @@ wrapper {
     gradleVersion = '5.6.4'
 }
 
-version = '3.1.0.RELEASE'
+version = '3.1.1-SNAPSHOT'
 
 apply from: "${rootProject.projectDir}/gradle/publish-properties.gradle"
 apply from: "${rootProject.projectDir}/gradle/publish-bom.gradle"
@@ -41,6 +41,8 @@ def versions = [
         springCloud       : 'Hoxton.SR12',
         alibabaSpringCloud: '2.2.6.RELEASE'
 ]
+
+ext['log4j2.version'] = '2.16.0'
 
 dependencyManagement {
     imports {
@@ -53,7 +55,7 @@ dependencyManagement {
 
         dependency "com.google.auto.service:auto-service:1.0-rc6"
 
-        dependency "com.google.guava:guava:30.1.1-jre"
+        dependency "com.google.guava:guava:31.0.1-jre"
         dependency("net.javacrumbs.future-converter:future-converter-spring-java8:1.2.0") {
             exclude 'com.google.guava:guava'
         }
@@ -63,17 +65,17 @@ dependencyManagement {
         dependency("net.javacrumbs.future-converter:future-converter-java8-guava:1.2.0") {
             exclude 'com.google.guava:guava'
         }
-        dependency("com.spotify:futures-extra:4.3.0") {
+        dependency("com.spotify:futures-extra:4.3.1") {
             exclude 'com.google.guava:guava'
         }
 
         dependency "commons-io:commons-io:2.8.0"
         dependency "commons-beanutils:commons-beanutils:1.9.4"
         dependency "org.apache.commons:commons-lang3:3.12.0"
-        dependency "org.apache.commons:commons-compress:1.20"
+        dependency "org.apache.commons:commons-compress:1.21"
         dependency "org.apache.commons:commons-text:1.9"
         dependency "org.apache.commons:commons-collections4:4.4"
-        dependency "org.reflections:reflections:0.9.12"
+        dependency "org.reflections:reflections:0.10.2"
 
         dependency("com.squareup.retrofit2:converter-scalars:2.9.0") {
             exclude 'com.squareup.retrofit2:retrofit'
@@ -89,34 +91,33 @@ dependencyManagement {
         }
 
         dependency "net.sourceforge.jexcelapi:jxl:2.6.12"
-        dependency "com.dyuproject.protostuff:protostuff-core:1.1.6"
-        dependency "com.dyuproject.protostuff:protostuff-core:1.1.6"
-        dependency "com.dyuproject.protostuff:protostuff-runtime:1.1.6"
+        dependency "com.dyuproject.protostuff:protostuff-core:1.2.2"
+        dependency "com.dyuproject.protostuff:protostuff-runtime:1.2.2"
 
         dependency "com.lmax:disruptor:3.4.4"
-        dependency "org.influxdb:influxdb-java:2.21"
+        dependency "org.influxdb:influxdb-java:2.22"
 
-        dependency "com.thoughtworks.xstream:xstream:1.4.17"
+        dependency "com.thoughtworks.xstream:xstream:1.4.18"
 
-        dependency "com.taobao.text:text-ui:0.0.2"
-        dependency "com.alibaba:fastjson:1.2.76"
-        dependency "com.alibaba:transmittable-thread-local:2.12.1"
+        dependency "com.taobao.text:text-ui:0.0.3"
+        dependency "com.alibaba:fastjson:1.2.79"
+        dependency "com.alibaba:transmittable-thread-local:2.12.3"
         dependency "com.alibaba:log4j2-ttl-thread-context-map:1.3.3"
 
         /*************************************************db依赖*******************************************************/
 
         dependency "tk.mybatis:mapper:4.1.5"
-        dependency "org.mybatis:mybatis:3.5.7"
+        dependency "org.mybatis:mybatis:3.5.8"
         dependency "org.mybatis:mybatis-spring:2.0.6"
-        dependency "com.github.pagehelper:pagehelper:5.2.0"
-        dependency "com.alibaba:druid:1.2.5"
+        dependency "com.github.pagehelper:pagehelper:5.3.0"
+        dependency "com.alibaba:druid:1.2.8"
         dependency "org.apache.shardingsphere:sharding-jdbc-core:4.1.1"
 
         /***********************************************middleware依赖**************************************************/
 
         dependency "org.apache.activemq:activemq-core:5.7.0"
 
-        dependency "org.redisson:redisson:3.16.0"
+        dependency "org.redisson:redisson:3.16.6"
 
         dependency "com.101tec:zkclient:0.11"
         dependency("org.apache.curator:curator-client:4.3.0") {
