@@ -18,7 +18,7 @@ public enum RejectionPolicyEnum {
     DISCARD_OLDEST_POLICY("DiscardOldestPolicy"),
     ABORT_POLICY("AbortPolicy");
 
-    private String rejectionPolicy;
+    private final String rejectionPolicy;
 
     public static RejectionPolicyEnum matchRejectionPolicy(String rejectionPolicy) {
         return Arrays.stream(RejectionPolicyEnum.values())

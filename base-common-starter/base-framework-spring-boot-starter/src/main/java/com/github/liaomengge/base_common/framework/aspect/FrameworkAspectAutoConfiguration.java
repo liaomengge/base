@@ -60,7 +60,7 @@ public class FrameworkAspectAutoConfiguration implements ApplicationContextAware
     public FilterChain filterChain() {
         FilterChain filterChain = new FilterChain();
         Map<String, ServiceApiFilter> serviceFilterMap = applicationContext.getBeansOfType(ServiceApiFilter.class);
-        Optional.ofNullable(serviceFilterMap).ifPresent(val -> filterChain.addFilter(val.values().parallelStream().collect(Collectors.toList())));
+        Optional.ofNullable(serviceFilterMap).ifPresent(val -> filterChain.addFilter(val.values().stream().collect(Collectors.toList())));
         return filterChain;
     }
 

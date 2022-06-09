@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class InfluxDBConnection {
-    
+
     @Getter
     private InfluxDB influxDB;
     private InfluxDBProperties influxDBProperties;
@@ -45,9 +45,9 @@ public class InfluxDBConnection {
             try {
                 InfluxDBProperties.AdditionalConfig additionalConfig = influxDBProperties.getAdditionalConfig();
                 OkHttpClient.Builder builder = new OkHttpClient.Builder();
-                builder.connectTimeout(additionalConfig.getConnectTimeout().getSeconds(), TimeUnit.SECONDS)
-                        .readTimeout(additionalConfig.getReadTimeout().getSeconds(), TimeUnit.SECONDS)
-                        .writeTimeout(additionalConfig.getWriteTimeout().getSeconds(), TimeUnit.SECONDS)
+                builder.connectTimeout(additionalConfig.getConnectTimeout().toMillis(), TimeUnit.MILLISECONDS)
+                        .readTimeout(additionalConfig.getReadTimeout().toMillis(), TimeUnit.MILLISECONDS)
+                        .writeTimeout(additionalConfig.getWriteTimeout().toMillis(), TimeUnit.MILLISECONDS)
                         .retryOnConnectionFailure(true)
                         .connectionPool(new ConnectionPool(additionalConfig.getMaxConnections(), 5L, TimeUnit.MINUTES));
                 influxDB = InfluxDBFactory.connect(influxDBProperties.getUrl(), influxDBProperties.getUsername(),

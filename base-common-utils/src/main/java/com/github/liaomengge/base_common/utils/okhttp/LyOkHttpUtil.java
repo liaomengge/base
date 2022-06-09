@@ -19,8 +19,8 @@ public class LyOkHttpUtil {
 
     private static final int RETRY_TIME = 2;//重试次数
 
-    private static final int CONNECTION_TIME_OUT = 5_000;//连接超时时间
-    private static final int SOCKET_TIME_OUT = 5_000;//读写超时时间
+    private static final long CONNECTION_TIME_OUT = 5_000;//连接超时时间
+    private static final long SOCKET_TIME_OUT = 5_000;//读写超时时间
 
     private static final int MAX_IDLE_CONNECTIONS = 30;// 空闲连接数
     private static final long KEEP_ALIVE_TIME = 60_000L;//保持连接时间

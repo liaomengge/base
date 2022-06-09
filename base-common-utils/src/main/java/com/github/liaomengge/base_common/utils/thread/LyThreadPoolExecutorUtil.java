@@ -193,50 +193,51 @@ public class LyThreadPoolExecutorUtil {
         return buildCpuCoreThreadPool(threadName, new LinkedBlockingQueue<>(queueCapacity));
     }
 
-    public ScheduledExecutorService newScheduledThreadPool(int corePoolSize, ThreadFactory threadFactory) {
+    public ScheduledExecutorService buildScheduledThreadPool(int corePoolSize, ThreadFactory threadFactory) {
         return Executors.newScheduledThreadPool(corePoolSize, threadFactory);
     }
 
-    public ScheduledExecutorService newScheduledThreadPool(int corePoolSize, String threadNameFormat) {
-        return newScheduledThreadPool(corePoolSize, new ThreadFactoryBuilder().setNameFormat(threadNameFormat).build());
+    public ScheduledExecutorService buildScheduledThreadPool(int corePoolSize, String threadNameFormat) {
+        return buildScheduledThreadPool(corePoolSize,
+                new ThreadFactoryBuilder().setNameFormat(threadNameFormat).build());
     }
 
     public void awaitShutdown(ThreadPoolExecutor executor) {
-        awaitShutdown(executor, 10, 2);
+        awaitShutdown(executor, 10000, 2000);
     }
 
     /**
      * @param executor
-     * @param awaitTerminationSeconds 等待超时时间
-     * @param checkInterval           check时间间隔
+     * @param awaitTerminationMillis 等待超时时间
+     * @param checkIntervalMillis    check时间间隔
      */
-    public void awaitShutdown(ThreadPoolExecutor executor, int awaitTerminationSeconds, int checkInterval) {
+    public void awaitShutdown(ThreadPoolExecutor executor, long awaitTerminationMillis, long checkIntervalMillis) {
         if (executor instanceof LyThreadPoolExecutor) {
             LyThreadPoolExecutor lyThreadPoolExecutor = (LyThreadPoolExecutor) executor;
-            awaitShutdown(lyThreadPoolExecutor.getThreadName(), lyThreadPoolExecutor, awaitTerminationSeconds,
-                    checkInterval);
+            awaitShutdown(lyThreadPoolExecutor.getThreadName(), lyThreadPoolExecutor, awaitTerminationMillis,
+                    checkIntervalMillis);
             return;
         }
-        awaitShutdown("default", executor, awaitTerminationSeconds, checkInterval);
+        awaitShutdown("default", executor, awaitTerminationMillis, checkIntervalMillis);
     }
 
     /**
-     * @param threadName              线程名
-     * @param executor                线程池
-     * @param awaitTerminationSeconds 等待超时时间
-     * @param checkInterval           check时间间隔
+     * @param threadName             线程名
+     * @param executor               线程池
+     * @param awaitTerminationMillis 等待超时时间
+     * @param checkIntervalMillis    check时间间隔
      */
-    public void awaitShutdown(String threadName, ThreadPoolExecutor executor,
-                              int awaitTerminationSeconds, int checkInterval) {
+    public void awaitShutdown(String threadName, ThreadPoolExecutor executor, long awaitTerminationMillis,
+                              long checkIntervalMillis) {
         if (Objects.nonNull(executor)) {
             log.info("thread pool[{}] shutdown start...", executor);
             executor.shutdown();
-            if (awaitTerminationSeconds > 0) {
+            if (awaitTerminationMillis > 0) {
                 try {
-                    for (long remaining = awaitTerminationSeconds; remaining > 0; remaining -= checkInterval) {
+                    for (long remaining = awaitTerminationMillis; remaining > 0; remaining -= checkIntervalMillis) {
                         try {
-                            if (executor.awaitTermination(Math.min(remaining, checkInterval),
-                                    TimeUnit.SECONDS)) {
+                            if (executor.awaitTermination(Math.min(remaining, checkIntervalMillis),
+                                    TimeUnit.MILLISECONDS)) {
                                 break;
                             }
                         } catch (InterruptedException e) {

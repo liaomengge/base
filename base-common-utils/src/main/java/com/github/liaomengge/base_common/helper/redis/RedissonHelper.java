@@ -1,23 +1,20 @@
 package com.github.liaomengge.base_common.helper.redis;
 
 import com.github.liaomengge.base_common.utils.number.LyNumberUtil;
-
 import com.google.common.collect.Sets;
+import lombok.Getter;
+import org.redisson.Redisson;
+import org.redisson.api.*;
+import org.redisson.config.Config;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
+import redis.clients.jedis.Tuple;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
-import org.redisson.Redisson;
-import org.redisson.api.*;
-import org.redisson.config.Config;
-
-import lombok.Getter;
-import redis.clients.jedis.ScanParams;
-import redis.clients.jedis.ScanResult;
-import redis.clients.jedis.Tuple;
 
 /**
  * Created by liaomengge on 2018/10/12.
@@ -79,8 +76,8 @@ public class RedissonHelper implements IRedisHelper {
     }
 
     @Override
-    public void expire(String key, int seconds) {
-        redissonClient.getBucket(key).expire(seconds, TimeUnit.SECONDS);
+    public void expire(String key, long milliseconds) {
+        redissonClient.getBucket(key).expire(milliseconds, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -94,7 +91,7 @@ public class RedissonHelper implements IRedisHelper {
     }
 
     @Override
-    public boolean lock(String key, String value, long expiredSeconds) {
+    public boolean lock(String key, String value, long expiredMillis) {
         throw new UnsupportedOperationException("Redisson不兼容该返回结果集操作");
     }
 
@@ -109,8 +106,8 @@ public class RedissonHelper implements IRedisHelper {
     }
 
     @Override
-    public void set(String key, String value, int expiredSeconds) {
-        redissonClient.getBucket(key).set(value, expiredSeconds, TimeUnit.SECONDS);
+    public void set(String key, String value, long expiredMillis) {
+        redissonClient.getBucket(key).set(value, expiredMillis, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -122,7 +119,7 @@ public class RedissonHelper implements IRedisHelper {
     @Override
     public List<String> mget(String... keys) {
         Map<String, String> map = redissonClient.getBuckets().get(keys);
-        return map.values().parallelStream().collect(Collectors.toList());
+        return map.values().stream().collect(Collectors.toList());
     }
 
     @Override
@@ -131,9 +128,9 @@ public class RedissonHelper implements IRedisHelper {
     }
 
     @Override
-    public void hset(String key, String field, String value, int seconds) {
+    public void hset(String key, String field, String value, long milliseconds) {
         redissonClient.getMap(key).fastPut(field, value);
-        redissonClient.getBucket(key).expire(seconds, TimeUnit.SECONDS);
+        redissonClient.getBucket(key).expire(milliseconds, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -151,7 +148,7 @@ public class RedissonHelper implements IRedisHelper {
     @Override
     public List<String> hmget(String key, String... fields) {
         RMap<String, String> rMap = redissonClient.getMap(key);
-        return rMap.getAll(Sets.newHashSet(fields)).values().parallelStream().collect(Collectors.toList());
+        return rMap.getAll(Sets.newHashSet(fields)).values().stream().collect(Collectors.toList());
     }
 
     @Override
@@ -163,7 +160,7 @@ public class RedissonHelper implements IRedisHelper {
     @Override
     public List<String> hvalues(String key) {
         RMap<String, String> rMap = redissonClient.getMap(key);
-        return rMap.readAllValues().parallelStream().collect(Collectors.toList());
+        return rMap.readAllValues().stream().collect(Collectors.toList());
     }
 
     @Override

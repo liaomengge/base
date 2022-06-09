@@ -1,6 +1,7 @@
 package com.github.liaomengge.base_common.utils.validator;
 
 import com.google.common.collect.Lists;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,8 +9,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import lombok.*;
 
 /**
  * Created by liaomengge on 2018/8/10.
@@ -29,7 +28,8 @@ public final class LyMoreParamValidatorUtil {
     }
 
     public static <T> ValidatorResult validate(T t, Predicate<T> predicate, ValidatorError validatorError) {
-        return validate(t, val -> predicate.test(val) ? new ValidatorResult() : new ValidatorResult(false, validatorError));
+        return validate(t, val -> predicate.test(val) ? new ValidatorResult() : new ValidatorResult(false,
+                validatorError));
     }
 
     public static <T> ValidatorResult validate2(@NonNull T t, Function<T, ValidatorResult> function) {
@@ -37,7 +37,8 @@ public final class LyMoreParamValidatorUtil {
     }
 
     public static <T> ValidatorResult validate2(@NonNull T t, Predicate<T> predicate, ValidatorError validatorError) {
-        return validate2(t, val -> predicate.test(val) ? new ValidatorResult() : new ValidatorResult(false, validatorError));
+        return validate2(t, val -> predicate.test(val) ? new ValidatorResult() : new ValidatorResult(false,
+                validatorError));
     }
 
     public static <T> ValidatorResult validate2(@NonNull T t, Predicate<T> predicate, String errorMsg) {
@@ -117,7 +118,7 @@ public final class LyMoreParamValidatorUtil {
         public String toString() {
             return "ValidatorResult{" +
                     "success=" + success +
-                    ", errorList=" + errorList.parallelStream().map(val -> "(errorCode=" + val.getErrorCode() + ", " +
+                    ", errorList=" + errorList.stream().map(val -> "(errorCode=" + val.getErrorCode() + ", " +
                     "errorMsg=" + val.getErrorMsg() + ", field=" + val.getField() + ", value=" + val.getInvalidValue() + ")")
                     .collect(Collectors.joining(",")) + '}';
         }

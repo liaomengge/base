@@ -2,11 +2,23 @@ package com.github.liaomengge.base_common.helper.redis;
 
 import com.github.liaomengge.base_common.utils.collection.LyArrayUtil;
 import com.github.liaomengge.base_common.utils.string.LyStringUtil;
-
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.redis.core.DefaultTypedTuple;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
+import redis.clients.jedis.Tuple;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,21 +26,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
-import org.springframework.data.redis.core.DefaultTypedTuple;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.serializer.RedisSerializer;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import redis.clients.jedis.ScanParams;
-import redis.clients.jedis.ScanResult;
-import redis.clients.jedis.Tuple;
 
 /**
  * Created by liaomengge on 17/11/7.
@@ -90,8 +87,8 @@ public class RedisTemplateHelper implements IRedisHelper {
     }
 
     @Override
-    public void expire(String key, int seconds) {
-        stringRedisTemplate.expire(key, seconds, TimeUnit.SECONDS);
+    public void expire(String key, long milliseconds) {
+        stringRedisTemplate.expire(key, milliseconds, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -105,7 +102,7 @@ public class RedisTemplateHelper implements IRedisHelper {
     }
 
     @Override
-    public boolean lock(String key, String value, long expiredSeconds) {
+    public boolean lock(String key, String value, long expiredMillis) {
         throw new UnsupportedOperationException("StringRedisTemplate不兼容该返回结果集操作");
     }
 
@@ -120,8 +117,8 @@ public class RedisTemplateHelper implements IRedisHelper {
     }
 
     @Override
-    public void set(String key, String value, int expiredSeconds) {
-        stringRedisTemplate.opsForValue().set(key, value, expiredSeconds, TimeUnit.SECONDS);
+    public void set(String key, String value, long expiredMillis) {
+        stringRedisTemplate.opsForValue().set(key, value, expiredMillis, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -140,9 +137,9 @@ public class RedisTemplateHelper implements IRedisHelper {
     }
 
     @Override
-    public void hset(String key, String field, String value, int seconds) {
-        stringRedisTemplate.opsForHash().put(key, field, value);
-        stringRedisTemplate.expire(key, seconds, TimeUnit.SECONDS);
+    public void hset(String key, String field, String value, long milliseconds) {
+        hset(key, field, value);
+        expire(key, milliseconds);
     }
 
     @Override

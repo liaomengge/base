@@ -10,8 +10,7 @@ import javax.annotation.PostConstruct;
 import java.util.Map;
 
 /**
- * @author liaomengge
- * @version GenericStrategyFactory.java, v 0.1 2021-11-05 10:22 liaomengge Exp $$
+ * Created by liaomengge on 2021/11/05
  */
 public abstract class GenericStrategyFactory<K, V> implements ApplicationContextAware {
 

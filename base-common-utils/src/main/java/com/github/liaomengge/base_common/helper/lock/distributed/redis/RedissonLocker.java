@@ -50,7 +50,7 @@ public class RedissonLocker implements DistributedLocker {
      * @return
      */
     public boolean tryLock(String lockName, long waitTime) {
-        return tryLock(lockName, waitTime, TimeUnit.SECONDS);
+        return tryLock(lockName, waitTime, TimeUnit.MILLISECONDS);
     }
 
     /**

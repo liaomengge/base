@@ -21,9 +21,13 @@ public class SpringUtils implements ApplicationContextAware {
 
     private static ApplicationContext staticApplicationContext;
 
+    private static void setStaticApplicationContext(ApplicationContext applicationContext) {
+        staticApplicationContext = applicationContext;
+    }
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        staticApplicationContext = applicationContext;
+        setStaticApplicationContext(applicationContext);
     }
 
     public static <T> T getBean(Class<T> clazz) {

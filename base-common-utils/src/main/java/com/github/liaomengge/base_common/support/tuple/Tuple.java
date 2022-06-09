@@ -1,7 +1,5 @@
 package com.github.liaomengge.base_common.support.tuple;
 
-import java.util.Optional;
-
 /**
  * Tuple元组类
  *
@@ -10,13 +8,21 @@ import java.util.Optional;
  */
 public abstract class Tuple {
 
-    public abstract <A> Optional<A> _1();
+    public static <A, B> Tuple2<A, B> of(A a, B b) {
+        return new Tuple2<>(a, b);
+    }
 
-    public abstract <B> Optional<B> _2();
+    public static <A, B, C> Tuple3<A, B, C> of(A a, B b, C c) {
+        return new Tuple3<>(a, b, c);
+    }
 
-    public abstract <C> Optional<C> _3();
+    public static <A, B, C, D> Tuple4<A, B, C, D> of(A a, B b, C c, D d) {
+        return new Tuple4<>(a, b, c, d);
+    }
 
-    public abstract <D> Optional<D> _4();
+    public static <A, B, C, D, E> Tuple5<A, B, C, D, E> of(A a, B b, C c, D d, E e) {
+        return new Tuple5<>(a, b, c, d, e);
+    }
 
-    public abstract <E> Optional<E> _5();
+    public abstract int arity();
 }

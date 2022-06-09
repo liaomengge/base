@@ -61,7 +61,7 @@ public class DefaultFilterChain<T, R> implements FilterChain<T, R> {
     }
 
     public String printFilters() {
-        return filters.parallelStream()
+        return filters.stream()
                 .map(filter -> {
                     String filterName = filter.getClass().getSimpleName();
                     int order = LyNumberUtil.getIntValue(OrderUtils.getOrder(filter.getClass(), filter.getOrder()));

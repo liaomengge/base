@@ -13,41 +13,20 @@ public class Tuple3<A, B, C> extends Tuple {
         this.c = c;
     }
 
-    public static <A, B, C> Tuple3<A, B, C> of(A a, B b, C c) {
-        return new Tuple3<>(a, b, c);
-    }
-
-    @Override
     public Optional<A> _1() {
         return Optional.ofNullable(a);
     }
 
-    @Override
     public Optional<B> _2() {
         return Optional.ofNullable(b);
     }
 
-    @Override
     public Optional<C> _3() {
         return Optional.ofNullable(c);
     }
 
     @Override
-    public <D> Optional<D> _4() {
-        return Optional.empty();
-    }
-
-    @Override
-    public <E> Optional<E> _5() {
-        return Optional.empty();
-    }
-
-    @Override
-    public String toString() {
-        return "Tuple3{" +
-                "a=" + a +
-                ", b=" + b +
-                ", c=" + c +
-                '}';
+    public int arity() {
+        return 3;
     }
 }

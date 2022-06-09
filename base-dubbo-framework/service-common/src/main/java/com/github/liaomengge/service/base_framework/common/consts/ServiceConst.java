@@ -16,7 +16,7 @@ public class ServiceConst {
         enum SuccessCodeEnum {
             SUCCESS("000000", "成功");
 
-            private String code;
+            private final String code;
             private String msg;
         }
 
@@ -37,7 +37,7 @@ public class ServiceConst {
             UNKNOWN_ERROR("000900", "未知错误"),
             BIZ_DEFAULT_ERROR("100000", "业务处理失败");
 
-            private String code;
+            private final String code;
             private String msg;
         }
     }

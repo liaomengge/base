@@ -1,14 +1,7 @@
 package com.github.liaomengge.base_common.helper.redis;
 
 import com.github.liaomengge.base_common.utils.collection.LyArrayUtil;
-
 import com.google.common.collect.Sets;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +9,11 @@ import lombok.Setter;
 import redis.clients.jedis.*;
 import redis.clients.jedis.params.SetParams;
 import redis.clients.jedis.util.SafeEncoder;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by liaomengge on 17/11/7.
@@ -92,8 +90,8 @@ public class JedisClusterHelper implements IRedisHelper {
     }
 
     @Override
-    public void expire(String key, int seconds) {
-        jedisCluster.expire(key, seconds);
+    public void expire(String key, long milliseconds) {
+        jedisCluster.expire(key, (int) (milliseconds / 1000));
     }
 
     @Override
@@ -107,8 +105,9 @@ public class JedisClusterHelper implements IRedisHelper {
     }
 
     @Override
-    public boolean lock(String key, String value, long expiredSeconds) {
-        String result = jedisCluster.set(LOCK_PREFIX + key, value, SetParams.setParams().nx().ex((int) expiredSeconds));
+    public boolean lock(String key, String value, long expiredMillis) {
+        String result = jedisCluster.set(LOCK_PREFIX + key, value,
+                SetParams.setParams().nx().ex((int) expiredMillis / 1000));
         return LOCK_SUCCESS.equals(result);
     }
 
@@ -129,8 +128,8 @@ public class JedisClusterHelper implements IRedisHelper {
     }
 
     @Override
-    public void set(String key, String value, int expiredSeconds) {
-        jedisCluster.setex(key, expiredSeconds, value);
+    public void set(String key, String value, long expiredMillis) {
+        jedisCluster.setex(key, (int) (expiredMillis / 1000), value);
     }
 
     @Override
@@ -151,9 +150,9 @@ public class JedisClusterHelper implements IRedisHelper {
     }
 
     @Override
-    public void hset(String key, String field, String value, int seconds) {
-        jedisCluster.hset(key, field, value);
-        jedisCluster.expire(key, seconds);
+    public void hset(String key, String field, String value, long milliseconds) {
+        hset(key, field, value);
+        expire(key, milliseconds);
     }
 
     @Override

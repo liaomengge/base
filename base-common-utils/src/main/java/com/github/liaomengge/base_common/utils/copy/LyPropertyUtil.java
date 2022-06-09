@@ -8,8 +8,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
- * @author liaomengge
- * @version LyPropertyUtil.java, v 0.1 2021-11-05 11:30 liaomengge Exp $$
+ * Created by liaomengge on 2021/11/05
  */
 @UtilityClass
 public class LyPropertyUtil {

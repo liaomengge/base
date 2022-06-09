@@ -42,8 +42,8 @@ public class FeignProperties {
         private int maxConnections = 20;
         private long timeToLive = 300L;
         private TimeUnit timeToLiveUnit = TimeUnit.SECONDS;
-        private int connectTimeout = 5000;
-        private int readTimeout = 5000;
-        private int writeTimeout = 5000;
+        private long connectTimeout = 5000;
+        private long readTimeout = 5000;
+        private long writeTimeout = 5000;
     }
 }

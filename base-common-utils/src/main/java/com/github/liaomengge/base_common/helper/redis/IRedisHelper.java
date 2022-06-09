@@ -40,13 +40,13 @@ public interface IRedisHelper {
 
     ScanResult<String> scan(String key, ScanParams params);
 
-    void expire(String key, int seconds);
+    void expire(String key, long milliseconds);
 
     Long ttl(String key);
 
     Object eval(String script, List<String> keys, List<String> args);
 
-    boolean lock(String key, String value, long expiredSeconds);
+    boolean lock(String key, String value, long expiredMillis);
 
     boolean unlock(String key, String value);
 
@@ -55,7 +55,7 @@ public interface IRedisHelper {
 
     void set(String key, String value);
 
-    void set(String key, String value, int expiredSeconds);
+    void set(String key, String value, long expiredMillis);
 
     String get(String key);
 
@@ -67,7 +67,7 @@ public interface IRedisHelper {
 
     void hset(String key, String field, String value);
 
-    void hset(String key, String field, String value, int seconds);
+    void hset(String key, String field, String value, long milliseconds);
 
     String hget(String key, String field);
 

@@ -8,6 +8,7 @@ import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import static com.github.liaomengge.base_common.helper.lock.distributed.consts.DistributedConst.DEFAULT_TIME_UNIT;
 import static com.github.liaomengge.base_common.helper.lock.distributed.consts.DistributedConst.ZK_LOCKER_PREFIX;
 
 /**
@@ -99,7 +100,11 @@ public class ZkLocker implements DistributedLocker {
      * @throws Exception
      */
     public <T> T tryLock(String path, AcquiredLockCallback<T> callback) throws Exception {
-        return this.tryLock(path, callback, 0L, TimeUnit.SECONDS);
+        return this.tryLock(path, callback, 0L, DEFAULT_TIME_UNIT);
+    }
+
+    public <T> T tryLock(String path, AcquiredLockCallback<T> callback, long time) throws Exception {
+        return this.tryLock(path, callback, time, DEFAULT_TIME_UNIT);
     }
 
     /**

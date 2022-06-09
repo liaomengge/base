@@ -1,11 +1,7 @@
 package com.github.liaomengge.base_common.utils.concurrent;
 
-import static java.util.stream.Collectors.toList;
-
-import com.github.liaomengge.base_common.support.tuple.Tuple2;
-import com.github.liaomengge.base_common.support.tuple.Tuple3;
-import com.github.liaomengge.base_common.support.tuple.Tuple4;
-import com.github.liaomengge.base_common.support.tuple.Tuple5;
+import com.github.liaomengge.base_common.support.tuple.*;
+import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +10,7 @@ import java.util.concurrent.Executor;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import lombok.experimental.UtilityClass;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created by liaomengge on 2020/6/5.
@@ -72,7 +68,7 @@ public class LyMoreCompletableFutureUtil {
         CompletableFuture future3 = CompletableFuture.supplyAsync(supplier3);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple3.of((A) val.get(0), (B) val.get(1), (C) val.get(2))).join();
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2))).join();
     }
 
     public <A, B, C> Tuple3<A, B, C> asyncExec(Supplier<A> supplier, Supplier<B> supplier2, Supplier<C> supplier3,
@@ -87,7 +83,7 @@ public class LyMoreCompletableFutureUtil {
         CompletableFuture future3 = CompletableFuture.supplyAsync(supplier3, supplyExecutor);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple3.of((A) val.get(0), (B) val.get(1), (C) val.get(2)), combineExecutor).join();
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2)), combineExecutor).join();
     }
 
     public <A, B, C> Tuple3<A, B, C> asyncExec(Supplier<A> supplier, Supplier<B> supplier2, Supplier<C> supplier3,
@@ -99,7 +95,7 @@ public class LyMoreCompletableFutureUtil {
         CompletableFuture future3 = CompletableFuture.supplyAsync(supplier3).whenCompleteAsync(cConsumer);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple3.of((A) val.get(0), (B) val.get(1), (C) val.get(2))).join();
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2))).join();
     }
 
     public <A, B, C> Tuple3<A, B, C> asyncExec(Supplier<A> supplier, Supplier<B> supplier2, Supplier<C> supplier3,
@@ -122,7 +118,7 @@ public class LyMoreCompletableFutureUtil {
                 CompletableFuture.supplyAsync(supplier3, supplyExecutor).whenCompleteAsync(cConsumer);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple3.of((A) val.get(0), (B) val.get(1), (C) val.get(2)), combineExecutor).join();
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2)), combineExecutor).join();
     }
 
     /************************************************华丽的分割线(Tuple4)***********************************************/
@@ -135,7 +131,7 @@ public class LyMoreCompletableFutureUtil {
         CompletableFuture future4 = CompletableFuture.supplyAsync(supplier4);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3, future4);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple4.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3))).join();
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3))).join();
     }
 
     public <A, B, C, D> Tuple4<A, B, C, D> asyncExec(Supplier<A> supplier, Supplier<B> supplier2,
@@ -153,7 +149,7 @@ public class LyMoreCompletableFutureUtil {
         CompletableFuture future4 = CompletableFuture.supplyAsync(supplier4, supplyExecutor);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3, future4);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple4.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3)),
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3)),
                         combineExecutor).join();
     }
 
@@ -169,7 +165,7 @@ public class LyMoreCompletableFutureUtil {
         CompletableFuture future4 = CompletableFuture.supplyAsync(supplier4).whenCompleteAsync(dConsumer);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3, future4);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple4.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3))).join();
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3))).join();
     }
 
     public <A, B, C, D> Tuple4<A, B, C, D> asyncExec(Supplier<A> supplier, Supplier<B> supplier2,
@@ -200,7 +196,7 @@ public class LyMoreCompletableFutureUtil {
                 CompletableFuture.supplyAsync(supplier4, supplyExecutor).whenCompleteAsync(dConsumer);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3, future4);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple4.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3)),
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3)),
                         combineExecutor).join();
     }
 
@@ -216,7 +212,7 @@ public class LyMoreCompletableFutureUtil {
         CompletableFuture future5 = CompletableFuture.supplyAsync(supplier5);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3, future4, future5);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple5.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3),
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3),
                         (E) val.get(4))).join();
     }
 
@@ -238,7 +234,7 @@ public class LyMoreCompletableFutureUtil {
         CompletableFuture future5 = CompletableFuture.supplyAsync(supplier5, supplyExecutor);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3, future4, future5);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple5.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3),
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3),
                         (E) val.get(4)), combineExecutor).join();
     }
 
@@ -257,7 +253,7 @@ public class LyMoreCompletableFutureUtil {
         CompletableFuture future5 = CompletableFuture.supplyAsync(supplier5).whenCompleteAsync(eConsumer);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3, future4, future5);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple5.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3),
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3),
                         (E) val.get(4))).join();
     }
 
@@ -295,7 +291,7 @@ public class LyMoreCompletableFutureUtil {
                 CompletableFuture.supplyAsync(supplier5, supplyExecutor).whenCompleteAsync(eConsumer);
         List<CompletableFuture<?>> completableFutureList = Arrays.asList(future, future2, future3, future4, future5);
         return asList(completableFutureList)
-                .thenApplyAsync(val -> Tuple5.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3),
+                .thenApplyAsync(val -> Tuple.of((A) val.get(0), (B) val.get(1), (C) val.get(2), (D) val.get(3),
                         (E) val.get(4)), combineExecutor).join();
     }
 
@@ -346,13 +342,13 @@ public class LyMoreCompletableFutureUtil {
 
     public <A, B> CompletableFuture<Tuple2<A, B>> thenCombineAsync(CompletableFuture<A> future,
                                                                    CompletableFuture<B> future2) {
-        return future.thenCombineAsync(future2, (t, r) -> Tuple2.of(t, r));
+        return future.thenCombineAsync(future2, (t, r) -> Tuple.of(t, r));
     }
 
     public <A, B> CompletableFuture<Tuple2<A, B>> thenCombineAsync(CompletableFuture<A> future,
                                                                    CompletableFuture<B> future2,
                                                                    Executor combineExecutor) {
-        return future.thenCombineAsync(future2, (t, r) -> Tuple2.of(t, r), combineExecutor);
+        return future.thenCombineAsync(future2, (t, r) -> Tuple.of(t, r), combineExecutor);
     }
 
     /************************************************华丽的分割线*******************************************************/

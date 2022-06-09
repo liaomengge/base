@@ -138,11 +138,11 @@ public class RetrofitAutoConfiguration {
         if (CollectionUtils.isNotEmpty(urlHttpClientProperties)) {
             Map<String, OkHttpClient> okHttpClientMap =
                     urlHttpClientProperties.stream().collect(Collectors.toMap(UrlHttpClientProperties::getUrl,
-                            val -> newBuilder(LyNumberUtil.getIntValue(val.getReadTimeout(),
+                            val -> newBuilder(LyNumberUtil.getLongValue(val.getReadTimeout(),
                                     httpClientProperties.getReadTimeout()),
-                                    LyNumberUtil.getIntValue(val.getWriteTimeout(),
+                                    LyNumberUtil.getLongValue(val.getWriteTimeout(),
                                             httpClientProperties.getWriteTimeout()),
-                                    LyNumberUtil.getIntValue(val.getConnectTimeout(),
+                                    LyNumberUtil.getLongValue(val.getConnectTimeout(),
                                             httpClientProperties.getConnectTimeout()),
                                     connectionPool, sentinelRetrofitInterceptor, httpLoggingInterceptor).build(), (v1
                                     , v2) -> v2));

@@ -49,7 +49,8 @@ public class NacosUpTimeRandomWeightRule extends NacosRandomWeightRule {
     }
 
     private double calculateWarmupWeight(long startUpTime, long warmupTime, double weight) {
-        double calculateWeight = LyBigDecimalUtil.div(LyBigDecimalUtil.mul(startUpTime, weight), warmupTime);
+        double calculateWeight = LyBigDecimalUtil.div(LyBigDecimalUtil.mul(startUpTime, weight).doubleValue(),
+                warmupTime).doubleValue();
         return Math.min(Math.max(calculateWeight, Double.valueOf(0.01d)), weight);
     }
 }

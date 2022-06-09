@@ -10,6 +10,6 @@ public interface DistributedConst {
     String REDIS_LOCKER_PREFIX = "lock:";
     String ZK_LOCKER_PREFIX = "/lock/";
 
-    long DEFAULT_TIMEOUT = 5;
-    TimeUnit DEFAULT_TIME_UNIT = TimeUnit.SECONDS;
+    long DEFAULT_TIMEOUT = 5_000;
+    TimeUnit DEFAULT_TIME_UNIT = TimeUnit.MILLISECONDS;
 }

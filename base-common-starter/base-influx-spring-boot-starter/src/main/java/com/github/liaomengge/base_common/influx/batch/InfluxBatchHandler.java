@@ -6,6 +6,7 @@ import com.github.liaomengge.base_common.influx.InfluxDBConnection;
 import com.github.liaomengge.base_common.influx.InfluxDBProperties;
 import com.github.liaomengge.base_common.influx.consts.InfluxConst;
 import com.github.liaomengge.base_common.utils.thread.LyThreadFactoryBuilderUtil;
+import com.github.liaomengge.base_common.utils.thread.LyThreadUtil;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.influxdb.dto.BatchPoints;
@@ -16,7 +17,6 @@ import java.time.Duration;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 2020/7/21.
@@ -69,11 +69,7 @@ public class InfluxBatchHandler {
                         consume();
                     } catch (Exception e) {
                         log.error("batch write influx fail", e);
-                        try {
-                            TimeUnit.MILLISECONDS.sleep(InfluxConst.DEFAULT_TAKE_BATCH_TIMEOUT);
-                        } catch (InterruptedException interruptedException) {
-                            Thread.currentThread().interrupt();
-                        }
+                        LyThreadUtil.sleep(InfluxConst.DEFAULT_TAKE_BATCH_TIMEOUT);
                     }
                 }
             });

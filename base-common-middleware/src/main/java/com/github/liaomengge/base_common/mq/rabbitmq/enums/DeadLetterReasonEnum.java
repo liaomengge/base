@@ -12,6 +12,6 @@ public enum DeadLetterReasonEnum {
 
     REJECTED("rejected", "拒绝"), EXPIRED("expired", "过期"), MAXLEN("maxlen", "超过最大队列长度");
 
-    private String code;
+    private final String code;
     private String description;
 }

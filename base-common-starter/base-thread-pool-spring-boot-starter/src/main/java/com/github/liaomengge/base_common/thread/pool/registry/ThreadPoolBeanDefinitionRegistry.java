@@ -84,8 +84,8 @@ public class ThreadPoolBeanDefinitionRegistry implements EnvironmentAware, BeanD
             threadPoolTaskExecutor.setTaskDecorator(RequestContextRunnable::wrapRunnable);
         }
 
-        threadPoolTaskExecutor.setCheckInterval(threadPoolProperties.getCheckInterval());
-        threadPoolTaskExecutor.setAwaitTerminationSeconds(threadPoolProperties.getAwaitTerminationSeconds());
+        threadPoolTaskExecutor.setCheckIntervalMillis(threadPoolProperties.getCheckIntervalMillis());
+        threadPoolTaskExecutor.setAwaitTerminationMillis(threadPoolProperties.getAwaitTerminationMillis());
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(threadPoolProperties.isWaitForTasksToCompleteOnShutdown());
         threadPoolTaskExecutor.setAllowCoreThreadTimeOut(threadPoolProperties.isAllowCoreThreadTimeOut());
 

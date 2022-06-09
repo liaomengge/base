@@ -58,7 +58,7 @@ public class SwaggerAutoConfiguration {
         String basePackage = this.swaggerProperties.getBasePackage();
         List<String> basePackageList = SPLITTER.splitToList(basePackage);
         List<Predicate<RequestHandler>> predicates =
-                basePackageList.parallelStream().map(val -> RequestHandlerSelectors.basePackage(val)).collect(Collectors.toList());
+                basePackageList.stream().map(val -> RequestHandlerSelectors.basePackage(val)).collect(Collectors.toList());
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName(this.swaggerProperties.getGroupName())
                 .apiInfo(this.apiInfo())

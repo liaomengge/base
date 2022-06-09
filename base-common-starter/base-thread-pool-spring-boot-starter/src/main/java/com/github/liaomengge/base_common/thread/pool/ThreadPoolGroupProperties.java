@@ -36,8 +36,8 @@ public class ThreadPoolGroupProperties {
         private int queueCapacity = 64;//可动态修改
         private boolean allowCoreThreadTimeOut = false;//可动态修改
         private boolean waitForTasksToCompleteOnShutdown = false;
-        private int checkInterval = 2;//默认：check时间间隔2s
-        private int awaitTerminationSeconds = 0;
+        private long checkIntervalMillis = 2000L;//默认：check时间间隔2s
+        private long awaitTerminationMillis = 0L;
         private String queueType = QueueTypeEnum.RESIZABLE_CAPACITY_LINKED_BLOCKING_QUEUE.getQueueType();
         private String rejectionPolicy = RejectionPolicyEnum.CALLER_RUNS_POLICY.getRejectionPolicy();//可动态修改
 

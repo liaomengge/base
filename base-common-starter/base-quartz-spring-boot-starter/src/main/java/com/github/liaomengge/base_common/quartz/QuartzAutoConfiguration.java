@@ -101,7 +101,7 @@ public class QuartzAutoConfiguration {
             }
         }
         log.info("load job trigger(" + cronTriggerList.size() + ") ===> [" +
-                cronTriggerList.parallelStream().map(val -> val.getKey().getName()).reduce((val, val2) -> val + ',' + val2).orElse("") + "]");
+                cronTriggerList.stream().map(val -> val.getKey().getName()).reduce((val, val2) -> val + ',' + val2).orElse("") + "]");
         return cronTriggerList;
     }
 

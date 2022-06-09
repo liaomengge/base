@@ -30,9 +30,9 @@ public class LyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
 
     private boolean waitForTasksToCompleteOnShutdown = false;
 
-    private int awaitTerminationSeconds = 0;
+    private long awaitTerminationMillis = 0L;
 
-    private int checkInterval = 2;//默认：check时间间隔2s
+    private long checkIntervalMillis = 2000L;//默认：check时间间隔2s
 
     public LyThreadPoolTaskExecutor(String threadName) {
         this.threadName = threadName;
@@ -57,11 +57,12 @@ public class LyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
         if (Objects.nonNull(executor)) {
             log.info("thread pool[{}] shutdown start...", threadName);
             executor.shutdown();
-            if (this.awaitTerminationSeconds > 0) {
+            if (this.awaitTerminationMillis > 0) {
                 try {
-                    for (long remaining = this.awaitTerminationSeconds; remaining > 0; remaining -= this.checkInterval) {
+                    for (long remaining = this.awaitTerminationMillis; remaining > 0; remaining -= this.checkIntervalMillis) {
                         try {
-                            if (executor.awaitTermination(Math.min(remaining, this.checkInterval), TimeUnit.SECONDS)) {
+                            if (executor.awaitTermination(Math.min(remaining, this.checkIntervalMillis),
+                                    TimeUnit.MILLISECONDS)) {
                                 break;
                             }
                         } catch (InterruptedException e) {
@@ -80,7 +81,7 @@ public class LyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
     @Override
     public void afterPropertiesSet() {
         super.setWaitForTasksToCompleteOnShutdown(this.waitForTasksToCompleteOnShutdown);
-        super.setAwaitTerminationSeconds(this.awaitTerminationSeconds);
+        super.setAwaitTerminationMillis(this.awaitTerminationMillis);
         if (StringUtils.isNotBlank(threadName)) {
             super.setThreadFactory(LyThreadFactoryBuilderUtil.build(threadName));
         }

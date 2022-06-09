@@ -34,7 +34,7 @@ public interface InfluxConst {
      * okhttp timeout
      */
     int DEFAULT_MAX_CONNECTIONS = 50;
-    Duration DEFAULT_CONNECT_TIMEOUT = Duration.ofSeconds(5);
-    Duration DEFAULT_READ_TIMEOUT = Duration.ofSeconds(5);
-    Duration DEFAULT_WRITE_TIMEOUT = Duration.ofSeconds(5);
+    Duration DEFAULT_CONNECT_TIMEOUT = Duration.ofMillis(5000);
+    Duration DEFAULT_READ_TIMEOUT = Duration.ofMillis(5000);
+    Duration DEFAULT_WRITE_TIMEOUT = Duration.ofMillis(5000);
 }

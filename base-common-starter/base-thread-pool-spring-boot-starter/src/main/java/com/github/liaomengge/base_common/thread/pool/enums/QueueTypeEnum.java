@@ -22,7 +22,7 @@ public enum QueueTypeEnum {
     LINKED_TRANSFER_QUEUE("LinkedTransferQueue"),
     PRIORITY_BLOCKING_QUEUE("PriorityBlockingQueue");
 
-    private String queueType;
+    private final String queueType;
 
     public static QueueTypeEnum matchQueueType(String queueType) {
         return Arrays.stream(QueueTypeEnum.values())

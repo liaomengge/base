@@ -57,9 +57,9 @@ public class OkHttpAutoConfiguration {
         public okhttp3.OkHttpClient client(OkHttpClientFactory httpClientFactory, ConnectionPool connectionPool) {
             FeignProperties.OkHttpProperties okHttpProperties = feignProperties.getOkhttp();
             Boolean followRedirects = okHttpProperties.isFollowRedirects();
-            Integer connectTimeout = okHttpProperties.getConnectTimeout();
-            Integer readTimeout = okHttpProperties.getReadTimeout();
-            Integer writeTimeout = okHttpProperties.getWriteTimeout();
+            Long connectTimeout = okHttpProperties.getConnectTimeout();
+            Long readTimeout = okHttpProperties.getReadTimeout();
+            Long writeTimeout = okHttpProperties.getWriteTimeout();
             Boolean disableSslValidation = okHttpProperties.isDisableSslValidation();
             this.okHttpClient = httpClientFactory.createBuilder(disableSslValidation)
                     .connectTimeout(connectTimeout, TimeUnit.MILLISECONDS)

@@ -12,8 +12,7 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.Args;
 
 /**
- * @author liaomengge
- * @version HttpConnectionKeepAliveStrategy.java, v 0.1 2021-12-16 15:18 liaomengge Exp $$
+ * Created by liaomengge on 2021/12/16
  */
 @NoArgsConstructor
 @AllArgsConstructor

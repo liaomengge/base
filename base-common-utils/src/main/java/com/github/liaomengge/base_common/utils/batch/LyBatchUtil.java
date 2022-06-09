@@ -1,6 +1,8 @@
 package com.github.liaomengge.base_common.utils.batch;
 
 import com.google.common.collect.Lists;
+import lombok.NonNull;
+import lombok.experimental.UtilityClass;
 
 import java.util.Collection;
 import java.util.List;
@@ -8,9 +10,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
-
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 
 /**
  * Created by liaomengge on 18/5/10.
@@ -57,8 +56,7 @@ public class LyBatchUtil {
         process2(list, batchSize, function).forEach(consumer);
     }
 
-    public <T, V> Stream<List<V>> process3(@NonNull List<T> list, int batchSize, Function<List<T>, List<V>>
-            function) {
+    public <T, V> Stream<List<V>> process3(@NonNull List<T> list, int batchSize, Function<List<T>, List<V>> function) {
         return process2(list, batchSize).map(function);
     }
 

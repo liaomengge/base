@@ -17,43 +17,28 @@ public class Tuple5<A, B, C, D, E> extends Tuple {
         this.e = e;
     }
 
-    public static <A, B, C, D, E> Tuple5<A, B, C, D, E> of(A a, B b, C c, D d, E e) {
-        return new Tuple5<>(a, b, c, d, e);
-    }
-
-    @Override
     public Optional<A> _1() {
         return Optional.ofNullable(a);
     }
 
-    @Override
     public Optional<B> _2() {
         return Optional.ofNullable(b);
     }
 
-    @Override
     public Optional<C> _3() {
         return Optional.ofNullable(c);
     }
 
-    @Override
     public Optional<D> _4() {
         return Optional.ofNullable(d);
     }
 
-    @Override
     public Optional<E> _5() {
         return Optional.ofNullable(e);
     }
 
     @Override
-    public String toString() {
-        return "Tuple5{" +
-                "a=" + a +
-                ", b=" + b +
-                ", c=" + c +
-                ", d=" + d +
-                ", e=" + e +
-                '}';
+    public int arity() {
+        return 5;
     }
 }
